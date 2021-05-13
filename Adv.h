@@ -21,6 +21,7 @@ public:
 	void Final() override;
 	void Update() override;
 	void Draw() override;
+	void Load();
 
 	int day = 0;
 
@@ -33,9 +34,31 @@ private:
 	const int DrawFlashTiming_	= 20;
 	const int Divisor_			= 30;
 
-	int MassegeCount = 0;
-
 	int IconFlashCount_ = 0;
+
+	/*-----メッセージ処理用メンバ変数-----*/
+	
+	int MassegeCount_ = 0;
+
+	const int LineWidth_ = 20;
+	std::string filePath_ = "";
+	std::vector<std::string> massegeList_;
+
+	std::vector<int> ResourceNum_;
+	std::vector<int> ResourcePath_;
+	std::vector<int> CX_;
+	std::vector<int> CY_;
+	int MassegeX_	   = 0;
+	int MassegeY_	   = 0;
+	int StringX_	   = 0;
+	int StringY_	   = 0;
+	int BGX_		   = 0;
+	int BGY_		   = 0;
+	int CDrawCount_    = 0;
+	int BreakCount_	   = 0;
+	std::string CName_ = "";
+
+	/*----------------------------------*/
 };
 
 #endif
