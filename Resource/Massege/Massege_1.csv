@@ -1,0 +1,16 @@
+ResourceLoad,Image,Resource/Image/test_3.jpg,
+ResourceLoad,Image,Resource/Image/test_1.png,
+ResourceLoad,Image,Resource/Image/test_2.png,
+ResourceLoad,Music,Resource/Music/bgm_test.wav,
+PlayBGM,3,
+BGX,0,BGY,0,BGDraw,0,
+MassegeX,100,Massege,600,
+StringX,50,StringY,500,CName,クラン,
+CX,200,CY,60,CDraw,1,
+CX,400,CY,60,CDraw,2,
+テスト1,
+テスト2,Break,テスト3,BreakEnd,
+テスト4
+
+
+

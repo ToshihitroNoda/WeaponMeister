@@ -1,0 +1,134 @@
+#ifndef GAMEMANAGER_H_
+#define GAMEMANAGER_H_
+
+#include "Singleton.h"
+
+#include <vector>
+#include <memory>
+#include <iostream>
+#include <map>
+#include <DxLib.h>
+#include <assert.h>
+
+#include "DataCsv.h"
+
+
+// CSVファイルの読込み
+struct MapData : public DataCsv
+{
+	MapData(std::string filePath = "", std::string csvOption = "DATA") : DataCsv(filePath)
+	{
+	};
+	~MapData() { clear(); };//お掃除処理はこちら
+	// csvファイルの読み込み
+	void Load(std::string filePath)
+	{
+		assert(filePath != "" && "ファイル名filePathを設定して！" != "");
+		DataCsv::LoadData(filePath);
+	}
+};
+
+struct ItemData : public DataCsv
+{
+	ItemData(std::string filePath = "", std::string csvOption = "DATA") : DataCsv(filePath)
+	{
+	};
+	~ItemData() { clear(); };//お掃除処理はこちら
+	// csvファイルの読み込み
+	void Load(std::string filePath)
+	{
+		assert(filePath != "" && "ファイル名filePathを設定して！" != "");
+		DataCsv::LoadData(filePath);
+	}
+};
+
+struct WeaponData : public DataCsv
+{
+	WeaponData(std::string filePath = "", std::string csvOption = "DATA") : DataCsv(filePath)
+	{
+	};
+	~WeaponData() { clear(); };//お掃除処理はこちら
+	// csvファイルの読み込み
+	void Load(std::string filePath)
+	{
+		assert(filePath != "" && "ファイル名filePathを設定して！" != "");
+		DataCsv::LoadData(filePath);
+	}
+};
+
+struct MassegeData : public DataCsv
+{
+	MassegeData(std::string filePath = "", std::string csvOption = "DATA") : DataCsv(filePath)
+	{
+	};
+	~MassegeData() { clear(); };//お掃除処理はこちら
+	// csvファイルの読み込み
+	void Load(std::string filePath)
+	{
+		assert(filePath != "" && "ファイル名filePathを設定して！" != "");
+		DataCsv::LoadData(filePath);
+	}
+};
+
+class Map;
+class Player;
+class FieldItem;
+class MapObjects;
+
+class GameManager : public Singleton<GameManager>
+{
+public:
+
+	MapData mapData;
+	ItemData itemData;
+	WeaponData weaponData;
+	MassegeData massegeData;
+
+	friend class Singleton<GameManager>;				// Singletonでのインスタンス作成は許可
+	
+	std::shared_ptr<Map> map{ nullptr };				// マップ
+
+	std::shared_ptr<Player> player{ nullptr };			// 自機の初期化
+
+	std::vector<std::shared_ptr<FieldItem>> fieldItems; // フィールド上のアイテム
+
+	std::vector<std::shared_ptr<MapObjects>> mapObjects;
+
+	// アイテム保管vector
+	std::vector<int> pouch;
+	std::vector<int> handles;
+	std::vector<int> main;
+	std::vector<int> weapons; 
+
+	// 品質保管vector
+	std::vector<int> pouchQuality;
+	std::vector<int> handlesQuality;
+	std::vector<int> mainQuality;
+	std::vector<int> weaponQuality;
+
+	// 削除処理テンプレート
+	template <typename T, class T_if>
+	void EraseRemoveIf(std::vector<T>& v, T_if if_condition)
+	{
+		v.erase(
+			std::remove_if(v.begin(), v.end(), if_condition),
+			v.end()
+		);
+	};
+
+	const int colorWhite = GetColor(255, 255, 255);
+	const int colorBrack = GetColor(0, 0, 0);
+	const int colorGray  = GetColor(122, 122, 122);
+
+	const int DefaultFontSize_ = 15;
+
+	int money = 0;
+	const int defaultMoney = 1000;
+
+protected:
+	GameManager() {};			// 外部からのインスタンス作成は禁止
+	virtual ~GameManager() {};	// 外部からのインスタンス破棄も禁止
+};
+
+#endif 
+
