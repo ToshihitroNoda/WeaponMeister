@@ -21,7 +21,6 @@ public:
 	void Final() override;
 	void Update() override;
 	void Draw() override;
-	void Load();
 
 	static int day;
 

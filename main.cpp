@@ -32,8 +32,6 @@ static void GameDraw(Game& game)
 	skipCount = 0; // フレームスキップのカウントをリセット
 }
 
-// #includeで別ファイルのヘッダファイル.hをこのコード内に読み込む
-
 // 設定画面の【リンカー】→【システム】の【サブシステム】をWindows(SYSTEM:WINDOWS)に設定するとWinMainからプログラムが開始する
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_  LPSTR lpCmdLine, _In_  int nCmdShow)
 {

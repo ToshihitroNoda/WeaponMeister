@@ -50,7 +50,6 @@ void StageSelection::Update()
 				stageNum = stageNums_[i];
 			}
 		}
-
 		sm.LoadScene("Collection");
 	}
 

@@ -45,6 +45,7 @@ private:
 	static std::string CName_;
 	static bool NowBreak_;
 	static bool DrawSkip_;
+	static bool LoadEnd_;
 };
 
 int ADVSimpleScript::MassegeCount_ = 0;
@@ -73,8 +74,9 @@ int ADVSimpleScript::PrevPlayMusic = 0;
 std::string ADVSimpleScript::filePath_ = "";
 std::string ADVSimpleScript::CName_	   = "";
 
-bool ADVSimpleScript::NowBreak_ = false;
-bool ADVSimpleScript::DrawSkip_ = false;
+bool ADVSimpleScript::NowBreak_		 = false;
+bool ADVSimpleScript::DrawSkip_		 = false;
+bool ADVSimpleScript::LoadEnd_		 = false;
 
 void ADVSimpleScript::Load(std::string filePath)
 {
@@ -104,6 +106,7 @@ void ADVSimpleScript::Update()
 
 		if (massegeList_[MassegeCount_] == "ResourceLoad")
 		{
+			LoadEnd_ = true;
 			DrawSkip_ = true;
 			ResourceNum_++;
 			ResourceNums_.push_back(ResourceNum_);
@@ -324,21 +327,24 @@ void ADVSimpleScript::MassegeDraw(int MassegeColor, int FontSize, int DefaultFon
 
 	SetFontSize(FontSize);
 
-	DrawString(StringX_, StringY_, CName_.c_str(), MassegeColor);
+	if (LoadEnd_)
+	{
+		DrawString(StringX_, StringY_, CName_.c_str(), MassegeColor);
 
-	if (DrawSkip_)
-	{
-		DrawSkip_ = false;
-		return;
-	}
-	else
-	{
-		DrawString(MassegeX_, MassegeY_ + LineWidth_ * BreakCount_, massegeList_[MassegeCount_].c_str(), MassegeColor);
-		if (NowBreak_)
+		if (DrawSkip_)
 		{
-			for (int i = 0; i < BreakCount_; i++)
+			DrawSkip_ = false;
+			return;
+		}
+		else
+		{
+			DrawString(MassegeX_, MassegeY_ + LineWidth_ * BreakCount_, massegeList_[MassegeCount_].c_str(), MassegeColor);
+			if (NowBreak_)
 			{
-				DrawString(MassegeX_, MassegeY_ + LineWidth_ * i, massegeList_[MassegeCount_ - ((BreakCount_ - 1 - i) * 2 + 2)].c_str(), MassegeColor);
+				for (int i = 0; i < BreakCount_; i++)
+				{
+					DrawString(MassegeX_, MassegeY_ + LineWidth_ * i, massegeList_[MassegeCount_ - ((BreakCount_ - 1 - i) * 2 + 2)].c_str(), MassegeColor);
+				}
 			}
 		}
 	}

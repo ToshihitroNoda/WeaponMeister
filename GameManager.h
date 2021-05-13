@@ -82,7 +82,6 @@ public:
 	MapData mapData;
 	ItemData itemData;
 	WeaponData weaponData;
-	MassegeData massegeData;
 
 	friend class Singleton<GameManager>;				// Singletonでのインスタンス作成は許可
 	

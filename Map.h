@@ -43,9 +43,14 @@ class Map
 public:
 	GameManager& gm = GameManager::GetInstance();
 
-	const int None			= -1;   // 何も無いマス
-	const int terrain_grass = 0;	// 草の地面
-	const int Wall			= 1;    // 壁
+	const int None			  = -1;   // 何も無いマス
+	const int terrain_grass   = 0;	  // 草の地面
+	const int terrain_sand	  = 1;	  // 砂の地面
+	const int terrain_stone   = 2;	  // 石の地面
+	const int terrain_volcano = 3;	  // 火山の地面
+
+	const int Fielditem		  = 0;	  // フィールド上のアイテム
+	const int Spruce_1		  = 1;    // 木1
 
 	//壁じゃないもの
 	int NotWallNums[2] = { -1,0 };
@@ -202,11 +207,11 @@ public:
 					{
 						id = objects[cellY][cellX];
 					}
-					if (id == 0)
+					if (id == Fielditem)
 					{
 						gm.fieldItems.push_back(std::make_shared<FieldItem>(x, 30, y));
 					}
-					if (id == 1)
+					if (id == Spruce_1)
 					{
 						gm.mapObjects.push_back(std::make_shared<MapObjects>(x, 0, y, "Spruce_1"));
 					}

@@ -8,6 +8,7 @@
 #include "FieldItem.h"
 #include "MyRandom.h"
 #include "Input.h"
+#include "Screen.h"
 
 void Collection::Init()
 {

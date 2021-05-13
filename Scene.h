@@ -10,13 +10,9 @@ public:
     std::string tag = ""; // シーンの種類の判別に使う
 
     // コンストラクタ
-    Scene()
-    {
-    }
+    Scene() = default;
     // デストラクタ
-    virtual ~Scene()
-    {
-    }
+    virtual ~Scene() = default;
 
     // 初期化処理
     virtual void Init() = 0;
