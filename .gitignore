@@ -386,3 +386,12 @@ FodyWeavers.xsd
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# Make3Dobj
+*.blend
+*.blend1
+*.fbx
+
+# MakeMapData
+*.tmx
+*.tsx
