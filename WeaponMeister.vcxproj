@@ -171,6 +171,7 @@
     <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ADVSimpleScript.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DataCsv.h" />
     <ClInclude Include="FieldItem.h" />
