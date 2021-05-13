@@ -2,7 +2,7 @@
 #include "Input.h"
 #include "Adv.h"
 
-Adv adv;
+Adv adv_2;
 
 void Sale::Init()
 {
@@ -10,12 +10,6 @@ void Sale::Init()
 
 	cursorX_ = CursorX_Min_ItemSelect_;
 	cursorY_ = CursorY_Min_ItemSelect_;
-
-	for (int i = 0; i < 45; i++)
-	{
-		gm.weapons.push_back(1);
-		gm.weaponQuality.push_back(10);
-	}
 
 	for (int i = 0; i < gm.weapons.size(); i++)
 	{
@@ -207,7 +201,7 @@ void Sale::Update()
 		}
 		else
 		{
-			if (adv.day == LastDay_)
+			if (adv_2.day == LastDay_)
 				sm.LoadScene("GameClear");
 			else
 				sm.LoadScene("Adv");

@@ -23,8 +23,6 @@ public:
 	void Draw() override;
 
 private:
-	StageSelection stageSelection;
-
 	const int LastDay_ = 14;
 
 	const int PouchWindowX_	 = 60;
