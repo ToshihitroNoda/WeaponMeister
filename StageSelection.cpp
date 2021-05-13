@@ -4,6 +4,7 @@
 #include "Production.h"
 #include "Adv.h"
 #include "Input.h"
+#include "Screen.h"
 
 Production production;
 
@@ -42,6 +43,10 @@ void StageSelection::Final()
 void StageSelection::Update()
 {
 	if (Input::GetButtonDown(PAD_INPUT_1))
+	{
+		nowLoadingDraw_ = true;	
+	}
+	if (nextSceneLoad_)
 	{
 		for (int i = 0; i < (unsigned)mapIconPostions_.size() / 2; i++)
 		{
@@ -146,5 +151,12 @@ void StageSelection::Draw()
 	}
 
 	DrawGraph(cursorX_, cursorY_, Image::mapCursor, TRUE);
+
+	if (nowLoadingDraw_)
+	{
+		DrawBox(0, 0, Screen::Width, Screen::Height, gm.colorBrack, TRUE);
+		DrawString(900, 600, "Now Loading...", gm.colorWhite);
+		nextSceneLoad_ = true;
+	}
 }
 

@@ -41,6 +41,8 @@ private:
 	bool addMap4_			= false;
 	bool addMap5_			= false;
 	bool doNewStageAdd_		= false;
+	bool nextSceneLoad_		= false;
+	bool nowLoadingDraw_	= false;
 
 	const int NewStageAddDayDiameter_ = 3; // これで割り切れる日に新しいステージ追加
 	const int alreadtTrueWapon_ = 2; // 既に作れるようになっている武器は配列の最初から2つ目まで
