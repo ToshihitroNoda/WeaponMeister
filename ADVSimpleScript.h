@@ -16,14 +16,14 @@ public:
 	static void Load(std::string filePath);
 	static void Update();
 	static void ImageDraw();
-	static void MassegeDraw(int MassegeColor);
+	static void MassegeDraw(int MassegeColor, int FontSize = 30, int DefaultFontSize = 20);
 
 	static int MassegeCount_;
 	static std::vector<std::string> massegeList_;
 
 private:
 
-	static const int LineWidth_ = 20;
+	static int LineWidth_;
 	static std::string filePath_;
 
 	static std::vector<int> ResourceNums_;
@@ -49,26 +49,30 @@ private:
 
 int ADVSimpleScript::MassegeCount_ = 0;
 
-std::string ADVSimpleScript::filePath_ = "";
 std::vector<std::string> ADVSimpleScript::massegeList_;
+std::vector<std::string> ADVSimpleScript::ResourcePath_;
 
 std::vector<int> ADVSimpleScript::ResourceNums_;
-std::vector<std::string> ADVSimpleScript::ResourcePath_;
 std::vector<int> ADVSimpleScript::CX_;
 std::vector<int> ADVSimpleScript::CY_;
 std::vector<int> ADVSimpleScript::CDrawID_;
-int ADVSimpleScript::ResourceNum_ = -1;
-int ADVSimpleScript::MassegeX_ = 0;
-int ADVSimpleScript::MassegeY_ = 0;
-int ADVSimpleScript::StringX_ = 0;
-int ADVSimpleScript::StringY_ = 0;
-int ADVSimpleScript::BGX_ = 0;
-int ADVSimpleScript::BGY_ = 0;
-int ADVSimpleScript::BGID_ = 0;
-int ADVSimpleScript::CDrawCount_ = 0;
-int ADVSimpleScript::BreakCount_ = 0;
+
+int ADVSimpleScript::LineWidth_	   = 0;
+int ADVSimpleScript::ResourceNum_  = -1;
+int ADVSimpleScript::MassegeX_	   = 0;
+int ADVSimpleScript::MassegeY_	   = 0;
+int ADVSimpleScript::StringX_	   = 0;
+int ADVSimpleScript::StringY_	   = 0;
+int ADVSimpleScript::BGX_		   = 0;
+int ADVSimpleScript::BGY_		   = 0;
+int ADVSimpleScript::BGID_		   = 0;
+int ADVSimpleScript::CDrawCount_   = 0;
+int ADVSimpleScript::BreakCount_   = 0;
 int ADVSimpleScript::PrevPlayMusic = 0;
-std::string ADVSimpleScript::CName_ = "";
+
+std::string ADVSimpleScript::filePath_ = "";
+std::string ADVSimpleScript::CName_	   = "";
+
 bool ADVSimpleScript::NowBreak_ = false;
 bool ADVSimpleScript::DrawSkip_ = false;
 
@@ -312,9 +316,13 @@ void ADVSimpleScript::ImageDraw()
 	/*----------------------------------*/
 }
 
-void ADVSimpleScript::MassegeDraw(int MassegeColor)
+void ADVSimpleScript::MassegeDraw(int MassegeColor, int FontSize, int DefaultFontSize)
 {
+	LineWidth_ = FontSize;
+
 	/*-----メッセージ処理の文字列描画-----*/
+
+	SetFontSize(FontSize);
 
 	DrawString(StringX_, StringY_, CName_.c_str(), MassegeColor);
 
@@ -334,6 +342,8 @@ void ADVSimpleScript::MassegeDraw(int MassegeColor)
 			}
 		}
 	}
+
+	SetFontSize(DefaultFontSize);
 
 	/*------------------------------------*/
 }
