@@ -2,8 +2,6 @@
 #include "Input.h"
 #include "Adv.h"
 
-Adv adv_2;
-
 void Sale::Init()
 {
 	gm.weaponData.Load("Resource/Datas/WeaponData.csv");
@@ -201,7 +199,7 @@ void Sale::Update()
 		}
 		else
 		{
-			if (adv_2.day == LastDay_)
+			if (Adv::day == LastDay_)
 				sm.LoadScene("GameClear");
 			else
 				sm.LoadScene("Adv");

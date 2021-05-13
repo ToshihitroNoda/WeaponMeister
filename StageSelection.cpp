@@ -6,13 +6,12 @@
 #include "Input.h"
 
 Production production;
-Adv adv;
 
 void StageSelection::Init()
 {
 	gm.mapData.LoadData("Resource/Datas/MapData.csv");
 
-	if (adv.day % NewStageAddDayDiameter_ == 0)
+	if (Adv::day % NewStageAddDayDiameter_ == 0)
 	{
 		doNewStageAdd_ = true;
 		mapCount_++;
@@ -131,7 +130,7 @@ void StageSelection::Update()
 void StageSelection::Draw()
 {
 	DrawGraph(0, 0, Image::dayWindow, TRUE);
-	DrawGraph(0, 0, Image::dayNum[adv.day], TRUE);
+	DrawGraph(0, 0, Image::dayNum[Adv::day], TRUE);
 
 	if (doNewStageAdd_)
 	{
