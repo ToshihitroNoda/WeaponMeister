@@ -395,3 +395,6 @@ FodyWeavers.xsd
 # MakeMapData
 *.tmx
 *.tsx
+
+# Text is Info
+*.txt
