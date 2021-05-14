@@ -22,6 +22,7 @@ public:
 	void Update() override;
 	void Draw() override;
 
+	static int buyAmount;
 private:
 	StageSelection stageSelection;
 
@@ -77,6 +78,7 @@ private:
 	int selectIconNum_ = 0;
 
 	int beforeBuyPouchSize_ = 0;
+	int beforeMoney_ = 0;
 
 	bool itemDetail_ = false;
 

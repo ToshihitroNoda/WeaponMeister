@@ -22,6 +22,7 @@ public:
 	void Update() override;
 	void Draw() override;
 
+	static int saleAmount;
 private:
 	const int LastDay_ = 14;
 
@@ -76,6 +77,8 @@ private:
 	int cursorY_	   = 0;
 	int prevCursorY_   = 0;
 	int selectIconNum_ = 0;
+
+	int prevMoney_ = 0;
 
 	std::vector<int> weaponPosOnPouch_;
 	std::vector<int> saleWeapons_;

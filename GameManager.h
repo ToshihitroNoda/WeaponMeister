@@ -120,6 +120,8 @@ public:
 	const int colorWhite = GetColor(255, 255, 255);
 	const int colorBrack = GetColor(0, 0, 0);
 	const int colorGray  = GetColor(122, 122, 122);
+	const int colorRed	 = GetColor(255, 0, 0);
+	const int colorBlue  = GetColor(0, 100, 200);
 
 	const int DefaultFontSize_ = 15;
 

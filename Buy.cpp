@@ -2,6 +2,8 @@
 #include "Input.h"
 #include "Image.h"
 
+int Buy::buyAmount = 0;
+
 void Buy::Init()
 {
 	gm.itemData.Load("Resource/Datas/ItemData.csv");
@@ -19,6 +21,7 @@ void Buy::Init()
 	cursorY_ = CursorY_Min_ItemSelect_;
 
 	beforeBuyPouchSize_ = gm.pouch.size();
+	beforeMoney_ = gm.money;
 }
 
 void Buy::Final()
@@ -77,6 +80,7 @@ void Buy::Update()
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
+			buyAmount = beforeMoney_ - gm.money;
 			sm.LoadScene("Production");
 		}
 	}

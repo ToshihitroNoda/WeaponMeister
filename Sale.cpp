@@ -2,6 +2,8 @@
 #include "Input.h"
 #include "Adv.h"
 
+int Sale::saleAmount = 0;
+
 void Sale::Init()
 {
 	gm.weaponData.Load("Resource/Datas/WeaponData.csv");
@@ -25,6 +27,8 @@ void Sale::Init()
 		int price = basePrice * (1 + ((float)gm.weaponQuality[i] / 100));
 		weaponPrice_.push_back(price);
 	}
+
+	prevMoney_ = gm.money;
 }
 
 void Sale::Final()
@@ -199,6 +203,7 @@ void Sale::Update()
 		}
 		else
 		{
+			saleAmount = gm.money - prevMoney_;
 			sm.LoadScene("Report");
 		}
 	}
