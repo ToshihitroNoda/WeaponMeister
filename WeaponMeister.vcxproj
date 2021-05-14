@@ -180,6 +180,7 @@
     <ClInclude Include="ItemBase.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapObjects.h" />
+    <ClInclude Include="MapTerrain.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="Buy.h" />
     <ClInclude Include="Collection.h" />

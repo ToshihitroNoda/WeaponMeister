@@ -74,6 +74,7 @@ class Map;
 class Player;
 class FieldItem;
 class MapObjects;
+class MapTerrain;
 
 class GameManager : public Singleton<GameManager>
 {
@@ -92,6 +93,7 @@ public:
 	std::vector<std::shared_ptr<FieldItem>> fieldItems; // フィールド上のアイテム
 
 	std::vector<std::shared_ptr<MapObjects>> mapObjects;
+	std::vector<std::shared_ptr<MapTerrain>> mapTerrain;
 
 	// アイテム保管vector
 	std::vector<int> pouch;

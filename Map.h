@@ -17,6 +17,7 @@
 #include "Image.h"
 #include "FieldItem.h"
 #include "MapObjects.h"
+#include "MapTerrain.h"
 #include "DataCsv.h"
 
 // CSVファイルの読込み & 当たり判定可能なマス目
@@ -94,6 +95,7 @@ public:
 	float positionY = 0;		// 現在の位置（マップ上端の座標）
 
 	bool objectsLoad = false;
+	bool terrainLoad = false;
 
 	// コンストラクタ
 	// startPosition : 開始位置（デバッグやリスタート時に、面の途中から開始できるように）
@@ -224,25 +226,27 @@ public:
 	//★地形を描く3D対応でY平面に描く
 	void DrawTerrain()
 	{
-		for (int cellX = 0; cellX < terrain.Width; cellX++)
+		if (!terrainLoad)
 		{
-			for (int cellY = 0; cellY < terrain.Height; cellY++)
+			for (int cellX = 0; cellX < terrain.Width; cellX++)
 			{
-				float x = (float)(cellX * CellSize) + rotaGraphShiftX; //マス目サイズ/2ずらし
-				float y = (float)(cellY * CellSize) + rotaGraphShiftY; //マス目サイズ/2ずらし
-				int id = -1;
-				if (cellY < (signed)terrain.size()
-					&& cellX < (signed)terrain[cellY].size())
+				for (int cellY = 0; cellY < terrain.Height; cellY++)
 				{
-					id = terrain[cellY][cellX];
-				}
-				if (id == terrain_grass)
-				{
-					MV1SetPosition(Image::Terrain_Block_1, VGet(x, -25, y));
-					MV1SetScale(Image::Terrain_Block_1, VGet(0.2f, 0.2f, 0.2f));
-					MV1DrawModel(Image::Terrain_Block_1);
+					float x = (float)(cellX * CellSize) + rotaGraphShiftX; //マス目サイズ/2ずらし
+					float y = (float)(cellY * CellSize) + rotaGraphShiftY; //マス目サイズ/2ずらし
+					int id = -1;
+					if (cellY < (signed)terrain.size()
+						&& cellX < (signed)terrain[cellY].size())
+					{
+						id = terrain[cellY][cellX];
+					}
+					if (id == terrain_grass)
+					{
+						gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Grass"));
+					}
 				}
 			}
+			terrainLoad = true;
 		}
 	}
 	int count = 0;

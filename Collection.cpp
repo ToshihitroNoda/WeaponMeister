@@ -50,9 +50,9 @@ void Collection::Update()
 		gm.player->Update(); // プレイヤの更新
 
 	// フィールドアイテムの更新
-	for (const auto& f : gm.fieldItems)
+	for (const auto& fI : gm.fieldItems)
 	{
-		f->Update();
+		fI->Update();
 	}
 
 	if (!menuInit)
@@ -263,10 +263,16 @@ void Collection::Draw()
 
 	gm.player->Draw(); // プレイヤーの描画
 
-	// フィールドアイテム
-	for (const auto& f : gm.fieldItems)
+	// 地形
+	for (const auto& mT : gm.mapTerrain)
 	{
-		f->Draw();
+		mT->Draw();
+	}
+
+	// フィールドアイテム
+	for (const auto& fI : gm.fieldItems)
+	{
+		fI->Draw();
 	}
 
 	// オブジェクト
