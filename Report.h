@@ -38,11 +38,11 @@ private:
 	const int BuyAmountY_	= 300;
 	const int SaleAmountX_  = 200;
 	const int SaleAmountY_  = 400;
-	const int HaveMoneyX_   = 500;
+	const int HaveMoneyX_   = 600;
 	const int HaveMoneyY_	= 200;
-	const int RentX_		= 500;
+	const int RentX_		= 600;
 	const int RentY_		= 300;
-	const int FinalMoneyX_  = 500;
+	const int FinalMoneyX_  = 600;
 	const int FinalMoneyY_  = 400;
 
 	const int DrawDataNums_   = 6;
@@ -52,7 +52,9 @@ private:
 	const int haveMoneyDraw_  = 4;
 	const int rentDraw_		  = 5;
 	const int finalMoneyDraw_ = 6;
-	
+
+	const int FontSize_ = 30;
+
 	int firstMoney_  = 0;
 	int Rent_		= 0; // â∆í¿ÅBäÓñ{äz * (ì˙Ç…Çø * 1.5)
 	int finalMoney_ = 0;

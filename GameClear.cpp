@@ -1,9 +1,15 @@
 #include "GameClear.h"
 #include "Input.h"
+#include "Image.h"
+#include "ADVSimpleScript.h"
 
 void GameClear::Init()
 {
+	ADVSimpleScript::Init();
 
+	filePath_ = ("Resource/Massege/Massege_GameClear.csv");
+
+	ADVSimpleScript::Load(filePath_);
 }
 
 void GameClear::Final()
@@ -13,13 +19,46 @@ void GameClear::Final()
 
 void GameClear::Update()
 {
-	if (Input::GetButtonDown(PAD_INPUT_1))
+	if (!massegeEnd_)
 	{
-		sm.LoadScene("Title");
+		if (ADVSimpleScript::LoadEnd_)
+		{
+			if (Input::GetButtonDown(PAD_INPUT_1))
+			{
+				ADVSimpleScript::MassegeCount++;
+			}
+
+			if (ADVSimpleScript::MassegeCount >= ADVSimpleScript::massegeList.size())
+			{
+				massegeEnd_ = true;
+			}
+		}
+		ADVSimpleScript::Update();
+	}
+	else
+	{
+		if (Input::GetButtonDown(PAD_INPUT_1))
+		{
+			sm.LoadScene("Title");
+		}
 	}
 }
 
 void GameClear::Draw()
 {
-	DrawString(0, 0, "GameClear", gm.colorWhite);
+	if (!massegeEnd_)
+	{
+		ADVSimpleScript::ImageDraw();
+
+		DrawGraph(WindowX_, WindowY_, Image::textWindow, TRUE);
+
+		if (ADVSimpleScript::LoadEnd_)
+			ADVSimpleScript::MassegeDraw(gm.colorWhite);
+
+		if (IconFlashCount_ % Divisor_ < DrawFlashTiming_)
+		{
+			DrawGraph(CursorX_, CursorY_, Image::textCursor, TRUE);
+		}
+		IconFlashCount_++;
+	}
 }

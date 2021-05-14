@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ADVSimpleScript.cpp" />
     <ClCompile Include="Buy.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collection.cpp" />

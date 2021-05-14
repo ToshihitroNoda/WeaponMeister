@@ -9,6 +9,8 @@ void Adv::Init()
 {
 	day++;
 
+	ADVSimpleScript::Init();
+
 	std::stringstream ss;
 	ss << day;
 	filePath_ = ("Resource/Massege/Massege_" + ss.str() + ".csv");

@@ -30,6 +30,14 @@ void MainMenu::Update()
 	{
 		sm.LoadScene("Adv");
 	}
+	else if (CursorY_ == CursorY_Init_ + CursorY_Dist_ && Input::GetButtonDown(PAD_INPUT_1))
+	{
+		return; // Œã‚ÅContinue
+	}
+	else if (CursorY_ == CursorY_Init_ + CursorY_Dist_ * 2 && Input::GetButtonDown(PAD_INPUT_1))
+	{
+		exit(0);
+	}
 }
 
 void MainMenu::Draw()
