@@ -54,6 +54,8 @@ public:
 	static int buyBack;
 	static int productionBack;
 
+	static int gameBack;
+
 	// アイテムアイコン
 	static std::vector<int> itemIcons;
 	static std::vector<int> weaponIcons;

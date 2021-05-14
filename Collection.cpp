@@ -254,6 +254,7 @@ void Collection::ItemGet()
 
 void Collection::Draw()
 {
+	DrawGraph(0, 0, Image::gameBack, TRUE);
 
 	MV1SetPosition(Image::SkyBox, VGet(0, 0, 0));
 	MV1SetScale(Image::SkyBox, VGet(10.0f, 10.0f, 10.0f));

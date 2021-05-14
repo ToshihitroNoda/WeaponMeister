@@ -36,6 +36,8 @@ int Image::mainmenuBack				{ -1 };
 int Image::buyBack					{ -1 };
 int Image::productionBack			{ -1 };
 
+int Image::gameBack					{ -1 };
+
 // アイテムアイコン
 std::vector<int> Image::itemIcons	{ NULL };
 std::vector<int> Image::weaponIcons	{ NULL };
@@ -93,6 +95,8 @@ void Image::Load()
 	mainmenuBack			= LoadGraph("Resource/Image/mainmenu.jpg");
 	buyBack					= LoadGraph("Resource/Image/buy.jpg");
 	productionBack			= LoadGraph("Resource/Image/production.jpg");
+
+	gameBack				= LoadGraph("Resource/Image/Model/Textures/Sky_FantasyClouds2_High_Cam_0_Front+Z.png");
 
 	// アイテムアイコン
 	itemIcons.resize(GetGraphSize("Resource/Image/itemicons.png", 64, 64));
