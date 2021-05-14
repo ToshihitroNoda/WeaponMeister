@@ -73,6 +73,7 @@ void Player::HandleInput()
 // 更新処理
 void Player::Update()
 {
+	printfDx("backX %f \n", backX);
 	GetMousePoint(&MouseX_, &MouseY_);				// マウスカーソル座標取得
 
 	// マウスがウィンドウ内にあったらカメラ移動
@@ -87,28 +88,40 @@ void Player::Update()
 			//							   x = (360(MouseX - prevMouseX)) / (Screen::Width * 2)
 
 			PercentAngleByCursorDis_ = (float)((MaxAngle_ * (MouseX_ - prevMouseX_)) / (Screen::Width * 2));
+			PercentAngleByCursorDis_BG_ = (float)((MaxAngle_ * (prevMouseX_ - MouseX_)) / (backImageWidth / 60));
 
 			// PercentAngleByCursor初期化
 			if (!canAngleInit_)
 			{
 				PercentAngleByCursorDis_ = 0;
+				PercentAngleByCursorDis_BG_ = 0;
 				canAngleInit_ = true;
 			}
 
 			nowCamAngle_ += PercentAngleByCursorDis_;	// 度数分足す
 
-			backX -= (float)((MaxAngle_ * (prevMouseX_ - MouseX_)) / backImageSize);
-			if (backX < -backImageSize)
-				backX = 0;
+			backX += PercentAngleByCursorDis_BG_;
+			if (backX <= -backImageWidth + Screen::Width)
+				backX = 0.0f;
 		}
 		else if (MouseX_ < prevMouseX_)					// マウスが左に動いていたら
 		{
 			PercentAngleByCursorDis_ = (float)((MaxAngle_ * (prevMouseX_ - MouseX_)) / (Screen::Width * 2));
+			PercentAngleByCursorDis_BG_ = (float)((MaxAngle_ * (prevMouseX_ - MouseX_)) / (backImageWidth / 60));
+
+			// PercentAngleByCursor初期化
+			if (!canAngleInit_)
+			{
+				PercentAngleByCursorDis_ = 0;
+				PercentAngleByCursorDis_BG_ = 0;
+				canAngleInit_ = true;
+			}
+
 			nowCamAngle_ -= PercentAngleByCursorDis_;
 
-			backX += (float)((MaxAngle_ * (prevMouseX_ - MouseX_)) / backImageSize);
-			if (backX > backImageSize)
-				backX = 0;
+			backX += PercentAngleByCursorDis_BG_;
+			if (backX > backImageWidth)
+				backX = 0.0f;
 		}
 	}
 

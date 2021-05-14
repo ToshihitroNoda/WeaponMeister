@@ -70,8 +70,8 @@ public:
     void AnimationAttach(int AtnimIndex);
     void PlayAnimation(float ConstPlayTime, bool isLoop);
 
-    const int backImageSize = 8192;
-    int backX = 0;
+    const float backImageWidth = 8192;
+    float backX = 0;
     
 private:
 
@@ -81,9 +81,10 @@ private:
     float camDistanceFromPlayer_ = 0;
     float camHeightFromTerrain_  = 0;
     float nowCamAngle_           = 0; 
-    float PercentAngleByCursorDis_   = 0; // マウスの移動距離に応じて角度変える
-    float collisionDetectionMiddleX_ = 0.0f;
-    float collisionDetectionMiddleZ_ = 0.0f;
+    float PercentAngleByCursorDis_    = 0.0f; // マウスの移動距離に応じて角度変える
+    float PercentAngleByCursorDis_BG_ = 0.0f;
+    float collisionDetectionMiddleX_  = 0.0f;
+    float collisionDetectionMiddleZ_  = 0.0f;
 
     int MouseX_     = 0;
     int MouseY_     = 0;

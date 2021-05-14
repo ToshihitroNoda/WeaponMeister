@@ -24,17 +24,19 @@ void Adv::Final()
 
 void Adv::Update()
 {
+	if (ADVSimpleScript::LoadEnd_)
+	{
+		if (Input::GetButtonDown(PAD_INPUT_1))
+		{
+			ADVSimpleScript::MassegeCount++;
+		}
+
+		if (ADVSimpleScript::MassegeCount >= ADVSimpleScript::massegeList.size())
+		{
+			sm.LoadScene("StageSelection");
+		}
+	}
 	ADVSimpleScript::Update();
-
-	if (Input::GetButtonDown(PAD_INPUT_1))
-	{
-		ADVSimpleScript::MassegeCount_++;
-	}
-
-	if (ADVSimpleScript::MassegeCount_ >= ADVSimpleScript::massegeList_.size())
-	{
-		sm.LoadScene("StageSelection");
-	}
 }
 
 void Adv::Draw()
@@ -43,7 +45,8 @@ void Adv::Draw()
 
 	DrawGraph(WindowX_, WindowY_, Image::textWindow, TRUE);
 
-	ADVSimpleScript::MassegeDraw(gm.colorWhite);
+	if (ADVSimpleScript::LoadEnd_)
+		ADVSimpleScript::MassegeDraw(gm.colorWhite);
 
 	if (IconFlashCount_ % Divisor_ < DrawFlashTiming_)
 	{

@@ -254,8 +254,8 @@ void Collection::ItemGet()
 
 void Collection::Draw()
 {
-	DrawGraph(gm.player->backX, 0, Image::skyBack, TRUE);
-	DrawGraph(gm.player->backX - gm.player->backImageSize, 0, Image::skyBack, TRUE);
+	DrawGraphF(gm.player->backX, 0, Image::skyBack, TRUE);
+	DrawGraphF(gm.player->backX - gm.player->backImageWidth, 0, Image::skyBack, TRUE);
 
 
 	gm.map->DrawTerrain(); // ƒ}ƒbƒv‚Ì•`‰æ
