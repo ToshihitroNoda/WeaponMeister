@@ -54,7 +54,7 @@ public:
 	static int buyBack;
 	static int productionBack;
 
-	static int gameBack;
+	static int skyBack;
 
 	// アイテムアイコン
 	static std::vector<int> itemIcons;
@@ -63,7 +63,6 @@ public:
 	// 3Dモデル
 	static int Player;
 	static int fieldItem;
-	static int SkyBox;
 	static int Spruce_1;
 	static int Terrain_Block_1;
 };

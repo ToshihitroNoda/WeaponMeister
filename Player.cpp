@@ -96,11 +96,19 @@ void Player::Update()
 			}
 
 			nowCamAngle_ += PercentAngleByCursorDis_;	// 度数分足す
+
+			backX -= (float)((MaxAngle_ * (prevMouseX_ - MouseX_)) / backImageSize);
+			if (backX < -backImageSize)
+				backX = 0;
 		}
 		else if (MouseX_ < prevMouseX_)					// マウスが左に動いていたら
 		{
-			PercentAngleByCursorDis_ = (float)((360 * (prevMouseX_ - MouseX_)) / (Screen::Width * 2));
+			PercentAngleByCursorDis_ = (float)((MaxAngle_ * (prevMouseX_ - MouseX_)) / (Screen::Width * 2));
 			nowCamAngle_ -= PercentAngleByCursorDis_;
+
+			backX += (float)((MaxAngle_ * (prevMouseX_ - MouseX_)) / backImageSize);
+			if (backX > backImageSize)
+				backX = 0;
 		}
 	}
 

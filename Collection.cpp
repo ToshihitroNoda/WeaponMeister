@@ -254,11 +254,10 @@ void Collection::ItemGet()
 
 void Collection::Draw()
 {
-	DrawGraph(0, 0, Image::gameBack, TRUE);
+	DrawGraph(gm.player->backX, 0, Image::skyBack, TRUE);
+	DrawGraph(gm.player->backX - gm.player->backImageSize, 0, Image::skyBack, TRUE);
 
-	MV1SetPosition(Image::SkyBox, VGet(0, 0, 0));
-	MV1SetScale(Image::SkyBox, VGet(10.0f, 10.0f, 10.0f));
-	MV1DrawModel(Image::SkyBox);
+
 	gm.map->DrawTerrain(); // マップの描画
 	gm.map->DrawObjects(); // オブジェクトの描画
 

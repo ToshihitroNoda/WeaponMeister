@@ -24,6 +24,8 @@ void Adv::Final()
 
 void Adv::Update()
 {
+	ADVSimpleScript::Update();
+
 	if (Input::GetButtonDown(PAD_INPUT_1))
 	{
 		ADVSimpleScript::MassegeCount_++;
@@ -33,8 +35,6 @@ void Adv::Update()
 	{
 		sm.LoadScene("StageSelection");
 	}
-
-	ADVSimpleScript::Update();
 }
 
 void Adv::Draw()

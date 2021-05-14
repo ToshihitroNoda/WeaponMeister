@@ -36,7 +36,7 @@ int Image::mainmenuBack				{ -1 };
 int Image::buyBack					{ -1 };
 int Image::productionBack			{ -1 };
 
-int Image::gameBack					{ -1 };
+int Image::skyBack					{ -1 };
 
 // アイテムアイコン
 std::vector<int> Image::itemIcons	{ NULL };
@@ -44,7 +44,6 @@ std::vector<int> Image::weaponIcons	{ NULL };
 
 int Image::Player					{ -1 };
 int Image::fieldItem				{ -1 };
-int Image::SkyBox					{ -1 };
 int Image::Spruce_1					{ -1 };
 int Image::Terrain_Block_1			{ -1 };
 
@@ -96,7 +95,7 @@ void Image::Load()
 	buyBack					= LoadGraph("Resource/Image/buy.jpg");
 	productionBack			= LoadGraph("Resource/Image/production.jpg");
 
-	gameBack				= LoadGraph("Resource/Image/Model/Textures/Sky_FantasyClouds2_High_Cam_0_Front+Z.png");
+	skyBack				= LoadGraph("Resource/Image/skyback.jpg");
 
 	// アイテムアイコン
 	itemIcons.resize(GetGraphSize("Resource/Image/itemicons.png", 64, 64));
@@ -107,7 +106,6 @@ void Image::Load()
 	// 3Dモデル
 	Player			= MV1LoadModel("Resource/Image/Model/curen.mv1");
 	fieldItem		= MV1LoadModel("Resource/Image/Model/fielditem.mv1");
-	SkyBox			= MV1LoadModel("Resource/Image/Model/skybox.mv1");
 	Spruce_1		= MV1LoadModel("Resource/Image/Model/obj/spruce_01.mv1");
 	Terrain_Block_1 = MV1LoadModel("Resource/Image/Model/terrain_block_1.mv1");
 

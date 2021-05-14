@@ -70,6 +70,9 @@ public:
     void AnimationAttach(int AtnimIndex);
     void PlayAnimation(float ConstPlayTime, bool isLoop);
 
+    const int backImageSize = 8192;
+    int backX = 0;
+    
 private:
 
     float MoveSpeedMax_          = 15; 
