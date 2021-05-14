@@ -73,7 +73,6 @@ void Player::HandleInput()
 // 更新処理
 void Player::Update()
 {
-	printfDx("backX %f \n", backX);
 	GetMousePoint(&MouseX_, &MouseY_);				// マウスカーソル座標取得
 
 	// マウスがウィンドウ内にあったらカメラ移動

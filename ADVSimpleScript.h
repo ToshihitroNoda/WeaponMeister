@@ -63,25 +63,25 @@ std::vector<int> ADVSimpleScript::CX_;
 std::vector<int> ADVSimpleScript::CY_;
 std::vector<int> ADVSimpleScript::CDrawID_;
 
-int ADVSimpleScript::LineWidth_	   = 0;
-int ADVSimpleScript::ResourceNum_  = -1;
-int ADVSimpleScript::MassegeX_	   = 0;
-int ADVSimpleScript::MassegeY_	   = 0;
-int ADVSimpleScript::StringX_	   = 0;
-int ADVSimpleScript::StringY_	   = 0;
-int ADVSimpleScript::BGX_		   = 0;
-int ADVSimpleScript::BGY_		   = 0;
-int ADVSimpleScript::BGID_		   = 0;
-int ADVSimpleScript::CDrawCount_   = 0;
-int ADVSimpleScript::BreakCount_   = 0;
+int ADVSimpleScript::LineWidth_ = 0;
+int ADVSimpleScript::ResourceNum_ = -1;
+int ADVSimpleScript::MassegeX_ = 0;
+int ADVSimpleScript::MassegeY_ = 0;
+int ADVSimpleScript::StringX_ = 0;
+int ADVSimpleScript::StringY_ = 0;
+int ADVSimpleScript::BGX_ = 0;
+int ADVSimpleScript::BGY_ = 0;
+int ADVSimpleScript::BGID_ = 0;
+int ADVSimpleScript::CDrawCount_ = 0;
+int ADVSimpleScript::BreakCount_ = 0;
 int ADVSimpleScript::PrevPlayMusic = 0;
 
 std::string ADVSimpleScript::filePath_ = "";
-std::string ADVSimpleScript::CName_	   = "";
+std::string ADVSimpleScript::CName_ = "";
 
-bool ADVSimpleScript::NowBreak_		 = false;
-bool ADVSimpleScript::DrawSkip_		 = false;
-bool ADVSimpleScript::LoadEnd_		 = false;
+bool ADVSimpleScript::NowBreak_ = false;
+bool ADVSimpleScript::DrawSkip_ = false;
+bool ADVSimpleScript::LoadEnd_ = false;
 
 void ADVSimpleScript::Load(std::string filePath)
 {
@@ -347,25 +347,24 @@ void ADVSimpleScript::MassegeDraw(int MassegeColor, int FontSize, int DefaultFon
 
 	SetFontSize(FontSize);
 
-	
+	if (DrawSkip_)
+	{
+		DrawSkip_ = false;
+		return;
+	}
+	else
+	{
 		DrawString(StringX_, StringY_, CName_.c_str(), MassegeColor);
 
-		if (DrawSkip_)
+		DrawString(MassegeX_, MassegeY_ + LineWidth_ * BreakCount_, massegeList[MassegeCount].c_str(), MassegeColor);
+		if (NowBreak_)
 		{
-			DrawSkip_ = false;
-			return;
-		}
-		else
-		{
-			DrawString(MassegeX_, MassegeY_ + LineWidth_ * BreakCount_, massegeList[MassegeCount].c_str(), MassegeColor);
-			if (NowBreak_)
+			for (int i = 0; i < BreakCount_; i++)
 			{
-				for (int i = 0; i < BreakCount_; i++)
-				{
-					DrawString(MassegeX_, MassegeY_ + LineWidth_ * i, massegeList[MassegeCount - ((BreakCount_ - 1 - i) * 2 + 2)].c_str(), MassegeColor);
-				}
+				DrawString(MassegeX_, MassegeY_ + LineWidth_ * i, massegeList[MassegeCount - ((BreakCount_ - 1 - i) * 2 + 2)].c_str(), MassegeColor);
 			}
 		}
+	}
 
 	SetFontSize(DefaultFontSize);
 

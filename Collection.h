@@ -82,6 +82,7 @@ private:
 	int cursorY_			= CursorY_Min_ItemSelect_;
 	int selectIconNum_		= 0;
 	int scrollCount			= 0;
+	int startCount			= 120;
 
 	bool getItemFlg_		= false; // アイテムゲットフラグ
 	bool menuOpen_		    = false;
