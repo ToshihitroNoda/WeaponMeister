@@ -199,10 +199,7 @@ void Sale::Update()
 		}
 		else
 		{
-			if (Adv::day == LastDay_)
-				sm.LoadScene("GameClear");
-			else
-				sm.LoadScene("Adv");
+			sm.LoadScene("Report");
 		}
 	}
 }

@@ -10,6 +10,7 @@
 #include "Buy.h"
 #include "Production.h"
 #include "Sale.h"
+#include "Report.h"
 #include "GameOver.h"
 #include "GameClear.h"
 
@@ -83,6 +84,14 @@ void SceneManager::LoadScene(std::string sceneName, std::vector<std::string> opt
 			prevScene->isDead = true;
 		// 次のシーンの生成
 		currentScene = std::make_shared<Sale>();
+	}
+	else if (sceneName == "Report")
+	{
+		// 前のシーンを削除
+		if (prevScene != NULL)
+			prevScene->isDead = true;
+		// 次のシーンの生成
+		currentScene = std::make_shared<Report>();
 	}
 	else if (sceneName == "GameOver")
 	{

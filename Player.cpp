@@ -14,7 +14,17 @@ void Player::Init()
 	AnimationAttach((int)State::wait);
 
 	// プレイヤーモデルの角度
-	modelAngle_ = -((nowCamAngle_ - 90) * MyMath::Deg2Rad);
+	modelAngle_ = -((nowCamAngle_ - 90) * MyMath::Deg2Rad);	
+	
+	// カメラ位置
+	Camera::SetPosition
+	/* X座標 */(gm.player->x + (camDistanceFromPlayer_ * std::cos(nowCamAngle_ * MyMath::Deg2Rad)),
+	/* Y座標 */  gm.player->y - camHeightFromTerrain_,
+	/* Z座標 */  gm.player->z + (camDistanceFromPlayer_ * std::sin(nowCamAngle_ * MyMath::Deg2Rad)));
+
+	//カメラはプレイヤの方を見る
+	Camera::LookAt(gm.player->x, gm.player->y + 100, gm.player->z);
+
 }
 
 void Player::HandleInput()

@@ -165,6 +165,7 @@
     <ClCompile Include="MyRandom.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Production.cpp" />
+    <ClCompile Include="Report.cpp" />
     <ClCompile Include="Sale.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="StageSelection.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Adv.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Production.h" />
+    <ClInclude Include="Report.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Sale.h" />
     <ClInclude Include="Scene.h" />
