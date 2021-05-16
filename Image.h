@@ -64,8 +64,39 @@ public:
 	// 3Dƒ‚ƒfƒ‹
 	static int Player;
 	static int fieldItem;
-	static int Spruce_1;
+
 	static int Terrain_Block_1;
+
+	static int Branch_1;
+	static int Branch_2;
+	static int Branch_3;
+	static int Branch_4;
+	static int Branch_group;
+	static int Bush_1;
+	static int Bush_2;
+	static int Bush_3;
+	static int Bush_4;
+	static int Bush_large_1;
+	static int Bush_large_2;
+	static int Cliff_rock_1;
+	static int Cliff_rock_2;
+	static int Cliff_rock_3;
+	static int Cliff_rock_4;
+	static int Cliff_rock_5;
+	static int Crystal_1;
+	static int Crystal_2;
+	static int Crystal_3;
+	static int Crystal_4;
+	static int Crystal_5;
+	static int Rock_1;
+	static int Rock_2;
+	static int Rock_3;
+	static int Rock_4;
+	static int Rock_5;
+	static int Spruce_1;
+	static int Spruce_2;
+	static int Spruce_3;
+	static int Trunk;
 };
 
 #endif

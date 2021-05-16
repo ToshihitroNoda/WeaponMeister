@@ -51,10 +51,50 @@ public:
 	const int terrain_volcano = 3;	  // 火山の地面
 
 	const int Fielditem		  = 0;	  // フィールド上のアイテム
-	const int Spruce_1		  = 1;    // 木1
+	const int Spruce_1		  = 1;    // 木
+	const int Spruce_2		  = 2;
+	const int Spruce_3		  = 3;
+	const int Trunk			  = 4;
+	const int Branch_1		  = 5;
+	const int Branch_2		  = 6;
+	const int Branch_3		  = 7;
+	const int Branch_4		  = 8;
+	const int BranchGroup	  = 9;
+	const int Bush_1		  = 10;
+	const int Bush_2		  = 11;
+	const int Bush_3		  = 12;
+	const int Bush_4		  = 13;
+	const int BushLarge_1	  = 14;
+	const int BushLarge_2	  = 15;
+	const int CliffRock_1	  = 16;
+	const int CliffRock_2	  = 17;
+	const int CliffRock_3	  = 18;
+	const int CliffRock_4	  = 19;
+	const int CliffRock_5	  = 20;
+	const int Rock_1		  = 21;
+	const int Rock_2		  = 22;
+	const int Rock_3		  = 23;
+	const int Rock_4		  = 24;
+	const int Rock_5		  = 25;
+	const int Crystal_1		  = 26;
+	const int Crystal_2		  = 27;
+	const int Crystal_3		  = 28;
+	const int Crystal_4		  = 29;
+	const int Crystal_5		  = 30;
+
+	std::vector<int> ObjectIDs
+	{ Spruce_1, Spruce_2, Spruce_3, Trunk, Branch_1, Branch_2, Branch_3, Branch_4, BranchGroup,
+	  Bush_1, Bush_2, Bush_3, Bush_4, BushLarge_1, BushLarge_2, CliffRock_1, CliffRock_2, CliffRock_3,
+	  CliffRock_4, CliffRock_5, Rock_1, Rock_2, Rock_3, Rock_4, Rock_5,
+	  Crystal_1, Crystal_2, Crystal_3, Crystal_4, Crystal_5 };
+	std::vector<std::string> ObjectNames
+	{ "Spruce_1", "Spruce_2", "Spruce_3", "Trunk", "Branch_1", "Branch_2", "Branch_3", "Branch_4", "BranchGroup",
+	  "Bush_1", "Bush_2", "Bush_3", "Bush_4", "BushLarge_1", "BushLarge_2", "CliffRock_1", "CliffRock_2", "CliffRock_3",
+	  "CliffRock_4", "CliffRock_5", "Rock_1", "Rock_2", "Rock_3", "Rock_4", "Rock_5",
+	  "Crystal_1", "Crystal_2", "Crystal_3", "Crystal_4", "Crystal_5"};
 
 	//壁じゃないもの
-	int NotWallNums[2] = { -1,0 };
+	int NotWallNums[8] = { None, Fielditem, Bush_1, Bush_2, Bush_3, Bush_4, BushLarge_1, BushLarge_2 };
 
 	// マス目のXとYを保持するデータ型
 	struct CellXY
@@ -108,11 +148,6 @@ public:
 		objects.LoadMap(CellSize, "Resource/Map/" + stageName + "_objects.csv");
 		terrain.LoadMap(CellSize, "Resource/Map/" + stageName + "_terrain.csv");
 
-
-		//DataInfo terrainDataInfo = Load("Map/" + stageName + "_terrain.csv", terrain);
-		//TerrainWidth = terrainDataInfo.Width;
-		//TerrainHeight = terrainDataInfo.Height;
-
 		assert(SpawnRangeX > 0 && SpawnRangeY > 0); // ちゃんと敵出現射程を設定してね
 		// 敵出現射程の辞書初期化
 		InitSpawnDic(SpawnRangeX, SpawnRangeY);
@@ -128,148 +163,24 @@ public:
 
 	// 敵出現射程の辞書初期化【先に計算して辞書化】すると計算が必要なくなり【高速化する】
 	//【注意！XとYの単位はマス目】
-	void InitSpawnDic(int rangeCellX, int rangeCellY)
-	{
-		SpawnDic.clear();//一旦辞書をクリアするのでゲーム中の再設定も可(だが処理時間はかかる)
-		// 敵出現射程の辞書初期化
-		// ★ X = A cosθ Y = B sinθ(←楕円の方程式)
-		// ★ 楕円の半径 r = √(A×A×cosθ×cosθ + B×B×sinθ×sinθ)
-		// ★ xの2乗 + yの2乗 < rならば楕円の内側
-		float A2 = (float)(rangeCellX * rangeCellX); // 2乗
-		float B2 = (float)(rangeCellY * rangeCellY); // 2乗
-		for (int x = -rangeCellX; x <= rangeCellX; x++)
-		{
-			for (int y = -rangeCellY; y <= rangeCellY; y++)
-			{   //★[逆三角関数] https://cpprefjp.github.io/reference/cmath/atan2.html
-				float theta = (float)std::atan2(y, x); // ★[逆三角関数]
-				float cos_t = std::cos(theta);
-				float sin_t = std::sin(theta);
-				float r2 = A2 * cos_t * cos_t + B2 * sin_t * sin_t;
-				if (x * x + y * y <= r2) // ★ xの2乗 + yの2乗 < rならば楕円の内側
-				{   //楕円の内側なら辞書SpawnDic[(x,y)] = true;として登録
-					//【★楕円にしたいときはこちら】SpawnDic[CellXY(x,y)] = true; //【例】SpawnDic[(3,2)] = true;
-				}
-				//【★四角形にしたいときはこちら】
-				SpawnDic[CellXY(x, y)] = true;
-			}
-		}
-	}
+	void InitSpawnDic(int rangeCellX, int rangeCellY);
 
 	// 指定された座標（ワールド座標）の地形データを取得する。
-	int GetTerrain(float worldX, float worldY, float worldZ = -10000.0)
-	{
-		if (worldZ != -10000.0) worldY = worldZ; //★【YとZを変換】Zの入力があるときはZをYとして扱う
-		// 負の座標が指定された場合は、何も無いものとして扱う
-		if (worldX < 0 || worldY < 0)
-			return None;
+	int GetTerrain(float worldX, float worldY, float worldZ = -10000.0);
 
-		// マップ座標系（二次元配列の行と列）に変換する
-		int mapX = (int)(worldX / CellSize);
-		int mapY = (int)(worldY / CellSize);
-
-		// 二次元配列の範囲外は、何も無いものとして扱う
-		if (mapX >= terrain.Width || mapY >= terrain.Height)
-			return None;
-
-		return terrain[mapY][mapX]; // 二次元配列から地形IDを取り出して返却する
-	}
-
-	int GetObjects(float worldX, float worldY, float worldZ = -10000.0)
-	{
-		if (worldZ != -10000.0) worldY = worldZ; //★【YとZを変換】Zの入力があるときはZをYとして扱う
-		// 負の座標が指定された場合は、何も無いものとして扱う
-		if (worldX < 0 || worldY < 0)
-			return None;
-
-		// マップ座標系（二次元配列の行と列）に変換する
-		int mapX = (int)(worldX / CellSize);
-		int mapY = (int)(worldY / CellSize);
-
-		// 二次元配列の範囲外は、何も無いものとして扱う
-		if (mapX >= objects.Width || mapY >= objects.Height)
-			return None;
-
-		return objects[mapY][mapX]; // 二次元配列から地形IDを取り出して返却する
-	}
+	int GetObjects(float worldX, float worldY, float worldZ = -10000.0);
 
 	// ゲームオブジェクト描画
-	void DrawObjects()
-	{
-		if (!objectsLoad)
-		{
-			for (int cellX = 0; cellX < terrain.Width; cellX++)
-			{
-				for (int cellY = 0; cellY < terrain.Height; cellY++)
-				{
-					float x = (float)(cellX * CellSize) + rotaGraphShiftX; //マス目サイズ/2ずらし
-					float y = (float)(cellY * CellSize) + rotaGraphShiftY; //マス目サイズ/2ずらし
-					int id = -1;
-					if (cellY < (int)objects.size()
-						&& cellX < (int)objects[cellY].size())
-					{
-						id = objects[cellY][cellX];
-					}
-					if (id == Fielditem)
-					{
-						gm.fieldItems.push_back(std::make_shared<FieldItem>(x, 30, y));
-					}
-					if (id == Spruce_1)
-					{
-						gm.mapObjects.push_back(std::make_shared<MapObjects>(x, 0, y, "Spruce_1"));
-					}
-				}
-			}
-			objectsLoad = true;
-		}
-	}
+	void DrawObjects();
 
 	//★地形を描く3D対応でY平面に描く
-	void DrawTerrain()
-	{
-		if (!terrainLoad)
-		{
-			for (int cellX = 0; cellX < terrain.Width; cellX++)
-			{
-				for (int cellY = 0; cellY < terrain.Height; cellY++)
-				{
-					float x = (float)(cellX * CellSize) + rotaGraphShiftX; //マス目サイズ/2ずらし
-					float y = (float)(cellY * CellSize) + rotaGraphShiftY; //マス目サイズ/2ずらし
-					int id = -1;
-					if (cellY < (signed)terrain.size()
-						&& cellX < (signed)terrain[cellY].size())
-					{
-						id = terrain[cellY][cellX];
-					}
-					if (id == terrain_grass)
-					{
-						gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Grass"));
-					}
-				}
-			}
-			terrainLoad = true;
-		}
-	}
-	int count = 0;
+	void DrawTerrain();
 
 	// 指定された座標（ワールド座標）の地形が壁か調べる
-	bool IsWall(float worldX, float worldY, float worldZ = -10000.0)
-	{
-		int objectsID = GetObjects(worldX, worldY, worldZ); // 指定された座標の地形のIDを取得
-
-		return IsWall(objectsID);
-	}
+	bool IsWall(float worldX, float worldY, float worldZ = -10000.0);
 
 	//あるIDが壁かどうかだけ調べる
-	bool IsWall(int objectsID)
-	{
-		for (int i = 0; i < sizeof(NotWallNums) / sizeof(NotWallNums[0]); i++)//[配列の数を求めるには]https://qiita.com/yohhoy/items/a2ab2900a2bd36c31879
-		{   // 壁じゃない番号のとき
-			if (objectsID == NotWallNums[i]) return false;
-		}
-		//SetTerrain(worldX, worldY, worldZ);
-		//if (terrainID == 0) { printfDx("%d ", terrainID); printfDx("(%f %f)", worldX, worldZ); count++; }
-		return (objectsID != -1);// (terrainID == Wall); // 地形が壁ならtrue、違うならfalseを返却する
-	}
+	bool IsWall(int objectsID);
 
 };
 

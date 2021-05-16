@@ -162,6 +162,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Adv.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapObjects.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="MyRandom.cpp" />
     <ClCompile Include="Player.cpp" />

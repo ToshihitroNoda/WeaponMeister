@@ -45,8 +45,39 @@ std::vector<int> Image::weaponIcons	{ NULL };
 
 int Image::Player					{ -1 };
 int Image::fieldItem				{ -1 };
-int Image::Spruce_1					{ -1 };
+
 int Image::Terrain_Block_1			{ -1 };
+
+int Image::Branch_1					{ -1 };
+int Image::Branch_2					{ -1 };
+int Image::Branch_3					{ -1 };
+int Image::Branch_4					{ -1 };
+int Image::Branch_group				{ -1 };
+int Image::Bush_1					{ -1 };
+int Image::Bush_2					{ -1 };
+int Image::Bush_3					{ -1 };
+int Image::Bush_4					{ -1 };
+int Image::Bush_large_1				{ -1 };
+int Image::Bush_large_2				{ -1 };
+int Image::Cliff_rock_1				{ -1 };
+int Image::Cliff_rock_2				{ -1 };
+int Image::Cliff_rock_3				{ -1 };
+int Image::Cliff_rock_4				{ -1 };
+int Image::Cliff_rock_5				{ -1 };
+int Image::Crystal_1				{ -1 };
+int Image::Crystal_2				{ -1 };
+int Image::Crystal_3				{ -1 };
+int Image::Crystal_4				{ -1 };
+int Image::Crystal_5				{ -1 };
+int Image::Rock_1					{ -1 };
+int Image::Rock_2					{ -1 };
+int Image::Rock_3					{ -1 };
+int Image::Rock_4					{ -1 };
+int Image::Rock_5					{ -1 };
+int Image::Spruce_1					{ -1 };
+int Image::Spruce_2					{ -1 };
+int Image::Spruce_3					{ -1 };
+int Image::Trunk					{ -1 };
 
 int Image::GetGraphSize(std::string ImageHandle, int CellSizeX, int CellSizeY)
 {
@@ -108,38 +139,37 @@ void Image::Load()
 	// 3Dƒ‚ƒfƒ‹
 	Player			= MV1LoadModel("Resource/Image/Model/curen.mv1");
 	fieldItem		= MV1LoadModel("Resource/Image/Model/fielditem.mv1");
-	Spruce_1		= MV1LoadModel("Resource/Image/Model/obj/spruce_01.mv1");
+
 	Terrain_Block_1 = MV1LoadModel("Resource/Image/Model/terrain_block_1.mv1");
 
-	// UIŠÖŒW
-	assert(arrow != -1);
-	assert(pressStartButton != -1);
-	assert(menuCursor != -1);
-	assert(dayWindow != -1);
-	assert(itemIconWindow != -1);
-	assert(itemWindow != -1);
-	assert(shopWindow != -1);
-	assert(itemSelection != -1);
-	assert(recipeWindow != -1);
-	assert(recipeSelection != -1);
-	assert(detailWindow != -1);
-	assert(moneyWindow != -1);
-	assert(salePriceWindow != -1);
-	assert(selectItemWindow != -1);
-	assert(textWindow != -1);
-	assert(textCursor != -1);
-	assert(next != -1);
-	assert(nextCursor != -1);
-	assert(end != -1);
-	assert(buy != -1);
-	assert(sale != -1);
-	assert(mapIcon != -1);
-	assert(mapCursor != -1);
-
-	// ”wŒi
-	assert(titleBack != -1);
-	assert(titleLogo != -1);
-	assert(mainmenuBack != -1);
-	assert(buyBack != -1);
-	assert(productionBack != -1);
+	Branch_1		= MV1LoadModel("Resource/Image/Model/obj/branch_1.mv1");
+	Branch_2		= MV1LoadModel("Resource/Image/Model/obj/branch_2.mv1");
+	Branch_3		= MV1LoadModel("Resource/Image/Model/obj/branch_3.mv1");
+	Branch_4		= MV1LoadModel("Resource/Image/Model/obj/branch_4.mv1");
+	Branch_group	= MV1LoadModel("Resource/Image/Model/obj/branch_group_1.mv1");
+	Bush_1			= MV1LoadModel("Resource/Image/Model/obj/bush_1.mv1");
+	Bush_2			= MV1LoadModel("Resource/Image/Model/obj/bush_2.mv1");
+	Bush_3			= MV1LoadModel("Resource/Image/Model/obj/bush_3.mv1");
+	Bush_4			= MV1LoadModel("Resource/Image/Model/obj/bush_4.mv1");
+	Bush_large_1	= MV1LoadModel("Resource/Image/Model/obj/bush_large_1.mv1");
+	Bush_large_2	= MV1LoadModel("Resource/Image/Model/obj/bush_large_2.mv1");
+	Cliff_rock_1	= MV1LoadModel("Resource/Image/Model/obj/cliff_rock_1.mv1");
+	Cliff_rock_2	= MV1LoadModel("Resource/Image/Model/obj/cliff_rock_2.mv1");
+	Cliff_rock_3	= MV1LoadModel("Resource/Image/Model/obj/cliff_rock_3.mv1");
+	Cliff_rock_4	= MV1LoadModel("Resource/Image/Model/obj/cliff_rock_4.mv1");
+	Cliff_rock_5	= MV1LoadModel("Resource/Image/Model/obj/cliff_rock_5.mv1");
+	Crystal_1		= MV1LoadModel("Resource/Image/Model/obj/crystal_node_1.mv1");
+	Crystal_2		= MV1LoadModel("Resource/Image/Model/obj/crystal_node_2.mv1");
+	Crystal_3		= MV1LoadModel("Resource/Image/Model/obj/crystal_node_3.mv1");
+	Crystal_4		= MV1LoadModel("Resource/Image/Model/obj/crystal_node_4.mv1");
+	Crystal_5		= MV1LoadModel("Resource/Image/Model/obj/crystal_node_5.mv1");
+	Rock_1			= MV1LoadModel("Resource/Image/Model/obj/rock_1.mv1");
+	Rock_2			= MV1LoadModel("Resource/Image/Model/obj/rock_2.mv1");
+	Rock_3			= MV1LoadModel("Resource/Image/Model/obj/rock_3.mv1");
+	Rock_4			= MV1LoadModel("Resource/Image/Model/obj/rock_4.mv1");
+	Rock_5			= MV1LoadModel("Resource/Image/Model/obj/rock_5.mv1");
+	Spruce_1		= MV1LoadModel("Resource/Image/Model/obj/spruce_01.mv1");
+	Spruce_2		= MV1LoadModel("Resource/Image/Model/obj/spruce_03.mv1");
+	Spruce_3		= MV1LoadModel("Resource/Image/Model/obj/spruce_05.mv1");
+	Trunk			= MV1LoadModel("Resource/Image/Model/obj/spruce_trunk_fallen.mv1");
 }
