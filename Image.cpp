@@ -47,6 +47,10 @@ int Image::Player					{ -1 };
 int Image::fieldItem				{ -1 };
 
 int Image::Terrain_Block_1			{ -1 };
+int Image::Terrain_Block_2			{ -1 };
+int Image::Terrain_Block_3			{ -1 };
+int Image::Terrain_Block_4			{ -1 };
+
 
 int Image::Branch_1					{ -1 };
 int Image::Branch_2					{ -1 };
@@ -141,6 +145,9 @@ void Image::Load()
 	fieldItem		= MV1LoadModel("Resource/Image/Model/fielditem.mv1");
 
 	Terrain_Block_1 = MV1LoadModel("Resource/Image/Model/terrain_block_1.mv1");
+	Terrain_Block_2 = MV1LoadModel("Resource/Image/Model/terrain_block_2.mv1");
+	Terrain_Block_3 = MV1LoadModel("Resource/Image/Model/terrain_block_3.mv1");
+	Terrain_Block_4 = MV1LoadModel("Resource/Image/Model/terrain_block_4.mv1");
 
 	Branch_1		= MV1LoadModel("Resource/Image/Model/obj/branch_1.mv1");
 	Branch_2		= MV1LoadModel("Resource/Image/Model/obj/branch_2.mv1");

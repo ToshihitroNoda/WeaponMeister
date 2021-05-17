@@ -66,6 +66,9 @@ public:
 	static int fieldItem;
 
 	static int Terrain_Block_1;
+	static int Terrain_Block_2;
+	static int Terrain_Block_3;
+	static int Terrain_Block_4;
 
 	static int Branch_1;
 	static int Branch_2;

@@ -27,13 +27,6 @@ public:
 		hitboxOffsetBottom = 0;	// 当たり判定の下端のオフセット
 		hitboxOffsetForward = -10;	// 当たり判定の奥方向のオフセット
 		hitboxOffsetBack = -10;	// 当たり判定の手前方向のオフセット
-
-		if (isRotaGraph == true)
-		{   // 画像の中心を起点に描く場合のずれ
-			rotaGraphShiftX = (float)imageWidth / 2;
-			rotaGraphShiftY = (float)imageHeight / 2;
-			rotaGraphShiftZ = (float)imageLength / 2;
-		}
 	};
 
 	~MapTerrain() {};
@@ -46,12 +39,24 @@ public:
 		{
 			DrawModel(Image::Terrain_Block_1);
 		}
+		if (tag == "Sand")
+		{
+			DrawModel(Image::Terrain_Block_2);
+		}
+		if (tag == "Stone")
+		{
+			DrawModel(Image::Terrain_Block_3);
+		}
+		if (tag == "Volcano")
+		{
+			DrawModel(Image::Terrain_Block_4);
+		}
 	};
 	void OnCollision(std::shared_ptr<GameObject> other) {};
 	void DrawModel(int MV1Handle)
 	{
 		MV1SetPosition(MV1Handle, VGet(x, y, z));
-		MV1SetScale(MV1Handle, VGet(0.2f, 0.2f, 0.2f));
+		MV1SetScale(MV1Handle, VGet(0.162f, 0.25f, 0.162f));
 		MV1DrawModel(MV1Handle);
 	}
 

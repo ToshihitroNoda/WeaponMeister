@@ -91,7 +91,7 @@ void Map::DrawObjects()
 				{
 					if (id == ObjectIDs[i])
 					{
-						gm.mapObjects.push_back(std::make_shared<MapObjects>(x, 0, y, ObjectNames[i]));
+						gm.mapObjects.push_back(std::make_shared<MapObjects>(x, 0, y, ObjectWidths[i], ObjectLengths[i], ObjectNames[i]));
 					}
 				}
 			}
@@ -120,6 +120,18 @@ void Map::DrawTerrain()
 				if (id == terrain_grass)
 				{
 					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Grass"));
+				}
+				if (id == terrain_sand)
+				{
+					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Sand"));
+				}
+				if (id == terrain_stone)
+				{
+					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Stone"));
+				}
+				if (id == terrain_volcano)
+				{
+					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Volcano"));
 				}
 			}
 		}

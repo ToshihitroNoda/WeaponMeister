@@ -83,15 +83,28 @@ public:
 	const int Crystal_5		  = 30;
 
 	std::vector<int> ObjectIDs
-	{ Spruce_1, Spruce_2, Spruce_3, Trunk, Branch_1, Branch_2, Branch_3, Branch_4, BranchGroup,
-	  Bush_1, Bush_2, Bush_3, Bush_4, BushLarge_1, BushLarge_2, CliffRock_1, CliffRock_2, CliffRock_3,
-	  CliffRock_4, CliffRock_5, Rock_1, Rock_2, Rock_3, Rock_4, Rock_5,
-	  Crystal_1, Crystal_2, Crystal_3, Crystal_4, Crystal_5 };
+	{ Spruce_1,    Spruce_2,	Spruce_3,	 Trunk,		  Branch_1,	   Branch_2,	Branch_3,	 Branch_4, 
+	  BranchGroup, Bush_1,	    Bush_2,		 Bush_3,	  Bush_4,	   BushLarge_1, BushLarge_2, CliffRock_1,
+	  CliffRock_2, CliffRock_3, CliffRock_4, CliffRock_5, Rock_1,	   Rock_2,		Rock_3,		 Rock_4,		
+	  Rock_5,	   Crystal_1,   Crystal_2,	 Crystal_3,   Crystal_4,   Crystal_5 };
 	std::vector<std::string> ObjectNames
-	{ "Spruce_1", "Spruce_2", "Spruce_3", "Trunk", "Branch_1", "Branch_2", "Branch_3", "Branch_4", "BranchGroup",
-	  "Bush_1", "Bush_2", "Bush_3", "Bush_4", "BushLarge_1", "BushLarge_2", "CliffRock_1", "CliffRock_2", "CliffRock_3",
-	  "CliffRock_4", "CliffRock_5", "Rock_1", "Rock_2", "Rock_3", "Rock_4", "Rock_5",
-	  "Crystal_1", "Crystal_2", "Crystal_3", "Crystal_4", "Crystal_5"};
+	{ "Spruce_1",	 "Spruce_2",	"Spruce_3",	   "Trunk",		  "Branch_1",  "Branch_2",	  "Branch_3",	 "Branch_4", 
+	  "BranchGroup", "Bush_1",		"Bush_2",	   "Bush_3",	  "Bush_4",	   "BushLarge_1", "BushLarge_2", "CliffRock_1",
+	  "CliffRock_2", "CliffRock_3", "CliffRock_4", "CliffRock_5", "Rock_1",	   "Rock_2",	  "Rock_3",		 "Rock_4", 
+	  "Rock_5",		 "Crystal_1",	"Crystal_2",   "Crystal_3",	  "Crystal_4", "Crystal_5"};
+
+	std::vector<int> ObjectWidths
+	{
+		120, 140, 40,  40,  540, 360, 270, 450, 560,  175, 180,
+		270, 198, 240, 200, 660, 462, 450, 552, 1160, 297, 270,
+		225, 320, 252, 175, 210, 162, 189, 138
+	};
+	std::vector<int> ObjectLengths
+	{
+		120, 140, 40,  180, 60,  40,  30,  50,  560, 250, 180,
+		189, 220, 300, 225, 240, 294, 270, 920, 464, 231, 210,
+		225, 320, 432, 245, 150, 162, 189, 161
+	};
 
 	//•Ç‚¶‚á‚È‚¢‚à‚Ì
 	int NotWallNums[8] = { None, Fielditem, Bush_1, Bush_2, Bush_3, Bush_4, BushLarge_1, BushLarge_2 };

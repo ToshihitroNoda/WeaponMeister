@@ -19,7 +19,7 @@ void Collection::Init()
 	// Ｚバッファへの書き込みを有効にする
 	SetWriteZBuffer3D(TRUE);
 
-	gm.map	  = std::make_shared<Map>(0, "Map1");
+	gm.map	  = std::make_shared<Map>(0, "Map2");
 	gm.player = std::make_shared<Player>
 				(gm.mapData[3][stageSelection.stageNum + CsvSkipCell_],
 				 gm.mapData[4][stageSelection.stageNum + CsvSkipCell_],
@@ -70,6 +70,18 @@ void Collection::Update()
 					gm.player->OnCollision(gm.fieldItems[i]);
 					gm.fieldItems[i]->OnCollision(gm.player);
 					ItemGet();
+				}
+			}
+			// プレイヤーとマップオブジェクトの当たり判定
+			for (int i = 0; i < (signed)gm.mapObjects.size(); i++)
+			{
+				if (MyMath::RectRectIntersect(
+					gm.player->GetLeft(), gm.player->GetBack(), gm.player->GetRight(), gm.player->GetForward(),
+					gm.mapObjects[i]->GetLeft(), gm.mapObjects[i]->GetBack(), gm.mapObjects[i]->GetRight(), gm.mapObjects[i]->GetForward()
+				))
+				{
+					gm.player->OnCollision(gm.mapObjects[i]);
+					gm.mapObjects[i]->OnCollision(gm.player);
 				}
 			}
 		}

@@ -423,12 +423,16 @@ void Production::Update()
 				{
 					shouldWeaponMainCreate_ = false;
 					gm.main.clear();
+					gm.main.shrink_to_fit();
 					gm.mainQuality.clear();
+					gm.mainQuality.shrink_to_fit();
 					itemForWeaponMake_.clear();
+					itemForWeaponMake_.shrink_to_fit();
 					ItemPosOnThePouch_.clear();
+					ItemPosOnThePouch_.shrink_to_fit();
 					SelectItemPosOnThePouch_.erase
 					(SelectItemPosOnThePouch_.begin() + gm.handles.size(),
-						SelectItemPosOnThePouch_.end());
+					 SelectItemPosOnThePouch_.end());
 
 					// 持ち手部分で選択できるものをvectorに保管
 					GetHandleForWeaponMake();
@@ -485,7 +489,9 @@ void Production::Update()
 						/*---------------*/
 
 						gm.handles.clear();
+						gm.handles.shrink_to_fit();
 						gm.main.clear();
+						gm.main.shrink_to_fit();
 
 						gm.weapons.push_back(weaponID_);
 						gm.weaponQuality.push_back(weaponQualityStorage);
@@ -522,14 +528,23 @@ void Production::Format()
 	animationEnd_ = false;
 	// リストをクリア(初期化)
 	gm.handles.clear();
+	gm.handles.shrink_to_fit();
 	gm.handlesQuality.clear();
+	gm.handlesQuality.shrink_to_fit();
 	gm.main.clear();
+	gm.main.shrink_to_fit();
 	gm.mainQuality.clear();
+	gm.mainQuality.shrink_to_fit();
 	itemForWeaponMake_.clear();
+	itemForWeaponMake_.shrink_to_fit();
 	itemQualityForWeaponMake_.clear();
+	itemQualityForWeaponMake_.shrink_to_fit();
 	SelectItemPosOnThePouch_.clear();
+	SelectItemPosOnThePouch_.shrink_to_fit();
 	ItemPosOnThePouch_.clear();
+	ItemPosOnThePouch_.shrink_to_fit();
 	weaponName_.clear();
+	weaponName_.shrink_to_fit();
 	// CSVを破棄
 	gm.itemData.clear();
 	gm.weaponData.clear();

@@ -191,31 +191,6 @@ void Player::MoveX()
 {
 	// 横に移動する
 	x += vx;
-
-	// 当たり判定の四隅の座標を取得
-	float left = GetLeft();
-	float right = GetRight() - 0.01f;
-	float back = GetBack();
-	float middle = back + collisionDetectionMiddleZ_;
-	float forward = GetForward() - 0.01f;
-
-	// 左端が壁にめりこんでいるか？
-	if (gm.map->IsWall(left, back) ||		// 壁か？
-		gm.map->IsWall(left, middle) ||		// 壁か？
-		gm.map->IsWall(left, forward))		// 壁か？
-	{
-		float wallRight = left - (float)std::fmod(left, gm.map->CellSize) + gm.map->CellSize; // 壁の右端
-		SetLeft(wallRight); // プレイヤーの左端を壁の右端に沿わす
-	}
-	// 右端が壁にめりこんでいるか？
-	else if (
-		gm.map->IsWall(right, back) ||		// 右上が壁か？
-		gm.map->IsWall(right, middle) ||    // 壁か？
-		gm.map->IsWall(right, forward))		// 右下が壁か？
-	{
-		float wallLeft = right - (float)std::fmod(right, gm.map->CellSize); // 壁の左端
-		SetRight(wallLeft); // プレイヤーの右端を壁の左端に沿わす
-	}
 }
 
 // Z奥行き方向の移動処理
@@ -223,31 +198,6 @@ void Player::MoveZ()
 {
 	// Z奥行き方向に移動する
 	z += vz;
-
-	// 当たり判定の四隅の座標を取得
-	float left = GetLeft();
-	float middle = left + collisionDetectionMiddleX_;
-	float right = GetRight() - 0.01f;
-	float back = GetBack();
-	float forward = GetForward() - 0.01f;
-
-	// 手前側が壁にめりこんでいるか？
-	if (gm.map->IsWall(left, back) ||		// 壁か？
-		gm.map->IsWall(middle, back) ||		// 壁か？
-		gm.map->IsWall(right, back))		// 壁か？
-	{
-		float wallForward = back - (float)std::fmod(back, gm.map->CellSize) + gm.map->CellSize; // 壁の奥行き方向
-		SetBack(wallForward); // プレイヤーの背中を壁のフォワードに沿わす
-	}
-	// 奥行き側が壁にめりこんでいるか？
-	else if (
-		gm.map->IsWall(left, forward) ||		// 壁か？
-		gm.map->IsWall(middle, forward) ||		// 壁か？
-		gm.map->IsWall(right, forward))			// 壁か？
-	{
-		float wallBack = forward - (float)std::fmod(forward, gm.map->CellSize); // 壁の手前側
-		SetForward(wallBack); // プレイヤーのおでこを壁のバックに沿わす
-	}
 }
 
 
@@ -269,7 +219,10 @@ void Player::Draw()
 }
 
 
-void  Player::OnCollision(std::shared_ptr<GameObject> other) {
+void  Player::OnCollision(std::shared_ptr<GameObject> other) 
+{
+	printfDx("Dist_to_Dist : %d \n", std::abs(x - other->x) > std::abs(z - other->z));
+
 	if (other->tag == "FieldItem")
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
@@ -279,6 +232,43 @@ void  Player::OnCollision(std::shared_ptr<GameObject> other) {
 			other->isDead = true;
 		}
 	}
+
+	else if (other->tag != "Bush_1")
+	{
+		if ((GetPrevLeft() < other->GetRight() ||
+			GetPrevRight() > other->GetLeft()) &&
+			(GetPrevForward() > other->GetBack() ||
+			 GetPrevBack() < other->GetForward()))
+		{
+			if (GetLeft() < other->GetRight() &&
+				GetLeft() > other->GetLeft())
+			{
+				SetLeft(other->GetRight() + 1.0f);
+				return;
+			}
+			else if (GetRight() > other->GetLeft() &&
+				GetRight() < other->GetRight())
+			{
+				SetRight(other->GetLeft() - 1.0f);
+				return;
+			}
+		}
+		else
+		{
+			if (GetBack() < other->GetForward() &&
+				GetBack() > other->GetBack())
+			{
+				SetBack(other->GetForward() + 1.0f);
+				return;
+			}
+			else if (GetForward() > other->GetBack() &&
+				GetForward() < other->GetForward())
+			{
+				SetForward(other->GetBack() - 1.0f);
+				return;
+			}
+		}
+	}	
 }
 
 void Player::AnimationAttach(int AnimIndex)
