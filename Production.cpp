@@ -433,6 +433,7 @@ void Production::Update()
 					SelectItemPosOnThePouch_.erase
 					(SelectItemPosOnThePouch_.begin() + gm.handles.size(),
 					 SelectItemPosOnThePouch_.end());
+					SelectItemPosOnThePouch_.shrink_to_fit();
 
 					// ‚¿è•”•ª‚Å‘I‘ğ‚Å‚«‚é‚à‚Ì‚ğvector‚É•ÛŠÇ
 					GetHandleForWeaponMake();

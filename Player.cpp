@@ -221,8 +221,6 @@ void Player::Draw()
 
 void  Player::OnCollision(std::shared_ptr<GameObject> other) 
 {
-	printfDx("Dist_to_Dist : %d \n", std::abs(x - other->x) > std::abs(z - other->z));
-
 	if (other->tag == "FieldItem")
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
@@ -235,10 +233,8 @@ void  Player::OnCollision(std::shared_ptr<GameObject> other)
 
 	else if (other->tag != "Bush_1")
 	{
-		if ((GetPrevLeft() < other->GetRight() ||
-			GetPrevRight() > other->GetLeft()) &&
-			(GetPrevForward() > other->GetBack() ||
-			 GetPrevBack() < other->GetForward()))
+		if ((GetForward() < other->GetForward() &&
+			 GetBack()	  > other->GetBack()))
 		{
 			if (GetLeft() < other->GetRight() &&
 				GetLeft() > other->GetLeft())
