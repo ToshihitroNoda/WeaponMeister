@@ -7,11 +7,14 @@
 #include "Screen.h"
 
 Production production;
+
 int StageSelection::mapCount = 1;
 int StageSelection::stageNum = 0;
 
 void StageSelection::Init()
 {
+	gm.image.Load(tag);
+
 	gm.mapData.LoadData("Resource/Datas/MapData.csv");
 
 	if (Adv::day % NewStageAddDayDiameter_ == 0)
@@ -36,10 +39,16 @@ void StageSelection::Init()
 		}
 	}
 
+	mapIcons_.resize(5);
+	for (int i = 0; i < mapIcons_.size(); i++)
+	{
+		mapIcons_[i] = gm.image.mapIcon;
+	}
 }
 
 void StageSelection::Final()
 {
+	gm.image.Final();
 	sm.currentScene.reset();
 }
 
@@ -136,8 +145,8 @@ void StageSelection::Update()
 
 void StageSelection::Draw()
 {
-	DrawGraph(0, 0, Image::dayWindow, TRUE);
-	DrawGraph(0, 0, Image::dayNum[Adv::day], TRUE);
+	DrawGraph(0, 0, gm.image.dayWindow, TRUE);
+	DrawGraph(0, 0, gm.image.dayNum[Adv::day], TRUE);
 
 	if (doNewStageAdd_)
 	{
@@ -153,7 +162,7 @@ void StageSelection::Draw()
 		}
 	}
 
-	DrawGraph(cursorX_, cursorY_, Image::mapCursor, TRUE);
+	DrawGraph(cursorX_, cursorY_, gm.image.mapCursor, TRUE);
 
 	if (nowLoadingDraw_)
 	{

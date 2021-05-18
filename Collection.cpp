@@ -12,6 +12,7 @@
 
 void Collection::Init()
 {
+	gm.image.Load(tag);
 	gm.mapData.Load("Resource/Datas/MapData.csv");
 	gm.itemData.Load("Resource/Datas/ItemData.csv");
 
@@ -26,6 +27,24 @@ void Collection::Init()
 				 gm.mapData[5][StageSelection::stageNum - 1 + CsvSkipCell_]);
 
 	gm.player->Init();
+
+	// 地形
+	for (const auto& mT : gm.mapTerrain)
+	{
+		mT->Init();
+	}
+
+	// フィールドアイテム
+	for (const auto& fI : gm.fieldItems)
+	{
+		fI->Init();
+	}
+
+	// オブジェクト
+	for (const auto& mO : gm.mapObjects)
+	{
+		mO->Init();
+	}
 	
 	// アイテム配列の行数を取得
 	int n1	  = gm.itemData[0].size();
@@ -43,6 +62,7 @@ void Collection::Final()
 {
 	gm.map.reset();
 	gm.player.reset();
+	gm.image.Final();
 	sm.currentScene.reset();
 }
 
@@ -294,8 +314,8 @@ void Collection::ItemGet()
 
 void Collection::Draw()
 {
-	DrawGraphF(gm.player->backX, 0, Image::skyBack, TRUE);
-	DrawGraphF(gm.player->backX - gm.player->backImageWidth, 0, Image::skyBack, TRUE);
+	DrawGraphF(gm.player->backX, 0, gm.image.skyBack, TRUE);
+	DrawGraphF(gm.player->backX - gm.player->backImageWidth, 0, gm.image.skyBack, TRUE);
 
 
 	gm.map->DrawTerrain(); // マップの描画
@@ -327,8 +347,8 @@ void Collection::Draw()
 	{
 		for (int i = 0; i < getItemCount_; i++)
 		{
-			DrawGraph(DrawGetItemX_ + i * DrawGetItemX_Width_, DrawGetItemY_, Image::itemIconWindow, TRUE);
-			DrawGraph(DrawGetItemX_ + i * DrawGetItemX_Width_, DrawGetItemY_, Image::itemIcons[DrawGetItem_[i]], TRUE);
+			DrawGraph(DrawGetItemX_ + i * DrawGetItemX_Width_, DrawGetItemY_, gm.image.itemIconWindow, TRUE);
+			DrawGraph(DrawGetItemX_ + i * DrawGetItemX_Width_, DrawGetItemY_, gm.image.itemIcons[DrawGetItem_[i]], TRUE);
 		}
 	}
 
@@ -347,7 +367,7 @@ void Collection::Draw()
 
 	if (menuOpen_)
 	{
-		DrawGraph(WindowX_, WindowY_, Image::itemWindow, TRUE);
+		DrawGraph(WindowX_, WindowY_, gm.image.itemWindow, TRUE);
 
 		for (int y = 0; y < WindowY_CellSize_; y++)
 		{
@@ -355,17 +375,17 @@ void Collection::Draw()
 			{
 				if ((signed)(x + (y * WindowX_CellSize_)) < PouchDrawErea_.size())
 				{
-					DrawGraph(itemX_ + x * WindowCellSize_X_, itemY_ + y * WindowCellSize_Y_, Image::itemIcons[PouchDrawErea_[x + (y * WindowX_CellSize_)]], TRUE);
+					DrawGraph(itemX_ + x * WindowCellSize_X_, itemY_ + y * WindowCellSize_Y_, gm.image.itemIcons[PouchDrawErea_[x + (y * WindowX_CellSize_)]], TRUE);
 				}
 			}
 		}
 
 		if (cursorX_ >= CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
-			DrawGraph(cursorX_, cursorY_, Image::itemSelection, TRUE);
+			DrawGraph(cursorX_, cursorY_, gm.image.itemSelection, TRUE);
 
 		if (PouchDrawErea_.size() > (signed)selectIconNum_)
 		{
-			DrawGraph(DetailWindowX_, DetailWindowY_, Image::detailWindow, TRUE);
+			DrawGraph(DetailWindowX_, DetailWindowY_, gm.image.detailWindow, TRUE);
 			DrawString(ItemNameX_, ItemNameY_, gm.itemData[0][PouchDrawErea_[selectIconNum_] + CsvSkipCell_].stringData.c_str(), gm.colorWhite);
 			std::stringstream ss;
 			ss << gm.pouchQuality[selectIconNum_];
@@ -376,8 +396,8 @@ void Collection::Draw()
 	}
 
 	if (startCount_ >= 0)
-		DrawGraph(0, 0, Image::collectionStart, TRUE);
+		DrawGraph(0, 0, gm.image.collectionStart, TRUE);
 
 	if (collectionEnd_)
-		DrawGraph(0, 0, Image::collectionEnd, TRUE);
+		DrawGraph(0, 0, gm.image.collectionEnd, TRUE);
 }

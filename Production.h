@@ -5,7 +5,6 @@
 #include "SceneManager.h"
 #include "GameManager.h"
 #include "DataCsv.h"
-#include "Image.h"
 #include "Screen.h"
 
 class Production : public Scene

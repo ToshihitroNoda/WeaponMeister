@@ -14,7 +14,6 @@
 #include "GameManager.h"
 #include "GameObject.h"
 #include "MyMath.h"
-#include "Image.h"
 #include "FieldItem.h"
 #include "MapObjects.h"
 #include "MapTerrain.h"

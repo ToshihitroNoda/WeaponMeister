@@ -1,6 +1,5 @@
 #include "Buy.h"
 #include "Input.h"
-#include "Image.h"
 
 StageSelection stageSelection;
 
@@ -8,6 +7,7 @@ int Buy::buyAmount = 0;
 
 void Buy::Init()
 {
+	gm.image.Load(tag);
 	gm.itemData.Load("Resource/Datas/ItemData.csv");
 	
 	for (int i = CsvSkipCell_; i < gm.itemData[0].size(); i++)
@@ -28,6 +28,7 @@ void Buy::Init()
 
 void Buy::Final()
 {
+	gm.image.Final();
 	sm.currentScene.reset();
 }
 
@@ -118,13 +119,13 @@ void Buy::Update()
 
 void Buy::Draw()
 {
-	DrawGraph(0, 0, Image::buyBack, TRUE);
-	DrawGraph(MoneyWindowX_, MoneyWindowY_, Image::moneyWindow, TRUE);
-	DrawGraph(MoneyWindowX_ + BuyMoneyXdist_, MoneyWindowY_, Image::salePriceWindow, TRUE);
-	DrawGraph(ShopWindowX_, ShopWindowY_, Image::shopWindow, TRUE);
-	DrawGraph(ArrowX_, ArrowY_, Image::arrow, TRUE);
-	DrawGraph(PouchWindowX_, PouchWindowY_, Image::itemWindow, TRUE);
-	DrawGraph(ShopWindowX_, BuyY_, Image::buy, TRUE); 
+	DrawGraph(0, 0, gm.image.buyBack, TRUE);
+	DrawGraph(MoneyWindowX_, MoneyWindowY_, gm.image.moneyWindow, TRUE);
+	DrawGraph(MoneyWindowX_ + BuyMoneyXdist_, MoneyWindowY_, gm.image.salePriceWindow, TRUE);
+	DrawGraph(ShopWindowX_, ShopWindowY_, gm.image.shopWindow, TRUE);
+	DrawGraph(ArrowX_, ArrowY_, gm.image.arrow, TRUE);
+	DrawGraph(PouchWindowX_, PouchWindowY_, gm.image.itemWindow, TRUE);
+	DrawGraph(ShopWindowX_, BuyY_, gm.image.buy, TRUE);
 
 	SetFontSize(DrawMoneySize_);
 	DrawString(DrawMoneyX_, DrawMoneyY_, std::to_string(gm.money).c_str(), gm.colorWhite);
@@ -139,7 +140,7 @@ void Buy::Draw()
 		DrawGraph
 		(itemX_ + x * CursorX_MoveVerticalWidth_ItemSelect_,
 		 itemY_ + y * CursorY_MoveVerticalWidth_ItemSelect_,
-		 Image::itemIcons[buyItems_[x + (y * ItemID_ByLineBreak_ItemSelect_)]],
+			gm.image.itemIcons[buyItems_[x + (y * ItemID_ByLineBreak_ItemSelect_)]],
 		 TRUE);
 
 		if (x < ItemID_ByLineBreak_ItemSelect_ - 1)
@@ -167,7 +168,7 @@ void Buy::Draw()
 		DrawGraph
 		(pouchItemX_ + pouchX * CursorX_MoveVerticalWidth_ItemSelect_,
 		 itemY_ + pouchY * CursorY_MoveVerticalWidth_ItemSelect_,
-		 Image::itemIcons[DrawItems_[pouchX + (pouchY * ItemID_ByLineBreak_ItemSelect_)]],
+			gm.image.itemIcons[DrawItems_[pouchX + (pouchY * ItemID_ByLineBreak_ItemSelect_)]],
 		 TRUE);
 
 		if (pouchX < ItemID_ByLineBreak_ItemSelect_ - 1)
@@ -182,15 +183,15 @@ void Buy::Draw()
 	}
 
 	if (cursorY_ <= CursorY_Max_ItemSelect_)
-		DrawGraph(cursorX_, cursorY_, Image::itemSelection, TRUE);
+		DrawGraph(cursorX_, cursorY_, gm.image.itemSelection, TRUE);
 
 	if (cursorY_ > CursorY_Max_ItemSelect_)
-		DrawGraph(cursorX_, cursorY_, Image::nextCursor, TRUE);
+		DrawGraph(cursorX_, cursorY_, gm.image.nextCursor, TRUE);
 
 	/*----- ÉAÉCÉeÉÄÇÃè⁄ç◊èÓïÒ -----*/
 	if (itemDetail_)
 	{
-		DrawGraph(DetailWindowX_, DetailWindowY_, Image::detailWindow, TRUE);
+		DrawGraph(DetailWindowX_, DetailWindowY_, gm.image.detailWindow, TRUE);
 		DrawString(ItemNameX_, ItemNameY_, gm.itemData[0][buyItems_[selectIconNum_] + CsvSkipCell_].stringData.c_str(), gm.colorWhite);
 		std::stringstream ss;
 		ss << buyItemsQuality_[selectIconNum_];

@@ -6,6 +6,8 @@ int Sale::saleAmount = 0;
 
 void Sale::Init()
 {
+	gm.image.Load(tag);
+
 	gm.weaponData.Load("Resource/Datas/WeaponData.csv");
 
 	cursorX_ = CursorX_Min_ItemSelect_;
@@ -33,6 +35,7 @@ void Sale::Init()
 
 void Sale::Final()
 {
+	gm.image.Final();
 	sm.currentScene.reset();
 }
 
@@ -211,10 +214,10 @@ void Sale::Update()
 
 void Sale::Draw()
 {
-	DrawGraph(MoneyWindowX_, MoneyWindowY_, Image::moneyWindow, TRUE);
-	DrawGraph(PouchWindowX_, PouchWindowY_, Image::itemWindow, TRUE);
-	DrawGraph(DetailWindowX_, DetailWindowY_, Image::detailWindow, TRUE);
-	DrawGraph(SaleButtonX_, SaleButtonY_, Image::sale, TRUE);
+	DrawGraph(MoneyWindowX_, MoneyWindowY_, gm.image.moneyWindow, TRUE);
+	DrawGraph(PouchWindowX_, PouchWindowY_, gm.image.itemWindow, TRUE);
+	DrawGraph(DetailWindowX_, DetailWindowY_, gm.image.detailWindow, TRUE);
+	DrawGraph(SaleButtonX_, SaleButtonY_, gm.image.sale, TRUE);
 	
 	SetFontSize(DrawMoneySize_);
 	DrawString(DrawMoneyX_, DrawMoneyY_, std::to_string(gm.money).c_str(), gm.colorWhite);
@@ -226,7 +229,7 @@ void Sale::Draw()
 		{
 			if ((signed)(x + (y * WindowX_CellSize_)) < PouchDrawErea_.size())
 			{
-				DrawGraph(itemX_ + x * WindowCellSize_X_, itemY_ + y * WindowCellSize_Y_, Image::weaponIcons[PouchDrawErea_[x + (y * WindowX_CellSize_)]], TRUE);
+				DrawGraph(itemX_ + x * WindowCellSize_X_, itemY_ + y * WindowCellSize_Y_, gm.image.weaponIcons[PouchDrawErea_[x + (y * WindowX_CellSize_)]], TRUE);
 			}
 		}
 	}
@@ -283,8 +286,8 @@ void Sale::Draw()
 	}
 
 	if (cursorX_ >= CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
-		DrawGraph(cursorX_, cursorY_, Image::itemSelection, TRUE);
+		DrawGraph(cursorX_, cursorY_, gm.image.itemSelection, TRUE);
 
 	if (cursorX_ > CursorX_Max_ItemSelect_)
-		DrawGraph(cursorX_, cursorY_, Image::nextCursor, TRUE);
+		DrawGraph(cursorX_, cursorY_, gm.image.nextCursor, TRUE);
 }

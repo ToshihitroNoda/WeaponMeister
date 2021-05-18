@@ -3,19 +3,18 @@
 
 #include "MainMenu.h"
 #include "Input.h"
-#include "Image.h"
 #include "DataLoad.h"
-
 
 DataLoad dataLoad;
 
 void MainMenu::Init()
 {
-
+	gm.image.Load(tag);
 }
 
 void MainMenu::Final()
 {
+	gm.image.Final();
 	sm.currentScene.reset();
 }
 
@@ -55,7 +54,7 @@ void MainMenu::Update()
 
 void MainMenu::Draw()
 {
-	DrawGraph(0, 0, Image::mainmenuBack, TRUE);
+	DrawGraph(0, 0, gm.image.mainmenuBack, TRUE);
 
 	for (int i = 0; i < (unsigned)MenuStr_.size(); i++)
 	{
@@ -63,5 +62,5 @@ void MainMenu::Draw()
 		DrawString(MenuStrX_Init_, MenuStrY_Init_ + (MenuStrY_Dist_ * i), MenuStr_[i].c_str(), gm.colorWhite);
 		SetFontSize(gm.DefaultFontSize_);
 	}
-	DrawGraph(CursorX_, CursorY_, Image::menuCursor, TRUE);
+	DrawGraph(CursorX_, CursorY_, gm.image.menuCursor, TRUE);
 }

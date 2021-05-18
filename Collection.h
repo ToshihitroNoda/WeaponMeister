@@ -4,7 +4,6 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "GameManager.h"
-#include "Image.h"
 #include "StageSelection.h"
 #include "DataCsv.h"
 

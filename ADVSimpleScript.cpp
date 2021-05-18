@@ -60,10 +60,7 @@ void ADVSimpleScript::Init()
 
 void ADVSimpleScript::Final()
 {
-	for (int i = 0; i < ResourceNums_.size(); i++)
-	{
-		DeleteGraph(ResourceNums_[i]);
-	}
+	InitGraph();
 	massegeList.clear();
 	massegeList.shrink_to_fit();
 	ResourcePath_.clear();

@@ -1,6 +1,5 @@
 #include "GameOver.h"
 #include "Input.h"
-#include "Image.h"
 #include "ADVSimpleScript.h"
 #include "Adv.h"
 
@@ -8,6 +7,8 @@
 
 void GameOver::Init()
 {
+	gm.image.Load(tag);
+
 	ADVSimpleScript::Init();
 
 	filePath_ = ("Resource/Massege/Massege_GameOver.csv");
@@ -17,6 +18,7 @@ void GameOver::Init()
 
 void GameOver::Final()
 {
+	gm.image.Final();
 	sm.currentScene.reset();
 }
 
@@ -55,14 +57,14 @@ void GameOver::Draw()
 	{
 		ADVSimpleScript::ImageDraw();
 
-		DrawGraph(WindowX_, WindowY_, Image::textWindow, TRUE);
+		DrawGraph(WindowX_, WindowY_, gm.image.textWindow, TRUE);
 
 		if (ADVSimpleScript::LoadEnd_)
 			ADVSimpleScript::MassegeDraw(gm.colorWhite);
 
 		if (IconFlashCount_ % Divisor_ < DrawFlashTiming_)
 		{
-			DrawGraph(CursorX_, CursorY_, Image::textCursor, TRUE);
+			DrawGraph(CursorX_, CursorY_, gm.image.textCursor, TRUE);
 		}
 		IconFlashCount_++;
 	}
