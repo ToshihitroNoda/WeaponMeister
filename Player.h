@@ -30,12 +30,12 @@ public:
         imageHeight         = 64;  
         imageLength         = 64;  
         // 当たり判定の左端のオフセット
-        hitboxOffsetLeft    = 5;   
-        hitboxOffsetRight   = 5;   
+        hitboxOffsetLeft    = 0;   
+        hitboxOffsetRight   = 0;   
         hitboxOffsetTop     = 0;   
         hitboxOffsetBottom  = 0;   
-        hitboxOffsetForward = 5;   
-        hitboxOffsetBack    = 5;   
+        hitboxOffsetForward = 0;   
+        hitboxOffsetBack    = 0;   
 
         if (isRotaGraph == true)
         {   // 画像の中心を起点に描く場合のずれ
