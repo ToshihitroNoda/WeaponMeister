@@ -398,6 +398,7 @@ FodyWeavers.xsd
 
 # Text is Info
 *.txt
+*.dat
 
 # Map in Image is MakeMap
 Resource/Map/**/*.png
