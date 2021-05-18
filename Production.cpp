@@ -465,12 +465,19 @@ void Production::Update()
 						weaponQualityStorage += (gm.mainQuality[i] / ((i + 1) * 2));	// 全素材の品質を計算(上で計算した持ち手部分 + メイン部分)
 					}
 
-					if (!animationEnd_)
+					if (!animationEnd_ && !MakeEnd_)
 					{
 						for (int i = 0; i < gm.handles.size(); i++)
 							drawItemID_.push_back(gm.handles[i]);
 						for (int i = 0; i < gm.main.size(); i++)
 							drawItemID_.push_back(gm.main[i]);
+
+						for (int i = 0; i < drawItemID_.size(); i++)
+						{
+							animationX_.push_back(0);
+							animationY_.push_back(0);
+						}
+
 						MakeEnd_ = true;
 					}
 					if (!MakeEnd_)
@@ -738,13 +745,14 @@ void Production::Draw()
 		{
 			for (int i = 0; i < drawItemID_.size(); i++)
 			{
-				animationX_ = (Screen::Width / 2) + cos((angle_ / drawItemID_.size()) * i * MyMath::Deg2Rad) * distToCenter_;
-				animationY_ = (Screen::Height / 2) + sin((angle_ / drawItemID_.size()) * i * MyMath::Deg2Rad) * distToCenter_;
+				animationX_[i] = (Screen::Width / 2) + cos((std::abs(angle_) / drawItemID_.size()) * (i + 1) * MyMath::Deg2Rad) * distToCenter_;
+				animationY_[i] = (Screen::Height / 2) + sin((std::abs(angle_) / drawItemID_.size()) * (i + 1) * MyMath::Deg2Rad) * distToCenter_;
 
-				DrawGraph(animationX_, animationY_, Image::itemIcons[drawItemID_[i]], TRUE);
-
-				angle_ -= 60;
+				angle_ += 10;
 			}
+
+			for (int i = 0; i < drawItemID_.size(); i++)
+				DrawGraph(animationX_[i], animationY_[i], Image::itemIcons[drawItemID_[i]], TRUE);
 
 			distToCenter_--;
 			drawCounter_--;

@@ -164,12 +164,12 @@ private:
 	std::vector<std::string> weaponName_;
 
 	const int defaultDrawCount_ = 300;
-	const int defaultAngle_	    = 360;
+	const int defaultAngle_	    = 359;
 
 	int distToCenter_ = defaultDrawCount_;
-	int animationX_	  = 0;
-	int animationY_	  = 0;
-	int angle_		  = defaultAngle_;
+	std::vector<int> animationX_;
+	std::vector<int> animationY_;
+	int angle_		  = 0;
 
 	int drawCounter_  = defaultDrawCount_;
 
