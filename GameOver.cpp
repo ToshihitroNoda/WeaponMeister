@@ -29,6 +29,8 @@ void GameOver::Update()
 			if (Input::GetButtonDown(PAD_INPUT_1))
 			{
 				ADVSimpleScript::MassegeCount++;
+				ADVSimpleScript::Update();
+				Sleep(0.3f * 1000);			// ˜A‘Å‚µ‚Ä‚à•s‹ï‡‚ª‹N‚±‚ç‚È‚¢‚æ‚¤‚É0.3•bˆ—’âŽ~
 			}
 
 			if (ADVSimpleScript::MassegeCount >= ADVSimpleScript::massegeList.size())

@@ -106,9 +106,6 @@ public:
 		225, 320, 432, 245, 150, 162, 189, 161
 	};
 
-	//壁じゃないもの
-	int NotWallNums[8] = { None, Fielditem, Bush_1, Bush_2, Bush_3, Bush_4, BushLarge_1, BushLarge_2 };
-
 	// マス目のXとYを保持するデータ型
 	struct CellXY
 	{
@@ -178,22 +175,11 @@ public:
 	//【注意！XとYの単位はマス目】
 	void InitSpawnDic(int rangeCellX, int rangeCellY);
 
-	// 指定された座標（ワールド座標）の地形データを取得する。
-	int GetTerrain(float worldX, float worldY, float worldZ = -10000.0);
-
-	int GetObjects(float worldX, float worldY, float worldZ = -10000.0);
-
 	// ゲームオブジェクト描画
 	void DrawObjects();
 
 	//★地形を描く3D対応でY平面に描く
 	void DrawTerrain();
-
-	// 指定された座標（ワールド座標）の地形が壁か調べる
-	bool IsWall(float worldX, float worldY, float worldZ = -10000.0);
-
-	//あるIDが壁かどうかだけ調べる
-	bool IsWall(int objectsID);
 
 };
 

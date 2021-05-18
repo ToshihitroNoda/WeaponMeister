@@ -29,43 +29,6 @@ void Map::InitSpawnDic(int rangeCellX, int rangeCellY)
 	}
 }
 
-// 指定された座標（ワールド座標）の地形データを取得する。
-int Map::GetTerrain(float worldX, float worldY, float worldZ)
-{
-	if (worldZ != -10000.0) worldY = worldZ; //★【YとZを変換】Zの入力があるときはZをYとして扱う
-	// 負の座標が指定された場合は、何も無いものとして扱う
-	if (worldX < 0 || worldY < 0)
-		return None;
-
-	// マップ座標系（二次元配列の行と列）に変換する
-	int mapX = (int)(worldX / CellSize);
-	int mapY = (int)(worldY / CellSize);
-
-	// 二次元配列の範囲外は、何も無いものとして扱う
-	if (mapX >= terrain.Width || mapY >= terrain.Height)
-		return None;
-
-	return terrain[mapY][mapX]; // 二次元配列から地形IDを取り出して返却する
-}
-
-int Map::GetObjects(float worldX, float worldY, float worldZ)
-{
-	if (worldZ != -10000.0) worldY = worldZ; //★【YとZを変換】Zの入力があるときはZをYとして扱う
-	// 負の座標が指定された場合は、何も無いものとして扱う
-	if (worldX < 0 || worldY < 0)
-		return None;
-
-	// マップ座標系（二次元配列の行と列）に変換する
-	int mapX = (int)(worldX / CellSize);
-	int mapY = (int)(worldY / CellSize);
-
-	// 二次元配列の範囲外は、何も無いものとして扱う
-	if (mapX >= objects.Width || mapY >= objects.Height)
-		return None;
-
-	return objects[mapY][mapX]; // 二次元配列から地形IDを取り出して返却する
-}
-
 // ゲームオブジェクト描画
 void Map::DrawObjects()
 {
@@ -137,24 +100,4 @@ void Map::DrawTerrain()
 		}
 		terrainLoad = true;
 	}
-}
-
-// 指定された座標（ワールド座標）の地形が壁か調べる
-bool Map::IsWall(float worldX, float worldY, float worldZ)
-{
-	int objectsID = GetObjects(worldX, worldY, worldZ); // 指定された座標の地形のIDを取得
-
-	return IsWall(objectsID);
-}
-
-//あるIDが壁かどうかだけ調べる
-bool Map::IsWall(int objectsID)
-{
-	for (int i = 0; i < sizeof(NotWallNums) / sizeof(NotWallNums[0]); i++)//[配列の数を求めるには]https://qiita.com/yohhoy/items/a2ab2900a2bd36c31879
-	{   // 壁じゃない番号のとき
-		if (objectsID == NotWallNums[i]) return false;
-	}
-	//SetTerrain(worldX, worldY, worldZ);
-	//if (terrainID == 0) { printfDx("%d ", terrainID); printfDx("(%f %f)", worldX, worldZ); count++; }
-	return (objectsID != -1);// (terrainID == Wall); // 地形が壁ならtrue、違うならfalseを返却する
 }

@@ -231,7 +231,8 @@ void  Player::OnCollision(std::shared_ptr<GameObject> other)
 		}
 	}
 
-	else if (other->tag != "Bush_1")
+	else if (other->tag != "Bush_1" && other->tag != "Bush_2"&& other->tag != "Bush_3"&&
+			 other->tag != "Bush_4" && other->tag != "BushLarge_1" && other->tag != "BushLarge_2")
 	{
 		if (
 		   (GetBack()  + 10.0f < other->GetForward() && GetForward() - 10.0f > other->GetBack()) &&
