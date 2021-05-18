@@ -152,7 +152,6 @@
     <ClCompile Include="Buy.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collection.cpp" />
-    <ClCompile Include="DataCsv.cpp" />
     <ClCompile Include="FieldItem.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameClear.cpp" />
@@ -183,7 +182,6 @@
     <ClInclude Include="FieldItem.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Image.h" />
-    <ClInclude Include="ItemBase.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapObjects.h" />
     <ClInclude Include="MapTerrain.h" />

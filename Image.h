@@ -12,95 +12,103 @@ public:
 	Image() {};
 	~Image() {}; 
 
-	static void Load();
-	
-	static void LoadDivGraph(std::string fileName, int allNum, int xNum, int yNum, int xSize, int ySize, int* hundleArray);
+	void Load(std::string SceneName);
+	void Final();
+	void LoadDivGraph(std::string fileName, int allNum, int xNum, int yNum, int xSize, int ySize, int* hundleArray);
 
 	// タイル画像の画像総数を取得する。
-	static int GetGraphSize(std::string ImageHandle, int CellSizeX, int CellSizeY);
-	static int ImageWidth; // 横幅保存用
-	static int ImageHeight; // 縦幅保存用
+	int GetGraphSize(std::string ImageHandle, int CellSizeX, int CellSizeY);
+	int ImageWidth{ 0 }; // 横幅保存用
+	int ImageHeight{ 0 }; // 縦幅保存用
 
 	// UI関係
-	static std::vector<int> dayNum;
-	static int arrow;
-	static int pressStartButton;
-	static int menuCursor;
-	static int dayWindow;
-	static int itemIconWindow;
-	static int itemWindow;
-	static int shopWindow;
-	static int itemSelection;
-	static int recipeWindow;
-	static int recipeSelection;
-	static int detailWindow;
-	static int moneyWindow;
-	static int salePriceWindow;
-	static int selectItemWindow;
-	static int textWindow;
-	static int textCursor;
-	static int next;
-	static int nextCursor;
-	static int end;
-	static int buy;
-	static int sale;
-	static int mapIcon;
-	static int mapCursor;
-	static int collectionStart;
-	static int collectionEnd;
+	std::vector<int> dayNum		{ NULL };
+	int arrow					{ -1 };
+	int pressStartButton		{ -1 };
+	int menuCursor				{ -1 };
+	int dayWindow				{ -1 };
+	int itemIconWindow			{ -1 };
+	int itemWindow				{ -1 };
+	int shopWindow				{ -1 };
+	int itemSelection			{ -1 };
+	int recipeWindow			{ -1 };
+	int recipeSelection			{ -1 };
+	int detailWindow			{ -1 };
+	int moneyWindow				{ -1 };
+	int salePriceWindow			{ -1 };
+	int selectItemWindow		{ -1 };
+	int textWindow				{ -1 };
+	int textCursor				{ -1 };
+	int next					{ -1 };
+	int nextCursor				{ -1 };
+	int end						{ -1 };
+	int buy						{ -1 };
+	int sale					{ -1 };
+	int mapIcon					{ -1 };
+	int mapCursor				{ -1 };
+	int collectionStart			{ -1 };
+	int collectionEnd			{ -1 };
 
 	// 背景
-	static int titleBack;
-	static int titleLogo;
-	static int mainmenuBack;
-	static int buyBack;
-	static int productionBack;
+	int titleBack				{ -1 };
+	int titleLogo				{ -1 };
+	int mainmenuBack			{ -1 };
+	int buyBack					{ -1 };
+	int productionBack			{ -1 };
 
-	static int skyBack;
+	int skyBack					{ -1 };
 
 	// アイテムアイコン
-	static std::vector<int> itemIcons;
-	static std::vector<int> weaponIcons;
+	std::vector<int> itemIcons	{ NULL };
+	std::vector<int> weaponIcons{ NULL };
 
 	// 3Dモデル
-	static int Player;
-	static int fieldItem;
+	int Player					{ -1 };
+	int fieldItem				{ -1 };
 
-	static int Terrain_Block_1;
-	static int Terrain_Block_2;
-	static int Terrain_Block_3;
-	static int Terrain_Block_4;
+	int Terrain_Block_1			{ -1 };
+	int Terrain_Block_2			{ -1 };
+	int Terrain_Block_3			{ -1 };
+	int Terrain_Block_4			{ -1 };
 
-	static int Branch_1;
-	static int Branch_2;
-	static int Branch_3;
-	static int Branch_4;
-	static int Branch_group;
-	static int Bush_1;
-	static int Bush_2;
-	static int Bush_3;
-	static int Bush_4;
-	static int Bush_large_1;
-	static int Bush_large_2;
-	static int Cliff_rock_1;
-	static int Cliff_rock_2;
-	static int Cliff_rock_3;
-	static int Cliff_rock_4;
-	static int Cliff_rock_5;
-	static int Crystal_1;
-	static int Crystal_2;
-	static int Crystal_3;
-	static int Crystal_4;
-	static int Crystal_5;
-	static int Rock_1;
-	static int Rock_2;
-	static int Rock_3;
-	static int Rock_4;
-	static int Rock_5;
-	static int Spruce_1;
-	static int Spruce_2;
-	static int Spruce_3;
-	static int Trunk;
+	int Branch_1				{ -1 };
+	int Branch_2				{ -1 };
+	int Branch_3				{ -1 };
+	int Branch_4				{ -1 };
+	int Branch_group			{ -1 };
+	int Bush_1					{ -1 };
+	int Bush_2					{ -1 };
+	int Bush_3					{ -1 };
+	int Bush_4					{ -1 };
+	int Bush_large_1			{ -1 };
+	int Bush_large_2			{ -1 };
+	int Cliff_rock_1			{ -1 };
+	int Cliff_rock_2			{ -1 };
+	int Cliff_rock_3			{ -1 };
+	int Cliff_rock_4			{ -1 };
+	int Cliff_rock_5			{ -1 };
+	int Crystal_1				{ -1 };
+	int Crystal_2				{ -1 };
+	int Crystal_3				{ -1 };
+	int Crystal_4				{ -1 };
+	int Crystal_5				{ -1 };
+	int Rock_1					{ -1 };
+	int Rock_2					{ -1 };
+	int Rock_3					{ -1 };
+	int Rock_4					{ -1 };
+	int Rock_5					{ -1 };
+	int Spruce_1				{ -1 };
+	int Spruce_2				{ -1 };
+	int Spruce_3				{ -1 };
+	int Trunk					{ -1 };
+
+	std::vector<int> ModelHandles
+	{ Player,		fieldItem,	  Terrain_Block_1, Terrain_Block_2,	Terrain_Block_3, Terrain_Block_4,
+	  Branch_1,		Branch_2,	  Branch_3,		   Branch_4,		Branch_group,	 Bush_1, 
+	  Bush_2,		Bush_3,		  Bush_4,		   Bush_large_1,	Bush_large_2,	 Cliff_rock_1,	  
+	  Cliff_rock_2,	Cliff_rock_3, Cliff_rock_4,	   Cliff_rock_5,	Crystal_1,	     Crystal_2,		
+	  Crystal_3,	Crystal_4,	  Crystal_5,	   Rock_1,			Rock_2,			 Rock_3,		   
+	  Rock_4,		Rock_5,		  Spruce_1,		   Spruce_2,		Spruce_3,		 Trunk };
 };
 
 #endif

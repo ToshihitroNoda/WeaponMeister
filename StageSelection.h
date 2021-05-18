@@ -9,7 +9,6 @@
 #include "GameManager.h"
 #include "Map.h"
 #include "DataCsv.h"
-#include "Image.h"
 
 class StageSelection : public Scene
 {
@@ -70,7 +69,7 @@ private:
 	std::vector<int>  nowMapCount_{ 2, 3, 4, 5 };
 	std::vector<int>  KindofCanWeaponsMake_{ 1, 2, 1, 1 };
 	std::vector<int>  stageNums_{ 1, 2, 3, 4, 5 };
-	std::vector<int>  mapIcons_{ Image::mapIcon, Image::mapIcon, Image::mapIcon, Image::mapIcon, Image::mapIcon, };
+	std::vector<int>  mapIcons_;
 	std::vector<int>  mapIconPostions_
 		{ Map1IconPosX_, Map2IconPosX_, 
 		  Map3IconPosX_, Map4IconPosX_, 

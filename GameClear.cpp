@@ -1,10 +1,11 @@
 #include "GameClear.h"
 #include "Input.h"
-#include "Image.h"
 #include "ADVSimpleScript.h"
 
 void GameClear::Init()
 {
+	gm.image.Load(tag);
+
 	ADVSimpleScript::Init();
 
 	filePath_ = ("Resource/Massege/Massege_GameClear.csv");
@@ -14,6 +15,7 @@ void GameClear::Init()
 
 void GameClear::Final()
 {
+	gm.image.Final();
 	sm.currentScene.reset();
 }
 
@@ -52,14 +54,14 @@ void GameClear::Draw()
 	{
 		ADVSimpleScript::ImageDraw();
 
-		DrawGraph(WindowX_, WindowY_, Image::textWindow, TRUE);
+		DrawGraph(WindowX_, WindowY_, gm.image.textWindow, TRUE);
 
 		if (ADVSimpleScript::LoadEnd_)
 			ADVSimpleScript::MassegeDraw(gm.colorWhite);
 
 		if (IconFlashCount_ % Divisor_ < DrawFlashTiming_)
 		{
-			DrawGraph(CursorX_, CursorY_, Image::textCursor, TRUE);
+			DrawGraph(CursorX_, CursorY_, gm.image.textCursor, TRUE);
 		}
 		IconFlashCount_++;
 	}

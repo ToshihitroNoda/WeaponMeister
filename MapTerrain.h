@@ -4,7 +4,6 @@
 #include <DxLib.h>
 #include "GameManager.h"
 #include "GameObject.h"
-#include "Image.h"
 
 class MapTerrain : public GameObject
 {
@@ -37,19 +36,19 @@ public:
 	{
 		if (tag == "Grass")
 		{
-			DrawModel(Image::Terrain_Block_1);
+			DrawModel(gm.image.Terrain_Block_1);
 		}
 		if (tag == "Sand")
 		{
-			DrawModel(Image::Terrain_Block_2);
+			DrawModel(gm.image.Terrain_Block_2);
 		}
 		if (tag == "Stone")
 		{
-			DrawModel(Image::Terrain_Block_3);
+			DrawModel(gm.image.Terrain_Block_3);
 		}
 		if (tag == "Volcano")
 		{
-			DrawModel(Image::Terrain_Block_4);
+			DrawModel(gm.image.Terrain_Block_4);
 		}
 	};
 	void OnCollision(std::shared_ptr<GameObject> other) {};

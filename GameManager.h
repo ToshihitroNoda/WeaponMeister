@@ -11,6 +11,7 @@
 #include <assert.h>
 
 #include "DataCsv.h"
+#include "Image.h"
 
 
 // CSVファイルの読込み
@@ -83,6 +84,7 @@ public:
 	MapData mapData;
 	ItemData itemData;
 	WeaponData weaponData;
+	Image image;
 
 	friend class Singleton<GameManager>;				// Singletonでのインスタンス作成は許可
 	

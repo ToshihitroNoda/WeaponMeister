@@ -2,7 +2,6 @@
 
 #include <DxLib.h>
 #include "Input.h"
-#include "Image.h"
 #include "MyMath.h"
 #include "Camera.h"
 #include "Map.h"
@@ -212,10 +211,10 @@ void Player::MoveY()
 void Player::Draw()
 {
 	// プレイヤーモデルを回転させる
-	MV1SetRotationXYZ(Image::Player, VGet(0, modelAngle_, 0));
-	MV1SetPosition(Image::Player, VGet(x, y, z));
-	MV1SetScale(Image::Player, VGet(0.8f, 0.8f, 0.8f));
-	MV1DrawModel(Image::Player);
+	MV1SetRotationXYZ(gm.image.Player, VGet(0, modelAngle_, 0));
+	MV1SetPosition(gm.image.Player, VGet(x, y, z));
+	MV1SetScale(gm.image.Player, VGet(0.8f, 0.8f, 0.8f));
+	MV1DrawModel(gm.image.Player);
 }
 
 
@@ -274,16 +273,16 @@ void Player::AnimationAttach(int AnimIndex)
 {
 	AttachCheck_[prevAnimIndex_] = false;			 // 前回立てたフラグの初期化
 
-	MV1DetachAnim(Image::Player, prevAttachIndex_);	 // アニメーションのデタッチ
+	MV1DetachAnim(gm.image.Player, prevAttachIndex_);	 // アニメーションのデタッチ
 
 	prevAnimIndex_	 = AnimIndex;						 // 次フラグを初期化するために保存
 	prevAttachIndex_ = AttachIndex_;				 // 今のアニメを次デタッチするために保存
 
 	/*-----アタッチ処理-----*/
-	AttachIndex_ = MV1AttachAnim(Image::Player, AnimIndex, -1, FALSE);
-	TotalTime_	 = MV1GetAttachAnimTotalTime(Image::Player, AttachIndex_);
+	AttachIndex_ = MV1AttachAnim(gm.image.Player, AnimIndex, -1, FALSE);
+	TotalTime_	 = MV1GetAttachAnimTotalTime(gm.image.Player, AttachIndex_);
 	PlayTime_	 = 0.0f;
-	MV1SetAttachAnimTime(Image::Player, AttachIndex_, PlayTime_);
+	MV1SetAttachAnimTime(gm.image.Player, AttachIndex_, PlayTime_);
 
 	/*---------------*/
 
@@ -300,7 +299,7 @@ void Player::PlayAnimation(float ConstPlayTime, bool isLoop)
 		{
 			PlayTime_ = 0.0f;
 		}
-		MV1SetAttachAnimTime(Image::Player, AttachIndex_, PlayTime_);
+		MV1SetAttachAnimTime(gm.image.Player, AttachIndex_, PlayTime_);
 	}
 	else
 	{
@@ -314,6 +313,6 @@ void Player::PlayAnimation(float ConstPlayTime, bool isLoop)
 			}
 		}
 
-		MV1SetAttachAnimTime(Image::Player, AttachIndex_, PlayTime_);
+		MV1SetAttachAnimTime(gm.image.Player, AttachIndex_, PlayTime_);
 	}
 }

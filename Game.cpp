@@ -2,11 +2,9 @@
 
 #include "MyRandom.h"
 #include "Input.h"
-#include "Image.h"
 
 void Game::Init()
 {
-	Image::Load();
 	Input::Init();
 	MyRandom::Init();
 	ChangeFont("UD ƒfƒWƒ^ƒ‹ ‹³‰È‘‘Ì N-B");

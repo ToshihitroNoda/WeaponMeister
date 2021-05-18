@@ -16,6 +16,8 @@ int Report::prevMoney = 0;
 
 void Report::Init()
 {
+	gm.image.Load(tag);
+
 	firstMoney_  = gm.money;
 	Rent_		 = (int)(RentBase_ * (Adv::day * RentMultiplied_));
 	nextRent_	 = (int)(RentBase_ * ((Adv::day + 1) * RentMultiplied_));
@@ -28,6 +30,7 @@ void Report::Init()
 
 void Report::Final()
 {
+	gm.image.Final();
 	sm.currentScene.reset();
 }
 

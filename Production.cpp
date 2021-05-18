@@ -7,6 +7,8 @@
 
 void Production::Init()
 {
+	gm.image.Load(tag);
+
 	gm.itemData.Load("Resource/Datas/ItemData.csv");
 	gm.weaponData.Load("Resource/Datas/WeaponData.csv");
 	cursorInit_ = true;
@@ -19,6 +21,7 @@ void Production::Init()
 
 void Production::Final()
 {
+	gm.image.Final();
 	sm.currentScene.reset();
 }
 
@@ -562,14 +565,14 @@ void Production::Format()
 
 void Production::Draw()
 {
-	DrawGraph(0, 0, Image::productionBack, TRUE);
+	DrawGraph(0, 0, gm.image.productionBack, TRUE);
 
 	/*-----ëfçﬁëIëéûï`âÊ-----*/
 	if (recipeSelection_ && !MakeEnd_)
 	{
-		DrawGraph(WindowX_, WindowY_, Image::itemWindow, TRUE);
-		DrawGraph(SelectItemWindowX_, WindowY_, Image::selectItemWindow, TRUE);
-		DrawGraph(NextButtonX_, NextButtonY_, Image::next, TRUE);
+		DrawGraph(WindowX_, WindowY_, gm.image.itemWindow, TRUE);
+		DrawGraph(SelectItemWindowX_, WindowY_, gm.image.selectItemWindow, TRUE);
+		DrawGraph(NextButtonX_, NextButtonY_, gm.image.next, TRUE);
 
 		for (int y = 0; y < WindowY_CellSize_; y++)
 		{
@@ -577,7 +580,7 @@ void Production::Draw()
 			{
 				if ((x + (y * WindowX_CellSize_)) < PouchDrawErea_.size())
 				{
-					DrawGraph(itemX_ + x * WindowCellSize_X_, itemY_ + y * WindowCellSize_Y_, Image::itemIcons[PouchDrawErea_[x + (y * WindowX_CellSize_)]], TRUE);
+					DrawGraph(itemX_ + x * WindowCellSize_X_, itemY_ + y * WindowCellSize_Y_, gm.image.itemIcons[PouchDrawErea_[x + (y * WindowX_CellSize_)]], TRUE);
 				}
 			}
 		}
@@ -622,10 +625,10 @@ void Production::Draw()
 		}
 
 		// ïKóvëfçﬁÇÃï`âÊ
-		DrawGraph(AlreadySelect_MainItem_X_, MakeWeaponY_, Image::itemIcons[(int)gm.weaponData[CsvNecessaryItem_][weaponID_ + CsvSkipCell_]], TRUE);
+		DrawGraph(AlreadySelect_MainItem_X_, MakeWeaponY_, gm.image.itemIcons[(int)gm.weaponData[CsvNecessaryItem_][weaponID_ + CsvSkipCell_]], TRUE);
 
 		// çÏÇÈïêäÌÇÃï`âÊ
-		DrawGraph(MakeWeaponX_, MakeWeaponY_, Image::weaponIcons[weaponID_], TRUE);
+		DrawGraph(MakeWeaponX_, MakeWeaponY_, gm.image.weaponIcons[weaponID_], TRUE);
 
 		/*----- éùÇøéËïîï™ÇÃëfçﬁï`âÊ -----*/
 
@@ -637,7 +640,7 @@ void Production::Draw()
 				DrawGraph
 				(AlreadySelect_HandleItem_X_ + i * AlreadySelect_HandleItem_X_Diameter_,
 					AlreadySelect_HandleItem_Y_,
-					Image::itemIcons[gm.handles[i]],
+					gm.image.itemIcons[gm.handles[i]],
 					TRUE);
 			}
 		}
@@ -653,22 +656,22 @@ void Production::Draw()
 				DrawGraph
 				(AlreadySelect_MainItem_X_ + i * AlreadySelect_MainItem_X_Diameter_,
 					AlreadySelect_MainItem_Y_,
-					Image::itemIcons[gm.main[i]],
+					gm.image.itemIcons[gm.main[i]],
 					TRUE);
 			}
 		}
 		/*---------------*/
 
 		if (cursorX_ >= CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
-			DrawGraph(cursorX_, cursorY_, Image::itemSelection, TRUE);
+			DrawGraph(cursorX_, cursorY_, gm.image.itemSelection, TRUE);
 
 		if (cursorX_ > CursorX_Max_ItemSelect_)
-			DrawGraph(cursorX_, cursorY_, Image::nextCursor, TRUE);
+			DrawGraph(cursorX_, cursorY_, gm.image.nextCursor, TRUE);
 
 		/*----- ÉAÉCÉeÉÄÇÃè⁄ç◊èÓïÒ -----*/
 		if (itemDetail_)
 		{
-			DrawGraph(DetailWindowX_, DetailWindowY_, Image::detailWindow, TRUE);
+			DrawGraph(DetailWindowX_, DetailWindowY_, gm.image.detailWindow, TRUE);
 			DrawString(ItemNameX_, ItemNameY_, gm.itemData[0][itemForWeaponMake_[selectIconNum_] + CsvSkipCell_].stringData.c_str(), gm.colorWhite);
 			std::stringstream ss;
 			ss << itemQualityForWeaponMake_[selectIconNum_];
@@ -685,9 +688,9 @@ void Production::Draw()
 	/*-----çÏê¨ïêäÌëIëéûï`âÊ-----*/
 	else if (!recipeSelection_ && !MakeEnd_)
 	{
-		DrawGraph(NextButtonX_, NextButtonY_, Image::end, TRUE);
+		DrawGraph(NextButtonX_, NextButtonY_, gm.image.end, TRUE);
 
-		DrawGraph(WindowX_, RecipeWindowX_, Image::recipeWindow, TRUE);
+		DrawGraph(WindowX_, RecipeWindowX_, gm.image.recipeWindow, TRUE);
 
 		for (int i = 0; i < canWeaponMake_.size(); i++)
 		{
@@ -699,9 +702,9 @@ void Production::Draw()
 		}
 
 		if (cursorX_ < CursorX_ProceedNextPart_)
-			DrawGraph(cursorX_, cursorY_, Image::recipeSelection, TRUE);
+			DrawGraph(cursorX_, cursorY_, gm.image.recipeSelection, TRUE);
 		else
-			DrawGraph(cursorX_, cursorY_, Image::nextCursor, TRUE);
+			DrawGraph(cursorX_, cursorY_, gm.image.nextCursor, TRUE);
 	}
 
 	/*---------------*/
@@ -752,14 +755,14 @@ void Production::Draw()
 			}
 
 			for (int i = 0; i < drawItemID_.size(); i++)
-				DrawGraph(animationX_[i], animationY_[i], Image::itemIcons[drawItemID_[i]], TRUE);
+				DrawGraph(animationX_[i], animationY_[i], gm.image.itemIcons[drawItemID_[i]], TRUE);
 
 			distToCenter_--;
 			drawCounter_--;
 		}
 		else
 		{
-			DrawGraph(Screen::Width / 2, Screen::Height / 2, Image::weaponIcons[weaponID_], TRUE);
+			DrawGraph(Screen::Width / 2, Screen::Height / 2, gm.image.weaponIcons[weaponID_], TRUE);
 			std::string drawMassege = "ZÉLÅ[Ç≈éüÇ÷";
 			int DrawWidth = GetDrawStringWidth(drawMassege.c_str(), -1);
 			DrawString((Screen::Width - DrawWidth) / 2, (Screen::Height - (Screen::Height / 4)), drawMassege.c_str(), gm.colorWhite);
