@@ -178,6 +178,8 @@
     <ClInclude Include="ADVSimpleScript.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DataCsv.h" />
+    <ClInclude Include="DataLoad.h" />
+    <ClInclude Include="DataSave.h" />
     <ClInclude Include="FieldItem.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Image.h" />

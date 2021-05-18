@@ -29,6 +29,7 @@ int Image::sale						{ -1 };
 int Image::mapIcon					{ -1 };
 int Image::mapCursor				{ -1 };
 int Image::collectionStart			{ -1 };
+int Image::collectionEnd			{ -1 };
 
 // îwåi
 int Image::titleBack				{ -1 };
@@ -124,6 +125,7 @@ void Image::Load()
 	mapIcon					= LoadGraph("Resource/Image/player.png");
 	mapCursor				= LoadGraph("Resource/Image/cursor.png");
 	collectionStart		    = LoadGraph("Resource/Image/collectionstart.png");
+	collectionEnd			= LoadGraph("Resource/Image/collectionend.png");
 
 	// îwåi
 	titleBack				= LoadGraph("Resource/Image/title.jpg");

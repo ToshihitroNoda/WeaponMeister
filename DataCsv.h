@@ -97,12 +97,14 @@ struct DataCsv
 	virtual ~DataCsv()
 	{// 仮想デストラクタ
 		Data.clear();// 2次元配列データのお掃除
+		Data.shrink_to_fit();
 	}
 
 	// データをクリアしてメモリを節約する
 	virtual void clear()
 	{   // データをクリアしてメモリを節約する
 		Data.clear();// 2次元配列データのお掃除
+		Data.shrink_to_fit();
 	}
 
 	// csvファイルの読み込み

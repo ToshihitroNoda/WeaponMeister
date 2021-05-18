@@ -14,6 +14,7 @@ public:
 	~ADVSimpleScript() = default;
 
 	static void Init();
+	static void Final();
 	static void Load(std::string filePath);
 	static void Update();
 	static void ImageDraw();

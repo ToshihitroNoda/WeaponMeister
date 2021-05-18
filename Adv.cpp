@@ -21,7 +21,8 @@ void Adv::Init()
 
 void Adv::Final()
 {
-
+	ADVSimpleScript::Final();
+	sm.currentScene.reset();
 }
 
 void Adv::Update()

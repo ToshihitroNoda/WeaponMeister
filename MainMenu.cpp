@@ -1,7 +1,13 @@
 #include <DxLib.h>
+#include <filesystem>
+
 #include "MainMenu.h"
 #include "Input.h"
 #include "Image.h"
+#include "DataLoad.h"
+
+
+DataLoad dataLoad;
 
 void MainMenu::Init()
 {
@@ -10,7 +16,7 @@ void MainMenu::Init()
 
 void MainMenu::Final()
 {
-
+	sm.currentScene.reset();
 }
 
 void MainMenu::Update()
@@ -32,7 +38,14 @@ void MainMenu::Update()
 	}
 	else if (CursorY_ == CursorY_Init_ + CursorY_Dist_ && Input::GetButtonDown(PAD_INPUT_1))
 	{
-		return; // Œã‚ÅContinue
+		std::ifstream ifs("savedata.dat");
+		if (ifs.is_open())
+		{
+			dataLoad.Load();
+			sm.LoadScene("Adv");
+		}
+		else
+			return;
 	}
 	else if (CursorY_ == CursorY_Init_ + CursorY_Dist_ * 2 && Input::GetButtonDown(PAD_INPUT_1))
 	{

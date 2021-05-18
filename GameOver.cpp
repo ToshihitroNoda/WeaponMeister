@@ -17,7 +17,7 @@ void GameOver::Init()
 
 void GameOver::Final()
 {
-
+	sm.currentScene.reset();
 }
 
 void GameOver::Update()

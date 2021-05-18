@@ -47,6 +47,7 @@ public:
 	static int mapIcon;
 	static int mapCursor;
 	static int collectionStart;
+	static int collectionEnd;
 
 	// îwåi
 	static int titleBack;

@@ -83,11 +83,13 @@ private:
 	int selectIconNum_		= 0;
 	int scrollCount_		= 0;
 	int startCount_			= 120;
+	int endCount_		    = 120;
 	int collectTimer_		= 7200;	 // 採取時間。2分
 
 	bool getItemFlg_		= false; // アイテムゲットフラグ
 	bool menuOpen_		    = false;
 	bool menuInit			= false;
+	bool collectionEnd_		= false;
 
 	std::vector<int> possibilityToGetItem_;
 	std::vector<int> DrawGetItem_;

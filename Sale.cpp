@@ -33,7 +33,7 @@ void Sale::Init()
 
 void Sale::Final()
 {
-
+	sm.currentScene.reset();
 }
 
 void Sale::Update()

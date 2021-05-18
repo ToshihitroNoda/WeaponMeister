@@ -23,9 +23,8 @@ public:
 	void Draw() override;
 
 	static int buyAmount;
-private:
-	StageSelection stageSelection;
 
+private:
 	const int ShopWindowX_	  = 60;
 	const int ShopWindowY_	  = 120;
 	const int PouchWindowX_   = 740;

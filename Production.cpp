@@ -19,7 +19,7 @@ void Production::Init()
 
 void Production::Final()
 {
-
+	sm.currentScene.reset();
 }
 
 void Production::Update()

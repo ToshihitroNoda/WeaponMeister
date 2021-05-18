@@ -2,6 +2,8 @@
 #include "Input.h"
 #include "Image.h"
 
+StageSelection stageSelection;
+
 int Buy::buyAmount = 0;
 
 void Buy::Init()
@@ -10,7 +12,7 @@ void Buy::Init()
 	
 	for (int i = CsvSkipCell_; i < gm.itemData[0].size(); i++)
 	{
-		if ((int)gm.itemData[CsvItemMapCell_][i] == stageSelection.stageNum)
+		if ((int)gm.itemData[CsvItemMapCell_][i] <= StageSelection::stageNum - 1)
 		{
 			buyItems_.push_back((int)gm.itemData[CsvItemIdCell_][i]);
 			buyItemsQuality_.push_back((int)gm.itemData[CsvItemQualityCell_][i]);
@@ -26,7 +28,7 @@ void Buy::Init()
 
 void Buy::Final()
 {
-
+	sm.currentScene.reset();
 }
 
 void Buy::Update()

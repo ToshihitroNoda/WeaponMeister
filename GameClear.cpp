@@ -14,7 +14,7 @@ void GameClear::Init()
 
 void GameClear::Final()
 {
-
+	sm.currentScene.reset();
 }
 
 void GameClear::Update()

@@ -21,10 +21,7 @@ void Game::Update()
 {
 	Input::Update();
 
-	sm.currentScene->Update();
-
-	if (sm.prevScene->isDead == true)
-		sm.prevScene.~shared_ptr();
+	sm.currentScene->Update(); 
 }
 
 void Game::Draw()

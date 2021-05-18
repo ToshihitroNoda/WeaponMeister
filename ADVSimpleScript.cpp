@@ -36,17 +36,18 @@ bool ADVSimpleScript::LoadEnd_ = false;
 
 void ADVSimpleScript::Init()
 {
-	LineWidth_ = 0;
-	ResourceNum_ = -1;
-	MassegeX_ = 0;
-	MassegeY_ = 0;
-	StringX_ = 0;
-	StringY_ = 0;
-	BGX_ = 0;
-	BGY_ = 0;
-	BGID_ = 0;
-	CDrawCount_ = 0;
-	BreakCount_ = 0;
+	MassegeCount  = 0;
+	LineWidth_	  = 0;
+	ResourceNum_  = -1;
+	MassegeX_	  = 0;
+	MassegeY_	  = 0;
+	StringX_	  = 0;
+	StringY_	  = 0;
+	BGX_		  = 0;
+	BGY_		  = 0;
+	BGID_		  = 0;
+	CDrawCount_	  = 0;
+	BreakCount_	  = 0;
 	PrevPlayMusic = 0;
 
 	filePath_ = "";
@@ -55,6 +56,26 @@ void ADVSimpleScript::Init()
 	NowBreak_ = false;
 	DrawSkip_ = false;
 	LoadEnd_ = false;
+}
+
+void ADVSimpleScript::Final()
+{
+	for (int i = 0; i < ResourceNums_.size(); i++)
+	{
+		DeleteGraph(ResourceNums_[i]);
+	}
+	massegeList.clear();
+	massegeList.shrink_to_fit();
+	ResourcePath_.clear();
+	ResourcePath_.shrink_to_fit();
+	ResourceNums_.clear();
+	ResourceNums_.shrink_to_fit();
+	CX_.clear();
+	CX_.shrink_to_fit();
+	CY_.clear();
+	CY_.shrink_to_fit();
+	CDrawID_.clear();
+	CDrawID_.shrink_to_fit();
 }
 
 void ADVSimpleScript::Load(std::string filePath)

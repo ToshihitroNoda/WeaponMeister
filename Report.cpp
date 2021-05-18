@@ -8,6 +8,10 @@
 #include "Buy.h"
 #include "Sale.h"
 
+#include "DataSave.h"
+
+DataSave dataSave;
+
 int Report::prevMoney = 0;
 
 void Report::Init()
@@ -16,11 +20,15 @@ void Report::Init()
 	Rent_		 = (int)(RentBase_ * (Adv::day * RentMultiplied_));
 	nextRent_	 = (int)(RentBase_ * ((Adv::day + 1) * RentMultiplied_));
 	finalMoney_  = gm.money - Rent_;
+
+	gm.money = finalMoney_;
+
+	dataSave.Save();
 }
 
 void Report::Final()
 {
-	
+	sm.currentScene.reset();
 }
 
 void Report::Update()
@@ -33,8 +41,8 @@ void Report::Update()
 		}
 		else
 		{
-			gm.money = finalMoney_;
 			prevMoney = finalMoney_;
+
 			if (Adv::day == LastDay_)
 				sm.LoadScene("GameClear");
 			else if (finalMoney_ < 0)

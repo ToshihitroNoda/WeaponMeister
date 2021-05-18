@@ -27,13 +27,13 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	int stageNum   = 0;
+	static int stageNum;
+	static int mapCount;
 
 private:
 
 	int cursorX_	= 120;
 	int cursorY_	= 300;
-	int mapCount_	= 1;
 	int canMakeWeapon_ = 0;
 
 	bool addMap2_			= false;
@@ -45,7 +45,7 @@ private:
 	bool nowLoadingDraw_	= false;
 
 	const int NewStageAddDayDiameter_ = 3; // これで割り切れる日に新しいステージ追加
-	const int alreadtTrueWapon_ = 2; // 既に作れるようになっている武器は配列の最初から2つ目まで
+	const int alreadyTrueWapon_ = 2; // 既に作れるようになっている武器は配列の最初から2つ目まで
 
 	const int Map1IconPosX_ = 200;
 	const int Map1IconPosY_ = 300;
@@ -68,8 +68,8 @@ private:
 	std::vector<bool> addMapList_{ addMap2_, addMap3_, addMap4_, addMap5_ };
 
 	std::vector<int>  nowMapCount_{ 2, 3, 4, 5 };
-	std::vector<int>  KindofCanWeaponsMake_{ 2, 4, 2, 2 };
-	std::vector<int>  stageNums_{ 0, 1, 2, 3, 4 };
+	std::vector<int>  KindofCanWeaponsMake_{ 1, 2, 1, 1 };
+	std::vector<int>  stageNums_{ 1, 2, 3, 4, 5 };
 	std::vector<int>  mapIcons_{ Image::mapIcon, Image::mapIcon, Image::mapIcon, Image::mapIcon, Image::mapIcon, };
 	std::vector<int>  mapIconPostions_
 		{ Map1IconPosX_, Map2IconPosX_, 

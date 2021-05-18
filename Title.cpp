@@ -10,7 +10,7 @@ void Title::Init()
 
 void Title::Final()
 {
-
+	sm.currentScene.reset();
 }
 
 void Title::Update()
