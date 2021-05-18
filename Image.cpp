@@ -100,6 +100,16 @@ void Image::Load(std::string SceneName)
 		Spruce_2		= MV1LoadModel("Resource/Image/Model/obj/spruce_03.mv1");
 		Spruce_3		= MV1LoadModel("Resource/Image/Model/obj/spruce_05.mv1");
 		Trunk			= MV1LoadModel("Resource/Image/Model/obj/spruce_trunk_fallen.mv1");
+		
+		ModelHandles.resize(36);
+		ModelHandles = 
+		{ Player,		fieldItem,	  Terrain_Block_1, Terrain_Block_2,	Terrain_Block_3, Terrain_Block_4,
+		  Branch_1,		Branch_2,	  Branch_3,		   Branch_4,		Branch_group,	 Bush_1,
+		  Bush_2,		Bush_3,		  Bush_4,		   Bush_large_1,	Bush_large_2,	 Cliff_rock_1,
+		  Cliff_rock_2,	Cliff_rock_3, Cliff_rock_4,	   Cliff_rock_5,	Crystal_1,	     Crystal_2,
+		  Crystal_3,	Crystal_4,	  Crystal_5,	   Rock_1,			Rock_2,			 Rock_3,
+		  Rock_4,		Rock_5,		  Spruce_1,		   Spruce_2,		Spruce_3,		 Trunk };
+
 	}
 	else if (SceneName == "Buy")
 	{
