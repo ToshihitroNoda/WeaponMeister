@@ -30,7 +30,7 @@ private:
 	const float RentMultiplied_ = 1.5f;
 
 	const int NextMassegeX_ = 900;
-	const int NextMassegeY_ = 600;
+	const int NextMassegeY_ = 650;
 
 	const int PrevMoneyX_	= 200;
 	const int PrevMoneyY_	= 200;
@@ -44,22 +44,26 @@ private:
 	const int RentY_		= 300;
 	const int FinalMoneyX_  = 700;
 	const int FinalMoneyY_  = 400;
+	const int NextRentX_	= 700;
+	const int NextRentY_	= 500;
 
-	const int DrawDataNums_   = 6;
+	const int DrawDataNums_   = 7;
 	const int prevDraw_		  = 1;
 	const int buyAmountDraw_  = 2;
 	const int saleAmountDraw_ = 3;
 	const int haveMoneyDraw_  = 4;
 	const int rentDraw_		  = 5;
 	const int finalMoneyDraw_ = 6;
+	const int nextRentDraw_   = 7;
 
 	const int FontSize_ = 30;
 
 	int firstMoney_  = 0;
-	int Rent_		= 0; // 家賃。基本額 * (日にち * 1.5)
-	int finalMoney_ = 0;
+	int Rent_		 = 0; // 家賃。基本額 * (日にち * 1.5)
+	int nextRent_	 = 0;
+	int finalMoney_  = 0;
 
-	int pressCount_ = 0;
+	int pressCount_  = 0;
 };
 
 #endif

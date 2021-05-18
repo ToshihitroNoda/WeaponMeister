@@ -81,8 +81,9 @@ private:
 	int cursorX_			= CursorX_Min_ItemSelect_;	// カーソル座標
 	int cursorY_			= CursorY_Min_ItemSelect_;
 	int selectIconNum_		= 0;
-	int scrollCount			= 0;
-	int startCount			= 120;
+	int scrollCount_		= 0;
+	int startCount_			= 120;
+	int collectTimer_		= 7200;	 // 採取時間。2分
 
 	bool getItemFlg_		= false; // アイテムゲットフラグ
 	bool menuOpen_		    = false;

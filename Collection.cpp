@@ -46,7 +46,7 @@ void Collection::Final()
 
 void Collection::Update()
 {
-	if (startCount < 0)
+	if (startCount_ < 0)
 	{
 		if (!menuInit)
 			gm.player->Update(); // プレイヤの更新
@@ -160,15 +160,15 @@ void Collection::Update()
 						if (PouchDrawErea_.size() > WindowX_CellSize_)
 						{
 							// 一行スクロール
-							scrollCount++;
+							scrollCount_++;
 							// 描画するアイテムのvectorの最初の一行を削除し、後ろに一行足す
 							// まず先頭の一行の削除
 							PouchDrawErea_.erase(PouchDrawErea_.begin(), PouchDrawErea_.begin() + WindowX_CellSize_);
 							// 後ろに一行追加。
 							/// iの初期値		: 表示できる最大数 + 追加する列数 - 列数
 							/// for文の回る条件 : 表示できる最大数 + 追加する列数まで
-							for (int i = DrawMaxPouchSize + (scrollCount * WindowX_CellSize_) - WindowX_CellSize_;
-								i < DrawMaxPouchSize + (scrollCount * WindowX_CellSize_);
+							for (int i = DrawMaxPouchSize + (scrollCount_ * WindowX_CellSize_) - WindowX_CellSize_;
+								i < DrawMaxPouchSize + (scrollCount_ * WindowX_CellSize_);
 								i++)
 							{
 								if (i < gm.pouch.size())
@@ -189,15 +189,15 @@ void Collection::Update()
 				}
 				else
 				{
-					if (scrollCount > 0)
+					if (scrollCount_ > 0)
 					{
-						scrollCount--;
+						scrollCount_--;
 						if (PouchDrawErea_.size() == DrawMaxPouchSize)		// 描画されてるウィンドウが埋まってる場合
 						{
 							PouchDrawErea_.erase(PouchDrawErea_.end() - WindowX_CellSize_, PouchDrawErea_.end());
 							// 描画するアイテムのvectorの最初に描画されてない一行分追加
 							for (int i = WindowX_CellSize_; i > 0; i--)
-								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount * WindowX_CellSize_ + i - 1]);
+								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount_ * WindowX_CellSize_ + i - 1]);
 						}
 						else if (PouchDrawErea_.size() > DrawMaxPouchSize - WindowX_CellSize_ &&
 							PouchDrawErea_.size() < DrawMaxPouchSize)	// 描画されてるウィンドウの最後の一行に空きがある場合
@@ -205,13 +205,13 @@ void Collection::Update()
 							PouchDrawErea_.erase(PouchDrawErea_.end() - (PouchDrawErea_.size() % WindowX_CellSize_), PouchDrawErea_.end());
 							// 描画するアイテムのvectorの最初に描画されてない一行分追加
 							for (int i = WindowX_CellSize_; i > 0; i--)
-								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount * WindowX_CellSize_ + i - 1]);
+								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount_ * WindowX_CellSize_ + i - 1]);
 						}
 						else												// 描画されてるウィンドウの下何行かが空いている場合
 						{
 							// 描画するアイテムのvectorの最初に描画されてない一行分追加
 							for (int i = WindowX_CellSize_; i > 0; i--)
-								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount * WindowX_CellSize_ + i - 1]);
+								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount_ * WindowX_CellSize_ + i - 1]);
 						}
 					}
 				}
@@ -221,7 +221,7 @@ void Collection::Update()
 		}
 	}
 
-	startCount--;
+	startCount_--;
 }
 
 void Collection::ItemGet()
@@ -352,6 +352,6 @@ void Collection::Draw()
 
 	}
 
-	if (startCount >= 0)
+	if (startCount_ >= 0)
 		DrawGraph(0, 0, Image::collectionStart, TRUE);
 }

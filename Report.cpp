@@ -13,8 +13,9 @@ int Report::prevMoney = 0;
 void Report::Init()
 {
 	firstMoney_  = gm.money;
-	Rent_		= (int)(RentBase_ * (Adv::day * RentMultiplied_));
-	finalMoney_ = gm.money - Rent_;
+	Rent_		 = (int)(RentBase_ * (Adv::day * RentMultiplied_));
+	nextRent_	 = (int)(RentBase_ * ((Adv::day + 1) * RentMultiplied_));
+	finalMoney_  = gm.money - Rent_;
 }
 
 void Report::Final()
@@ -82,6 +83,13 @@ void Report::Draw()
 		std::stringstream fM;
 		fM << finalMoney_;
 		DrawString(FinalMoneyX_, FinalMoneyY_, ("最終的な所持金　　 : " + fM.str()).c_str(), gm.colorWhite);
+
+	}
+	if (pressCount_ >= nextRentDraw_)
+	{
+		std::stringstream nR;
+		nR << nextRent_;
+		DrawString(NextRentX_, NextRentY_, ("明日の家賃　　　　 : " + nR.str()).c_str(), gm.colorWhite);
 
 	}
 	if (pressCount_ >= DrawDataNums_)
