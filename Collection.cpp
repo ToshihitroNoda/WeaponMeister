@@ -19,7 +19,7 @@ void Collection::Init()
 	// Ｚバッファへの書き込みを有効にする
 	SetWriteZBuffer3D(TRUE);
 
-	gm.map	  = std::make_shared<Map>(0, "Map2");
+	gm.map	  = std::make_shared<Map>(0, "Map" + std::to_string(stageSelection.stageNum + 1));
 	gm.player = std::make_shared<Player>
 				(gm.mapData[3][stageSelection.stageNum + CsvSkipCell_],
 				 gm.mapData[4][stageSelection.stageNum + CsvSkipCell_],

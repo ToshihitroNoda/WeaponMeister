@@ -38,11 +38,11 @@ private:
 	const int BuyAmountY_	= 300;
 	const int SaleAmountX_  = 200;
 	const int SaleAmountY_  = 400;
-	const int HaveMoneyX_   = 600;
+	const int HaveMoneyX_   = 700;
 	const int HaveMoneyY_	= 200;
-	const int RentX_		= 600;
+	const int RentX_		= 700;
 	const int RentY_		= 300;
-	const int FinalMoneyX_  = 600;
+	const int FinalMoneyX_  = 700;
 	const int FinalMoneyY_  = 400;
 
 	const int DrawDataNums_   = 6;

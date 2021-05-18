@@ -568,7 +568,7 @@ void Production::Draw()
 		{
 			for (int x = 0; x < WindowX_CellSize_; x++)
 			{
-				if ((signed)(x + (y * WindowX_CellSize_)) < PouchDrawErea_.size())
+				if ((x + (y * WindowX_CellSize_)) < PouchDrawErea_.size())
 				{
 					DrawGraph(itemX_ + x * WindowCellSize_X_, itemY_ + y * WindowCellSize_Y_, Image::itemIcons[PouchDrawErea_[x + (y * WindowX_CellSize_)]], TRUE);
 				}

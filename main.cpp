@@ -64,7 +64,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetDrawScreen(DX_SCREEN_BACK);
 	SetUseTransColor(FALSE); // 画像の指定色を透過する機能を無効化
 
-	SetCameraNearFar(1.0f, 3000.0f); // 描画距離の設定
+	SetCameraNearFar(1.0f, 2500.0f); // 描画距離の設定
 
 	// これまでInitでやってきてた初期化処理
 	Game game;
