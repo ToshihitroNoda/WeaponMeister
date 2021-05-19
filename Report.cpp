@@ -25,7 +25,8 @@ void Report::Init()
 
 	gm.money = finalMoney_;
 
-	dataSave.Save();
+	if (gm.money < 0)		// 所持金がなかったらセーブしないでゲームオーバー
+		dataSave.Save();
 }
 
 void Report::Final()
@@ -54,6 +55,9 @@ void Report::Update()
 				sm.LoadScene("Adv");
 		}
 	}
+
+	if (autoSaveCount_ >= 0)
+		autoSaveCount_--;
 }
 
 void Report::Draw()
@@ -108,5 +112,10 @@ void Report::Draw()
 	else
 		DrawString(NextMassegeX_, NextMassegeY_, "Zキーで次へ", gm.colorWhite);
 	SetFontSize(gm.DefaultFontSize_);
+
+	if (gm.money >= 0 && autoSaveCount_ > 0)
+	{
+		DrawString(AutoSaveX_, AutoSaveY_, "セーブ中...", gm.colorWhite);
+	}
 
 }

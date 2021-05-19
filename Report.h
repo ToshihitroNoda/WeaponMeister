@@ -32,6 +32,9 @@ private:
 	const int NextMassegeX_ = 900;
 	const int NextMassegeY_ = 650;
 
+	const int AutoSaveX_	= 1000;
+	const int AutoSaveY_	= 10;
+
 	const int PrevMoneyX_	= 200;
 	const int PrevMoneyY_	= 200;
 	const int BuyAmountX_	= 200;
@@ -64,6 +67,8 @@ private:
 	int finalMoney_  = 0;
 
 	int pressCount_  = 0;
+
+	int autoSaveCount_ = 120;
 };
 
 #endif

@@ -33,6 +33,7 @@ void MainMenu::Update()
 
 	if (CursorY_ == CursorY_Init_ && Input::GetButtonDown(PAD_INPUT_1))
 	{
+		remove("savedata.dat");
 		sm.LoadScene("Adv");
 	}
 	else if (CursorY_ == CursorY_Init_ + CursorY_Dist_ && Input::GetButtonDown(PAD_INPUT_1))

@@ -1,12 +1,22 @@
 #ifndef DATASAVE_H_
 #define DATASAVE_H_
 
-#include<stdio.h>
-
+#include<fstream>
+#include<vector>
 
 #include "Adv.h"
 #include "StageSelection.h"
 #include "GameManager.h"
+
+struct Status {
+	int day;
+	int money;
+	int mapCount;
+	int pouchSize;
+	int pouchQSize;
+	int weaponSize;
+	int WeaponQSize;
+};
 
 class DataSave
 {
@@ -26,22 +36,41 @@ void DataSave::Save()
 	/* セーブするべきものは
 	* 日にち、ポーチ内のアイテム・装備、それぞれの品質、所持金
 	*/
-	FILE* fp;
-	errno_t error;
 
-	if ((error = fopen_s(&fp, "savedata.dat", "wb")) != 0)
+	Status status = { 0 };
+	status.day = Adv::day;
+	status.money = gm.money;
+	status.mapCount = StageSelection::mapCount;
+	status.pouchSize = gm.pouch.size();
+	status.pouchQSize = gm.pouchQuality.size();
+	status.weaponSize = gm.weapons.size();
+	status.WeaponQSize = gm.weaponQuality.size();
+
+	std::fstream file;
+	file.open("savedata.dat", std::ios::binary | std::ios::out);
+
+	file.write((char*)&status, sizeof(status));
+	
+	for (int i = 0; i < gm.pouch.size(); i++)
 	{
-		exit(0);
-	};
+		file.write((char*)&gm.pouch[i], sizeof(gm.pouch[i]));
+	}
 
-	fwrite(&Adv::day, sizeof(int), 1, fp);
-	fwrite(&StageSelection::mapCount, sizeof(int), 1, fp);
-	fwrite(&gm.money, sizeof(int), 1, fp);
-	//fwrite(&gm.pouch[0], gm.pouch.size() * sizeof(gm.pouch[0]), 1, fp);
-	//fwrite(&gm.pouchQuality[0], gm.pouchQuality.size() * sizeof(gm.pouchQuality[0]), 1, fp);
-	//fwrite(&gm.weapons[0], gm.weapons.size() * sizeof(gm.weapons[0]), 1, fp);
-	//fwrite(&gm.weaponQuality[0], gm.weaponQuality.size() * sizeof(gm.weaponQuality[0]), 1, fp);
+	for (int i = 0; i < gm.pouchQuality.size(); i++)
+	{
+		file.write((char*)&gm.pouchQuality[i], sizeof(gm.pouchQuality[i]));
+	}
 
-	fclose(fp);
+	for (int i = 0; i < gm.weapons.size(); i++)
+	{
+		file.write((char*)&gm.weapons[i], sizeof(gm.weapons[i]));
+	}
+
+	for (int i = 0; i < gm.weaponQuality.size(); i++)
+	{
+		file.write((char*)&gm.weaponQuality[i], sizeof(gm.weaponQuality[i]));
+	}
+
+	file.close();
 }
 
