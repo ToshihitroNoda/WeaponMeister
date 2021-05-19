@@ -30,7 +30,7 @@ void Map::InitSpawnDic(int rangeCellX, int rangeCellY)
 }
 
 // ゲームオブジェクト描画
-void Map::DrawObjects()
+void Map::LoadObjects()
 {
 	if (!objectsLoad)
 	{
@@ -64,7 +64,7 @@ void Map::DrawObjects()
 }
 
 //★地形を描く3D対応でY平面に描く
-void Map::DrawTerrain()
+void Map::LoadTerrain()
 {
 	if (!terrainLoad)
 	{
@@ -84,15 +84,15 @@ void Map::DrawTerrain()
 				{
 					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Grass"));
 				}
-				if (id == terrain_sand)
+				else if (id == terrain_sand)
 				{
 					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Sand"));
 				}
-				if (id == terrain_stone)
+				else if (id == terrain_stone)
 				{
 					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Stone"));
 				}
-				if (id == terrain_volcano)
+				else if (id == terrain_volcano)
 				{
 					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Volcano"));
 				}

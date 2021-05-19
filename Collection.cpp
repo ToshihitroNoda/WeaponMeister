@@ -28,24 +28,9 @@ void Collection::Init()
 
 	gm.player->Init();
 
-	// 地形
-	for (const auto& mT : gm.mapTerrain)
-	{
-		mT->Init();
-	}
+	gm.map->LoadTerrain(); // マップの描画
+	gm.map->LoadObjects(); // オブジェクトの描画
 
-	// フィールドアイテム
-	for (const auto& fI : gm.fieldItems)
-	{
-		fI->Init();
-	}
-
-	// オブジェクト
-	for (const auto& mO : gm.mapObjects)
-	{
-		mO->Init();
-	}
-	
 	// アイテム配列の行数を取得
 	int n1	  = gm.itemData[0].size();
 
@@ -60,6 +45,12 @@ void Collection::Init()
 
 void Collection::Final()
 {
+	gm.mapObjects.clear();
+	gm.mapObjects.shrink_to_fit();
+	gm.fieldItems.clear();
+	gm.fieldItems.shrink_to_fit();
+	gm.mapTerrain.clear();
+	gm.mapTerrain.shrink_to_fit();
 	gm.map.reset();
 	gm.player.reset();
 	gm.image.Final();
@@ -131,10 +122,10 @@ void Collection::Update()
 					menuInit = false;
 					PouchDrawErea_.clear();
 				}
-				else
+				else // でばっぐ
 				{
 					clsDx();
-					sm.LoadScene("Buy"); // でばっぐ
+					sm.LoadScene("Buy"); 
 				}
 			}
 
@@ -317,17 +308,13 @@ void Collection::Draw()
 	DrawGraphF(gm.player->backX, 0, gm.image.skyBack, TRUE);
 	DrawGraphF(gm.player->backX - gm.player->backImageWidth, 0, gm.image.skyBack, TRUE);
 
-
-	gm.map->DrawTerrain(); // マップの描画
-	gm.map->DrawObjects(); // オブジェクトの描画
-
-	gm.player->Draw(); // プレイヤーの描画
-
 	// 地形
-	for (const auto& mT : gm.mapTerrain)
+	for (auto& mT : gm.mapTerrain)
 	{
 		mT->Draw();
 	}
+
+	gm.player->Draw(); // プレイヤーの描画
 
 	// フィールドアイテム
 	for (const auto& fI : gm.fieldItems)

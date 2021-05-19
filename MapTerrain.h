@@ -30,34 +30,11 @@ public:
 
 	~MapTerrain() {};
 
-	void Init() {};
-	void Update() {};
-	void Draw()
-	{
-		if (tag == "Grass")
-		{
-			DrawModel(gm.image.Terrain_Block_1);
-		}
-		if (tag == "Sand")
-		{
-			DrawModel(gm.image.Terrain_Block_2);
-		}
-		if (tag == "Stone")
-		{
-			DrawModel(gm.image.Terrain_Block_3);
-		}
-		if (tag == "Volcano")
-		{
-			DrawModel(gm.image.Terrain_Block_4);
-		}
-	};
-	void OnCollision(std::shared_ptr<GameObject> other) {};
-	void DrawModel(int MV1Handle)
-	{
-		MV1SetPosition(MV1Handle, VGet(x, y, z));
-		MV1SetScale(MV1Handle, VGet(0.162f, 0.25f, 0.162f));
-		MV1DrawModel(MV1Handle);
-	}
+	void Init();
+	void Update();
+	void Draw();
+	void OnCollision(std::shared_ptr<GameObject> other);
+	void DrawModel(int MV1Handle);
 
 };
 

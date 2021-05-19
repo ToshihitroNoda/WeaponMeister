@@ -26,26 +26,23 @@ public:
 	void Format();
 
 	// 武器レシピGetフラグ
-	bool canWoodSword_			= true;
-	bool canJawaSword_			= true;
-	bool canEnriSword_			= false;
-	bool canKeinSword_			= false;
-	bool canShizukuSword_		= false;
-	bool canSaintSword_			= false;
-	bool canGodWoodSword_		= false;
+	static bool canWoodSword_;
+	static bool canJawaSword_;
+	static bool canEnriSword_;
+	static bool canKeinSword_;
+	static bool canShizukuSword_;
+	static bool canSaintSword_;
+	static bool canGodWoodSword_;
 
-	bool canStoneSword_			= true;
-	bool canIronOreSword_		= true;
-	bool canJadeSword_			= false;
-	bool canDiamondSword_		= false;
-	bool canCarbonadeSword_		= false;
-	bool canOrichalcumSword_	= false;
-	bool canGodStoneSword_		= false;
+	static bool canStoneSword_;
+	static bool canIronOreSword_;
+	static bool canJadeSword_;
+	static bool canDiamondSword_;
+	static bool canCarbonadeSword_;
+	static bool canOrichalcumSword_;
+	static bool canGodStoneSword_;
 
-	std::vector<bool> canWeaponMake_{ canWoodSword_		, canJawaSword_		 , canEnriSword_	, canKeinSword_,
-									  canShizukuSword_	, canSaintSword_	 , canGodWoodSword_ ,
-									  canStoneSword_	, canIronOreSword_	 , canJadeSword_	, canDiamondSword_,
-									  canCarbonadeSword_, canOrichalcumSword_, canGodStoneSword_ };
+	static std::vector<bool> canWeaponMake_;
 private:
 
 	void GetHandleForWeaponMake();

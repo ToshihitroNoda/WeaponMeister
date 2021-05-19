@@ -53,8 +53,6 @@ public:
 		std::chrono::system_clock::time_point time; //　イベントの時刻
 		bool isDead; //イベント終了時にフラグをtrueにする
 	};
-	//【検討】↓リスト化する必要あるか？辞書mapで全ペア保管してるし
-	//std::vector<std::shared_ptr<Event>> eventTimes; // イベントのタイミングを登録するリスト
 
 	// 今から何ミリ秒後に起こるイベントを追加する
 	unsigned long AddEventAtMilliSecAfterNow(std::string eventName, unsigned long milliSecFromNow, std::string eventInfo = "")

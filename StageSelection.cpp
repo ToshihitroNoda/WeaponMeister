@@ -32,8 +32,8 @@ void StageSelection::Init()
 			canMakeWeapon_ += KindofCanWeaponsMake_[i];
 			for (int j = 0; j < alreadyTrueWapon_ + canMakeWeapon_; j++)
 			{
-				production.canWeaponMake_[j] = true;
-				production.canWeaponMake_[j + production.canWeaponMake_.size() / 2] = true;
+				Production::canWeaponMake_[j] = true;
+				Production::canWeaponMake_[j + Production::canWeaponMake_.size() / 2] = true;
 			}
 			addMapList_[i] = true;
 		}

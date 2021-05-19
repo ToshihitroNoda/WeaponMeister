@@ -175,10 +175,10 @@ public:
 	void InitSpawnDic(int rangeCellX, int rangeCellY);
 
 	// ゲームオブジェクト描画
-	void DrawObjects();
+	void LoadObjects();
 
 	//★地形を描く3D対応でY平面に描く
-	void DrawTerrain();
+	void LoadTerrain();
 
 };
 
