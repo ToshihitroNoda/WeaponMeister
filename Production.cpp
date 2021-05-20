@@ -753,13 +753,13 @@ void Production::Draw()
 	{
 		std::string drawMassege = "素材数が足りないか、必要素材が選択されていません。";
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 122);
-		DrawBox(0, 0, Screen::Width, Screen::Height, gm.colorBrack, TRUE);
+		DrawBox(0, 0, Screen::width, Screen::height, gm.colorBrack, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		int DrawWidth = GetDrawStringWidth(drawMassege.c_str(), -1);
-		DrawString((Screen::Width - DrawWidth) / 2, Screen::Height / 2, drawMassege.c_str(), gm.colorWhite);
+		DrawString((Screen::width - DrawWidth) / 2, Screen::height / 2, drawMassege.c_str(), gm.colorWhite);
 		drawMassege = "Zキーで戻る";
 		DrawWidth = GetDrawStringWidth(drawMassege.c_str(), -1);
-		DrawString((Screen::Width - DrawWidth) / 2, (Screen::Height - (Screen::Height / 4)), drawMassege.c_str(), gm.colorWhite);
+		DrawString((Screen::width - DrawWidth) / 2, (Screen::height - (Screen::height / 4)), drawMassege.c_str(), gm.colorWhite);
 	}
 
 	/*-----素材選択後武器生成アニメーション-----*/
@@ -769,8 +769,8 @@ void Production::Draw()
 		{
 			for (int i = 0; i < drawItemID_.size(); i++)
 			{
-				animationX_[i] = (Screen::Width / 2) + cos((std::abs(angle_) / drawItemID_.size()) * (i + 1) * MyMath::Deg2Rad) * distToCenter_;
-				animationY_[i] = (Screen::Height / 2) + sin((std::abs(angle_) / drawItemID_.size()) * (i + 1) * MyMath::Deg2Rad) * distToCenter_;
+				animationX_[i] = (Screen::width / 2) + cos((std::abs(angle_) / drawItemID_.size()) * (i + 1) * MyMath::Deg2Rad) * distToCenter_;
+				animationY_[i] = (Screen::height / 2) + sin((std::abs(angle_) / drawItemID_.size()) * (i + 1) * MyMath::Deg2Rad) * distToCenter_;
 
 				angle_ += 10;
 			}
@@ -783,10 +783,10 @@ void Production::Draw()
 		}
 		else
 		{
-			DrawGraph(Screen::Width / 2, Screen::Height / 2, gm.image.weaponIcons[weaponID_], TRUE);
+			DrawGraph(Screen::width / 2, Screen::height / 2, gm.image.weaponIcons[weaponID_], TRUE);
 			std::string drawMassege = "Zキーで次へ";
 			int DrawWidth = GetDrawStringWidth(drawMassege.c_str(), -1);
-			DrawString((Screen::Width - DrawWidth) / 2, (Screen::Height - (Screen::Height / 4)), drawMassege.c_str(), gm.colorWhite);
+			DrawString((Screen::width - DrawWidth) / 2, (Screen::height - (Screen::height / 4)), drawMassege.c_str(), gm.colorWhite);
 
 			if (Input::GetButtonDown(PAD_INPUT_1))
 			{

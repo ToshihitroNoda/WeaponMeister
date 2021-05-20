@@ -4,7 +4,7 @@
 	//【注意！XとYの単位はマス目】
 void Map::InitSpawnDic(int rangeCellX, int rangeCellY)
 {
-	SpawnDic.clear();//一旦辞書をクリアするのでゲーム中の再設定も可(だが処理時間はかかる)
+	spawnDic_.clear();//一旦辞書をクリアするのでゲーム中の再設定も可(だが処理時間はかかる)
 	// 敵出現射程の辞書初期化
 	// ★ X = A cosθ Y = B sinθ(←楕円の方程式)
 	// ★ 楕円の半径 r = √(A×A×cosθ×cosθ + B×B×sinθ×sinθ)
@@ -24,7 +24,7 @@ void Map::InitSpawnDic(int rangeCellX, int rangeCellY)
 				//【★楕円にしたいときはこちら】SpawnDic[CellXY(x,y)] = true; //【例】SpawnDic[(3,2)] = true;
 			}
 			//【★四角形にしたいときはこちら】
-			SpawnDic[CellXY(x, y)] = true;
+			spawnDic_[CellXY(x, y)] = true;
 		}
 	}
 }
@@ -32,72 +32,72 @@ void Map::InitSpawnDic(int rangeCellX, int rangeCellY)
 // ゲームオブジェクト描画
 void Map::LoadObjects()
 {
-	if (!objectsLoad)
+	if (!objectsLoad_)
 	{
-		for (int cellX = 0; cellX < terrain.Width; cellX++)
+		for (int cellX = 0; cellX < terrain_.Width; cellX++)
 		{
-			for (int cellY = 0; cellY < terrain.Height; cellY++)
+			for (int cellY = 0; cellY < terrain_.Height; cellY++)
 			{
-				float x = (float)(cellX * CellSize) + rotaGraphShiftX; //マス目サイズ/2ずらし
-				float y = (float)(cellY * CellSize) + rotaGraphShiftY; //マス目サイズ/2ずらし
+				float x = (float)(cellX * cellSize_) + rotaGraphShiftX_; //マス目サイズ/2ずらし
+				float y = (float)(cellY * cellSize_) + rotaGraphShiftY_; //マス目サイズ/2ずらし
 				int id = -1;
-				if (cellY < (int)objects.size()
-					&& cellX < (int)objects[cellY].size())
+				if (cellY < (int)objects_.size()
+					&& cellX < (int)objects_[cellY].size())
 				{
-					id = objects[cellY][cellX];
+					id = objects_[cellY][cellX];
 				}
 				if (id == Fielditem)
 				{
 					gm.fieldItems.push_back(std::make_shared<FieldItem>(x, 30, y));
 				}
-				for (int i = 0; i < ObjectIDs.size(); i++)
+				for (int i = 0; i < objectIDs.size(); i++)
 				{
-					if (id == ObjectIDs[i])
+					if (id == objectIDs[i])
 					{
-						gm.mapObjects.push_back(std::make_shared<MapObjects>(x, 0, y, ObjectWidths[i], ObjectLengths[i], ObjectNames[i]));
+						gm.mapObjects.push_back(std::make_shared<MapObjects>(x, 0, y, objectWidths_[i], objectLengths_[i], objectNames[i]));
 					}
 				}
 			}
 		}
-		objectsLoad = true;
+		objectsLoad_ = true;
 	}
 }
 
 //★地形を描く3D対応でY平面に描く
 void Map::LoadTerrain()
 {
-	if (!terrainLoad)
+	if (!terrainLoad_)
 	{
-		for (int cellX = 0; cellX < terrain.Width; cellX++)
+		for (int cellX = 0; cellX < terrain_.Width; cellX++)
 		{
-			for (int cellY = 0; cellY < terrain.Height; cellY++)
+			for (int cellY = 0; cellY < terrain_.Height; cellY++)
 			{
-				float x = (float)(cellX * CellSize) + rotaGraphShiftX; //マス目サイズ/2ずらし
-				float y = (float)(cellY * CellSize) + rotaGraphShiftY; //マス目サイズ/2ずらし
+				float x = (float)(cellX * cellSize_) + rotaGraphShiftX_; //マス目サイズ/2ずらし
+				float y = (float)(cellY * cellSize_) + rotaGraphShiftY_; //マス目サイズ/2ずらし
 				int id = -1;
-				if (cellY < (signed)terrain.size()
-					&& cellX < (signed)terrain[cellY].size())
+				if (cellY < (signed)terrain_.size()
+					&& cellX < (signed)terrain_[cellY].size())
 				{
-					id = terrain[cellY][cellX];
+					id = terrain_[cellY][cellX];
 				}
-				if (id == terrain_grass)
+				if (id == Terrain_Grass)
 				{
 					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Grass"));
 				}
-				else if (id == terrain_sand)
+				else if (id == Tterrain_Sand)
 				{
 					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Sand"));
 				}
-				else if (id == terrain_stone)
+				else if (id == Terrain_Stone)
 				{
 					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Stone"));
 				}
-				else if (id == terrain_volcano)
+				else if (id == Terrain_Volcano)
 				{
 					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Volcano"));
 				}
 			}
 		}
-		terrainLoad = true;
+		terrainLoad_ = true;
 	}
 }

@@ -25,7 +25,7 @@ public:
 private:
 	const int WindowHeight = 280;
 	const int WindowX_ = 5;
-	const int WindowY_ = Screen::Height - WindowHeight;
+	const int WindowY_ = Screen::height - WindowHeight;
 	const int CursorX_ = 1150;
 	const int CursorY_ = 630;
 	const int DrawFlashTiming_ = 20;

@@ -45,8 +45,13 @@ void Image::Load(std::string SceneName)
 		LoadDivGraph("Resource/Image/daynum.png", 15, 15, 1, 255, 141, &dayNum[0]);
 
 		dayWindow = LoadGraph("Resource/Image/daywindow.png");
-		mapIcon	  = LoadGraph("Resource/Image/player.png");
 		mapCursor = LoadGraph("Resource/Image/cursor.png");
+		worldMap  = LoadGraph("Resource/Image/worldmap.jpg");
+		mapIcon_1 = LoadGraph("Resource/Image/mapicon_1.png");
+		mapIcon_2 = LoadGraph("Resource/Image/mapicon_2.png");
+		mapIcon_3 = LoadGraph("Resource/Image/mapicon_3.png");
+		mapIcon_4 = LoadGraph("Resource/Image/mapicon_4.png");
+		mapIcon_5 = LoadGraph("Resource/Image/mapicon_5.png");
 	}
 	else if (SceneName == "Collection")
 	{
@@ -156,15 +161,22 @@ void Image::Load(std::string SceneName)
 		sale		  = LoadGraph("Resource/Image/sale.png");
 		nextCursor	  = LoadGraph("Resource/Image/nextcursor.png");
 		itemSelection = LoadGraph("Resource/Image/itemselection.png");
+		saleBack	  = LoadGraph("Resource/Image/saleback.jpg");
+	}
+	else if (SceneName == "Report")
+	{
+		reportBack = LoadGraph("Resource/Image/reportback.jpg");
 	}
 	else if (SceneName == "GameClear")
 	{
 		textWindow = LoadGraph("Resource/Image/textwindow.png");
 		textCursor = LoadGraph("Resource/Image/textcursor.png");
+		reportBack = LoadGraph("Resource/Image/reportback.jpg");
 	}
 	else if (SceneName == "GameOver")
 	{
 		textWindow = LoadGraph("Resource/Image/textwindow.png");
 		textCursor = LoadGraph("Resource/Image/textcursor.png");
+		reportBack = LoadGraph("Resource/Image/reportback.jpg");
 	}
 }

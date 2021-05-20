@@ -48,7 +48,7 @@ public:
         collisionDetectionMiddleX_ = (GetRight() - GetLeft())   / 2; 
         collisionDetectionMiddleZ_ = (GetForward() - GetBack()) / 2;
 
-        SetMousePoint(Screen::Width / 2, Screen::Height / 2); // マウスカーソル初期化
+        SetMousePoint(Screen::width / 2, Screen::height / 2); // マウスカーソル初期化
 
         camDistanceFromPlayer_ = 250; // プレイヤからカメラまでのY平面上の距離
         camHeightFromTerrain_  = -200; // 地面からカメラまでのY方向上の高さ
@@ -70,44 +70,43 @@ public:
     void AnimationAttach(int AtnimIndex);
     void PlayAnimation(float ConstPlayTime, bool isLoop);
 
-    const float backImageWidth = 8192;
+    const float BackImageWidth = 8192;
     float backX = 0;
     
 private:
+    int mouseX_     = 0;
+    int mouseY_     = 0;
+    int prevMouseX_ = 0;
 
-    float MoveSpeedMax_          = 15; 
-    float MoveSpeed_             = 0; 
-    float MoveSpeedLateral_      = 0; 
+    float moveSpeedMax_          = 15; 
+    float moveSpeed_             = 0; 
+    float moveSpeedLateral_      = 0; 
     float camDistanceFromPlayer_ = 0;
     float camHeightFromTerrain_  = 0;
     float nowCamAngle_           = 0; 
-    float PercentAngleByCursorDis_    = 0.0f; // マウスの移動距離に応じて角度変える
-    float PercentAngleByCursorDis_BG_ = 0.0f;
+    float percentAngleByCursorDis_    = 0.0f; // マウスの移動距離に応じて角度変える
+    float percentAngleByCursorDis_BG_ = 0.0f;
     float collisionDetectionMiddleX_  = 0.0f;
     float collisionDetectionMiddleZ_  = 0.0f;
-
-    int MouseX_     = 0;
-    int MouseY_     = 0;
-    int prevMouseX_ = 0;
 
     bool doLateralMove_ = false; 
     bool canAngleInit_  = false;
     bool collectAttach_ = false;
     bool runAttach_     = false;
     bool waitAttach_    = false;
-    std::vector<bool> AttachCheck_{ collectAttach_, runAttach_, waitAttach_ };
+    std::vector<bool> attachCheck_{ collectAttach_, runAttach_, waitAttach_ };
 
-    const float IncreaseSpeed_ = 0.3f;
-    const float DecreaseSpeed_ = 0.9f;
-    const int   MaxAngle_      = 360;
-    const int   DrawStrPosX_   = 500;
-    const int   DrawStrPosY_   = 500;
+    const int   MaxAngle      = 360;
+    const int   DrawStrPosX   = 500;
+    const int   DrawStrPosY   = 500;
+    const float IncreaseSpeed = 0.3f;
+    const float DecreaseSpeed = 0.9f;
 
-    int AttachIndex_     = 0;
+    int attachIndex_     = 0;
     int prevAttachIndex_ = 0;
     int prevAnimIndex_   = 0;
-    float TotalTime_     = 0.0f;
-    float PlayTime_      = 0.0f;
+    float totalTime_     = 0.0f;
+    float playTime_      = 0.0f;
     float modelAngle_    = 0.0f;
 };
 

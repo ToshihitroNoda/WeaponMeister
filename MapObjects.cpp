@@ -13,11 +13,11 @@ void MapObjects::Update()
 
 void MapObjects::Draw()
 {
-	for (int i = 0; i < gm.map->ObjectIDs.size(); i++)
+	for (int i = 0; i < gm.map->objectIDs.size(); i++)
 	{
-		if (tag == gm.map->ObjectNames[i])
+		if (tag == gm.map->objectNames[i])
 		{
-			DrawModel(ObjectModelHandles[i]);
+			DrawModel(objectModelHandles[i]);
 		}
 	}
 	DrawHitBox();

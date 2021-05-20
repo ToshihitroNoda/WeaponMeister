@@ -44,7 +44,6 @@ public:
 	int end						{ -1 };
 	int buy						{ -1 };
 	int sale					{ -1 };
-	int mapIcon					{ -1 };
 	int mapCursor				{ -1 };
 	int collectionStart			{ -1 };
 	int collectionEnd			{ -1 };
@@ -53,8 +52,16 @@ public:
 	int titleBack				{ -1 };
 	int titleLogo				{ -1 };
 	int mainmenuBack			{ -1 };
+	int worldMap				{ -1 };
+	int mapIcon_1				{ -1 };
+	int mapIcon_2				{ -1 };
+	int mapIcon_3				{ -1 };
+	int mapIcon_4				{ -1 };
+	int mapIcon_5				{ -1 };
 	int buyBack					{ -1 };
 	int productionBack			{ -1 };
+	int saleBack				{ -1 };
+	int reportBack				{ -1 };
 
 	int skyBack					{ -1 };
 

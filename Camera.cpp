@@ -10,4 +10,4 @@ float Camera::anglePlaneCharaRotate = 0;
 
 float Camera::cameraLookAtHeight	= 0;
 
-VECTOR Camera::cameraPos = DxLib::VGet(Screen::Width / 2, Screen::Height / 2, -100.0f);
+VECTOR Camera::cameraPos = DxLib::VGet(Screen::width / 2, Screen::height / 2, -100.0f);

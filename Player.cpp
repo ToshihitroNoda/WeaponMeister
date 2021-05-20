@@ -31,40 +31,40 @@ void Player::HandleInput()
 	if (Input::GetButton(PAD_INPUT_4))				// A
 	{
 		doLateralMove_ = true;
-		MoveSpeedLateral_ += IncreaseSpeed_;
-		if (MoveSpeedLateral_ > MoveSpeedMax_)
-			MoveSpeedLateral_ = MoveSpeedMax_;		//Maxスピードで止める
-		if (!AttachCheck_[(int)State::run] && !AttachCheck_[(int)State::collect])
+		moveSpeedLateral_ += IncreaseSpeed;
+		if (moveSpeedLateral_ > moveSpeedMax_)
+			moveSpeedLateral_ = moveSpeedMax_;		//Maxスピードで止める
+		if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
 			AnimationAttach((int)State::run);
 		modelAngle_ = -(nowCamAngle_ * MyMath::Deg2Rad);
 	}
 	else if (Input::GetButton(PAD_INPUT_6))			// D
 	{
 		doLateralMove_ = true;
-		MoveSpeedLateral_ -= IncreaseSpeed_;
-		if (MoveSpeedLateral_ < -MoveSpeedMax_)
-			MoveSpeedLateral_ = -MoveSpeedMax_;		//Maxスピードで止める
-		if (!AttachCheck_[(int)State::run] && !AttachCheck_[(int)State::collect])
+		moveSpeedLateral_ -= IncreaseSpeed;
+		if (moveSpeedLateral_ < -moveSpeedMax_)
+			moveSpeedLateral_ = -moveSpeedMax_;		//Maxスピードで止める
+		if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
 			AnimationAttach((int)State::run);
 		modelAngle_ = -((nowCamAngle_ - 180) * MyMath::Deg2Rad);
 	}
 	if (Input::GetButton(PAD_INPUT_8))				// W
 	{
 		doLateralMove_ = false;
-		MoveSpeed_ += IncreaseSpeed_;
-		if (MoveSpeed_ > MoveSpeedMax_)
-			MoveSpeed_ = MoveSpeedMax_;				//Maxスピードで止める
-		if (!AttachCheck_[(int)State::run] && !AttachCheck_[(int)State::collect])
+		moveSpeed_ += IncreaseSpeed;
+		if (moveSpeed_ > moveSpeedMax_)
+			moveSpeed_ = moveSpeedMax_;				//Maxスピードで止める
+		if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
 			AnimationAttach((int)State::run);
 		modelAngle_ = -((nowCamAngle_ - 90) * MyMath::Deg2Rad);
 	}
 	else if (Input::GetButton(PAD_INPUT_5))			// S
 	{
 		doLateralMove_ = false;
-		MoveSpeed_ -= IncreaseSpeed_;
-		if (MoveSpeed_ < -MoveSpeedMax_)
-			MoveSpeed_ = -MoveSpeedMax_;			//Maxスピードで止める
-		if (!AttachCheck_[(int)State::run] && !AttachCheck_[(int)State::collect])
+		moveSpeed_ -= IncreaseSpeed;
+		if (moveSpeed_ < -moveSpeedMax_)
+			moveSpeed_ = -moveSpeedMax_;			//Maxスピードで止める
+		if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
 			AnimationAttach((int)State::run);
 		modelAngle_ = -((nowCamAngle_ + 90) * MyMath::Deg2Rad);
 	}
@@ -74,7 +74,7 @@ void Player::HandleInput()
 		!Input::GetButton(PAD_INPUT_5) &&
 		!Input::GetButton(PAD_INPUT_8))
 	{
-		if (!AttachCheck_[(int)State::wait] && !AttachCheck_[(int)State::collect])
+		if (!attachCheck_[(int)State::wait] && !attachCheck_[(int)State::collect])
 			AnimationAttach((int)State::wait);
 	}
 }
@@ -82,69 +82,69 @@ void Player::HandleInput()
 // 更新処理
 void Player::Update()
 {
-	GetMousePoint(&MouseX_, &MouseY_);				// マウスカーソル座標取得
+	GetMousePoint(&mouseX_, &mouseY_);				// マウスカーソル座標取得
 
 	// マウスがウィンドウ内にあったらカメラ移動
-	if (MouseX_ > 0 && MouseX_ < Screen::Width &&
-		MouseY_ > 0 && MouseY_ < Screen::Height)
+	if (mouseX_ > 0 && mouseX_ < Screen::width &&
+		mouseY_ > 0 && mouseY_ < Screen::height)
 	{
-		if (MouseX_ > prevMouseX_)					//　マウスが右に動いていたら
+		if (mouseX_ > prevMouseX_)					//　マウスが右に動いていたら
 		{
 
 			// マウスの移動距離を度数変換、360 : x = Screen::Width * 2 : MouseX - prevMouseX
 			//							   x(Screen::Width * 2) = 360(MouseX - prevMouseX)
 			//							   x = (360(MouseX - prevMouseX)) / (Screen::Width * 2)
 
-			PercentAngleByCursorDis_ = (float)((MaxAngle_ * (MouseX_ - prevMouseX_)) / (Screen::Width * 2));
-			PercentAngleByCursorDis_BG_ = (float)((MaxAngle_ * (prevMouseX_ - MouseX_)) / (backImageWidth / 60));
+			percentAngleByCursorDis_ = (float)((MaxAngle * (mouseX_ - prevMouseX_)) / (Screen::width * 2));
+			percentAngleByCursorDis_BG_ = (float)((MaxAngle * (prevMouseX_ - mouseX_)) / (BackImageWidth / 60));
 
 			// PercentAngleByCursor初期化
 			if (!canAngleInit_)
 			{
-				PercentAngleByCursorDis_ = 0;
-				PercentAngleByCursorDis_BG_ = 0;
+				percentAngleByCursorDis_ = 0;
+				percentAngleByCursorDis_BG_ = 0;
 				canAngleInit_ = true;
 			}
 
-			nowCamAngle_ += PercentAngleByCursorDis_;	// 度数分足す
+			nowCamAngle_ += percentAngleByCursorDis_;	// 度数分足す
 
-			backX += PercentAngleByCursorDis_BG_;
-			if (backX <= -backImageWidth + Screen::Width)
+			backX += percentAngleByCursorDis_BG_;
+			if (backX <= -BackImageWidth + Screen::width)
 				backX = 0.0f;
 		}
-		else if (MouseX_ < prevMouseX_)					// マウスが左に動いていたら
+		else if (mouseX_ < prevMouseX_)					// マウスが左に動いていたら
 		{
-			PercentAngleByCursorDis_ = (float)((MaxAngle_ * (prevMouseX_ - MouseX_)) / (Screen::Width * 2));
-			PercentAngleByCursorDis_BG_ = (float)((MaxAngle_ * (prevMouseX_ - MouseX_)) / (backImageWidth / 60));
+			percentAngleByCursorDis_ = (float)((MaxAngle * (prevMouseX_ - mouseX_)) / (Screen::width * 2));
+			percentAngleByCursorDis_BG_ = (float)((MaxAngle * (prevMouseX_ - mouseX_)) / (BackImageWidth / 60));
 
 			// PercentAngleByCursor初期化
 			if (!canAngleInit_)
 			{
-				PercentAngleByCursorDis_ = 0;
-				PercentAngleByCursorDis_BG_ = 0;
+				percentAngleByCursorDis_ = 0;
+				percentAngleByCursorDis_BG_ = 0;
 				canAngleInit_ = true;
 			}
 
-			nowCamAngle_ -= PercentAngleByCursorDis_;
+			nowCamAngle_ -= percentAngleByCursorDis_;
 
-			backX += PercentAngleByCursorDis_BG_;
-			if (backX > backImageWidth)
+			backX += percentAngleByCursorDis_BG_;
+			if (backX > BackImageWidth)
 				backX = 0.0f;
 		}
 	}
 
 	// カメラが360度で1周するように
-	if (nowCamAngle_ <= 0)		  nowCamAngle_ = (float)MaxAngle_ - 1;
-	if (nowCamAngle_ >= MaxAngle_) nowCamAngle_ = 1;
+	if (nowCamAngle_ <= 0)		  nowCamAngle_ = (float)MaxAngle - 1;
+	if (nowCamAngle_ >= MaxAngle) nowCamAngle_ = 1;
 
-	prevMouseX_ = MouseX_;								 // マウスカーソル座標を保存
+	prevMouseX_ = mouseX_;								 // マウスカーソル座標を保存
 
 	vx = 0;												 // x方向移動速度
 	vy = 0;												 // y方向移動速度
 	vz = 0;												 // z方向移動速度
 
-	MoveSpeed_ *= DecreaseSpeed_;					 // 移動速度も減速する
-	MoveSpeedLateral_ *= DecreaseSpeed_;
+	moveSpeed_ *= DecreaseSpeed;					 // 移動速度も減速する
+	moveSpeedLateral_ *= DecreaseSpeed;
 
 	// 入力を受けての処理 
 	HandleInput();
@@ -152,13 +152,13 @@ void Player::Update()
 	// ↓進行方向角度をX方向とZ方向の速度に変える
 	if (!doLateralMove_)
 	{
-		vx = (float)std::cos((nowCamAngle_ + MaxAngle_ / 2) * MyMath::Deg2Rad) * MoveSpeed_;
-		vz = (float)std::sin((nowCamAngle_ + MaxAngle_ / 2) * MyMath::Deg2Rad) * MoveSpeed_;
+		vx = (float)std::cos((nowCamAngle_ + MaxAngle / 2) * MyMath::Deg2Rad) * moveSpeed_;
+		vz = (float)std::sin((nowCamAngle_ + MaxAngle / 2) * MyMath::Deg2Rad) * moveSpeed_;
 	}
 	else
 	{
-		vx = (float)std::cos((nowCamAngle_ + MaxAngle_ - (MaxAngle_ / 4)) * MyMath::Deg2Rad) * MoveSpeedLateral_;
-		vz = (float)std::sin((nowCamAngle_ + MaxAngle_ - (MaxAngle_ / 4)) * MyMath::Deg2Rad) * MoveSpeedLateral_;
+		vx = (float)std::cos((nowCamAngle_ + MaxAngle - (MaxAngle / 4)) * MyMath::Deg2Rad) * moveSpeedLateral_;
+		vz = (float)std::sin((nowCamAngle_ + MaxAngle - (MaxAngle / 4)) * MyMath::Deg2Rad) * moveSpeedLateral_;
 	}
 
 
@@ -177,9 +177,9 @@ void Player::Update()
 	//カメラはプレイヤの方を見る
 	Camera::LookAt(gm.player->x, gm.player->y + 100, gm.player->z);
 
-	if (AttachCheck_[(int)State::collect])
+	if (attachCheck_[(int)State::collect])
 		PlayAnimation(0.5f, FALSE);
-	else if (AttachCheck_[(int)State::run])
+	else if (attachCheck_[(int)State::run])
 		PlayAnimation(0.6f, TRUE);
 	else
 		PlayAnimation(0.07f, TRUE);
@@ -224,7 +224,7 @@ void  Player::OnCollision(std::shared_ptr<GameObject> other)
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
-			if (!AttachCheck_[(int)State::collect])
+			if (!attachCheck_[(int)State::collect])
 				AnimationAttach((int)State::collect);
 			other->isDead = true;
 		}
@@ -271,48 +271,48 @@ void  Player::OnCollision(std::shared_ptr<GameObject> other)
 
 void Player::AnimationAttach(int AnimIndex)
 {
-	AttachCheck_[prevAnimIndex_] = false;			 // 前回立てたフラグの初期化
+	attachCheck_[prevAnimIndex_] = false;			 // 前回立てたフラグの初期化
 
 	MV1DetachAnim(gm.image.Player, prevAttachIndex_);	 // アニメーションのデタッチ
 
 	prevAnimIndex_	 = AnimIndex;						 // 次フラグを初期化するために保存
-	prevAttachIndex_ = AttachIndex_;				 // 今のアニメを次デタッチするために保存
+	prevAttachIndex_ = attachIndex_;				 // 今のアニメを次デタッチするために保存
 
 	/*-----アタッチ処理-----*/
-	AttachIndex_ = MV1AttachAnim(gm.image.Player, AnimIndex, -1, FALSE);
-	TotalTime_	 = MV1GetAttachAnimTotalTime(gm.image.Player, AttachIndex_);
-	PlayTime_	 = 0.0f;
-	MV1SetAttachAnimTime(gm.image.Player, AttachIndex_, PlayTime_);
+	attachIndex_ = MV1AttachAnim(gm.image.Player, AnimIndex, -1, FALSE);
+	totalTime_	 = MV1GetAttachAnimTotalTime(gm.image.Player, attachIndex_);
+	playTime_	 = 0.0f;
+	MV1SetAttachAnimTime(gm.image.Player, attachIndex_, playTime_);
 
 	/*---------------*/
 
-	AttachCheck_[AnimIndex] = true;					 // アニメーションによってフラグを立てる	
+	attachCheck_[AnimIndex] = true;					 // アニメーションによってフラグを立てる	
 }
 
 void Player::PlayAnimation(float ConstPlayTime, bool isLoop)
 {
 	if (isLoop)
 	{
-		PlayTime_ += ConstPlayTime;
+		playTime_ += ConstPlayTime;
 
-		if (PlayTime_ >= TotalTime_)
+		if (playTime_ >= totalTime_)
 		{
-			PlayTime_ = 0.0f;
+			playTime_ = 0.0f;
 		}
-		MV1SetAttachAnimTime(gm.image.Player, AttachIndex_, PlayTime_);
+		MV1SetAttachAnimTime(gm.image.Player, attachIndex_, playTime_);
 	}
 	else
 	{
-		PlayTime_ += ConstPlayTime;
+		playTime_ += ConstPlayTime;
 
-		if (PlayTime_ >= TotalTime_)
+		if (playTime_ >= totalTime_)
 		{
-			for (int i = 0; i < AttachCheck_.size(); i++)
+			for (int i = 0; i < attachCheck_.size(); i++)
 			{
-				AttachCheck_[i] = false;
+				attachCheck_[i] = false;
 			}
 		}
 
-		MV1SetAttachAnimTime(gm.image.Player, AttachIndex_, PlayTime_);
+		MV1SetAttachAnimTime(gm.image.Player, attachIndex_, playTime_);
 	}
 }

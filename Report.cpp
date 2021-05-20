@@ -62,6 +62,8 @@ void Report::Update()
 
 void Report::Draw()
 {
+	DrawGraph(0, 0, gm.image.reportBack, TRUE);
+
 	SetFontSize(FontSize_);
 	if (pressCount_ >= prevDraw_)
 	{

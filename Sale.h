@@ -90,8 +90,8 @@ private:
 	
 	int scrollCount_ = 0;
 
-	std::vector<int> PouchDrawErea_;
-	std::vector<int> NowDrawPosOnPouch_;
+	std::vector<int> pouchDrawErea_;
+	std::vector<int> nowDrawPosOnPouch_;
 };
 
 #endif

@@ -25,7 +25,7 @@ void StageSelection::Init()
 	else
 		doNewStageAdd_ = false;
 
-	for (int i = 0; i < (unsigned)nowMapCount_.size(); i++)
+	for (int i = 0; i < nowMapCount_.size(); i++)
 	{
 		if (mapCount >= nowMapCount_[i])
 		{
@@ -40,10 +40,7 @@ void StageSelection::Init()
 	}
 
 	mapIcons_.resize(5);
-	for (int i = 0; i < mapIcons_.size(); i++)
-	{
-		mapIcons_[i] = gm.image.mapIcon;
-	}
+	mapIcons_ = { gm.image.mapIcon_1, gm.image.mapIcon_2, gm.image.mapIcon_3, gm.image.mapIcon_4, gm.image.mapIcon_5 };
 }
 
 void StageSelection::Final()
@@ -56,13 +53,13 @@ void StageSelection::Update()
 {
 	if (Input::GetButtonDown(PAD_INPUT_1))
 	{
-		nowLoadingDraw_ = true;	
+		nowLoadingDraw_ = true;
 	}
 	if (nextSceneLoad_)
 	{
 		for (int i = 0; i < mapIconPostions_.size() / 2; i++)
 		{
-			if (cursorX_ == mapIconPostions_[i] - CursorXDistMapX_ && cursorY_ == mapIconPostions_[i + (mapIconPostions_.size() / 2)] - CursorYDistMapY_)
+			if (cursorX_ == mapIconPostions_[i])
 			{
 				stageNum = stageNums_[i];
 			}
@@ -72,72 +69,55 @@ void StageSelection::Update()
 
 	if (Input::GetButtonDown(PAD_INPUT_RIGHT))
 	{
-		for (int i = 0; i < (unsigned)nowMapCount_.size(); i++)
+		if (mapCount > 1)
 		{
-			if (mapCount == nowMapCount_[i])
+			for (int i = 0; i < mapIconPostions_.size() / 2; i++)
 			{
-				if (cursorX_ != mapIconPostions_[i + 1] - CursorXDistMapX_)
+				if (cursorX_ == mapIconPostions_[i]) // 今どのマップ選んでるか
 				{
-					cursorX_ += MoveCursorDist;
+					if (mapIconPostions_[i + 1] > mapIconPostions_[i]) // 今選んでるマップより右にあるのを選択しようとしてたら
+					{
+						if (addMapList_[i])
+						{
+							cursorX_ = mapIconPostions_[i + 1];
+							break;
+						}
+					}
 				}
 			}
 		}
 	}
 	if (Input::GetButtonDown(PAD_INPUT_LEFT))
 	{
-		for (int i = 0; i < (unsigned)nowMapCount_.size(); i++)
+		if (mapCount > 1 && cursorX_ != mapIconPostions_[0] && cursorX_ != mapIconPostions_[3])
 		{
-			if (mapCount == nowMapCount_[i])
+			for (int i = 0; i < mapIconPostions_.size() / 2; i++)
 			{
-				if (mapCount >= nowMapCount_[nowMapCount_.size() / 2])
+				if (cursorX_ == mapIconPostions_[i])	// 今どのマップ選んでるか
 				{
-					if (cursorX_ != mapIconPostions_[3] - CursorXDistMapX_)
-					{
-						cursorX_ -= MoveCursorDist;
-					}
-				}
-				if (cursorX_ != mapIconPostions_[0] - CursorXDistMapX_)
-				{
-					cursorX_ -= MoveCursorDist;
+					if (mapIconPostions_[i - 1] < mapIconPostions_[i]) // 今選んでるマップより左にあるのを選択しようとしてたら
+						cursorX_ = mapIconPostions_[i - 1];
 				}
 			}
 		}
 	}
 	if (Input::GetButtonDown(PAD_INPUT_UP))
 	{
-		if (mapCount == 4)
+		if (cursorX_ == mapIconPostions_[3] || cursorX_ == mapIconPostions_[4])
 		{
-			if (cursorY_ == Map4IconPosY_)
-			{
-				cursorY_ = Map1IconPosY_;
-				cursorX_ = Map1IconPosX_ - CursorXDistMapX_;
-			}
-		}
-		else if (mapCount == 5)
-		{
-			if (cursorY_ == Map5IconPosY_)
-			{
-				cursorY_ = Map1IconPosY_;
-				cursorX_ = Map1IconPosX_ - CursorXDistMapX_;
-			}
+			cursorY_ = Map1IconPosY_;
+			cursorX_ = Map1IconPosX_;
+
 		}
 	}
 	if (Input::GetButtonDown(PAD_INPUT_DOWN))
 	{
-		if (mapCount == 4)
+		if (mapCount > 3)
 		{
-			if (cursorY_ == Map1IconPosY_)
+			if (cursorY_ < Map5IconPosY_)
 			{
-				cursorY_ = Map4IconPosX_;
-				cursorX_ = Map4IconPosY_ - CursorXDistMapX_;
-			}
-		}
-		else if (mapCount == 5)
-		{
-			if (cursorY_ == Map1IconPosY_)
-			{
-				cursorY_ = Map4IconPosX_;
-				cursorX_ = Map4IconPosY_ - CursorXDistMapX_;
+				cursorY_ = Map4IconPosY_;
+				cursorX_ = Map4IconPosX_;
 			}
 		}
 	}
@@ -145,28 +125,25 @@ void StageSelection::Update()
 
 void StageSelection::Draw()
 {
-	DrawGraph(0, 0, gm.image.dayWindow, TRUE);
-	DrawGraph(0, 0, gm.image.dayNum[Adv::day], TRUE);
-
-	if (doNewStageAdd_)
-	{
-		DrawString(0, 60, "newStage!!", gm.colorWhite);
-	}
+	DrawGraph(0, 0, gm.image.worldMap, TRUE);
 
 	for (int i = 0; i < ((unsigned)mapIconPostions_.size() / 2) - 1; i++)
 	{
-		DrawGraph(mapIconPostions_[0], mapIconPostions_[mapIconPostions_.size() / 2], mapIcons_[i], TRUE);
+		DrawGraph(mapIconPostions_[0], mapIconPostions_[mapIconPostions_.size() / 2], mapIcons_[0], TRUE);
 		if (addMapList_[i])
 		{
-			DrawGraph(mapIconPostions_[i + 1], mapIconPostions_[(i + 1) + (mapIconPostions_.size() / 2)], mapIcons_[i], TRUE);
+			DrawGraph(mapIconPostions_[i + 1], mapIconPostions_[(i + 1) + (mapIconPostions_.size() / 2)], mapIcons_[i + 1], TRUE);
 		}
 	}
+
+	DrawGraph(0, 0, gm.image.dayWindow, TRUE);
+	DrawGraph(0, 0, gm.image.dayNum[Adv::day], TRUE);
 
 	DrawGraph(cursorX_, cursorY_, gm.image.mapCursor, TRUE);
 
 	if (nowLoadingDraw_)
 	{
-		DrawBox(0, 0, Screen::Width, Screen::Height, gm.colorBrack, TRUE);
+		DrawBox(0, 0, Screen::width, Screen::height, gm.colorBrack, TRUE);
 		DrawString(900, 600, "Now Loading...", gm.colorWhite);
 		nextSceneLoad_ = true;
 	}

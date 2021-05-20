@@ -43,7 +43,7 @@ public:
 	void Draw();
 	void OnCollision(std::shared_ptr<GameObject> other);
 
-	bool isOnCollisionPlayer_ = false;
+	bool isOnCollisionPlayer = false;
 };
 
 #endif 

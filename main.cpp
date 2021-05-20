@@ -45,8 +45,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetWaitVSyncFlag(GetRefreshRate() == TargetFPS ? TRUE : FALSE);
 
 	// 画面モードの設定
-	SetWindowSize(Screen::Width, Screen::Height);// ウィンドウサイズ1280×720(こことSetGraphModeのサイズが異なると画像がゆがむ)
-	SetGraphMode(Screen::Width, Screen::Height, 32); // 画面サイズ1280×720のカラービット数32ビットで起動
+	SetWindowSize(Screen::width, Screen::height);// ウィンドウサイズ1280×720(こことSetGraphModeのサイズが異なると画像がゆがむ)
+	SetGraphMode(Screen::width, Screen::height, 32); // 画面サイズ1280×720のカラービット数32ビットで起動
 	SetMainWindowText("WeaponMeister");//この行でエラーになったら【設定】マルチバイト文字セットが間違ってるかも
 	ChangeWindowMode(TRUE);//フルスクリーン表示かウィンドウ表示か
 	SetAlwaysRunFlag(TRUE); // ウィンドウが非アクティブでも動作させる

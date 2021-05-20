@@ -26,7 +26,7 @@ public:
 	static bool LoadEnd_;
 private:
 
-	static int LineWidth_;
+	static int lineWidth_;
 	static std::string filePath_;
 
 	static std::vector<int> ResourceNums_;
@@ -49,6 +49,7 @@ private:
 	static std::string CName_;
 	static bool NowBreak_;
 	static bool DrawSkip_;
+	static bool is_message_text_;
 };
 
 #endif

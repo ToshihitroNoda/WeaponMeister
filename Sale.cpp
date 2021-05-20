@@ -16,10 +16,10 @@ void Sale::Init()
 	for (int i = 0; i < gm.weapons.size(); i++)
 	{
 		weaponPosOnPouch_.push_back(i);
-		if (PouchDrawErea_.size() < DrawMaxPouchSize_)
-			PouchDrawErea_.push_back(gm.weapons[i]);
-		if (NowDrawPosOnPouch_.size() < DrawMaxPouchSize_)
-			NowDrawPosOnPouch_.push_back(i);
+		if (pouchDrawErea_.size() < DrawMaxPouchSize_)
+			pouchDrawErea_.push_back(gm.weapons[i]);
+		if (nowDrawPosOnPouch_.size() < DrawMaxPouchSize_)
+			nowDrawPosOnPouch_.push_back(i);
 	}
 
 	// 価格の取得、計算
@@ -82,7 +82,7 @@ void Sale::Update()
 		{
 			if (gm.weapons.size() > DrawMaxPouchSize_)
 			{
-				if (PouchDrawErea_.size() > WindowX_CellSize_)
+				if (pouchDrawErea_.size() > WindowX_CellSize_)
 				{
 					prevCursorY_ = cursorY_;
 					selectIconNum_ += ItemID_ByLineBreak_ItemSelect_;
@@ -91,8 +91,8 @@ void Sale::Update()
 					scrollCount_++;
 					// 描画するアイテムのvectorの最初の一行を削除し、後ろに一行足す
 					// まず先頭の一行の削除
-					PouchDrawErea_.erase(PouchDrawErea_.begin(), PouchDrawErea_.begin() + WindowX_CellSize_);
-					NowDrawPosOnPouch_.erase(NowDrawPosOnPouch_.begin(), NowDrawPosOnPouch_.begin() + WindowX_CellSize_);
+					pouchDrawErea_.erase(pouchDrawErea_.begin(), pouchDrawErea_.begin() + WindowX_CellSize_);
+					nowDrawPosOnPouch_.erase(nowDrawPosOnPouch_.begin(), nowDrawPosOnPouch_.begin() + WindowX_CellSize_);
 					// 後ろに一行追加。
 					/// iの初期値		: 表示できる最大数 + 追加する列数 - 列数
 					/// for文の回る条件 : 表示できる最大数 + 追加する列数まで
@@ -102,8 +102,8 @@ void Sale::Update()
 					{
 						if (i < gm.weapons.size())
 						{
-							PouchDrawErea_.push_back(gm.weapons[i]);
-							NowDrawPosOnPouch_.push_back(weaponPosOnPouch_[i]);
+							pouchDrawErea_.push_back(gm.weapons[i]);
+							nowDrawPosOnPouch_.push_back(weaponPosOnPouch_[i]);
 						}
 					}
 				}
@@ -127,27 +127,27 @@ void Sale::Update()
 				selectIconNum_ -= ItemID_ByLineBreak_ItemSelect_;
 
 				scrollCount_--;
-				if (PouchDrawErea_.size() == DrawMaxPouchSize_)		// 描画されてるウィンドウが埋まってる場合
+				if (pouchDrawErea_.size() == DrawMaxPouchSize_)		// 描画されてるウィンドウが埋まってる場合
 				{
-					PouchDrawErea_.erase(PouchDrawErea_.end() - WindowX_CellSize_, PouchDrawErea_.end());
-					NowDrawPosOnPouch_.erase(NowDrawPosOnPouch_.end() - WindowX_CellSize_, NowDrawPosOnPouch_.end());
+					pouchDrawErea_.erase(pouchDrawErea_.end() - WindowX_CellSize_, pouchDrawErea_.end());
+					nowDrawPosOnPouch_.erase(nowDrawPosOnPouch_.end() - WindowX_CellSize_, nowDrawPosOnPouch_.end());
 					// 描画するアイテムのvectorの最初に描画されてない一行分追加
 					for (int i = WindowX_CellSize_; i > 0; i--)
 					{
-						PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.weapons[scrollCount_ * WindowX_CellSize_ + i - 1]);
-						NowDrawPosOnPouch_.begin() = NowDrawPosOnPouch_.insert(NowDrawPosOnPouch_.begin(), weaponPosOnPouch_[scrollCount_ * WindowX_CellSize_ + i - 1]);
+						pouchDrawErea_.begin() = pouchDrawErea_.insert(pouchDrawErea_.begin(), gm.weapons[scrollCount_ * WindowX_CellSize_ + i - 1]);
+						nowDrawPosOnPouch_.begin() = nowDrawPosOnPouch_.insert(nowDrawPosOnPouch_.begin(), weaponPosOnPouch_[scrollCount_ * WindowX_CellSize_ + i - 1]);
 					}
 				}
-				else if (PouchDrawErea_.size() > DrawMaxPouchSize_ - WindowX_CellSize_ &&
-					PouchDrawErea_.size() < DrawMaxPouchSize_)		// 描画されてるウィンドウの最後の一行に空きがある場合
+				else if (pouchDrawErea_.size() > DrawMaxPouchSize_ - WindowX_CellSize_ &&
+					pouchDrawErea_.size() < DrawMaxPouchSize_)		// 描画されてるウィンドウの最後の一行に空きがある場合
 				{
-					PouchDrawErea_.erase(PouchDrawErea_.end() - (PouchDrawErea_.size() % WindowX_CellSize_), PouchDrawErea_.end());
-					NowDrawPosOnPouch_.erase(NowDrawPosOnPouch_.end() - (NowDrawPosOnPouch_.size() % WindowX_CellSize_), NowDrawPosOnPouch_.end());
+					pouchDrawErea_.erase(pouchDrawErea_.end() - (pouchDrawErea_.size() % WindowX_CellSize_), pouchDrawErea_.end());
+					nowDrawPosOnPouch_.erase(nowDrawPosOnPouch_.end() - (nowDrawPosOnPouch_.size() % WindowX_CellSize_), nowDrawPosOnPouch_.end());
 					// 描画するアイテムのvectorの最初に描画されてない一行分追加
 					for (int i = WindowX_CellSize_; i > 0; i--)
 					{
-						PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.weapons[scrollCount_ * WindowX_CellSize_ + i - 1]);
-						NowDrawPosOnPouch_.begin() = NowDrawPosOnPouch_.insert(NowDrawPosOnPouch_.begin(), weaponPosOnPouch_[scrollCount_ * WindowX_CellSize_ + i - 1]);
+						pouchDrawErea_.begin() = pouchDrawErea_.insert(pouchDrawErea_.begin(), gm.weapons[scrollCount_ * WindowX_CellSize_ + i - 1]);
+						nowDrawPosOnPouch_.begin() = nowDrawPosOnPouch_.insert(nowDrawPosOnPouch_.begin(), weaponPosOnPouch_[scrollCount_ * WindowX_CellSize_ + i - 1]);
 					}
 				}
 				else												// 描画されてるウィンドウの下何行かが空いている場合
@@ -155,8 +155,8 @@ void Sale::Update()
 					// 描画するアイテムのvectorの最初に描画されてない一行分追加
 					for (int i = WindowX_CellSize_; i > 0; i--)
 					{
-						PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.weapons[scrollCount_ * WindowX_CellSize_ + i - 1]);
-						NowDrawPosOnPouch_.begin() = NowDrawPosOnPouch_.insert(NowDrawPosOnPouch_.begin(), weaponPosOnPouch_[scrollCount_ * WindowX_CellSize_ + i - 1]);
+						pouchDrawErea_.begin() = pouchDrawErea_.insert(pouchDrawErea_.begin(), gm.weapons[scrollCount_ * WindowX_CellSize_ + i - 1]);
+						nowDrawPosOnPouch_.begin() = nowDrawPosOnPouch_.insert(nowDrawPosOnPouch_.begin(), weaponPosOnPouch_[scrollCount_ * WindowX_CellSize_ + i - 1]);
 					}
 				}
 			}
@@ -214,6 +214,7 @@ void Sale::Update()
 
 void Sale::Draw()
 {
+	DrawGraph(0, 0, gm.image.saleBack, TRUE);
 	DrawGraph(MoneyWindowX_, MoneyWindowY_, gm.image.moneyWindow, TRUE);
 	DrawGraph(PouchWindowX_, PouchWindowY_, gm.image.itemWindow, TRUE);
 	DrawGraph(DetailWindowX_, DetailWindowY_, gm.image.detailWindow, TRUE);
@@ -227,9 +228,9 @@ void Sale::Draw()
 	{
 		for (int x = 0; x < WindowX_CellSize_; x++)
 		{
-			if ((signed)(x + (y * WindowX_CellSize_)) < PouchDrawErea_.size())
+			if ((signed)(x + (y * WindowX_CellSize_)) < pouchDrawErea_.size())
 			{
-				DrawGraph(itemX_ + x * WindowCellSize_X_, itemY_ + y * WindowCellSize_Y_, gm.image.weaponIcons[PouchDrawErea_[x + (y * WindowX_CellSize_)]], TRUE);
+				DrawGraph(itemX_ + x * WindowCellSize_X_, itemY_ + y * WindowCellSize_Y_, gm.image.weaponIcons[pouchDrawErea_[x + (y * WindowX_CellSize_)]], TRUE);
 			}
 		}
 	}
@@ -239,9 +240,9 @@ void Sale::Draw()
 	int shadowX = 0;
 	for (int i = 0; i < selectWeaponPos_.size(); i++)
 	{
-		for (int j = 0; j < NowDrawPosOnPouch_.size(); j++)
+		for (int j = 0; j < nowDrawPosOnPouch_.size(); j++)
 		{
-			if (selectWeaponPos_[i] == NowDrawPosOnPouch_[j])
+			if (selectWeaponPos_[i] == nowDrawPosOnPouch_[j])
 			{
 				if (j < ItemID_ByLineBreak_ItemSelect_)
 				{

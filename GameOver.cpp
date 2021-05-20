@@ -31,8 +31,6 @@ void GameOver::Update()
 			if (Input::GetButtonDown(PAD_INPUT_1))
 			{
 				ADVSimpleScript::MassegeCount++;
-				ADVSimpleScript::Update();
-				Sleep(0.3f * 1000);			// ˜A‘Å‚µ‚Ä‚à•s‹ï‡‚ª‹N‚±‚ç‚È‚¢‚æ‚¤‚É0.3•bˆ—’âŽ~
 			}
 
 			if (ADVSimpleScript::MassegeCount >= ADVSimpleScript::massegeList.size())
@@ -70,11 +68,12 @@ void GameOver::Draw()
 	}
 	else
 	{
+		DrawGraph(0, 0, gm.image.reportBack, TRUE);
 		SetFontSize(FontSize_);
 		DrawString(TitleX_, TitleY_, "‰c‹ÆŠúŠÔ : ", gm.colorWhite);
 		std::stringstream ss;
 		ss << Adv::day;
-		DrawString(DayX_,DayY_,(ss.str() + " “ú ").c_str(), gm.colorWhite);
+		DrawString(DayX_, DayY_, (ss.str() + " “ú ").c_str(), gm.colorWhite);
 		DrawString(NextMassegeX_, NextMassegeY_, "ZƒL[‚ÅI—¹", gm.colorWhite);
 		SetFontSize(gm.DefaultFontSize_);
 	}

@@ -30,9 +30,29 @@ public:
 	static int mapCount;
 
 private:
+	const int Map1IconPosX_ = 200;
+	const int Map1IconPosY_ = 130;
+	const int Map2IconPosX_ = 600;
+	const int Map2IconPosY_ = 160;
+	const int Map3IconPosX_ = 1000;
+	const int Map3IconPosY_ = 160;
+	const int Map4IconPosX_ = 360;
+	const int Map4IconPosY_ = 440;
+	const int Map5IconPosX_ = 800;
+	const int Map5IconPosY_ = 360;
 
-	int cursorX_	= 120;
-	int cursorY_	= 300;
+	const int NewStageAddDayDiameter_ = 3; // これで割り切れる日に新しいステージ追加
+	const int alreadyTrueWapon_       = 2; // 既に作れるようになっている武器は配列の最初から2つ目まで
+
+	const int CursorXDistMapX_ = 80;
+	const int CursorYDistMapY_ = 0;
+
+	const int MoveCursorDist = 400;
+
+	const int CsvSkipCell_ = 2;
+
+	int cursorX_	= Map1IconPosX_;
+	int cursorY_	= Map1IconPosY_;
 	int canMakeWeapon_ = 0;
 
 	bool addMap2_			= false;
@@ -42,27 +62,6 @@ private:
 	bool doNewStageAdd_		= false;
 	bool nextSceneLoad_		= false;
 	bool nowLoadingDraw_	= false;
-
-	const int NewStageAddDayDiameter_ = 3; // これで割り切れる日に新しいステージ追加
-	const int alreadyTrueWapon_ = 2; // 既に作れるようになっている武器は配列の最初から2つ目まで
-
-	const int Map1IconPosX_ = 200;
-	const int Map1IconPosY_ = 300;
-	const int Map2IconPosX_ = 600;
-	const int Map2IconPosY_ = 300;
-	const int Map3IconPosX_ = 1000;
-	const int Map3IconPosY_ = 300;
-	const int Map4IconPosX_ = 400;
-	const int Map4IconPosY_ = 500;
-	const int Map5IconPosX_ = 800;
-	const int Map5IconPosY_ = 500;
-
-	const int CursorXDistMapX_ = 80;
-	const int CursorYDistMapY_ = 0;
-
-	const int MoveCursorDist   = 400;
-
-	const int CsvSkipCell_	   = 2;
 
 	std::vector<bool> addMapList_{ addMap2_, addMap3_, addMap4_, addMap5_ };
 

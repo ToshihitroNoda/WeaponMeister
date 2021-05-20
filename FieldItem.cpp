@@ -9,7 +9,7 @@ void FieldItem::Init()
 
 void FieldItem::Update()
 {
-	isOnCollisionPlayer_ = false;
+	isOnCollisionPlayer = false;
 }
 
 void FieldItem::Draw()
@@ -25,6 +25,6 @@ void FieldItem::OnCollision(std::shared_ptr<GameObject> other)
 {
 	if (other->tag == "Player")
 	{
-		isOnCollisionPlayer_ = true;
+		isOnCollisionPlayer = true;
 	}
 }

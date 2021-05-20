@@ -14,7 +14,7 @@ std::vector<int> ADVSimpleScript::CX_;
 std::vector<int> ADVSimpleScript::CY_;
 std::vector<int> ADVSimpleScript::CDrawID_;
 
-int ADVSimpleScript::LineWidth_ = 0;
+int ADVSimpleScript::lineWidth_ = 0;
 int ADVSimpleScript::ResourceNum_ = -1;
 int ADVSimpleScript::MassegeX_ = 0;
 int ADVSimpleScript::MassegeY_ = 0;
@@ -33,11 +33,12 @@ std::string ADVSimpleScript::CName_ = "";
 bool ADVSimpleScript::NowBreak_ = false;
 bool ADVSimpleScript::DrawSkip_ = false;
 bool ADVSimpleScript::LoadEnd_ = false;
+bool ADVSimpleScript::is_message_text_ = false;
 
 void ADVSimpleScript::Init()
 {
 	MassegeCount  = 0;
-	LineWidth_	  = 0;
+	lineWidth_	  = 0;
 	ResourceNum_  = -1;
 	MassegeX_	  = 0;
 	MassegeY_	  = 0;
@@ -115,203 +116,209 @@ void ADVSimpleScript::Update()
 {
 	if (MassegeCount < massegeList.size())
 	{
-		/*------リソースファイルの読み込み-----*/
-
-		if (massegeList[MassegeCount] == "ResourceLoad")
+		is_message_text_ = false;
+		while (!is_message_text_)
 		{
-			DrawSkip_ = true;
-			ResourceNum_++;
-			ResourceNums_.push_back(ResourceNum_);
-			MassegeCount++;
-			if (massegeList[MassegeCount] == "Image")
+			/*------リソースファイルの読み込み-----*/
+
+			if (massegeList[MassegeCount] == "ResourceLoad")
 			{
+				DrawSkip_ = true;
+				ResourceNum_++;
+				ResourceNums_.push_back(ResourceNum_);
 				MassegeCount++;
-				ResourcePath_.push_back(massegeList[MassegeCount]);
-				ResourceNums_[ResourceNum_] = LoadGraph(ResourcePath_.back().c_str());
-			}
-			else if (massegeList[MassegeCount] == "Music")
-			{
-				MassegeCount++;
-				ResourcePath_.push_back(massegeList[MassegeCount]);
-				ResourceNums_[ResourceNum_] = LoadSoundMem(ResourcePath_.back().c_str());
-				PrevPlayMusic = ResourceNums_[ResourceNum_];
-			}
-			MassegeCount++;
-		}
-
-		/*-------------------------------------*/
-
-		/*-----BGMの再生-----*/
-
-		else if (massegeList[MassegeCount] == "PlayBGM")
-		{
-			DrawSkip_ = true;
-			MassegeCount++;
-			int playMusic = std::stoi(massegeList[MassegeCount].c_str());
-			StopSoundMem(PrevPlayMusic);
-			PlaySoundMem(playMusic, DX_PLAYTYPE_LOOP);
-			PrevPlayMusic = playMusic;
-			MassegeCount++;
-		}
-
-		/*-------------------*/
-
-		/*-----背景の座標取得-----*/
-
-		else if (massegeList[MassegeCount] == "BGX")
-		{
-			DrawSkip_ = true;
-			MassegeCount++;
-			BGX_ = std::stoi(massegeList[MassegeCount]);
-			MassegeCount++;
-		}
-		else if (massegeList[MassegeCount] == "BGY")
-		{
-			DrawSkip_ = true;
-			MassegeCount++;
-			BGY_ = std::stoi(massegeList[MassegeCount]);
-			MassegeCount++;
-		}
-
-		/*------------------------*/
-
-		/*-----背景の描画-----*/
-
-		else if (massegeList[MassegeCount] == "BGDraw")
-		{
-			DrawSkip_ = true;
-			MassegeCount++;
-			BGID_ = std::stoi(massegeList[MassegeCount]);
-			MassegeCount++;
-		}
-
-		/*--------------------*/
-
-		/*-----メッセージの文字列座標取得-----*/
-
-		else if (massegeList[MassegeCount] == "MassegeX")
-		{
-			DrawSkip_ = true;
-			MassegeCount++;
-			MassegeX_ = std::stoi(massegeList[MassegeCount]);
-			MassegeCount++;
-		}
-		else if (massegeList[MassegeCount] == "MassegeY")
-		{
-			DrawSkip_ = true;
-			MassegeCount++;
-			MassegeY_ = std::stoi(massegeList[MassegeCount]);
-			MassegeCount++;
-		}
-
-		/*------------------------------------*/
-
-		/*-----メッセージ以外の文字列座標取得-----*/
-
-		else if (massegeList[MassegeCount] == "StringX")
-		{
-			DrawSkip_ = true;
-			MassegeCount++;
-			StringX_ = std::stoi(massegeList[MassegeCount]);
-			MassegeCount++;
-		}
-		else if (massegeList[MassegeCount] == "StringY")
-		{
-			DrawSkip_ = true;
-			MassegeCount++;
-			StringY_ = std::stoi(massegeList[MassegeCount]);
-			MassegeCount++;
-		}
-
-		/*----------------------------------------*/
-
-		/*-----メッセージ以外の文字列の描画-----*/
-
-		else if (massegeList[MassegeCount] == "CName")
-		{
-			DrawSkip_ = true;
-			MassegeCount++;
-			CName_ = massegeList[MassegeCount];
-			MassegeCount++;
-		}
-
-		/*--------------------------------------*/
-
-		/*-----キャラクターの座標取得-----*/
-
-		else if (massegeList[MassegeCount] == "CX")
-		{
-			DrawSkip_ = true;
-			MassegeCount++;
-			CX_.push_back(std::stoi(massegeList[MassegeCount]));
-			MassegeCount++;
-		}
-		else if (massegeList[MassegeCount] == "CY")
-		{
-			DrawSkip_ = true;
-			MassegeCount++;
-			CY_.push_back(std::stoi(massegeList[MassegeCount]));
-			MassegeCount++;
-		}
-
-		/*--------------------------------*/
-
-		/*-----キャラクターの描画-----*/
-
-		else if (massegeList[MassegeCount] == "CDraw")
-		{
-			DrawSkip_ = true;
-			MassegeCount++;
-			CDrawID_.push_back(std::stoi(massegeList[MassegeCount]));
-			MassegeCount++;
-		}
-
-		/*----------------------------*/
-
-		/*-----キャラクターの立ち絵消し-----*/
-
-		else if (massegeList[MassegeCount] == "CDrawEnd")
-		{
-			DrawSkip_ = true;
-			MassegeCount++;
-			int eraseID = std::stoi(massegeList[MassegeCount]);
-			for (int i = 0; i < CDrawID_.size(); i++)
-			{
-				if (CDrawID_[i] == eraseID)
+				if (massegeList[MassegeCount] == "Image")
 				{
-					CDrawID_.erase(CDrawID_.begin() + i);
-					CX_.erase(CX_.begin() + i);
-					CY_.erase(CY_.begin() + i);
+					MassegeCount++;
+					ResourcePath_.push_back(massegeList[MassegeCount]);
+					ResourceNums_[ResourceNum_] = LoadGraph(ResourcePath_.back().c_str());
 				}
+				else if (massegeList[MassegeCount] == "Music")
+				{
+					MassegeCount++;
+					ResourcePath_.push_back(massegeList[MassegeCount]);
+					ResourceNums_[ResourceNum_] = LoadSoundMem(ResourcePath_.back().c_str());
+					PrevPlayMusic = ResourceNums_[ResourceNum_];
+				}
+				MassegeCount++;
 			}
-			MassegeCount++;
+
+			/*-------------------------------------*/
+
+			/*-----BGMの再生-----*/
+
+			else if (massegeList[MassegeCount] == "PlayBGM")
+			{
+				DrawSkip_ = true;
+				MassegeCount++;
+				int playMusic = std::stoi(massegeList[MassegeCount].c_str());
+				StopSoundMem(PrevPlayMusic);
+				PlaySoundMem(playMusic, DX_PLAYTYPE_LOOP);
+				PrevPlayMusic = playMusic;
+				MassegeCount++;
+			}
+
+			/*-------------------*/
+
+			/*-----背景の座標取得-----*/
+
+			else if (massegeList[MassegeCount] == "BGX")
+			{
+				DrawSkip_ = true;
+				MassegeCount++;
+				BGX_ = std::stoi(massegeList[MassegeCount]);
+				MassegeCount++;
+			}
+			else if (massegeList[MassegeCount] == "BGY")
+			{
+				DrawSkip_ = true;
+				MassegeCount++;
+				BGY_ = std::stoi(massegeList[MassegeCount]);
+				MassegeCount++;
+			}
+
+			/*------------------------*/
+
+			/*-----背景の描画-----*/
+
+			else if (massegeList[MassegeCount] == "BGDraw")
+			{
+				DrawSkip_ = true;
+				MassegeCount++;
+				BGID_ = std::stoi(massegeList[MassegeCount]);
+				MassegeCount++;
+			}
+
+			/*--------------------*/
+
+			/*-----メッセージの文字列座標取得-----*/
+
+			else if (massegeList[MassegeCount] == "MassegeX")
+			{
+				DrawSkip_ = true;
+				MassegeCount++;
+				MassegeX_ = std::stoi(massegeList[MassegeCount]);
+				MassegeCount++;
+			}
+			else if (massegeList[MassegeCount] == "MassegeY")
+			{
+				DrawSkip_ = true;
+				MassegeCount++;
+				MassegeY_ = std::stoi(massegeList[MassegeCount]);
+				MassegeCount++;
+			}
+
+			/*------------------------------------*/
+
+			/*-----メッセージ以外の文字列座標取得-----*/
+
+			else if (massegeList[MassegeCount] == "StringX")
+			{
+				DrawSkip_ = true;
+				MassegeCount++;
+				StringX_ = std::stoi(massegeList[MassegeCount]);
+				MassegeCount++;
+			}
+			else if (massegeList[MassegeCount] == "StringY")
+			{
+				DrawSkip_ = true;
+				MassegeCount++;
+				StringY_ = std::stoi(massegeList[MassegeCount]);
+				MassegeCount++;
+			}
+
+			/*----------------------------------------*/
+
+			/*-----メッセージ以外の文字列の描画-----*/
+
+			else if (massegeList[MassegeCount] == "CName")
+			{
+				DrawSkip_ = true;
+				MassegeCount++;
+				CName_ = massegeList[MassegeCount];
+				MassegeCount++;
+			}
+
+			/*--------------------------------------*/
+
+			/*-----キャラクターの座標取得-----*/
+
+			else if (massegeList[MassegeCount] == "CX")
+			{
+				DrawSkip_ = true;
+				MassegeCount++;
+				CX_.push_back(std::stoi(massegeList[MassegeCount]));
+				MassegeCount++;
+			}
+			else if (massegeList[MassegeCount] == "CY")
+			{
+				DrawSkip_ = true;
+				MassegeCount++;
+				CY_.push_back(std::stoi(massegeList[MassegeCount]));
+				MassegeCount++;
+			}
+
+			/*--------------------------------*/
+
+			/*-----キャラクターの描画-----*/
+
+			else if (massegeList[MassegeCount] == "CDraw")
+			{
+				DrawSkip_ = true;
+				MassegeCount++;
+				CDrawID_.push_back(std::stoi(massegeList[MassegeCount]));
+				MassegeCount++;
+			}
+
+			/*----------------------------*/
+
+			/*-----キャラクターの立ち絵消し-----*/
+
+			else if (massegeList[MassegeCount] == "CDrawEnd")
+			{
+				DrawSkip_ = true;
+				MassegeCount++;
+				int eraseID = std::stoi(massegeList[MassegeCount]);
+				for (int i = 0; i < CDrawID_.size(); i++)
+				{
+					if (CDrawID_[i] == eraseID)
+					{
+						CDrawID_.erase(CDrawID_.begin() + i);
+						CX_.erase(CX_.begin() + i);
+						CY_.erase(CY_.begin() + i);
+					}
+				}
+				MassegeCount++;
+			}
+
+			/*----------------------------------*/
+
+			/*-----改行処理-----*/
+
+			else if (massegeList[MassegeCount] == "Break")
+			{
+				DrawSkip_ = true;
+				MassegeCount++;
+				BreakCount_++;
+				NowBreak_ = true;
+			}
+
+			/*------------------*/
+
+			/*-----改行処理終了-----*/
+
+			else if (massegeList[MassegeCount] == "BreakEnd")
+			{
+				DrawSkip_ = true;
+				MassegeCount++;
+				BreakCount_ = 0;
+				NowBreak_ = false;
+			}
+
+			/*----------------------*/
+			else
+				is_message_text_ = true;
 		}
-
-		/*----------------------------------*/
-
-		/*-----改行処理-----*/
-
-		else if (massegeList[MassegeCount] == "Break")
-		{
-			DrawSkip_ = true;
-			MassegeCount++;
-			BreakCount_++;
-			NowBreak_ = true;
-		}
-
-		/*------------------*/
-
-		/*-----改行処理終了-----*/
-
-		else if (massegeList[MassegeCount] == "BreakEnd")
-		{
-			DrawSkip_ = true;
-			MassegeCount++;
-			BreakCount_ = 0;
-			NowBreak_ = false;
-		}
-
-		/*----------------------*/
 	}
 }
 
@@ -333,7 +340,7 @@ void ADVSimpleScript::ImageDraw()
 
 void ADVSimpleScript::MassegeDraw(int MassegeColor, int FontSize, int DefaultFontSize)
 {
-	LineWidth_ = FontSize;
+	lineWidth_ = FontSize;
 
 	/*-----メッセージ処理の文字列描画-----*/
 
@@ -348,12 +355,12 @@ void ADVSimpleScript::MassegeDraw(int MassegeColor, int FontSize, int DefaultFon
 	{
 		DrawString(StringX_, StringY_, CName_.c_str(), MassegeColor);
 
-		DrawString(MassegeX_, MassegeY_ + LineWidth_ * BreakCount_, massegeList[MassegeCount].c_str(), MassegeColor);
+		DrawString(MassegeX_, MassegeY_ + lineWidth_ * BreakCount_, massegeList[MassegeCount].c_str(), MassegeColor);
 		if (NowBreak_)
 		{
 			for (int i = 0; i < BreakCount_; i++)
 			{
-				DrawString(MassegeX_, MassegeY_ + LineWidth_ * i, massegeList[MassegeCount - ((BreakCount_ - 1 - i) * 2 + 2)].c_str(), MassegeColor);
+				DrawString(MassegeX_, MassegeY_ + lineWidth_ * i, massegeList[MassegeCount - ((BreakCount_ - 1 - i) * 2 + 2)].c_str(), MassegeColor);
 			}
 		}
 	}

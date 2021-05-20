@@ -306,7 +306,7 @@ void Collection::ItemGet()
 void Collection::Draw()
 {
 	DrawGraphF(gm.player->backX, 0, gm.image.skyBack, TRUE);
-	DrawGraphF(gm.player->backX - gm.player->backImageWidth, 0, gm.image.skyBack, TRUE);
+	DrawGraphF(gm.player->backX - gm.player->BackImageWidth, 0, gm.image.skyBack, TRUE);
 
 	// 地形
 	for (auto& mT : gm.mapTerrain)
@@ -342,8 +342,8 @@ void Collection::Draw()
 
 	for (int i = 0; i < gm.fieldItems.size(); i++)
 	{
-		if (gm.fieldItems[i]->isOnCollisionPlayer_)
-			DrawString(Screen::Width / 2, Screen::Height / 2, "Zキーで採取", gm.colorWhite);
+		if (gm.fieldItems[i]->isOnCollisionPlayer)
+			DrawString(Screen::width / 2, Screen::height / 2, "Zキーで採取", gm.colorWhite);
 	}
 	if (gm.pouch.size() == MaxPouchSize_)
 		DrawString
