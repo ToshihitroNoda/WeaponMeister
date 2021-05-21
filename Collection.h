@@ -35,6 +35,9 @@ private:
 	const int MaxPouchSize_			   = 200;
 	const int DrawMaxPouchSize		   = 42;
 
+	const int WatchX_                  = 1158;
+	const int WatchY_                  = 122;
+
 	const int DrawGetItemX_			   = 700;
 	const int DrawGetItemY_			   = 300;
 	const int DrawGetItemX_Width_	   = 72;
@@ -84,6 +87,9 @@ private:
 	int startCount_			= 120;
 	int endCount_		    = 120;
 	int collectTimer_		= 7200;	 // 採取時間。2分
+	
+	float watchPointerAngle_ = 0.0f; // 時計の針の角度。1フレームで+=0.05fすると2分で一周
+	float plusPointerAngle_  = 0.05f;
 
 	bool getItemFlg_		= false; // アイテムゲットフラグ
 	bool menuOpen_		    = false;

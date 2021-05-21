@@ -65,6 +65,8 @@ void Image::Load(std::string SceneName)
 		collectionStart = LoadGraph("Resource/Image/collectionstart.png");
 		collectionEnd	= LoadGraph("Resource/Image/collectionend.png");
 		detailWindow	= LoadGraph("Resource/Image/detailwindow.png");
+		watchBase       = LoadGraph("Resource/Image/watchbase.png");
+		watchPointer    = LoadGraph("Resource/Image/watchpointer.png");
 
 		// 3Dƒ‚ƒfƒ‹
 		Player			= MV1LoadModel("Resource/Image/Model/curen.mv1");

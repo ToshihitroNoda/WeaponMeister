@@ -20,7 +20,7 @@ void Collection::Init()
 	// Ｚバッファへの書き込みを有効にする
 	SetWriteZBuffer3D(TRUE);
 
-	gm.map	  = std::make_shared<Map>(0, "Map" + std::to_string(StageSelection::stageNum));
+	gm.map	  = std::make_shared<Map>(0, "Map3"/* + std::to_string(StageSelection::stageNum)*/);
 	gm.player = std::make_shared<Player>
 				(gm.mapData[3][StageSelection::stageNum - 1 + CsvSkipCell_],
 				 gm.mapData[4][StageSelection::stageNum - 1 + CsvSkipCell_],
@@ -59,7 +59,6 @@ void Collection::Final()
 
 void Collection::Update()
 {
-	printfDx("collectTimer : %d \n", collectTimer_);
 	if (startCount_ < 0)
 	{
 		if (collectTimer_ > 0)
@@ -239,6 +238,7 @@ void Collection::Update()
 				/*---------------*/
 			}
 			collectTimer_--;
+			watchPointerAngle_ += plusPointerAngle_;
 		}
 		else
 		{
@@ -305,8 +305,8 @@ void Collection::ItemGet()
 
 void Collection::Draw()
 {
-	DrawGraphF(gm.player->backX, 0, gm.image.skyBack, TRUE);
-	DrawGraphF(gm.player->backX - gm.player->BackImageWidth, 0, gm.image.skyBack, TRUE);
+	DrawGraph(gm.player->backX, 0, gm.image.skyBack, TRUE);
+	DrawGraph(gm.player->backX - gm.player->BackImageWidth, 0, gm.image.skyBack, TRUE);
 
 	// 地形
 	for (auto& mT : gm.mapTerrain)
@@ -329,6 +329,9 @@ void Collection::Draw()
 	}
 
 	gm.player->DrawHitBox(); // 当たり判定の描画 
+	
+	DrawRotaGraph(WatchX_, WatchY_, 1.0f, 0.0f, gm.image.watchBase, TRUE);
+	DrawRotaGraph(WatchX_, WatchY_, 1.0f, watchPointerAngle_ * MyMath::Deg2Rad, gm.image.watchPointer, TRUE);
 
 	if (getItemFlg_)
 	{

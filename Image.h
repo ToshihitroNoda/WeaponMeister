@@ -47,6 +47,8 @@ public:
 	int mapCursor				{ -1 };
 	int collectionStart			{ -1 };
 	int collectionEnd			{ -1 };
+	int watchBase               { -1 };
+	int watchPointer            { -1 };
 
 	// îwåi
 	int titleBack				{ -1 };

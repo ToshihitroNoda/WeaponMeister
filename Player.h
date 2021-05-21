@@ -70,8 +70,8 @@ public:
     void AnimationAttach(int AtnimIndex);
     void PlayAnimation(float ConstPlayTime, bool isLoop);
 
-    const float BackImageWidth = 8192;
-    float backX = 0;
+    const int BackImageWidth = 8192;
+    int backX = 0;
     
 private:
     int mouseX_     = 0;

@@ -136,14 +136,19 @@ void StageSelection::Draw()
 		}
 	}
 
-	DrawGraph(0, 0, gm.image.dayWindow, TRUE);
-	DrawGraph(0, 0, gm.image.dayNum[Adv::day], TRUE);
+	if (!nowLoadingDraw_)
+	{
+		DrawGraph(0, 0, gm.image.dayWindow, TRUE);
+		DrawGraph(0, 0, gm.image.dayNum[Adv::day], TRUE);
 
-	DrawGraph(cursorX_, cursorY_, gm.image.mapCursor, TRUE);
+		DrawGraph(cursorX_, cursorY_, gm.image.mapCursor, TRUE);
+	}
 
 	if (nowLoadingDraw_)
 	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 122);
 		DrawBox(0, 0, Screen::width, Screen::height, gm.colorBrack, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		DrawString(900, 600, "Now Loading...", gm.colorWhite);
 		nextSceneLoad_ = true;
 	}

@@ -110,7 +110,7 @@ void Player::Update()
 
 			backX += percentAngleByCursorDis_BG_;
 			if (backX <= -BackImageWidth + Screen::width)
-				backX = 0.0f;
+				backX = 0;
 		}
 		else if (mouseX_ < prevMouseX_)					// ƒ}ƒEƒX‚ª¶‚É“®‚¢‚Ä‚¢‚½‚ç
 		{
@@ -129,7 +129,7 @@ void Player::Update()
 
 			backX += percentAngleByCursorDis_BG_;
 			if (backX > BackImageWidth)
-				backX = 0.0f;
+				backX = 0;
 		}
 	}
 
