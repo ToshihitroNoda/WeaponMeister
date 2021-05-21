@@ -20,7 +20,7 @@ void MapObjects::Draw()
 			DrawModel(objectModelHandles[i]);
 		}
 	}
-	DrawHitBox();
+	//DrawHitBox();
 }
 
 void MapObjects::OnCollision(std::shared_ptr<GameObject> other) {};

@@ -215,6 +215,7 @@ void Player::Draw()
 	MV1SetPosition(gm.image.Player, VGet(x, y, z));
 	MV1SetScale(gm.image.Player, VGet(0.8f, 0.8f, 0.8f));
 	MV1DrawModel(gm.image.Player);
+	//DrawHitBox(); 
 }
 
 

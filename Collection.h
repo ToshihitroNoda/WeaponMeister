@@ -87,6 +87,7 @@ private:
 	int startCount_			= 120;
 	int endCount_		    = 120;
 	int collectTimer_		= 7200;	 // 採取時間。2分
+	int backGroundHandle_;
 	
 	float watchPointerAngle_ = 0.0f; // 時計の針の角度。1フレームで+=0.05fすると2分で一周
 	float plusPointerAngle_  = 0.05f;

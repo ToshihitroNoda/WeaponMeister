@@ -120,6 +120,16 @@ public:
 		objects_.LoadMap(cellSize_, "Resource/Map/" + stageName + "_objects.csv");
 		terrain_.LoadMap(cellSize_, "Resource/Map/" + stageName + "_terrain.csv");
 
+		std::ifstream ifs("Resource/Map/" + stageName + "_objects2.csv");
+		if (ifs.is_open())
+		{
+			objects2_.LoadMap(cellSize_, "Resource/Map/" + stageName + "_objects2.csv");
+		}
+		std::ifstream fs("Resource/Map/" + stageName + "_objects3.csv");
+		if (fs.is_open())
+		{
+			objects3_.LoadMap(cellSize_, "Resource/Map/" + stageName + "_objects3.csv");
+		}
 		assert(spawnRangeX_ > 0 && spawnRangeY_ > 0); // ちゃんと敵出現射程を設定してね
 		// 敵出現射程の辞書初期化
 		InitSpawnDic(spawnRangeX_, spawnRangeY_);
@@ -130,6 +140,8 @@ public:
 	{
 		// マップデータのお掃除
 		objects_.clear();
+		objects2_.clear();
+		objects3_.clear();
 		terrain_.clear();
 	}
 
@@ -174,6 +186,8 @@ private:
 
 	CsvCell terrain_;           // 地形データ
 	CsvCell objects_;           // 敵配置データ
+	CsvCell objects2_;
+	CsvCell objects3_;
 
 	int terrainWidth_  = 0;     // マップデータの横のマス数
 	int terrainHeight_ = 0;     // マップデータの縦のマス数
@@ -181,6 +195,8 @@ private:
 	float positionY_ = 0;       // 現在の位置（マップ上端の座標）
 
 	bool objectsLoad_ = false;
+	bool objects2Load_ = false;
+	bool objects3Load_ = false;
 	bool terrainLoad_ = false;
 
 };

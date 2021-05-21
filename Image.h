@@ -65,7 +65,9 @@ public:
 	int saleBack				{ -1 };
 	int reportBack				{ -1 };
 
-	int skyBack					{ -1 };
+	int skyBack					{ -1 };	
+	int rockBack				{ -1 };
+	int volcanoBack				{ -1 };
 
 	// アイテムアイコン
 	std::vector<int> itemIcons	{ NULL };

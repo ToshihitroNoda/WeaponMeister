@@ -59,6 +59,9 @@ void Image::Load(std::string SceneName)
 		LoadDivGraph("Resource/Image/itemicons.png", 28, 7, 4, 64, 64, &itemIcons[0]);
 
 		skyBack			= LoadGraph("Resource/Image/skyback.jpg");
+		rockBack        = LoadGraph("Resource/Image/rockback.jpg");
+		volcanoBack     = LoadGraph("Resource/Image/volcanoback.jpg");
+
 		itemIconWindow	= LoadGraph("Resource/Image/itemiconwindow.png");
 		itemWindow		= LoadGraph("Resource/Image/itemwindow.png");
 		itemSelection	= LoadGraph("Resource/Image/itemselection.png");

@@ -61,6 +61,56 @@ void Map::LoadObjects()
 		}
 		objectsLoad_ = true;
 	}
+	if (!objects2Load_ && objects2_.size() > 0)
+	{
+		for (int cellX = 0; cellX < terrain_.Width; cellX++)
+		{
+			for (int cellY = 0; cellY < terrain_.Height; cellY++)
+			{
+				float x = (float)(cellX * cellSize_) + rotaGraphShiftX_; //マス目サイズ/2ずらし
+				float y = (float)(cellY * cellSize_) + rotaGraphShiftY_; //マス目サイズ/2ずらし
+				int id = -1;
+				if (cellY < (int)objects2_.size()
+					&& cellX < (int)objects2_[cellY].size())
+				{
+					id = objects2_[cellY][cellX];
+				}
+				for (int i = 0; i < objectIDs.size(); i++)
+				{
+					if (id == objectIDs[i])
+					{
+						gm.mapObjects.push_back(std::make_shared<MapObjects>(x, 180, y, objectWidths_[i], objectLengths_[i], objectNames[i]));
+					}
+				}
+			}
+		}
+		objects2Load_ = true;
+	}
+	if (!objects3Load_ && objects3_.size() > 0)
+	{
+		for (int cellX = 0; cellX < terrain_.Width; cellX++)
+		{
+			for (int cellY = 0; cellY < terrain_.Height; cellY++)
+			{
+				float x = (float)(cellX * cellSize_) + rotaGraphShiftX_; //マス目サイズ/2ずらし
+				float y = (float)(cellY * cellSize_) + rotaGraphShiftY_; //マス目サイズ/2ずらし
+				int id = -1;
+				if (cellY < (int)objects3_.size()
+					&& cellX < (int)objects3_[cellY].size())
+				{
+					id = objects3_[cellY][cellX];
+				}
+				for (int i = 0; i < objectIDs.size(); i++)
+				{
+					if (id == objectIDs[i])
+					{
+						gm.mapObjects.push_back(std::make_shared<MapObjects>(x, 360, y, objectWidths_[i], objectLengths_[i], objectNames[i]));
+					}
+				}
+			}
+		}
+		objects3Load_ = true;
+	}
 }
 
 //★地形を描く3D対応でY平面に描く
