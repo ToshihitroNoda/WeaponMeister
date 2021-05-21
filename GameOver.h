@@ -28,8 +28,12 @@ private:
 	const int WindowY_ = Screen::height - WindowHeight;
 	const int CursorX_ = 1150;
 	const int CursorY_ = 630;
+	const int OptionMenuX_ = 800;
+	const int OptionMenuY_ = 690;
 	const int DrawFlashTiming_ = 20;
 	const int Divisor_ = 30;
+	const int AutoSpeed_ = 180;
+	const int SkipSpeed_ = 10;
 
 	const int FontSize_ = 30;
 	const int TitleX_   = 400;
@@ -40,10 +44,15 @@ private:
 	const int NextMassegeY_ = 600;
 
 	int IconFlashCount_ = 0;
+	int autoCounter_ = 0;
+	int skipCounter_ = 0;
 
 	std::string filePath_ = "";
 
 	bool massegeEnd_ = false;
+	bool autoMode_   = false;
+	bool skipMode_   = false;
+
 };
 
 #endif
