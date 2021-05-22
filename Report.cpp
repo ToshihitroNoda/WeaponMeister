@@ -47,9 +47,7 @@ void Report::Update()
 		{
 			prevMoney = finalMoney_;
 
-			if (Adv::day == LastDay_)
-				sm.LoadScene("GameClear");
-			else if (finalMoney_ < 0)
+			if (finalMoney_ < 0)
 				sm.LoadScene("GameOver");
 			else
 				sm.LoadScene("Adv");

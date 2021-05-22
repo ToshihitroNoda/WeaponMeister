@@ -27,7 +27,7 @@ private:
 	const int LastDay_ = 14;
 
 	const float RentBase_ = 100;
-	const float RentMultiplied_ = 1.5f;
+	const float RentMultiplied_ = 2.0f;
 
 	const int NextMassegeX_ = 900;
 	const int NextMassegeY_ = 650;
@@ -62,7 +62,7 @@ private:
 	const int FontSize_ = 30;
 
 	int firstMoney_  = 0;
-	int Rent_		 = 0; // 家賃。基本額 * (日にち * 1.5)
+	int Rent_		 = 0; // 家賃。基本額 * (日にち * 2)
 	int nextRent_	 = 0;
 	int finalMoney_  = 0;
 

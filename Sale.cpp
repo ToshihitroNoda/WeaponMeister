@@ -192,22 +192,36 @@ void Sale::Update()
 						/*------------------*/
 						/*-----èdï°è¡Çµ-----*/
 						saleWeapons_.erase(saleWeapons_.end() - 1);			   // ç≈å„Ç…í«â¡ÇµÇΩÇ‚Ç¬(ç°í«â¡ÇµÇΩÇ‚Ç¬)ÇçÌèú
-						selectWeaponPos_.erase(selectWeaponPos_.end() - 1);	  
+						selectWeaponPos_.erase(selectWeaponPos_.end() - 1);
 						gm.money -= weaponPrice_[selectIconNum_];
 						/*------------------*/
 						alradySelect_ = true;
 						break;
-					}  
+					}
+					else
+					{
+						if (Adv::day == LastDay_)
+						{
+							saleWeapons_.erase(saleWeapons_.end() - 1);
+							selectWeaponPos_.erase(selectWeaponPos_.end() - 1);
+							gm.money -= weaponPrice_[selectIconNum_];
+							alradySelect_ = true;
+						}
+					}
 				}
 				if (!alradySelect_)
 					alreadySelectWeaponPos_.push_back(selectIconNum_);
 				alradySelect_ = false;
 			}
-		}
-		else
-		{
-			saleAmount = gm.money - prevMoney_;
-			sm.LoadScene("Report");
+			else
+			{
+				saleAmount = gm.money - prevMoney_;
+
+				if (Adv::day == LastDay_)
+					sm.LoadScene("GameClear");
+				else
+					sm.LoadScene("Report");
+			}
 		}
 	}
 }
@@ -219,7 +233,7 @@ void Sale::Draw()
 	DrawGraph(PouchWindowX_, PouchWindowY_, gm.image.itemWindow, TRUE);
 	DrawGraph(DetailWindowX_, DetailWindowY_, gm.image.detailWindow, TRUE);
 	DrawGraph(SaleButtonX_, SaleButtonY_, gm.image.sale, TRUE);
-	
+
 	SetFontSize(DrawMoneySize_);
 	DrawString(DrawMoneyX_, DrawMoneyY_, std::to_string(gm.money).c_str(), gm.colorWhite);
 	SetFontSize(gm.DefaultFontSize_);
