@@ -88,6 +88,7 @@ private:
 	int endCount_		    = 120;
 	int collectTimer_		= 7200;	 // 採取時間。2分
 	int backGroundHandle_;
+	int operationDescriptionMassegeNum_ = 0;
 	
 	float watchPointerAngle_ = 0.0f; // 時計の針の角度。1フレームで+=0.05fすると2分で一周
 	float plusPointerAngle_  = 0.05f;
@@ -97,9 +98,20 @@ private:
 	bool menuInit			= false;
 	bool collectionEnd_		= false;
 
+	bool is_Operation_Description_Been_ = false;
+
 	std::vector<int> possibilityToGetItem_;
 	std::vector<int> DrawGetItem_;
 	std::vector<int> PouchDrawErea_;
+
+	std::string description_[6]
+	{ "それでは早速採取を始めていきましょう！",
+	  "キーボードのWASDで移動、マウスでカメラ操作が行えます。",
+	  "画面右上の時計が一周したら採取終了となります。それまでに多くの素材を集めましょう。",
+	  "マップ上の白く光っているオブジェクトに近づくと素材を採取できます。",
+	  "Cキーを押すことで採取済みのアイテムを確認することができます。",
+	  "以上が説明になります。それでは採取を始めてみましょう！"
+	};
 };
 
 #endif

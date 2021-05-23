@@ -75,18 +75,27 @@ private:
 	int cursorX_	   = 0;	// カーソル座標
 	int cursorY_	   = 0;
 	int selectIconNum_ = 0;
-
 	int beforeBuyPouchSize_ = 0;
 	int beforeMoney_ = 0;
+	int allLine_ = 0;
+	int eraseLine_ = 0;
+	int operationDescriptionMassegeNum_ = 0;
 
 	bool itemDetail_ = false;
+	bool is_Operation_Description_Been_ = false;
 
 	std::vector<int> buyItems_;
 	std::vector<int> buyItemsQuality_;
-
 	std::vector<int> DrawItems_;
-	int allLine_   = 0;
-	int eraseLine_ = 0;
+
+	std::string description_[6]
+	{ "ここでは採取の際集められなかった素材を買うことができます。",
+	  "矢印キーでカーソル移動、Zキーで購入する素材を選択できます。",
+	  "購入する素材を選択するとお金が左上の所持金から隣の売価分引かれます。",
+	  "選択を解除したい場合はXキーで一つ前に選択した素材を解除することができます。",
+	  "必要な素材をすべて選択し終えたら一番下のBUYボタンを押すと次に進みます。",
+	  "以上が説明になります。足りない素材があったら購入しておきましょう。"
+	};
 };
 
 #endif 

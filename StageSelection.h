@@ -54,6 +54,7 @@ private:
 	int cursorX_	= Map1IconPosX_;
 	int cursorY_	= Map1IconPosY_;
 	int canMakeWeapon_ = 0;
+	int operationDescriptionMassegeNum_ = 0;
 
 	bool addMap2_			= false;
 	bool addMap3_			= false;
@@ -62,6 +63,8 @@ private:
 	bool doNewStageAdd_		= false;
 	bool nextSceneLoad_		= false;
 	bool nowLoadingDraw_	= false;
+
+	bool is_Operation_Description_Been_ = false;
 
 	std::vector<bool> addMapList_{ addMap2_, addMap3_, addMap4_, addMap5_ };
 
@@ -77,6 +80,14 @@ private:
 		  Map3IconPosY_, Map4IconPosY_,
 		  Map5IconPosY_ };
 
+	std::string description_[6]
+	{ "まずは素材の採取に出かけましょう！",
+	  "矢印キーで出かける採取地を選べます。",
+	  "出かける採取地が決まったらZキーで採取に行きます。",
+	  "今は1箇所しか行ける採取地がありませんが、",
+	  "日にちを重ねると行ける採取地が増えていくでしょう。",
+	  "以上が説明になります。それでは採取に出かけましょう！"
+	};
 };
 
 #endif

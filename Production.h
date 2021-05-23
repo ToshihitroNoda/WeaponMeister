@@ -129,6 +129,13 @@ private:
 
 	const int DrawMaxPouchSize_						  = 42;
 
+	const int defaultDrawCount_ = 300;
+	const int defaultAngle_ = 359;
+
+	const int arrowX_        = 700;
+	const int arrowY_Handle_ = 200;
+	const int arrowY_Main_   = 500;
+
 	int cursorX_				= 0;	// カーソル座標
 	int cursorY_				= 0;
 	int prevCursorY_			= 0;
@@ -136,6 +143,12 @@ private:
 	int ItemType_				= 0;	// 選択できるアイテムの種類
 	int selectIconNum_			= 0;
 	int count_					= 0;
+	int distToCenter_ = defaultDrawCount_;
+	int angle_ = 0;
+	int drawCounter_ = defaultDrawCount_;
+	int scrollCount_ = 0;
+
+	int operationDescriptionMassegeNum_ = 0;
 
 	bool recipeSelection_		 = false;	// レシピを選び終わったかどうかの判定(終わったらtrue)
 	bool itemSelection_			 = false;	// アイテムを選び終わったかどうかの判定
@@ -152,29 +165,31 @@ private:
 	bool animationEnd_			 = false;
 	bool weaponMakeAssert_		 = false;
 
+	bool is_Operation_Description_Been_ = false;
+
 	std::vector<int> itemForWeaponMake_;		  // 武器生成に必要なアイテムを一時的に保管するvector
 	std::vector<int> itemQualityForWeaponMake_;	  // 武器生成に必要なアイテムの品質を一時的に保管するvector
 	std::vector<int> ItemPosOnThePouch_;
 	std::vector<int> SelectItemPosOnThePouch_;
 
-	std::vector<std::string> weaponName_;
-
-	const int defaultDrawCount_ = 300;
-	const int defaultAngle_	    = 359;
-
-	int distToCenter_ = defaultDrawCount_;
 	std::vector<int> animationX_;
 	std::vector<int> animationY_;
-	int angle_		  = 0;
-
-	int drawCounter_  = defaultDrawCount_;
 
 	std::vector<int> drawItemID_;
-
-	int scrollCount_ = 0;
-
 	std::vector<int> PouchDrawErea_;
 	std::vector<int> NowDrawPosOnPouch_;
+
+	std::vector<std::string> weaponName_;
+
+	std::string description_[7]
+	{ "先程採取した素材を早速加工して武器を作ってみましょう！",
+	  "まず作成する武器を選択します。作成できる武器は日にちが経つごとに増えていきます。",
+	  "次に持ち手部分の素材を選択します。選択できるのは木の角材の素材のみです。",
+	  "持ち手部分の素材を選択したら次に刀身部分の素材を選択します。作成する武器によって選べる素材が変わります。",
+	  "それぞれのセクションでXキーを押すと前のセクションに戻ることができます。",
+	  "作りたい武器をすべて作り終わったら作成武器選択画面でENDを押すと次の画面に進みます。",
+	  "以上が説明になります。それでは早速武器を作ってみましょう！"
+	};
 };
 
 #endif

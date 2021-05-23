@@ -3,23 +3,24 @@
 #include "DataCsv.h"
 #include "MyRandom.h"
 #include "MyMath.h"
+#include "Adv.h"
 #include <DxLib.h>
 
-bool Production::canWoodSword_		 = true;
-bool Production::canJawaSword_		 = true;
-bool Production::canEnriSword_		 = false;
-bool Production::canKeinSword_		 = false;
-bool Production::canShizukuSword_	 = false;
-bool Production::canSaintSword_		 = false;
-bool Production::canGodWoodSword_	 = false;
+bool Production::canWoodSword_ = true;
+bool Production::canJawaSword_ = true;
+bool Production::canEnriSword_ = false;
+bool Production::canKeinSword_ = false;
+bool Production::canShizukuSword_ = false;
+bool Production::canSaintSword_ = false;
+bool Production::canGodWoodSword_ = false;
 
-bool Production::canStoneSword_		 = true;
-bool Production::canIronOreSword_	 = true;
-bool Production::canJadeSword_		 = false;
-bool Production::canDiamondSword_	 = false;
-bool Production::canCarbonadeSword_	 = false;
+bool Production::canStoneSword_ = true;
+bool Production::canIronOreSword_ = true;
+bool Production::canJadeSword_ = false;
+bool Production::canDiamondSword_ = false;
+bool Production::canCarbonadeSword_ = false;
 bool Production::canOrichalcumSword_ = false;
-bool Production::canGodStoneSword_	 = false;
+bool Production::canGodStoneSword_ = false;
 
 std::vector<bool> Production::canWeaponMake_{ canWoodSword_		, canJawaSword_		 , canEnriSword_	, canKeinSword_,
 											  canShizukuSword_	, canSaintSword_	 , canGodWoodSword_ ,
@@ -38,6 +39,9 @@ void Production::Init()
 	{
 		weaponName_.push_back(gm.weaponData[0][i]);
 	}
+
+	if (Adv::day != 1)
+		is_Operation_Description_Been_ = true;
 }
 
 void Production::Final()
@@ -48,118 +52,27 @@ void Production::Final()
 
 void Production::Update()
 {
-	/*----- 作成武器選択 -----*/
-	if (!recipeSelection_)
+	if (is_Operation_Description_Been_)
 	{
-		if (cursorInit_) // カーソル位置初期化
-		{
-			cursorX_ = CursorX_Min_RecipeSelection_;
-			cursorY_ = CursorY_Min_RecipeSelection_;
-			weaponID_ = 0;
-			cursorInit_ = false;
-		}
-
-		/*----- カーソル移動 -----*/
-		if (Input::GetButtonDown(PAD_INPUT_RIGHT))
-		{
-			if (cursorX_ < CursorX_Max_RecipeSelection_)
-			{
-				cursorX_ = CursorX_Max_RecipeSelection_;
-				prevCursorY_ = cursorY_;
-				weaponID_++;
-			}
-			else
-			{
-				cursorX_ = CursorX_ProceedNextPart_;
-				cursorY_ = CursorY_ProceedNextPart_;
-			}
-		}
-		if (Input::GetButtonDown(PAD_INPUT_LEFT))
-		{
-			if (cursorX_ > CursorX_Min_RecipeSelection_ && cursorX_ != CursorX_ProceedNextPart_)
-			{
-				cursorX_ = CursorX_Min_RecipeSelection_;
-				weaponID_--;
-			}
-			else if (cursorX_ == CursorX_ProceedNextPart_)
-			{
-				cursorX_ = CursorX_Max_RecipeSelection_;
-				cursorY_ = prevCursorY_;
-			}
-		}
-		if (Input::GetButtonDown(PAD_INPUT_DOWN) &&
-			cursorY_ != CursorY_Max_RecipeSelection_ &&
-			cursorX_ <= CursorX_Max_RecipeSelection_)
-		{
-			cursorY_ += CursorY_MoveVerticalWidth_RecipeSelect_;
-			prevCursorY_ = cursorY_;
-			weaponID_ += WeaponID_ByLineBreak_RecipeSelection_;
-		}
-		if (Input::GetButtonDown(PAD_INPUT_UP) &&
-			cursorY_ != CursorY_Min_RecipeSelection_ &&
-			cursorX_ <= CursorX_Max_RecipeSelection_)
-		{
-			cursorY_ -= CursorY_MoveVerticalWidth_RecipeSelect_;
-			weaponID_ -= WeaponID_ByLineBreak_RecipeSelection_;
-		}
-		/*---------------*/
-
-		/*----- 作る武器を決定 -----*/
-		if (Input::GetButtonDown(PAD_INPUT_1))
-		{
-			if (cursorX_ == CursorX_ProceedNextPart_ && cursorY_ == CursorY_ProceedNextPart_)
-			{
-				sm.LoadScene("Sale");
-			}
-			else
-			{
-				if (canWeaponMake_[weaponID_ / 2])					// 選択した武器が作れるなら
-				{
-					recipeSelection_ = true;						// フラグを立てる
-
-					if (cursorY_ <= CursorY_Max_RecipeSelection_ / 2) // 木製武器選択
-					{
-						ItemType_ = gm.itemData[CsvTypeCheck_][CsvSkipCell_];
-						cursorInit_ = true;
-					}
-					else											  // 石製武器選択
-					{
-						ItemType_ = gm.itemData[CsvTypeCheck_][gm.itemData[0].size() - 1];
-						cursorInit_ = true;
-					}
-				}
-			}
-		}
-		/*---------------*/
-	}
-
-	/*---------------*/
-
-	/*----- 使用素材選択 -----*/
-	else
-	{
-		if (!weaponMakeAssert_)
+		/*----- 作成武器選択 -----*/
+		if (!recipeSelection_)
 		{
 			if (cursorInit_) // カーソル位置初期化
 			{
-				cursorX_ = CursorX_Min_ItemSelect_;
-				cursorY_ = CursorY_Min_ItemSelect_;
-				selectIconNum_ = 0;
+				cursorX_ = CursorX_Min_RecipeSelection_;
+				cursorY_ = CursorY_Min_RecipeSelection_;
+				weaponID_ = 0;
 				cursorInit_ = false;
-
-				// 持ち手部分で選択できるものをvectorに保管
-				GetHandleForWeaponMake();
 			}
 
 			/*----- カーソル移動 -----*/
-
 			if (Input::GetButtonDown(PAD_INPUT_RIGHT))
 			{
-				if (cursorX_ < CursorX_Max_ItemSelect_)
+				if (cursorX_ < CursorX_Max_RecipeSelection_)
 				{
-					cursorX_ += CursorX_MoveVerticalWidth_ItemSelect_;
+					cursorX_ = CursorX_Max_RecipeSelection_;
 					prevCursorY_ = cursorY_;
-					selectIconNum_++; // 選択されてる箇所のアイテムの番号を取得
+					weaponID_++;
 				}
 				else
 				{
@@ -169,381 +82,485 @@ void Production::Update()
 			}
 			if (Input::GetButtonDown(PAD_INPUT_LEFT))
 			{
-				if (cursorX_ > CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
+				if (cursorX_ > CursorX_Min_RecipeSelection_ && cursorX_ != CursorX_ProceedNextPart_)
 				{
-					cursorX_ -= CursorX_MoveVerticalWidth_ItemSelect_;
-					prevCursorY_ = cursorY_;
-					selectIconNum_--;
+					cursorX_ = CursorX_Min_RecipeSelection_;
+					weaponID_--;
 				}
-				else if (cursorX_ > CursorX_Max_ItemSelect_)
+				else if (cursorX_ == CursorX_ProceedNextPart_)
 				{
-					cursorX_ = CursorX_Max_ItemSelect_;
+					cursorX_ = CursorX_Max_RecipeSelection_;
 					cursorY_ = prevCursorY_;
 				}
 			}
-			if (Input::GetButtonDown(PAD_INPUT_DOWN))
+			if (Input::GetButtonDown(PAD_INPUT_DOWN) &&
+				cursorY_ != CursorY_Max_RecipeSelection_ &&
+				cursorX_ <= CursorX_Max_RecipeSelection_)
 			{
-				if (cursorY_ != CursorY_Max_ItemSelect_ &&
-					cursorX_ <= CursorX_Max_ItemSelect_)
-				{
-					cursorY_ += CursorY_MoveVerticalWidth_ItemSelect_;
-					prevCursorY_ = cursorY_;
-					selectIconNum_ += ItemID_ByLineBreak_ItemSelect_;
-				}
-				else
-				{
-					if (itemForWeaponMake_.size() > DrawMaxPouchSize_)
-					{
-						if (PouchDrawErea_.size() > WindowX_CellSize_)
-						{
-							prevCursorY_ = cursorY_;
-							selectIconNum_ += ItemID_ByLineBreak_ItemSelect_;
-
-							// 一行スクロール
-							scrollCount_++;
-							// 描画するアイテムのvectorの最初の一行を削除し、後ろに一行足す
-							// まず先頭の一行の削除
-							PouchDrawErea_.erase(PouchDrawErea_.begin(), PouchDrawErea_.begin() + WindowX_CellSize_);
-							NowDrawPosOnPouch_.erase(NowDrawPosOnPouch_.begin(), NowDrawPosOnPouch_.begin() + WindowX_CellSize_);
-							// 後ろに一行追加。
-							/// iの初期値		: 表示できる最大数 + 追加する列数 - 列数
-							/// for文の回る条件 : 表示できる最大数 + 追加する列数まで
-							for (int i = DrawMaxPouchSize_ + (scrollCount_ * WindowX_CellSize_) - WindowX_CellSize_;
-								i < DrawMaxPouchSize_ + (scrollCount_ * WindowX_CellSize_);
-								i++)
-							{
-								if (i < itemForWeaponMake_.size())
-								{
-									PouchDrawErea_.push_back(itemForWeaponMake_[i]);
-									NowDrawPosOnPouch_.push_back(ItemPosOnThePouch_[i]);
-								}
-							}
-						}
-					}
-				}
+				cursorY_ += CursorY_MoveVerticalWidth_RecipeSelect_;
+				prevCursorY_ = cursorY_;
+				weaponID_ += WeaponID_ByLineBreak_RecipeSelection_;
 			}
-			if (Input::GetButtonDown(PAD_INPUT_UP))
+			if (Input::GetButtonDown(PAD_INPUT_UP) &&
+				cursorY_ != CursorY_Min_RecipeSelection_ &&
+				cursorX_ <= CursorX_Max_RecipeSelection_)
 			{
-				if (cursorY_ != CursorY_Min_ItemSelect_ &&
-					cursorX_ <= CursorX_Max_ItemSelect_)
-				{
-					cursorY_ -= CursorY_MoveVerticalWidth_ItemSelect_;
-					prevCursorY_ = cursorY_;
-					selectIconNum_ -= ItemID_ByLineBreak_ItemSelect_;
-				}
-				else
-				{
-					if (scrollCount_ > 0)
-					{
-						prevCursorY_ = cursorY_;
-						selectIconNum_ -= ItemID_ByLineBreak_ItemSelect_;
-
-						scrollCount_--;
-						if (PouchDrawErea_.size() == DrawMaxPouchSize_)		// 描画されてるウィンドウが埋まってる場合
-						{
-							PouchDrawErea_.erase(PouchDrawErea_.end() - WindowX_CellSize_, PouchDrawErea_.end());
-							NowDrawPosOnPouch_.erase(NowDrawPosOnPouch_.end() - WindowX_CellSize_, NowDrawPosOnPouch_.end());
-							// 描画するアイテムのvectorの最初に描画されてない一行分追加
-							for (int i = WindowX_CellSize_; i > 0; i--)
-							{
-								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), itemForWeaponMake_[scrollCount_ * WindowX_CellSize_ + i - 1]);
-								NowDrawPosOnPouch_.begin() = NowDrawPosOnPouch_.insert(NowDrawPosOnPouch_.begin(), ItemPosOnThePouch_[scrollCount_ * WindowX_CellSize_ + i - 1]);
-							}
-						}
-						else if (PouchDrawErea_.size() > DrawMaxPouchSize_ - WindowX_CellSize_ &&
-							PouchDrawErea_.size() < DrawMaxPouchSize_)		// 描画されてるウィンドウの最後の一行に空きがある場合
-						{
-							PouchDrawErea_.erase(PouchDrawErea_.end() - (PouchDrawErea_.size() % WindowX_CellSize_), PouchDrawErea_.end());
-							NowDrawPosOnPouch_.erase(NowDrawPosOnPouch_.end() - (NowDrawPosOnPouch_.size() % WindowX_CellSize_), NowDrawPosOnPouch_.end());
-							// 描画するアイテムのvectorの最初に描画されてない一行分追加
-							for (int i = WindowX_CellSize_; i > 0; i--)
-							{
-								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), itemForWeaponMake_[scrollCount_ * WindowX_CellSize_ + i - 1]);
-								NowDrawPosOnPouch_.begin() = NowDrawPosOnPouch_.insert(NowDrawPosOnPouch_.begin(), ItemPosOnThePouch_[scrollCount_ * WindowX_CellSize_ + i - 1]);
-							}
-						}
-						else												// 描画されてるウィンドウの下何行かが空いている場合
-						{
-							// 描画するアイテムのvectorの最初に描画されてない一行分追加
-							for (int i = WindowX_CellSize_; i > 0; i--)
-							{
-								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), itemForWeaponMake_[scrollCount_ * WindowX_CellSize_ + i - 1]);
-								NowDrawPosOnPouch_.begin() = NowDrawPosOnPouch_.insert(NowDrawPosOnPouch_.begin(), ItemPosOnThePouch_[scrollCount_ * WindowX_CellSize_ + i - 1]);
-							}
-						}
-					}
-				}
+				cursorY_ -= CursorY_MoveVerticalWidth_RecipeSelect_;
+				weaponID_ -= WeaponID_ByLineBreak_RecipeSelection_;
 			}
-
 			/*---------------*/
 
-			/*----- 持ち手部分素材選択 -----*/
-			if (!shouldWeaponMainCreate_)
+			/*----- 作る武器を決定 -----*/
+			if (Input::GetButtonDown(PAD_INPUT_1))
 			{
-				if (Input::GetButtonDown(PAD_INPUT_1))
+				if (cursorX_ == CursorX_ProceedNextPart_ && cursorY_ == CursorY_ProceedNextPart_)
 				{
-					if (cursorX_ <= CursorX_Max_ItemSelect_)
+					sm.LoadScene("Sale");
+				}
+				else
+				{
+					if (canWeaponMake_[weaponID_ / 2])					// 選択した武器が作れるなら
 					{
-						if (selectIconNum_ < itemForWeaponMake_.size())
+						recipeSelection_ = true;						// フラグを立てる
+
+						if (cursorY_ <= CursorY_Max_RecipeSelection_ / 2) // 木製武器選択
 						{
-							if (gm.handles.size() < HandleSelect_MaxSize_ && !AlreadySecectItem(ItemPosOnThePouch_[selectIconNum_])) // 重複していなかったら
+							ItemType_ = gm.itemData[CsvTypeCheck_][CsvSkipCell_];
+							cursorInit_ = true;
+						}
+						else											  // 石製武器選択
+						{
+							ItemType_ = gm.itemData[CsvTypeCheck_][gm.itemData[0].size() - 1];
+							cursorInit_ = true;
+						}
+					}
+				}
+			}
+			/*---------------*/
+		}
+
+		/*---------------*/
+
+		/*----- 使用素材選択 -----*/
+		else
+		{
+			if (!weaponMakeAssert_)
+			{
+				if (cursorInit_) // カーソル位置初期化
+				{
+					cursorX_ = CursorX_Min_ItemSelect_;
+					cursorY_ = CursorY_Min_ItemSelect_;
+					selectIconNum_ = 0;
+					cursorInit_ = false;
+
+					// 持ち手部分で選択できるものをvectorに保管
+					GetHandleForWeaponMake();
+				}
+
+				/*----- カーソル移動 -----*/
+
+				if (Input::GetButtonDown(PAD_INPUT_RIGHT))
+				{
+					if (cursorX_ < CursorX_Max_ItemSelect_)
+					{
+						cursorX_ += CursorX_MoveVerticalWidth_ItemSelect_;
+						prevCursorY_ = cursorY_;
+						selectIconNum_++; // 選択されてる箇所のアイテムの番号を取得
+					}
+					else
+					{
+						cursorX_ = CursorX_ProceedNextPart_;
+						cursorY_ = CursorY_ProceedNextPart_;
+					}
+				}
+				if (Input::GetButtonDown(PAD_INPUT_LEFT))
+				{
+					if (cursorX_ > CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
+					{
+						cursorX_ -= CursorX_MoveVerticalWidth_ItemSelect_;
+						prevCursorY_ = cursorY_;
+						selectIconNum_--;
+					}
+					else if (cursorX_ > CursorX_Max_ItemSelect_)
+					{
+						cursorX_ = CursorX_Max_ItemSelect_;
+						cursorY_ = prevCursorY_;
+					}
+				}
+				if (Input::GetButtonDown(PAD_INPUT_DOWN))
+				{
+					if (cursorY_ != CursorY_Max_ItemSelect_ &&
+						cursorX_ <= CursorX_Max_ItemSelect_)
+					{
+						cursorY_ += CursorY_MoveVerticalWidth_ItemSelect_;
+						prevCursorY_ = cursorY_;
+						selectIconNum_ += ItemID_ByLineBreak_ItemSelect_;
+					}
+					else
+					{
+						if (itemForWeaponMake_.size() > DrawMaxPouchSize_)
+						{
+							if (PouchDrawErea_.size() > WindowX_CellSize_)
 							{
-								gm.handles.push_back(itemForWeaponMake_[selectIconNum_]);
-								gm.handlesQuality.push_back(itemQualityForWeaponMake_[selectIconNum_]);
-								SelectItemPosOnThePouch_.push_back(NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_]);
-							}
-							else
-							{
-								for (int i = 0; i < gm.handles.size(); i++)
+								prevCursorY_ = cursorY_;
+								selectIconNum_ += ItemID_ByLineBreak_ItemSelect_;
+
+								// 一行スクロール
+								scrollCount_++;
+								// 描画するアイテムのvectorの最初の一行を削除し、後ろに一行足す
+								// まず先頭の一行の削除
+								PouchDrawErea_.erase(PouchDrawErea_.begin(), PouchDrawErea_.begin() + WindowX_CellSize_);
+								NowDrawPosOnPouch_.erase(NowDrawPosOnPouch_.begin(), NowDrawPosOnPouch_.begin() + WindowX_CellSize_);
+								// 後ろに一行追加。
+								/// iの初期値		: 表示できる最大数 + 追加する列数 - 列数
+								/// for文の回る条件 : 表示できる最大数 + 追加する列数まで
+								for (int i = DrawMaxPouchSize_ + (scrollCount_ * WindowX_CellSize_) - WindowX_CellSize_;
+									i < DrawMaxPouchSize_ + (scrollCount_ * WindowX_CellSize_);
+									i++)
 								{
-									if (SelectItemPosOnThePouch_[i] == NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_])
+									if (i < itemForWeaponMake_.size())
 									{
-										gm.handles.erase(gm.handles.begin() + i);
-										gm.handlesQuality.erase(gm.handlesQuality.begin() + i);
-										SelectItemPosOnThePouch_.erase(SelectItemPosOnThePouch_.begin() + i);
+										PouchDrawErea_.push_back(itemForWeaponMake_[i]);
+										NowDrawPosOnPouch_.push_back(ItemPosOnThePouch_[i]);
 									}
 								}
 							}
 						}
 					}
-					// 次へ
+				}
+				if (Input::GetButtonDown(PAD_INPUT_UP))
+				{
+					if (cursorY_ != CursorY_Min_ItemSelect_ &&
+						cursorX_ <= CursorX_Max_ItemSelect_)
+					{
+						cursorY_ -= CursorY_MoveVerticalWidth_ItemSelect_;
+						prevCursorY_ = cursorY_;
+						selectIconNum_ -= ItemID_ByLineBreak_ItemSelect_;
+					}
 					else
 					{
-						if (HandleSlectOk_)
+						if (scrollCount_ > 0)
 						{
-							cursorX_ = CursorX_Min_ItemSelect_;			// カーソル位置初期化
-							cursorY_ = CursorY_Min_ItemSelect_;
-							selectIconNum_ = 0;							// 選択中の番号初期化
-							shouldWeaponMainCreate_ = true;
-							itemDetail_ = false;						// アイテム詳細ウィンドウフラグ初期化
-							itemForWeaponMake_.clear();					// 選択できるアイテムリストをクリア
-							ItemPosOnThePouch_.clear();					// 選択できるアイテムポーチ内の位置情報をクリア
+							prevCursorY_ = cursorY_;
+							selectIconNum_ -= ItemID_ByLineBreak_ItemSelect_;
 
-							// メイン部分で選択できるものをvectorに保管
-							GetMainForWeaponMake(ItemType_);
-						}
-						else
-						{
-							weaponMakeAssert_ = true;
+							scrollCount_--;
+							if (PouchDrawErea_.size() == DrawMaxPouchSize_)		// 描画されてるウィンドウが埋まってる場合
+							{
+								PouchDrawErea_.erase(PouchDrawErea_.end() - WindowX_CellSize_, PouchDrawErea_.end());
+								NowDrawPosOnPouch_.erase(NowDrawPosOnPouch_.end() - WindowX_CellSize_, NowDrawPosOnPouch_.end());
+								// 描画するアイテムのvectorの最初に描画されてない一行分追加
+								for (int i = WindowX_CellSize_; i > 0; i--)
+								{
+									PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), itemForWeaponMake_[scrollCount_ * WindowX_CellSize_ + i - 1]);
+									NowDrawPosOnPouch_.begin() = NowDrawPosOnPouch_.insert(NowDrawPosOnPouch_.begin(), ItemPosOnThePouch_[scrollCount_ * WindowX_CellSize_ + i - 1]);
+								}
+							}
+							else if (PouchDrawErea_.size() > DrawMaxPouchSize_ - WindowX_CellSize_ &&
+								PouchDrawErea_.size() < DrawMaxPouchSize_)		// 描画されてるウィンドウの最後の一行に空きがある場合
+							{
+								PouchDrawErea_.erase(PouchDrawErea_.end() - (PouchDrawErea_.size() % WindowX_CellSize_), PouchDrawErea_.end());
+								NowDrawPosOnPouch_.erase(NowDrawPosOnPouch_.end() - (NowDrawPosOnPouch_.size() % WindowX_CellSize_), NowDrawPosOnPouch_.end());
+								// 描画するアイテムのvectorの最初に描画されてない一行分追加
+								for (int i = WindowX_CellSize_; i > 0; i--)
+								{
+									PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), itemForWeaponMake_[scrollCount_ * WindowX_CellSize_ + i - 1]);
+									NowDrawPosOnPouch_.begin() = NowDrawPosOnPouch_.insert(NowDrawPosOnPouch_.begin(), ItemPosOnThePouch_[scrollCount_ * WindowX_CellSize_ + i - 1]);
+								}
+							}
+							else												// 描画されてるウィンドウの下何行かが空いている場合
+							{
+								// 描画するアイテムのvectorの最初に描画されてない一行分追加
+								for (int i = WindowX_CellSize_; i > 0; i--)
+								{
+									PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), itemForWeaponMake_[scrollCount_ * WindowX_CellSize_ + i - 1]);
+									NowDrawPosOnPouch_.begin() = NowDrawPosOnPouch_.insert(NowDrawPosOnPouch_.begin(), ItemPosOnThePouch_[scrollCount_ * WindowX_CellSize_ + i - 1]);
+								}
+							}
 						}
 					}
 				}
 
-				if (gm.handles.size() >= 1)
-				{
-					HandleSlectOk_ = true;
-				}
-				else
-				{
-					HandleSlectOk_ = false;
-				}
+				/*---------------*/
 
-				if (Input::GetButtonDown(PAD_INPUT_3) && selectIconNum_ < itemForWeaponMake_.size())
+				/*----- 持ち手部分素材選択 -----*/
+				if (!shouldWeaponMainCreate_)
 				{
-					if (!itemDetail_)
-						itemDetail_ = true;
-					else
-						itemDetail_ = false;
-				}
-
-				// 詳細ウィンドウ表示したままカーソル移動しても閉じるように
-				if (selectIconNum_ >= itemForWeaponMake_.size())
-					itemDetail_ = false;
-
-				if (Input::GetButtonDown(PAD_INPUT_2))
-				{
-					Format();
-				}
-			}
-
-			/*----- メイン部分素材選択 -----*/
-			else
-			{
-				if (Input::GetButtonDown(PAD_INPUT_1))
-				{
-					if (cursorX_ <= CursorX_Max_ItemSelect_)
+					if (Input::GetButtonDown(PAD_INPUT_1))
 					{
-						if (selectIconNum_ < itemForWeaponMake_.size())
+						if (cursorX_ <= CursorX_Max_ItemSelect_)
 						{
-							if (gm.main.size() < MainSelect_MaxSize_ && !AlreadySecectItem(ItemPosOnThePouch_[selectIconNum_])) // 重複していなかったら
+							if (selectIconNum_ < itemForWeaponMake_.size())
 							{
-								gm.main.push_back(itemForWeaponMake_[selectIconNum_]);
-								gm.mainQuality.push_back(itemQualityForWeaponMake_[selectIconNum_]);
-								SelectItemPosOnThePouch_.push_back(NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_]);
+								if (gm.handles.size() < HandleSelect_MaxSize_ && !AlreadySecectItem(ItemPosOnThePouch_[selectIconNum_])) // 重複していなかったら
+								{
+									gm.handles.push_back(itemForWeaponMake_[selectIconNum_]);
+									gm.handlesQuality.push_back(itemQualityForWeaponMake_[selectIconNum_]);
+									SelectItemPosOnThePouch_.push_back(NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_]);
+								}
+								else
+								{
+									for (int i = 0; i < gm.handles.size(); i++)
+									{
+										if (SelectItemPosOnThePouch_[i] == NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_])
+										{
+											gm.handles.erase(gm.handles.begin() + i);
+											gm.handlesQuality.erase(gm.handlesQuality.begin() + i);
+											SelectItemPosOnThePouch_.erase(SelectItemPosOnThePouch_.begin() + i);
+										}
+									}
+								}
+							}
+						}
+						// 次へ
+						else
+						{
+							if (HandleSlectOk_)
+							{
+								cursorX_ = CursorX_Min_ItemSelect_;			// カーソル位置初期化
+								cursorY_ = CursorY_Min_ItemSelect_;
+								selectIconNum_ = 0;							// 選択中の番号初期化
+								shouldWeaponMainCreate_ = true;
+								itemDetail_ = false;						// アイテム詳細ウィンドウフラグ初期化
+								itemForWeaponMake_.clear();					// 選択できるアイテムリストをクリア
+								ItemPosOnThePouch_.clear();					// 選択できるアイテムポーチ内の位置情報をクリア
+
+								// メイン部分で選択できるものをvectorに保管
+								GetMainForWeaponMake(ItemType_);
 							}
 							else
 							{
-								for (int i = 0; i < gm.main.size(); i++)
+								weaponMakeAssert_ = true;
+							}
+						}
+					}
+
+					if (gm.handles.size() >= 1)
+					{
+						HandleSlectOk_ = true;
+					}
+					else
+					{
+						HandleSlectOk_ = false;
+					}
+
+					if (Input::GetButtonDown(PAD_INPUT_3) && selectIconNum_ < itemForWeaponMake_.size())
+					{
+						if (!itemDetail_)
+							itemDetail_ = true;
+						else
+							itemDetail_ = false;
+					}
+
+					// 詳細ウィンドウ表示したままカーソル移動しても閉じるように
+					if (selectIconNum_ >= itemForWeaponMake_.size())
+						itemDetail_ = false;
+
+					if (Input::GetButtonDown(PAD_INPUT_2))
+					{
+						Format();
+					}
+				}
+
+				/*----- メイン部分素材選択 -----*/
+				else
+				{
+					if (Input::GetButtonDown(PAD_INPUT_1))
+					{
+						if (cursorX_ <= CursorX_Max_ItemSelect_)
+						{
+							if (selectIconNum_ < itemForWeaponMake_.size())
+							{
+								if (gm.main.size() < MainSelect_MaxSize_ && !AlreadySecectItem(ItemPosOnThePouch_[selectIconNum_])) // 重複していなかったら
 								{
-									if (SelectItemPosOnThePouch_[i + gm.handles.size()] == ItemPosOnThePouch_[selectIconNum_])
+									gm.main.push_back(itemForWeaponMake_[selectIconNum_]);
+									gm.mainQuality.push_back(itemQualityForWeaponMake_[selectIconNum_]);
+									SelectItemPosOnThePouch_.push_back(NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_]);
+								}
+								else
+								{
+									for (int i = 0; i < gm.main.size(); i++)
 									{
-										for (int j = 0; j < gm.handles.size(); j++)
+										if (SelectItemPosOnThePouch_[i + gm.handles.size()] == ItemPosOnThePouch_[selectIconNum_])
 										{
-											if (SelectItemPosOnThePouch_[j] != NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_])
+											for (int j = 0; j < gm.handles.size(); j++)
 											{
-												gm.main.erase(gm.main.begin() + i);
-												gm.mainQuality.erase(gm.mainQuality.begin() + i);
-												SelectItemPosOnThePouch_.erase(SelectItemPosOnThePouch_.begin() + (i + gm.handles.size()));
-												break;
+												if (SelectItemPosOnThePouch_[j] != NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_])
+												{
+													gm.main.erase(gm.main.begin() + i);
+													gm.mainQuality.erase(gm.mainQuality.begin() + i);
+													SelectItemPosOnThePouch_.erase(SelectItemPosOnThePouch_.begin() + (i + gm.handles.size()));
+													break;
+												}
 											}
 										}
 									}
 								}
 							}
 						}
+						else
+						{
+							bool roopBreak = false;
+							for (int i = 0; i < gm.handles.size(); i++)
+							{
+								for (int j = 0; j < gm.main.size(); j++)
+								{   // メイン部分選択後、必要素材が含まれていたら
+									if (MainSlectOk_ &&
+										((int)gm.weaponData[CsvNecessaryItem_][weaponID_ + CsvSkipCell_] == gm.handles[i] ||
+											(int)gm.weaponData[CsvNecessaryItem_][weaponID_ + CsvSkipCell_] == gm.main[j]))
+									{
+										shouldCreate_ = true;
+										itemDetail_ = false;
+										weaponMakeAssert_ = false;
+										roopBreak = true;
+										itemForWeaponMake_.clear();			// 選択できるアイテムリストをクリア
+										ItemPosOnThePouch_.clear();			// 選択できるアイテムポーチ内の位置情報をクリア
+										break;
+									}
+									else
+									{
+										weaponMakeAssert_ = true;
+									}
+								}
+								if (roopBreak)
+									break;
+							}
+						}
+					}
+
+					if (gm.main.size() >= 2)
+					{
+						MainSlectOk_ = true;
 					}
 					else
 					{
-						bool roopBreak = false;
-						for (int i = 0; i < gm.handles.size(); i++)
-						{
-							for (int j = 0; j < gm.main.size(); j++)
-							{   // メイン部分選択後、必要素材が含まれていたら
-								if (MainSlectOk_ &&
-									((int)gm.weaponData[CsvNecessaryItem_][weaponID_ + CsvSkipCell_] == gm.handles[i] ||
-										(int)gm.weaponData[CsvNecessaryItem_][weaponID_ + CsvSkipCell_] == gm.main[j]))
-								{
-									shouldCreate_ = true;
-									itemDetail_ = false;
-									weaponMakeAssert_ = false;
-									roopBreak = true;
-									itemForWeaponMake_.clear();			// 選択できるアイテムリストをクリア
-									ItemPosOnThePouch_.clear();			// 選択できるアイテムポーチ内の位置情報をクリア
-									break;
-								}
-								else
-								{
-									weaponMakeAssert_ = true;
-								}
-							}
-							if (roopBreak)
-								break;
-						}
+						MainSlectOk_ = false;
+					}
+
+					if (Input::GetButtonDown(PAD_INPUT_3) && selectIconNum_ < itemForWeaponMake_.size())
+					{
+						if (!itemDetail_)
+							itemDetail_ = true;
+						else
+							itemDetail_ = false;
+					}
+
+					// 詳細ウィンドウ表示したままカーソル移動しても閉じるように
+					if (selectIconNum_ >= itemForWeaponMake_.size())
+						itemDetail_ = false;
+
+					if (Input::GetButtonDown(PAD_INPUT_2))
+					{
+						shouldWeaponMainCreate_ = false;
+						gm.main.clear();
+						gm.main.shrink_to_fit();
+						gm.mainQuality.clear();
+						gm.mainQuality.shrink_to_fit();
+						itemForWeaponMake_.clear();
+						itemForWeaponMake_.shrink_to_fit();
+						ItemPosOnThePouch_.clear();
+						ItemPosOnThePouch_.shrink_to_fit();
+						SelectItemPosOnThePouch_.erase
+						(SelectItemPosOnThePouch_.begin() + gm.handles.size(),
+							SelectItemPosOnThePouch_.end());
+						SelectItemPosOnThePouch_.shrink_to_fit();
+
+						// 持ち手部分で選択できるものをvectorに保管
+						GetHandleForWeaponMake();
 					}
 				}
 
-				if (gm.main.size() >= 2)
-				{
-					MainSlectOk_ = true;
-				}
-				else
-				{
-					MainSlectOk_ = false;
-				}
+				/*----------*/
 
-				if (Input::GetButtonDown(PAD_INPUT_3) && selectIconNum_ < itemForWeaponMake_.size())
+				/*----- 素材選択後。武器生成 -----*/
+				if (shouldCreate_)
 				{
-					if (!itemDetail_)
-						itemDetail_ = true;
+					if (MainSlectOk_)
+					{
+						// vector内容クリア前に品質を計算して保管しておく。
+						// 一時的に保管してたgm.handlesとgm.mainの内容をクリアする。
+						// gm.pouchとgm.lumberから持ち手リストに入ってるもの、
+						// gm.pouchとgm.メイン部分のリストからメイン部分リストに入ってるものを消し、
+						// waponIDの武器を一つ生成
+						// gm.waponQualityに品質を代入
+
+						int weaponQualityStorage = 0; // 品質保存用変数
+
+						for (int i = 0; i < gm.handles.size(); i++)
+						{
+							weaponQualityStorage += (gm.handlesQuality[i] / ((i + 1) * 2)); // 全素材の品質を計算(持ち手部分)
+						}
+						for (int i = 0; i < gm.main.size(); i++)
+						{
+							weaponQualityStorage += (gm.mainQuality[i] / ((i + 1) * 2));	// 全素材の品質を計算(上で計算した持ち手部分 + メイン部分)
+						}
+
+						if (!animationEnd_ && !MakeEnd_)
+						{
+							for (int i = 0; i < gm.handles.size(); i++)
+								drawItemID_.push_back(gm.handles[i]);
+							for (int i = 0; i < gm.main.size(); i++)
+								drawItemID_.push_back(gm.main[i]);
+
+							for (int i = 0; i < drawItemID_.size(); i++)
+							{
+								animationX_.push_back(0);
+								animationY_.push_back(0);
+							}
+
+							MakeEnd_ = true;
+						}
+						if (!MakeEnd_)
+						{
+							/*----- 選択済み素材削除処理 -----*/
+
+							/*　選択済みのアイテムのポーチにおける位置が入ってるVectorを　*/
+							/*　　　　降順にソートしてgm.pouchの後ろから順にerase　 　　　*/
+
+							std::sort(SelectItemPosOnThePouch_.begin(), SelectItemPosOnThePouch_.end(), std::greater<int>());
+							for (int i = 0; i < SelectItemPosOnThePouch_.size(); i++)
+							{
+								gm.pouch.erase(gm.pouch.begin() + SelectItemPosOnThePouch_[i]);
+								gm.pouchQuality.erase(gm.pouchQuality.begin() + SelectItemPosOnThePouch_[i]);
+
+							}
+							/*---------------*/
+
+							gm.handles.clear();
+							gm.handles.shrink_to_fit();
+							gm.main.clear();
+							gm.main.shrink_to_fit();
+
+							gm.weapons.push_back(weaponID_);
+							gm.weaponQuality.push_back(weaponQualityStorage);
+						}
+					}
 					else
-						itemDetail_ = false;
-				}
-
-				// 詳細ウィンドウ表示したままカーソル移動しても閉じるように
-				if (selectIconNum_ >= itemForWeaponMake_.size())
-					itemDetail_ = false;
-
-				if (Input::GetButtonDown(PAD_INPUT_2))
-				{
-					shouldWeaponMainCreate_ = false;
-					gm.main.clear();
-					gm.main.shrink_to_fit();
-					gm.mainQuality.clear();
-					gm.mainQuality.shrink_to_fit();
-					itemForWeaponMake_.clear();
-					itemForWeaponMake_.shrink_to_fit();
-					ItemPosOnThePouch_.clear();
-					ItemPosOnThePouch_.shrink_to_fit();
-					SelectItemPosOnThePouch_.erase
-					(SelectItemPosOnThePouch_.begin() + gm.handles.size(),
-					 SelectItemPosOnThePouch_.end());
-					SelectItemPosOnThePouch_.shrink_to_fit();
-
-					// 持ち手部分で選択できるものをvectorに保管
-					GetHandleForWeaponMake();
+						shouldRetry_ = true;
+					if (!MakeEnd_)
+					{// 初期化
+						Format();
+					}
 				}
 			}
 
-			/*----------*/
-
-			/*----- 素材選択後。武器生成 -----*/
-			if (shouldCreate_)
+			else
 			{
-				if (MainSlectOk_)
+				if (Input::GetButtonDown(PAD_INPUT_1))
 				{
-					// vector内容クリア前に品質を計算して保管しておく。
-					// 一時的に保管してたgm.handlesとgm.mainの内容をクリアする。
-					// gm.pouchとgm.lumberから持ち手リストに入ってるもの、
-					// gm.pouchとgm.メイン部分のリストからメイン部分リストに入ってるものを消し、
-					// waponIDの武器を一つ生成
-					// gm.waponQualityに品質を代入
-
-					int weaponQualityStorage = 0; // 品質保存用変数
-
-					for (int i = 0; i < gm.handles.size(); i++)
-					{
-						weaponQualityStorage += (gm.handlesQuality[i] / ((i + 1) * 2)); // 全素材の品質を計算(持ち手部分)
-					}
-					for (int i = 0; i < gm.main.size(); i++)
-					{
-						weaponQualityStorage += (gm.mainQuality[i] / ((i + 1) * 2));	// 全素材の品質を計算(上で計算した持ち手部分 + メイン部分)
-					}
-
-					if (!animationEnd_ && !MakeEnd_)
-					{
-						for (int i = 0; i < gm.handles.size(); i++)
-							drawItemID_.push_back(gm.handles[i]);
-						for (int i = 0; i < gm.main.size(); i++)
-							drawItemID_.push_back(gm.main[i]);
-
-						for (int i = 0; i < drawItemID_.size(); i++)
-						{
-							animationX_.push_back(0);
-							animationY_.push_back(0);
-						}
-
-						MakeEnd_ = true;
-					}
-					if (!MakeEnd_)
-					{
-						/*----- 選択済み素材削除処理 -----*/
-
-						/*　選択済みのアイテムのポーチにおける位置が入ってるVectorを　*/
-						/*　　　　降順にソートしてgm.pouchの後ろから順にerase　 　　　*/
-
-						std::sort(SelectItemPosOnThePouch_.begin(), SelectItemPosOnThePouch_.end(), std::greater<int>());
-						for (int i = 0; i < SelectItemPosOnThePouch_.size(); i++)
-						{
-							gm.pouch.erase(gm.pouch.begin() + SelectItemPosOnThePouch_[i]);
-							gm.pouchQuality.erase(gm.pouchQuality.begin() + SelectItemPosOnThePouch_[i]);
-
-						}
-						/*---------------*/
-
-						gm.handles.clear();
-						gm.handles.shrink_to_fit();
-						gm.main.clear();
-						gm.main.shrink_to_fit();
-
-						gm.weapons.push_back(weaponID_);
-						gm.weaponQuality.push_back(weaponQualityStorage);
-					}
-				}
-				else
-					shouldRetry_ = true;
-				if (!MakeEnd_)
-				{// 初期化
-					Format();
+					weaponMakeAssert_ = false;
 				}
 			}
 		}
-
-		else
+	}
+	else
+	{
+		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
-			if (Input::GetButtonDown(PAD_INPUT_1))
-			{
-				weaponMakeAssert_ = false;
-			}
+			if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
+				operationDescriptionMassegeNum_++;
+			else
+				is_Operation_Description_Been_ = true;
 		}
 	}
 }
@@ -629,18 +646,18 @@ void Production::Draw()
 					SetDrawBlendMode(DX_BLENDMODE_ALPHA, 60);
 					DrawBox
 					(itemX_ + (shadowX * CursorX_MoveVerticalWidth_ItemSelect_),
-					 itemY_ + (shadowY * CursorY_MoveVerticalWidth_ItemSelect_),
-					 itemX_ + (shadowX * CursorX_MoveVerticalWidth_ItemSelect_ + iconSize_),
-					 itemY_ + (shadowY * CursorY_MoveVerticalWidth_ItemSelect_ + iconSize_),
-					 gm.colorGray,
-					 TRUE);
+						itemY_ + (shadowY * CursorY_MoveVerticalWidth_ItemSelect_),
+						itemX_ + (shadowX * CursorX_MoveVerticalWidth_ItemSelect_ + iconSize_),
+						itemY_ + (shadowY * CursorY_MoveVerticalWidth_ItemSelect_ + iconSize_),
+						gm.colorGray,
+						TRUE);
 					SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 					DrawString
 					(itemX_ + (shadowX * CursorX_MoveVerticalWidth_ItemSelect_),
-					 itemY_ + (shadowY * CursorY_MoveVerticalWidth_ItemSelect_),
-					 "選択中",
-					 gm.colorWhite);
+						itemY_ + (shadowY * CursorY_MoveVerticalWidth_ItemSelect_),
+						"選択中",
+						gm.colorWhite);
 				}
 			}
 		}
@@ -801,6 +818,18 @@ void Production::Draw()
 
 	/*---------------*/
 
+	if (!is_Operation_Description_Been_)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 122);
+		DrawBox(0, 0, Screen::width, Screen::height, gm.colorBrack, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		std::string drawNextDescription = "Zキーで次へ";
+		int DrawWidthUnder = GetDrawStringWidth(drawNextDescription.c_str(), -1);
+		DrawString((Screen::width - DrawWidthUnder) / 2, (Screen::height - (Screen::height / 4) + 30), drawNextDescription.c_str(), gm.colorWhite);
+		std::string drawMassege = description_[operationDescriptionMassegeNum_];
+		int DrawWidth = GetDrawStringWidth(drawMassege.c_str(), -1);
+		DrawString((Screen::width - DrawWidth) / 2, (Screen::height - (Screen::height / 4)), drawMassege.c_str(), gm.colorWhite);
+	}
 }
 
 void Production::GetHandleForWeaponMake()

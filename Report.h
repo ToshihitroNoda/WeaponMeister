@@ -69,6 +69,19 @@ private:
 	int pressCount_  = 0;
 
 	int autoSaveCount_ = 120;
+
+	int operationDescriptionMassegeNum_ = 0;
+
+	bool is_Operation_Description_Been_ = false;
+
+	std::string description_[6]
+	{ "1日の最後に今日の収支の確認ができます。",
+	  "前日の所持金、買い物で使った金額、売却で稼いだ金額、",
+	  "現在の所持金、今日の家賃、明日の家賃の6つを確認することができます。",
+	  "これらの情報をもとに翌日以降活動していきましょう。",
+	  "また、この画面でオートセーブが行われます。",
+	  "以上が説明になります。情報をもとに翌日以降より良い店舗経営をしましょう！"
+	};
 };
 
 #endif

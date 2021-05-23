@@ -1,5 +1,6 @@
 #include "Buy.h"
 #include "Input.h"
+#include "Adv.h"
 
 StageSelection stageSelection;
 
@@ -18,6 +19,9 @@ void Buy::Init()
 			buyItemsQuality_.push_back((int)gm.itemData[CsvItemQualityCell_][i]);
 		}
 	}
+	
+	if (Adv::day != 1)
+		is_Operation_Description_Been_ = true;
 
 	cursorX_ = CursorX_Min_ItemSelect_;
 	cursorY_ = CursorY_Min_ItemSelect_;
@@ -34,86 +38,99 @@ void Buy::Final()
 
 void Buy::Update()
 {
-	if (Input::GetButtonDown(PAD_INPUT_RIGHT))
+	if (is_Operation_Description_Been_)
 	{
-		if (cursorX_ < CursorX_Max_ItemSelect_ && cursorY_ != CursorY_Buy_Select)
+		if (Input::GetButtonDown(PAD_INPUT_RIGHT))
 		{
-			cursorX_ += CursorX_MoveVerticalWidth_ItemSelect_;
-			selectIconNum_++; // 選択されてる箇所のアイテムの番号を取得
+			if (cursorX_ < CursorX_Max_ItemSelect_ && cursorY_ != CursorY_Buy_Select)
+			{
+				cursorX_ += CursorX_MoveVerticalWidth_ItemSelect_;
+				selectIconNum_++; // 選択されてる箇所のアイテムの番号を取得
+			}
 		}
-	}
 
-	if (Input::GetButtonDown(PAD_INPUT_LEFT))
-	{
-		if (cursorX_ > CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
+		if (Input::GetButtonDown(PAD_INPUT_LEFT))
 		{
-			cursorX_ -= CursorX_MoveVerticalWidth_ItemSelect_;
-			selectIconNum_--;
+			if (cursorX_ > CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
+			{
+				cursorX_ -= CursorX_MoveVerticalWidth_ItemSelect_;
+				selectIconNum_--;
+			}
 		}
-	}
-	if (Input::GetButtonDown(PAD_INPUT_DOWN)) 
-	{	
-		if (cursorY_ != CursorY_Max_ItemSelect_ && cursorY_ != CursorY_Buy_Select)
+		if (Input::GetButtonDown(PAD_INPUT_DOWN))
 		{
+			if (cursorY_ != CursorY_Max_ItemSelect_ && cursorY_ != CursorY_Buy_Select)
+			{
 				cursorY_ += CursorY_MoveVerticalWidth_ItemSelect_;
 				selectIconNum_ += ItemID_ByLineBreak_ItemSelect_;
+			}
+			else if (cursorY_ < CursorY_Buy_Select)
+			{
+				cursorX_ = CursorX_Buy_Select;
+				cursorY_ = CursorY_Buy_Select;
+			}
 		}
-		else if (cursorY_ < CursorY_Buy_Select)
+		if (Input::GetButtonDown(PAD_INPUT_UP))
 		{
-			cursorX_ = CursorX_Buy_Select;
-			cursorY_ = CursorY_Buy_Select;
+			if (cursorY_ != CursorY_Min_ItemSelect_ && cursorY_ != CursorY_Buy_Select)
+			{
+				cursorY_ -= CursorY_MoveVerticalWidth_ItemSelect_;
+				selectIconNum_ -= ItemID_ByLineBreak_ItemSelect_;
+			}
+			else if (cursorY_ == CursorY_Buy_Select)
+			{
+				cursorX_ = CursorX_Min_ItemSelect_;
+				cursorY_ = CursorY_Max_ItemSelect_;
+			}
 		}
-	}
-	if (Input::GetButtonDown(PAD_INPUT_UP))
-	{
-		if (cursorY_ != CursorY_Min_ItemSelect_ && cursorY_ != CursorY_Buy_Select)
-		{
-			cursorY_ -= CursorY_MoveVerticalWidth_ItemSelect_;
-			selectIconNum_ -= ItemID_ByLineBreak_ItemSelect_;
-		}
-		else if (cursorY_ == CursorY_Buy_Select)
-		{
-			cursorX_ = CursorX_Min_ItemSelect_;
-			cursorY_ = CursorY_Max_ItemSelect_;
-		}
-	}
 
-	if (cursorX_ == CursorX_Buy_Select &&
-		cursorY_ == CursorY_Buy_Select)
+		if (cursorX_ == CursorX_Buy_Select &&
+			cursorY_ == CursorY_Buy_Select)
+		{
+			if (Input::GetButtonDown(PAD_INPUT_1))
+			{
+				buyAmount = beforeMoney_ - gm.money;
+				sm.LoadScene("Production");
+			}
+		}
+		// 購入処理
+		else
+		{
+			if (Input::GetButtonDown(PAD_INPUT_1) &&
+				selectIconNum_ < buyItems_.size() &&
+				gm.money >= (int)gm.itemData[CsvItemPriceCell_][buyItems_[selectIconNum_] + CsvSkipCell_])
+			{
+				gm.money -= (int)gm.itemData[CsvItemPriceCell_][buyItems_[selectIconNum_] + CsvSkipCell_];
+				gm.pouch.push_back(buyItems_[selectIconNum_]);
+				gm.pouchQuality.push_back(buyItemsQuality_[selectIconNum_]);
+			}
+		}
+
+		// 購入やめる処理（選択済みアイテムの選択解除）
+		if (Input::GetButtonDown(PAD_INPUT_2) && gm.pouch.size() > beforeBuyPouchSize_)
+		{
+			gm.money += (int)gm.itemData[CsvItemPriceCell_][gm.pouch.back() + CsvSkipCell_];
+			gm.pouch.erase(gm.pouch.end() - 1);
+			gm.pouchQuality.erase(gm.pouchQuality.end() - 1);
+		}
+
+		if (Input::GetButtonDown(PAD_INPUT_3) && selectIconNum_ < buyItems_.size())
+		{
+			if (!itemDetail_)
+				itemDetail_ = true;
+			else
+				itemDetail_ = false;
+		}
+	}
+	else
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
-			buyAmount = beforeMoney_ - gm.money;
-			sm.LoadScene("Production");
+			if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
+				operationDescriptionMassegeNum_++;
+			else
+				is_Operation_Description_Been_ = true;
 		}
-	}
-	// 購入処理
-	else
-	{
-		if (Input::GetButtonDown(PAD_INPUT_1) && 
-			selectIconNum_ < buyItems_.size() && 
-			gm.money >= (int)gm.itemData[CsvItemPriceCell_][buyItems_[selectIconNum_] + CsvSkipCell_])
-		{
-			gm.money -= (int)gm.itemData[CsvItemPriceCell_][buyItems_[selectIconNum_] + CsvSkipCell_];
-			gm.pouch.push_back(buyItems_[selectIconNum_]);
-			gm.pouchQuality.push_back(buyItemsQuality_[selectIconNum_]);
-		}
-	}
-
-	// 購入やめる処理（選択済みアイテムの選択解除）
-	if (Input::GetButtonDown(PAD_INPUT_2) && gm.pouch.size() > beforeBuyPouchSize_)
-	{
-		gm.money += (int)gm.itemData[CsvItemPriceCell_][gm.pouch.back() + CsvSkipCell_];
-		gm.pouch.erase(gm.pouch.end() - 1);
-		gm.pouchQuality.erase(gm.pouchQuality.end() - 1);
-	}
-
-	if (Input::GetButtonDown(PAD_INPUT_3) && selectIconNum_ < buyItems_.size())
-	{
-		if (!itemDetail_)
-			itemDetail_ = true;
-		else
-			itemDetail_ = false;
 	}
 }
 
@@ -201,4 +218,17 @@ void Buy::Draw()
 	}
 
 	/*---------------*/
+
+	if (!is_Operation_Description_Been_)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 122);
+		DrawBox(0, 0, Screen::width, Screen::height, gm.colorBrack, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		std::string drawNextDescription = "Zキーで次へ";
+		int DrawWidthUnder = GetDrawStringWidth(drawNextDescription.c_str(), -1);
+		DrawString((Screen::width - DrawWidthUnder) / 2, (Screen::height - (Screen::height / 4) + 30), drawNextDescription.c_str(), gm.colorWhite);
+		std::string drawMassege = description_[operationDescriptionMassegeNum_];
+		int DrawWidth = GetDrawStringWidth(drawMassege.c_str(), -1);
+		DrawString((Screen::width - DrawWidth) / 2, (Screen::height - (Screen::height / 4)), drawMassege.c_str(), gm.colorWhite);
+	}
 }

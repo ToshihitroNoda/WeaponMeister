@@ -25,6 +25,9 @@ void StageSelection::Init()
 	else
 		doNewStageAdd_ = false;
 
+	if (Adv::day != 1)
+		is_Operation_Description_Been_ = true;
+
 	for (int i = 0; i < nowMapCount_.size(); i++)
 	{
 		if (mapCount >= nowMapCount_[i])
@@ -51,74 +54,87 @@ void StageSelection::Final()
 
 void StageSelection::Update()
 {
-	if (Input::GetButtonDown(PAD_INPUT_1))
+	if (is_Operation_Description_Been_)
 	{
-		nowLoadingDraw_ = true;
-	}
-	if (nextSceneLoad_)
-	{
-		for (int i = 0; i < mapIconPostions_.size() / 2; i++)
+		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
-			if (cursorX_ == mapIconPostions_[i])
-			{
-				stageNum = stageNums_[i];
-			}
+			nowLoadingDraw_ = true;
 		}
-		sm.LoadScene("Collection");
-	}
-
-	if (Input::GetButtonDown(PAD_INPUT_RIGHT))
-	{
-		if (mapCount > 1)
+		if (nextSceneLoad_)
 		{
 			for (int i = 0; i < mapIconPostions_.size() / 2; i++)
 			{
-				if (cursorX_ == mapIconPostions_[i]) // 今どのマップ選んでるか
+				if (cursorX_ == mapIconPostions_[i])
 				{
-					if (mapIconPostions_[i + 1] > mapIconPostions_[i]) // 今選んでるマップより右にあるのを選択しようとしてたら
+					stageNum = stageNums_[i];
+				}
+			}
+			sm.LoadScene("Collection");
+		}
+
+		if (Input::GetButtonDown(PAD_INPUT_RIGHT))
+		{
+			if (mapCount > 1)
+			{
+				for (int i = 0; i < mapIconPostions_.size() / 2; i++)
+				{
+					if (cursorX_ == mapIconPostions_[i]) // 今どのマップ選んでるか
 					{
-						if (addMapList_[i])
+						if (mapIconPostions_[i + 1] > mapIconPostions_[i]) // 今選んでるマップより右にあるのを選択しようとしてたら
 						{
-							cursorX_ = mapIconPostions_[i + 1];
-							break;
+							if (addMapList_[i])
+							{
+								cursorX_ = mapIconPostions_[i + 1];
+								break;
+							}
 						}
 					}
 				}
 			}
 		}
-	}
-	if (Input::GetButtonDown(PAD_INPUT_LEFT))
-	{
-		if (mapCount > 1 && cursorX_ != mapIconPostions_[0] && cursorX_ != mapIconPostions_[3])
+		if (Input::GetButtonDown(PAD_INPUT_LEFT))
 		{
-			for (int i = 0; i < mapIconPostions_.size() / 2; i++)
+			if (mapCount > 1 && cursorX_ != mapIconPostions_[0] && cursorX_ != mapIconPostions_[3])
 			{
-				if (cursorX_ == mapIconPostions_[i])	// 今どのマップ選んでるか
+				for (int i = 0; i < mapIconPostions_.size() / 2; i++)
 				{
-					if (mapIconPostions_[i - 1] < mapIconPostions_[i]) // 今選んでるマップより左にあるのを選択しようとしてたら
-						cursorX_ = mapIconPostions_[i - 1];
+					if (cursorX_ == mapIconPostions_[i])	// 今どのマップ選んでるか
+					{
+						if (mapIconPostions_[i - 1] < mapIconPostions_[i]) // 今選んでるマップより左にあるのを選択しようとしてたら
+							cursorX_ = mapIconPostions_[i - 1];
+					}
+				}
+			}
+		}
+		if (Input::GetButtonDown(PAD_INPUT_UP))
+		{
+			if (cursorX_ == mapIconPostions_[3] || cursorX_ == mapIconPostions_[4])
+			{
+				cursorY_ = Map1IconPosY_;
+				cursorX_ = Map1IconPosX_;
+
+			}
+		}
+		if (Input::GetButtonDown(PAD_INPUT_DOWN))
+		{
+			if (mapCount > 3)
+			{
+				if (cursorY_ < Map5IconPosY_)
+				{
+					cursorY_ = Map4IconPosY_;
+					cursorX_ = Map4IconPosX_;
 				}
 			}
 		}
 	}
-	if (Input::GetButtonDown(PAD_INPUT_UP))
+	else
 	{
-		if (cursorX_ == mapIconPostions_[3] || cursorX_ == mapIconPostions_[4])
+		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
-			cursorY_ = Map1IconPosY_;
-			cursorX_ = Map1IconPosX_;
-
-		}
-	}
-	if (Input::GetButtonDown(PAD_INPUT_DOWN))
-	{
-		if (mapCount > 3)
-		{
-			if (cursorY_ < Map5IconPosY_)
-			{
-				cursorY_ = Map4IconPosY_;
-				cursorX_ = Map4IconPosX_;
-			}
+			if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
+				operationDescriptionMassegeNum_++;
+			else
+				is_Operation_Description_Been_ = true;
 		}
 	}
 }
@@ -151,6 +167,19 @@ void StageSelection::Draw()
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		DrawString(900, 600, "Now Loading...", gm.colorWhite);
 		nextSceneLoad_ = true;
+	}
+
+	if (!is_Operation_Description_Been_)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 122);
+		DrawBox(0, 0, Screen::width, Screen::height, gm.colorBrack, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		std::string drawNextDescription = "Zキーで次へ";
+		int DrawWidthUnder = GetDrawStringWidth(drawNextDescription.c_str(), -1);
+		DrawString((Screen::width - DrawWidthUnder) / 2, (Screen::height - (Screen::height / 4) + 30), drawNextDescription.c_str(), gm.colorWhite);
+		std::string drawMassege = description_[operationDescriptionMassegeNum_];
+		int DrawWidth = GetDrawStringWidth(drawMassege.c_str(), -1);
+		DrawString((Screen::width - DrawWidth) / 2, (Screen::height - (Screen::height / 4)), drawMassege.c_str(), gm.colorWhite);
 	}
 }
 

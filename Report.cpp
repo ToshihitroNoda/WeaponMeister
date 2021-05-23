@@ -27,6 +27,9 @@ void Report::Init()
 
 	if (gm.money < 0)		// 所持金がなかったらセーブしないでゲームオーバー
 		dataSave.Save();
+
+	if (Adv::day != 1)
+		is_Operation_Description_Been_ = true;
 }
 
 void Report::Final()
@@ -37,25 +40,38 @@ void Report::Final()
 
 void Report::Update()
 {
-	if (Input::GetButtonDown(PAD_INPUT_1))
+	if (is_Operation_Description_Been_)
 	{
-		if (pressCount_ < DrawDataNums_)
+		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
-			pressCount_++;
-		}
-		else
-		{
-			prevMoney = finalMoney_;
-
-			if (finalMoney_ < 0)
-				sm.LoadScene("GameOver");
+			if (pressCount_ < DrawDataNums_)
+			{
+				pressCount_++;
+			}
 			else
-				sm.LoadScene("Adv");
+			{
+				prevMoney = finalMoney_;
+
+				if (finalMoney_ < 0)
+					sm.LoadScene("GameOver");
+				else
+					sm.LoadScene("Adv");
+			}
+		}
+
+		if (autoSaveCount_ >= 0)
+			autoSaveCount_--;
+	}
+	else
+	{
+		if (Input::GetButtonDown(PAD_INPUT_1))
+		{
+			if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
+				operationDescriptionMassegeNum_++;
+			else
+				is_Operation_Description_Been_ = true;
 		}
 	}
-
-	if (autoSaveCount_ >= 0)
-		autoSaveCount_--;
 }
 
 void Report::Draw()
@@ -118,4 +134,16 @@ void Report::Draw()
 		DrawString(AutoSaveX_, AutoSaveY_, "セーブ中...", gm.colorWhite);
 	}
 
+	if (!is_Operation_Description_Been_)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 122);
+		DrawBox(0, 0, Screen::width, Screen::height, gm.colorBrack, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		std::string drawNextDescription = "Zキーで次へ";
+		int DrawWidthUnder = GetDrawStringWidth(drawNextDescription.c_str(), -1);
+		DrawString((Screen::width - DrawWidthUnder) / 2, (Screen::height - (Screen::height / 4) + 30), drawNextDescription.c_str(), gm.colorWhite);
+		std::string drawMassege = description_[operationDescriptionMassegeNum_];
+		int DrawWidth = GetDrawStringWidth(drawMassege.c_str(), -1);
+		DrawString((Screen::width - DrawWidth) / 2, (Screen::height - (Screen::height / 4)), drawMassege.c_str(), gm.colorWhite);
+	}
 }

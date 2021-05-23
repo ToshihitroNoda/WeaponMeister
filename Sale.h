@@ -77,21 +77,30 @@ private:
 	int cursorY_	   = 0;
 	int prevCursorY_   = 0;
 	int selectIconNum_ = 0;
-
 	int prevMoney_ = 0;
+	int scrollCount_ = 0;
+	int operationDescriptionMassegeNum_ = 0;
+
+	bool alradySelect_ = false;
+	bool is_Operation_Description_Been_ = false;
 
 	std::vector<int> weaponPosOnPouch_;
 	std::vector<int> saleWeapons_;
 	std::vector<int> selectWeaponPos_; // 選択した装備の位置を保存するvector
 	std::vector<int> alreadySelectWeaponPos_; // 【既に】選択されている装備の位置を保存するvector
-	bool alradySelect_ = false;
-
 	std::vector<int> weaponPrice_; 
-	
-	int scrollCount_ = 0;
-
 	std::vector<int> pouchDrawErea_;
 	std::vector<int> nowDrawPosOnPouch_;
+
+	std::string description_[7]
+	{ "それでは先程作成した武器を売却しましょう。",
+	  "最終日は勇者に売る武器一つのみしか売却することはできません。",
+	  "最終日以外はいくつでも売却することができます。",
+	  "矢印キーでカーソル移動、Zキーで選択することで売却する武器を選択できます。",
+	  "選択を解除したい場合は選択済みの武器にカーソルを合わせてZキーでその武器の選択を解除できます。",
+	  "売却したい武器をすべて選択し終えたらSALEボタンを押すことで次の画面に進みます。",
+	  "以上が説明になります。店を継続させるための家賃を稼ぐ為に定期的に武器を売却しましょう。"
+	};
 };
 
 #endif

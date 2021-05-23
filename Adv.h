@@ -34,8 +34,8 @@ private:
 	const int OptionMenuY_      = 690;
 	const int DrawFlashTiming_	= 20;
 	const int Divisor_			= 30;
-	const int AutoSpeed_        = 180;
-	const int SkipSpeed_        = 10;
+	const int AutoSpeed_        = 120;
+	const int SkipSpeed_        = 5;
 
 	int IconFlashCount_ = 0;
 	int autoCounter_ = 0;
