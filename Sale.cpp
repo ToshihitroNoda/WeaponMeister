@@ -1,6 +1,7 @@
 #include "Sale.h"
 #include "Input.h"
 #include "Adv.h"
+#include "Music.h"
 
 int Sale::saleAmount = 0;
 
@@ -34,10 +35,13 @@ void Sale::Init()
 	
 	if (Adv::day != 1)
 		is_Operation_Description_Been_ = true;
+
+	PlaySoundMem(Music::sale_BGM, DX_PLAYTYPE_LOOP);
 }
 
 void Sale::Final()
 {
+	StopSoundMem(Music::sale_BGM);
 	gm.image.Final();
 	sm.currentScene.reset();
 }
@@ -50,6 +54,7 @@ void Sale::Update()
 		{
 			if (cursorX_ < CursorX_Max_ItemSelect_)
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorX_ += CursorX_MoveVerticalWidth_ItemSelect_;
 				prevCursorY_ = cursorY_;
 				selectIconNum_++; // 選択されてる箇所のアイテムの番号を取得
@@ -64,12 +69,14 @@ void Sale::Update()
 		{
 			if (cursorX_ > CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorX_ -= CursorX_MoveVerticalWidth_ItemSelect_;
 				prevCursorY_ = cursorY_;
 				selectIconNum_--;
 			}
 			else if (cursorX_ > CursorX_Max_ItemSelect_)
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorX_ = CursorX_Max_ItemSelect_;
 				cursorY_ = prevCursorY_;
 			}
@@ -79,6 +86,7 @@ void Sale::Update()
 			if (cursorY_ != CursorY_Max_ItemSelect_ &&
 				cursorX_ <= CursorX_Max_ItemSelect_)
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorY_ += CursorY_MoveVerticalWidth_ItemSelect_;
 				prevCursorY_ = cursorY_;
 				selectIconNum_ += ItemID_ByLineBreak_ItemSelect_;
@@ -89,6 +97,7 @@ void Sale::Update()
 				{
 					if (pouchDrawErea_.size() > WindowX_CellSize_)
 					{
+						PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 						prevCursorY_ = cursorY_;
 						selectIconNum_ += ItemID_ByLineBreak_ItemSelect_;
 
@@ -120,6 +129,7 @@ void Sale::Update()
 			if (cursorY_ != CursorY_Min_ItemSelect_ &&
 				cursorX_ <= CursorX_Max_ItemSelect_)
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorY_ -= CursorY_MoveVerticalWidth_ItemSelect_;
 				prevCursorY_ = cursorY_;
 				selectIconNum_ -= ItemID_ByLineBreak_ItemSelect_;
@@ -128,6 +138,7 @@ void Sale::Update()
 			{
 				if (scrollCount_ > 0)
 				{
+					PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 					prevCursorY_ = cursorY_;
 					selectIconNum_ -= ItemID_ByLineBreak_ItemSelect_;
 
@@ -182,6 +193,7 @@ void Sale::Update()
 					{
 						if (alreadySelectWeaponPos_[i] == selectWeaponPos_.back()) // 重複していたら
 						{
+							PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
 							/*-----選択解除-----*/
 							for (int j = 0; j < saleWeapons_.size(); j++)
 							{
@@ -205,6 +217,7 @@ void Sale::Update()
 						}
 						else
 						{
+							PlaySoundMem(Music::money_SE, DX_PLAYTYPE_BACK);
 							if (Adv::day == LastDay_)
 							{
 								saleWeapons_.erase(saleWeapons_.end() - 1);
@@ -221,6 +234,7 @@ void Sale::Update()
 			}
 			else
 			{
+				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 				saleAmount = gm.money - prevMoney_;
 
 				if (Adv::day == LastDay_)
@@ -234,6 +248,7 @@ void Sale::Update()
 	{
 	if (Input::GetButtonDown(PAD_INPUT_1))
 	{
+		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 		if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
 			operationDescriptionMassegeNum_++;
 		else

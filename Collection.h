@@ -97,7 +97,8 @@ private:
 	bool menuOpen_		    = false;
 	bool menuInit			= false;
 	bool collectionEnd_		= false;
-
+	bool playStartSound_    = false;
+	bool playEndSound_      = false;
 	bool is_Operation_Description_Been_ = false;
 
 	std::vector<int> possibilityToGetItem_;

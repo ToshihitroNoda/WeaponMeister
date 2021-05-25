@@ -7,7 +7,7 @@
 #include "Adv.h"
 #include "Buy.h"
 #include "Sale.h"
-
+#include "Music.h"
 #include "DataSave.h"
 
 DataSave dataSave;
@@ -30,10 +30,13 @@ void Report::Init()
 
 	if (Adv::day != 1)
 		is_Operation_Description_Been_ = true;
+
+	PlaySoundMem(Music::report_BGM, DX_PLAYTYPE_LOOP);
 }
 
 void Report::Final()
 {
+	StopSoundMem(Music::report_BGM);
 	gm.image.Final();
 	sm.currentScene.reset();
 }
@@ -46,10 +49,12 @@ void Report::Update()
 		{
 			if (pressCount_ < DrawDataNums_)
 			{
+				PlaySoundMem(Music::reportenter_SE, DX_PLAYTYPE_BACK);
 				pressCount_++;
 			}
 			else
 			{
+				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 				prevMoney = finalMoney_;
 
 				if (finalMoney_ < 0)
@@ -66,6 +71,7 @@ void Report::Update()
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
+			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 			if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
 				operationDescriptionMassegeNum_++;
 			else

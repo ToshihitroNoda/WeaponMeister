@@ -4,6 +4,7 @@
 #include "MainMenu.h"
 #include "Input.h"
 #include "DataLoad.h"
+#include "Music.h"
 
 DataLoad dataLoad;
 
@@ -14,6 +15,7 @@ void MainMenu::Init()
 
 void MainMenu::Final()
 {
+	StopSoundMem(Music::op);
 	gm.image.Final();
 	sm.currentScene.reset();
 }
@@ -23,21 +25,29 @@ void MainMenu::Update()
 	if (Input::GetButtonDown(PAD_INPUT_DOWN))
 	{
 		if (CursorY_ != CursorY_Init_ + ((MenuStr_.size() - 1) * CursorY_Dist_))
+		{
+			PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 			CursorY_ += CursorY_Dist_;
+		}
 	}
 	if (Input::GetButtonDown(PAD_INPUT_UP))
 	{
 		if (CursorY_ != CursorY_Init_)
+		{
+			PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 			CursorY_ -= CursorY_Dist_;
+		}
 	}
 
 	if (CursorY_ == CursorY_Init_ && Input::GetButtonDown(PAD_INPUT_1))
 	{
+		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 		remove("savedata.dat");
 		sm.LoadScene("Adv");
 	}
 	else if (CursorY_ == CursorY_Init_ + CursorY_Dist_ && Input::GetButtonDown(PAD_INPUT_1))
 	{
+		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 		std::ifstream ifs("savedata.dat");
 		if (ifs.is_open())
 		{
@@ -49,6 +59,7 @@ void MainMenu::Update()
 	}
 	else if (CursorY_ == CursorY_Init_ + CursorY_Dist_ * 2 && Input::GetButtonDown(PAD_INPUT_1))
 	{
+		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 		exit(0);
 	}
 }

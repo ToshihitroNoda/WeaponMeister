@@ -5,6 +5,7 @@
 #include "MyMath.h"
 #include "Camera.h"
 #include "Map.h"
+#include "Music.h"
 
 #include <cmath> 
 
@@ -28,54 +29,66 @@ void Player::Init()
 
 void Player::HandleInput()
 {
-	if (Input::GetButton(PAD_INPUT_4))				// A
+	if (!attachCheck_[(int)State::collect])
 	{
-		doLateralMove_ = true;
-		moveSpeedLateral_ += IncreaseSpeed;
-		if (moveSpeedLateral_ > moveSpeedMax_)
-			moveSpeedLateral_ = moveSpeedMax_;		//Maxスピードで止める
-		if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
-			AnimationAttach((int)State::run);
-		modelAngle_ = -(nowCamAngle_ * MyMath::Deg2Rad);
-	}
-	else if (Input::GetButton(PAD_INPUT_6))			// D
-	{
-		doLateralMove_ = true;
-		moveSpeedLateral_ -= IncreaseSpeed;
-		if (moveSpeedLateral_ < -moveSpeedMax_)
-			moveSpeedLateral_ = -moveSpeedMax_;		//Maxスピードで止める
-		if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
-			AnimationAttach((int)State::run);
-		modelAngle_ = -((nowCamAngle_ - 180) * MyMath::Deg2Rad);
-	}
-	if (Input::GetButton(PAD_INPUT_8))				// W
-	{
-		doLateralMove_ = false;
-		moveSpeed_ += IncreaseSpeed;
-		if (moveSpeed_ > moveSpeedMax_)
-			moveSpeed_ = moveSpeedMax_;				//Maxスピードで止める
-		if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
-			AnimationAttach((int)State::run);
-		modelAngle_ = -((nowCamAngle_ - 90) * MyMath::Deg2Rad);
-	}
-	else if (Input::GetButton(PAD_INPUT_5))			// S
-	{
-		doLateralMove_ = false;
-		moveSpeed_ -= IncreaseSpeed;
-		if (moveSpeed_ < -moveSpeedMax_)
-			moveSpeed_ = -moveSpeedMax_;			//Maxスピードで止める
-		if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
-			AnimationAttach((int)State::run);
-		modelAngle_ = -((nowCamAngle_ + 90) * MyMath::Deg2Rad);
-	}
+		if (Input::GetButton(PAD_INPUT_4))				// A
+		{
+			doLateralMove_ = true;
+			moveSpeedLateral_ += IncreaseSpeed;
+			if (moveSpeedLateral_ > moveSpeedMax_)
+				moveSpeedLateral_ = moveSpeedMax_;		//Maxスピードで止める
+			if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
+				AnimationAttach((int)State::run);
+			modelAngle_ = -(nowCamAngle_ * MyMath::Deg2Rad);
+		}
+		else if (Input::GetButton(PAD_INPUT_6))			// D
+		{
+			doLateralMove_ = true;
+			moveSpeedLateral_ -= IncreaseSpeed;
+			if (moveSpeedLateral_ < -moveSpeedMax_)
+				moveSpeedLateral_ = -moveSpeedMax_;		//Maxスピードで止める
+			if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
+				AnimationAttach((int)State::run);
+			modelAngle_ = -((nowCamAngle_ - 180) * MyMath::Deg2Rad);
+		}
+		if (Input::GetButton(PAD_INPUT_8))				// W
+		{
+			doLateralMove_ = false;
+			moveSpeed_ += IncreaseSpeed;
+			if (moveSpeed_ > moveSpeedMax_)
+				moveSpeed_ = moveSpeedMax_;				//Maxスピードで止める
+			if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
+				AnimationAttach((int)State::run);
+			modelAngle_ = -((nowCamAngle_ - 90) * MyMath::Deg2Rad);
+		}
+		else if (Input::GetButton(PAD_INPUT_5))			// S
+		{
+			doLateralMove_ = false;
+			moveSpeed_ -= IncreaseSpeed;
+			if (moveSpeed_ < -moveSpeedMax_)
+				moveSpeed_ = -moveSpeedMax_;			//Maxスピードで止める
+			if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
+				AnimationAttach((int)State::run);
+			modelAngle_ = -((nowCamAngle_ + 90) * MyMath::Deg2Rad);
+		}
 
-	if (!Input::GetButton(PAD_INPUT_4) &&
-		!Input::GetButton(PAD_INPUT_6) &&
-		!Input::GetButton(PAD_INPUT_5) &&
-		!Input::GetButton(PAD_INPUT_8))
-	{
-		if (!attachCheck_[(int)State::wait] && !attachCheck_[(int)State::collect])
-			AnimationAttach((int)State::wait);
+		if (!Input::GetButton(PAD_INPUT_4) &&
+			!Input::GetButton(PAD_INPUT_6) &&
+			!Input::GetButton(PAD_INPUT_5) &&
+			!Input::GetButton(PAD_INPUT_8))
+		{
+			if (!attachCheck_[(int)State::wait] && !attachCheck_[(int)State::collect])
+				AnimationAttach((int)State::wait);
+		}
+		else
+		{
+			if (tapSoundTimer_ >= TapSoundTime)
+			{
+				PlaySoundMem(Music::run_SE, DX_PLAYTYPE_BACK);
+				tapSoundTimer_ = 0;
+			}
+			tapSoundTimer_++;
+		}
 	}
 }
 

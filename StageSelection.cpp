@@ -5,6 +5,7 @@
 #include "Adv.h"
 #include "Input.h"
 #include "Screen.h"
+#include "Music.h"
 
 Production production;
 
@@ -44,10 +45,13 @@ void StageSelection::Init()
 
 	mapIcons_.resize(5);
 	mapIcons_ = { gm.image.mapIcon_1, gm.image.mapIcon_2, gm.image.mapIcon_3, gm.image.mapIcon_4, gm.image.mapIcon_5 };
+
+	PlaySoundMem(Music::stageselection_BGM, DX_PLAYTYPE_LOOP);
 }
 
 void StageSelection::Final()
 {
+	StopSoundMem(Music::stageselection_BGM);
 	gm.image.Final();
 	sm.currentScene.reset();
 }
@@ -58,6 +62,7 @@ void StageSelection::Update()
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
+			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 			nowLoadingDraw_ = true;
 		}
 		if (nextSceneLoad_)
@@ -76,6 +81,7 @@ void StageSelection::Update()
 		{
 			if (mapCount > 1)
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				for (int i = 0; i < mapIconPostions_.size() / 2; i++)
 				{
 					if (cursorX_ == mapIconPostions_[i]) // 今どのマップ選んでるか
@@ -96,6 +102,7 @@ void StageSelection::Update()
 		{
 			if (mapCount > 1 && cursorX_ != mapIconPostions_[0] && cursorX_ != mapIconPostions_[3])
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				for (int i = 0; i < mapIconPostions_.size() / 2; i++)
 				{
 					if (cursorX_ == mapIconPostions_[i])	// 今どのマップ選んでるか
@@ -110,6 +117,7 @@ void StageSelection::Update()
 		{
 			if (cursorX_ == mapIconPostions_[3] || cursorX_ == mapIconPostions_[4])
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorY_ = Map1IconPosY_;
 				cursorX_ = Map1IconPosX_;
 
@@ -117,13 +125,12 @@ void StageSelection::Update()
 		}
 		if (Input::GetButtonDown(PAD_INPUT_DOWN))
 		{
-			if (mapCount > 3)
+			if (mapCount > 3 && cursorY_ < Map5IconPosY_)
 			{
-				if (cursorY_ < Map5IconPosY_)
-				{
-					cursorY_ = Map4IconPosY_;
-					cursorX_ = Map4IconPosX_;
-				}
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
+				cursorY_ = Map4IconPosY_;
+				cursorX_ = Map4IconPosX_;
+
 			}
 		}
 	}
@@ -131,6 +138,7 @@ void StageSelection::Update()
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
+			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 			if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
 				operationDescriptionMassegeNum_++;
 			else

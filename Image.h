@@ -3,14 +3,13 @@
 
 #include "DxLib.h"
 #include <string>
-#include <assert.h>
 #include <vector>
 
 class Image
 {
 public:
-	Image() {};
-	~Image() {}; 
+	Image() = default;
+	~Image() = default; 
 
 	void Load(std::string SceneName);
 	void Final();

@@ -1,10 +1,12 @@
 #include <DxLib.h>
 #include "Title.h"
 #include "Input.h"
+#include "Music.h"
 
 void Title::Init()
 {
 	gm.image.Load(tag);
+	PlaySoundMem(Music::op, DX_PLAYTYPE_LOOP);
 }
 
 void Title::Final()
@@ -17,6 +19,7 @@ void Title::Update()
 {
 	if (Input::GetButtonDown(PAD_INPUT_1))
 	{
+		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 		sm.LoadScene("MainMenu");
 	}
 }

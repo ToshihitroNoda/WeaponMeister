@@ -77,7 +77,14 @@ private:
     int mouseX_     = 0;
     int mouseY_     = 0;
     int prevMouseX_ = 0;
+    int attachIndex_ = 0;
+    int prevAttachIndex_ = 0;
+    int prevAnimIndex_ = 0;
+    int tapSoundTimer_ = 0;
 
+    float totalTime_ = 0.0f;
+    float playTime_ = 0.0f;
+    float modelAngle_ = 0.0f;
     float moveSpeedMax_          = 15; 
     float moveSpeed_             = 0; 
     float moveSpeedLateral_      = 0; 
@@ -88,6 +95,8 @@ private:
     float percentAngleByCursorDis_BG_ = 0.0f;
     float collisionDetectionMiddleX_  = 0.0f;
     float collisionDetectionMiddleZ_  = 0.0f;
+    float attachAnimationTime_        = 0.0f;
+    float moveStopTimer_              = 0.0f;
 
     bool doLateralMove_ = false; 
     bool canAngleInit_  = false;
@@ -96,18 +105,13 @@ private:
     bool waitAttach_    = false;
     std::vector<bool> attachCheck_{ collectAttach_, runAttach_, waitAttach_ };
 
-    const int   MaxAngle      = 360;
-    const int   DrawStrPosX   = 500;
-    const int   DrawStrPosY   = 500;
+    const int MaxAngle      = 360;
+    const int DrawStrPosX   = 500;
+    const int DrawStrPosY   = 500;
+    const int TapSoundTime  = 30;
+
     const float IncreaseSpeed = 0.3f;
     const float DecreaseSpeed = 0.9f;
-
-    int attachIndex_     = 0;
-    int prevAttachIndex_ = 0;
-    int prevAnimIndex_   = 0;
-    float totalTime_     = 0.0f;
-    float playTime_      = 0.0f;
-    float modelAngle_    = 0.0f;
 };
 
 #endif

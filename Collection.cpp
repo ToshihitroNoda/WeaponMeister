@@ -10,6 +10,7 @@
 #include "Input.h"
 #include "Screen.h"
 #include "Adv.h"
+#include "Music.h"
 
 void Collection::Init()
 {
@@ -38,16 +39,24 @@ void Collection::Init()
 	{
 		SetLightDifColor(GetColorF(1.0f, 1.0f, 1.0f, 0.0f));
 		backGroundHandle_ = gm.image.skyBack;
+		if (StageSelection::stageNum == 1)
+			PlaySoundMem(Music::stage1_BGM, DX_PLAYTYPE_LOOP);
+		else if (StageSelection::stageNum == 2)
+			PlaySoundMem(Music::stage2_BGM, DX_PLAYTYPE_LOOP);
+		else
+			PlaySoundMem(Music::stage5_BGM, DX_PLAYTYPE_LOOP);
 	}
 	else if (StageSelection::stageNum == 3)
 	{
 		SetLightDifColor(GetColorF(1.0f, 1.0f, 0.8f, 0.0f));
 		backGroundHandle_ = gm.image.rockBack;
+		PlaySoundMem(Music::stage3_BGM, DX_PLAYTYPE_LOOP);
 	}
 	else if (StageSelection::stageNum == 4)
 	{
 		SetLightDifColor(GetColorF(1.0f, 0.8f, 0.8f, 0.0f));
 		backGroundHandle_ = gm.image.volcanoBack;
+		PlaySoundMem(Music::stage5_BGM, DX_PLAYTYPE_LOOP);
 	}
 
 	if (Adv::day != 1)
@@ -67,6 +76,12 @@ void Collection::Init()
 
 void Collection::Final()
 {
+	StopSoundMem(Music::stage1_BGM);
+	StopSoundMem(Music::stage2_BGM);
+	StopSoundMem(Music::stage3_BGM);
+	StopSoundMem(Music::stage4_BGM);
+	StopSoundMem(Music::stage5_BGM);
+
 	gm.mapObjects.clear();
 	gm.mapObjects.shrink_to_fit();
 	gm.fieldItems.clear();
@@ -83,11 +98,16 @@ void Collection::Update()
 {
 	if (is_Operation_Description_Been_)
 	{
+		if (!playStartSound_)
+		{
+			PlaySoundMem(Music::collectionstart_SE, DX_PLAYTYPE_BACK);
+			playStartSound_ = true;
+		}
 		if (startCount_ < 0)
 		{
 			if (collectTimer_ > 0)
 			{
-				if (!menuInit)
+				if (!menuOpen_)
 					gm.player->Update(); // プレイヤの更新
 
 				// フィールドアイテムの更新
@@ -96,7 +116,7 @@ void Collection::Update()
 					fI->Update();
 				}
 
-				if (!menuInit)
+				if (!menuOpen_)
 				{
 					// プレイヤーとフィールドアイテムとの当たり判定
 					for (int i = 0; i < (signed)gm.fieldItems.size(); i++)
@@ -141,6 +161,7 @@ void Collection::Update()
 				{
 					if (menuOpen_)
 					{
+						PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
 						menuOpen_ = false;
 						menuInit = false;
 						PouchDrawErea_.clear();
@@ -149,6 +170,7 @@ void Collection::Update()
 
 				if (!menuOpen_ && Input::GetButtonDown(PAD_INPUT_3))
 				{
+					PlaySoundMem(Music::menuopen_SE, DX_PLAYTYPE_BACK);
 					menuOpen_ = true;
 					int cursorX_ = CursorX_Min_ItemSelect_;
 					int cursorY_ = CursorY_Min_ItemSelect_;
@@ -171,6 +193,7 @@ void Collection::Update()
 					{
 						if (cursorX_ < CursorX_Max_ItemSelect_)
 						{
+							PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 							cursorX_ += CursorX_MoveVerticalWidth_ItemSelect_;
 							selectIconNum_++; // 選択されてる箇所のアイテムの番号を取得
 						}
@@ -179,6 +202,7 @@ void Collection::Update()
 					{
 						if (cursorX_ > CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
 						{
+							PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 							cursorX_ -= CursorX_MoveVerticalWidth_ItemSelect_;
 							selectIconNum_--;
 						}
@@ -187,6 +211,7 @@ void Collection::Update()
 					{
 						if (cursorY_ != CursorY_Max_ItemSelect_)
 						{
+							PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 							cursorY_ += CursorY_MoveVerticalWidth_ItemSelect_;
 							selectIconNum_ += WaponID_ByLineBreak_ItemSelect_;
 						}
@@ -196,6 +221,7 @@ void Collection::Update()
 							{
 								if (PouchDrawErea_.size() > WindowX_CellSize_)
 								{
+									PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 									// 一行スクロール
 									scrollCount_++;
 									// 描画するアイテムのvectorの最初の一行を削除し、後ろに一行足す
@@ -221,6 +247,7 @@ void Collection::Update()
 					{
 						if (cursorY_ != CursorY_Min_ItemSelect_)
 						{
+							PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 							cursorY_ -= CursorY_MoveVerticalWidth_ItemSelect_;
 							selectIconNum_ -= WaponID_ByLineBreak_ItemSelect_;
 						}
@@ -228,6 +255,7 @@ void Collection::Update()
 						{
 							if (scrollCount_ > 0)
 							{
+								PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 								scrollCount_--;
 								if (PouchDrawErea_.size() == DrawMaxPouchSize)		// 描画されてるウィンドウが埋まってる場合
 								{
@@ -256,16 +284,25 @@ void Collection::Update()
 
 					/*---------------*/
 				}
-				collectTimer_--;
-				watchPointerAngle_ += plusPointerAngle_;
+				if (!menuOpen_)
+				{
+					collectTimer_--;
+					watchPointerAngle_ += plusPointerAngle_;
+				}
 			}
 			else
 			{
+				if (!playEndSound_)
+				{
+					PlaySoundMem(Music::collectionstart_SE, DX_PLAYTYPE_BACK);
+					playEndSound_ = true;
+				}
 				collectionEnd_ = true;
 				if (endCount_ < 0)
 				{
 					if (Input::GetButtonDown(PAD_INPUT_1))
 					{
+						PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 						clsDx();
 						sm.LoadScene("Buy");
 					}
@@ -280,6 +317,7 @@ void Collection::Update()
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
+			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 			if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
 				operationDescriptionMassegeNum_++;
 			else
@@ -298,6 +336,7 @@ void Collection::ItemGet()
 	// アイテム取得
 	if (Input::GetButtonDown(PAD_INPUT_1))
 	{
+		PlaySoundMem(Music::collect_SE, DX_PLAYTYPE_BACK);
 		if (gm.pouch.size() != MaxPouchSize_) // バッグがいっぱいじゃなかったら
 		{
 			getItemFlg_ = true; // 手に入れたアイテムを表示
@@ -377,11 +416,14 @@ void Collection::Draw()
 			DrawString(Screen::width / 2, Screen::height / 2, "Zキーで採取", gm.colorWhite);
 	}
 	if (gm.pouch.size() == MaxPouchSize_)
+	{
+		PlaySoundMem(Music::error_SE, DX_PLAYTYPE_BACK);
 		DrawString
 		(DrawAssertPouchSizeOverFlow_X_,
 			DrawAssertPouchSizeOverFlow_Y_,
 			"ポーチがいっぱいです",
 			gm.colorWhite);
+	}
 
 	if (menuOpen_)
 	{

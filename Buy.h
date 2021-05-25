@@ -70,7 +70,8 @@ private:
 	const int ItemInfoX_	 = 650;
 	const int ItemInfoY_	 = 200;
 
-	const int PouchMax_		 = 42;
+	const int PouchMaxSize_  = 200;
+	const int DrawPouchMax_	 = 42;
 
 	int cursorX_	   = 0;	// カーソル座標
 	int cursorY_	   = 0;

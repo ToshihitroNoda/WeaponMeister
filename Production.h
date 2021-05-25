@@ -136,6 +136,8 @@ private:
 	const int arrowY_Handle_ = 200;
 	const int arrowY_Main_   = 500;
 
+	const int animationSoundTime_ = 30;
+
 	int cursorX_				= 0;	// カーソル座標
 	int cursorY_				= 0;
 	int prevCursorY_			= 0;
@@ -147,7 +149,7 @@ private:
 	int angle_ = 0;
 	int drawCounter_ = defaultDrawCount_;
 	int scrollCount_ = 0;
-
+	int animationSoundTimer_ = 0;
 	int operationDescriptionMassegeNum_ = 0;
 
 	bool recipeSelection_		 = false;	// レシピを選び終わったかどうかの判定(終わったらtrue)
@@ -164,7 +166,7 @@ private:
 	bool MakeEnd_				 = false;
 	bool animationEnd_			 = false;
 	bool weaponMakeAssert_		 = false;
-
+	bool playProductionEndSound_ = false;
 	bool is_Operation_Description_Been_ = false;
 
 	std::vector<int> itemForWeaponMake_;		  // 武器生成に必要なアイテムを一時的に保管するvector

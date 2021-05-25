@@ -1,6 +1,7 @@
 #include "Buy.h"
 #include "Input.h"
 #include "Adv.h"
+#include "Music.h"
 
 StageSelection stageSelection;
 
@@ -28,10 +29,14 @@ void Buy::Init()
 
 	beforeBuyPouchSize_ = gm.pouch.size();
 	beforeMoney_ = gm.money;
+
+	PlaySoundMem(Music::buy_BGM, DX_PLAYTYPE_LOOP);
 }
 
 void Buy::Final()
 {
+	StopSoundMem(Music::buy_BGM);
+	PlaySoundMem(Music::production_BGM, DX_PLAYTYPE_LOOP);
 	gm.image.Final();
 	sm.currentScene.reset();
 }
@@ -44,6 +49,7 @@ void Buy::Update()
 		{
 			if (cursorX_ < CursorX_Max_ItemSelect_ && cursorY_ != CursorY_Buy_Select)
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorX_ += CursorX_MoveVerticalWidth_ItemSelect_;
 				selectIconNum_++; // 選択されてる箇所のアイテムの番号を取得
 			}
@@ -53,6 +59,7 @@ void Buy::Update()
 		{
 			if (cursorX_ > CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorX_ -= CursorX_MoveVerticalWidth_ItemSelect_;
 				selectIconNum_--;
 			}
@@ -61,11 +68,13 @@ void Buy::Update()
 		{
 			if (cursorY_ != CursorY_Max_ItemSelect_ && cursorY_ != CursorY_Buy_Select)
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorY_ += CursorY_MoveVerticalWidth_ItemSelect_;
 				selectIconNum_ += ItemID_ByLineBreak_ItemSelect_;
 			}
 			else if (cursorY_ < CursorY_Buy_Select)
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorX_ = CursorX_Buy_Select;
 				cursorY_ = CursorY_Buy_Select;
 			}
@@ -74,11 +83,13 @@ void Buy::Update()
 		{
 			if (cursorY_ != CursorY_Min_ItemSelect_ && cursorY_ != CursorY_Buy_Select)
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorY_ -= CursorY_MoveVerticalWidth_ItemSelect_;
 				selectIconNum_ -= ItemID_ByLineBreak_ItemSelect_;
 			}
 			else if (cursorY_ == CursorY_Buy_Select)
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorX_ = CursorX_Min_ItemSelect_;
 				cursorY_ = CursorY_Max_ItemSelect_;
 			}
@@ -89,6 +100,7 @@ void Buy::Update()
 		{
 			if (Input::GetButtonDown(PAD_INPUT_1))
 			{
+				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 				buyAmount = beforeMoney_ - gm.money;
 				sm.LoadScene("Production");
 			}
@@ -98,8 +110,10 @@ void Buy::Update()
 		{
 			if (Input::GetButtonDown(PAD_INPUT_1) &&
 				selectIconNum_ < buyItems_.size() &&
+				gm.pouch.size() < PouchMaxSize_   &&
 				gm.money >= (int)gm.itemData[CsvItemPriceCell_][buyItems_[selectIconNum_] + CsvSkipCell_])
 			{
+				PlaySoundMem(Music::money_SE, DX_PLAYTYPE_BACK);
 				gm.money -= (int)gm.itemData[CsvItemPriceCell_][buyItems_[selectIconNum_] + CsvSkipCell_];
 				gm.pouch.push_back(buyItems_[selectIconNum_]);
 				gm.pouchQuality.push_back(buyItemsQuality_[selectIconNum_]);
@@ -109,6 +123,7 @@ void Buy::Update()
 		// 購入やめる処理（選択済みアイテムの選択解除）
 		if (Input::GetButtonDown(PAD_INPUT_2) && gm.pouch.size() > beforeBuyPouchSize_)
 		{
+			PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
 			gm.money += (int)gm.itemData[CsvItemPriceCell_][gm.pouch.back() + CsvSkipCell_];
 			gm.pouch.erase(gm.pouch.end() - 1);
 			gm.pouchQuality.erase(gm.pouchQuality.end() - 1);
@@ -116,16 +131,22 @@ void Buy::Update()
 
 		if (Input::GetButtonDown(PAD_INPUT_3) && selectIconNum_ < buyItems_.size())
 		{
+			PlaySoundMem(Music::menuopen_SE, DX_PLAYTYPE_BACK);
 			if (!itemDetail_)
 				itemDetail_ = true;
 			else
 				itemDetail_ = false;
 		}
+
+		// 詳細ウィンドウ表示したままカーソル移動しても閉じるように
+		if (selectIconNum_ >= buyItems_.size())
+			itemDetail_ = false;
 	}
 	else
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
+			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 			if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
 				operationDescriptionMassegeNum_++;
 			else
@@ -152,7 +173,7 @@ void Buy::Draw()
 
 	int x = 0;
 	int y = 0;
-	for (int i = 0; i < (unsigned)buyItems_.size(); i++)
+	for (size_t i = 0; i < buyItems_.size(); i++)
 	{
 		DrawGraph
 		(itemX_ + x * CursorX_MoveVerticalWidth_ItemSelect_,
@@ -172,7 +193,7 @@ void Buy::Draw()
 	}
 
 	DrawItems_ = gm.pouch;
-	if (gm.pouch.size() > PouchMax_)
+	if (gm.pouch.size() > DrawPouchMax_)
 	{
 		allLine_ = gm.pouch.size() / ItemID_ByLineBreak_ItemSelect_ + 1;
 		eraseLine_ = allLine_ - Window_Icon_Columns_;

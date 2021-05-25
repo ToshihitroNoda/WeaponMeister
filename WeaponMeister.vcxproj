@@ -164,6 +164,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapObjects.cpp" />
     <ClCompile Include="MapTerrain.cpp" />
+    <ClCompile Include="Music.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="MyRandom.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapObjects.h" />
     <ClInclude Include="MapTerrain.h" />
+    <ClInclude Include="Music.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="Buy.h" />
     <ClInclude Include="Collection.h" />

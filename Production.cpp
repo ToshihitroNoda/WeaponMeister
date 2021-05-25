@@ -4,6 +4,7 @@
 #include "MyRandom.h"
 #include "MyMath.h"
 #include "Adv.h"
+#include "Music.h"
 #include <DxLib.h>
 
 bool Production::canWoodSword_ = true;
@@ -46,6 +47,7 @@ void Production::Init()
 
 void Production::Final()
 {
+	StopSoundMem(Music::production_BGM);
 	gm.image.Final();
 	sm.currentScene.reset();
 }
@@ -70,6 +72,7 @@ void Production::Update()
 			{
 				if (cursorX_ < CursorX_Max_RecipeSelection_)
 				{
+					PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 					cursorX_ = CursorX_Max_RecipeSelection_;
 					prevCursorY_ = cursorY_;
 					weaponID_++;
@@ -84,11 +87,13 @@ void Production::Update()
 			{
 				if (cursorX_ > CursorX_Min_RecipeSelection_ && cursorX_ != CursorX_ProceedNextPart_)
 				{
+					PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 					cursorX_ = CursorX_Min_RecipeSelection_;
 					weaponID_--;
 				}
 				else if (cursorX_ == CursorX_ProceedNextPart_)
 				{
+					PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 					cursorX_ = CursorX_Max_RecipeSelection_;
 					cursorY_ = prevCursorY_;
 				}
@@ -97,6 +102,7 @@ void Production::Update()
 				cursorY_ != CursorY_Max_RecipeSelection_ &&
 				cursorX_ <= CursorX_Max_RecipeSelection_)
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorY_ += CursorY_MoveVerticalWidth_RecipeSelect_;
 				prevCursorY_ = cursorY_;
 				weaponID_ += WeaponID_ByLineBreak_RecipeSelection_;
@@ -105,6 +111,7 @@ void Production::Update()
 				cursorY_ != CursorY_Min_RecipeSelection_ &&
 				cursorX_ <= CursorX_Max_RecipeSelection_)
 			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorY_ -= CursorY_MoveVerticalWidth_RecipeSelect_;
 				weaponID_ -= WeaponID_ByLineBreak_RecipeSelection_;
 			}
@@ -115,10 +122,12 @@ void Production::Update()
 			{
 				if (cursorX_ == CursorX_ProceedNextPart_ && cursorY_ == CursorY_ProceedNextPart_)
 				{
+					PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 					sm.LoadScene("Sale");
 				}
 				else
 				{
+					PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 					if (canWeaponMake_[weaponID_ / 2])					// 選択した武器が作れるなら
 					{
 						recipeSelection_ = true;						// フラグを立てる
@@ -163,6 +172,7 @@ void Production::Update()
 				{
 					if (cursorX_ < CursorX_Max_ItemSelect_)
 					{
+						PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 						cursorX_ += CursorX_MoveVerticalWidth_ItemSelect_;
 						prevCursorY_ = cursorY_;
 						selectIconNum_++; // 選択されてる箇所のアイテムの番号を取得
@@ -177,12 +187,14 @@ void Production::Update()
 				{
 					if (cursorX_ > CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
 					{
+						PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 						cursorX_ -= CursorX_MoveVerticalWidth_ItemSelect_;
 						prevCursorY_ = cursorY_;
 						selectIconNum_--;
 					}
 					else if (cursorX_ > CursorX_Max_ItemSelect_)
 					{
+						PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 						cursorX_ = CursorX_Max_ItemSelect_;
 						cursorY_ = prevCursorY_;
 					}
@@ -192,6 +204,7 @@ void Production::Update()
 					if (cursorY_ != CursorY_Max_ItemSelect_ &&
 						cursorX_ <= CursorX_Max_ItemSelect_)
 					{
+						PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 						cursorY_ += CursorY_MoveVerticalWidth_ItemSelect_;
 						prevCursorY_ = cursorY_;
 						selectIconNum_ += ItemID_ByLineBreak_ItemSelect_;
@@ -202,6 +215,7 @@ void Production::Update()
 						{
 							if (PouchDrawErea_.size() > WindowX_CellSize_)
 							{
+								PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 								prevCursorY_ = cursorY_;
 								selectIconNum_ += ItemID_ByLineBreak_ItemSelect_;
 
@@ -233,6 +247,7 @@ void Production::Update()
 					if (cursorY_ != CursorY_Min_ItemSelect_ &&
 						cursorX_ <= CursorX_Max_ItemSelect_)
 					{
+						PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 						cursorY_ -= CursorY_MoveVerticalWidth_ItemSelect_;
 						prevCursorY_ = cursorY_;
 						selectIconNum_ -= ItemID_ByLineBreak_ItemSelect_;
@@ -241,6 +256,7 @@ void Production::Update()
 					{
 						if (scrollCount_ > 0)
 						{
+							PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 							prevCursorY_ = cursorY_;
 							selectIconNum_ -= ItemID_ByLineBreak_ItemSelect_;
 
@@ -292,6 +308,7 @@ void Production::Update()
 						{
 							if (selectIconNum_ < itemForWeaponMake_.size())
 							{
+								PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 								if (gm.handles.size() < HandleSelect_MaxSize_ && !AlreadySecectItem(ItemPosOnThePouch_[selectIconNum_])) // 重複していなかったら
 								{
 									gm.handles.push_back(itemForWeaponMake_[selectIconNum_]);
@@ -317,6 +334,7 @@ void Production::Update()
 						{
 							if (HandleSlectOk_)
 							{
+								PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 								cursorX_ = CursorX_Min_ItemSelect_;			// カーソル位置初期化
 								cursorY_ = CursorY_Min_ItemSelect_;
 								selectIconNum_ = 0;							// 選択中の番号初期化
@@ -330,6 +348,7 @@ void Production::Update()
 							}
 							else
 							{
+								PlaySoundMem(Music::error_SE, DX_PLAYTYPE_BACK);
 								weaponMakeAssert_ = true;
 							}
 						}
@@ -346,6 +365,7 @@ void Production::Update()
 
 					if (Input::GetButtonDown(PAD_INPUT_3) && selectIconNum_ < itemForWeaponMake_.size())
 					{
+						PlaySoundMem(Music::menuopen_SE, DX_PLAYTYPE_BACK);
 						if (!itemDetail_)
 							itemDetail_ = true;
 						else
@@ -358,6 +378,7 @@ void Production::Update()
 
 					if (Input::GetButtonDown(PAD_INPUT_2))
 					{
+						PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
 						Format();
 					}
 				}
@@ -371,6 +392,7 @@ void Production::Update()
 						{
 							if (selectIconNum_ < itemForWeaponMake_.size())
 							{
+								PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 								if (gm.main.size() < MainSelect_MaxSize_ && !AlreadySecectItem(ItemPosOnThePouch_[selectIconNum_])) // 重複していなかったら
 								{
 									gm.main.push_back(itemForWeaponMake_[selectIconNum_]);
@@ -409,6 +431,7 @@ void Production::Update()
 										((int)gm.weaponData[CsvNecessaryItem_][weaponID_ + CsvSkipCell_] == gm.handles[i] ||
 											(int)gm.weaponData[CsvNecessaryItem_][weaponID_ + CsvSkipCell_] == gm.main[j]))
 									{
+										PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 										shouldCreate_ = true;
 										itemDetail_ = false;
 										weaponMakeAssert_ = false;
@@ -419,6 +442,7 @@ void Production::Update()
 									}
 									else
 									{
+										PlaySoundMem(Music::error_SE, DX_PLAYTYPE_BACK);
 										weaponMakeAssert_ = true;
 									}
 								}
@@ -439,6 +463,7 @@ void Production::Update()
 
 					if (Input::GetButtonDown(PAD_INPUT_3) && selectIconNum_ < itemForWeaponMake_.size())
 					{
+						PlaySoundMem(Music::menuopen_SE, DX_PLAYTYPE_BACK);
 						if (!itemDetail_)
 							itemDetail_ = true;
 						else
@@ -451,6 +476,7 @@ void Production::Update()
 
 					if (Input::GetButtonDown(PAD_INPUT_2))
 					{
+						PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
 						shouldWeaponMainCreate_ = false;
 						gm.main.clear();
 						gm.main.shrink_to_fit();
@@ -548,6 +574,7 @@ void Production::Update()
 			{
 				if (Input::GetButtonDown(PAD_INPUT_1))
 				{
+					PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 					weaponMakeAssert_ = false;
 				}
 			}
@@ -557,6 +584,7 @@ void Production::Update()
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
+			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 			if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
 				operationDescriptionMassegeNum_++;
 			else
@@ -784,6 +812,11 @@ void Production::Draw()
 	{
 		if (drawCounter_ > 0)
 		{
+			if (animationSoundTimer_ >= animationSoundTime_)
+			{
+				PlaySoundMem(Music::production_SE, DX_PLAYTYPE_BACK);
+				animationSoundTimer_ = 0;
+			}
 			for (int i = 0; i < drawItemID_.size(); i++)
 			{
 				animationX_[i] = (Screen::width / 2) + cos((std::abs(angle_) / drawItemID_.size()) * (i + 1) * MyMath::Deg2Rad) * distToCenter_;
@@ -797,9 +830,15 @@ void Production::Draw()
 
 			distToCenter_--;
 			drawCounter_--;
+			animationSoundTimer_++;
 		}
 		else
 		{
+			if (!playProductionEndSound_)
+			{
+				PlaySoundMem(Music::productionend_SE, DX_PLAYTYPE_BACK);
+				playProductionEndSound_ = true;
+			}
 			DrawGraph(Screen::width / 2, Screen::height / 2, gm.image.weaponIcons[weaponID_], TRUE);
 			std::string drawMassege = "Zキーで次へ";
 			int DrawWidth = GetDrawStringWidth(drawMassege.c_str(), -1);

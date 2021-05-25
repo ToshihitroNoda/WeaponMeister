@@ -2,6 +2,7 @@
 
 #include "MyRandom.h"
 #include "Input.h"
+#include "Music.h"
 
 void Game::Init()
 {
@@ -9,6 +10,7 @@ void Game::Init()
 	MyRandom::Init();
 	ChangeFont("UD ƒfƒWƒ^ƒ‹ ‹³‰È‘‘Ì N-B");
 	ChangeFontType(DX_FONTTYPE_EDGE);
+	Music::Load();
 
 	gm.money = gm.defaultMoney;
 
