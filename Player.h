@@ -95,8 +95,6 @@ private:
     float percentAngleByCursorDis_BG_ = 0.0f;
     float collisionDetectionMiddleX_  = 0.0f;
     float collisionDetectionMiddleZ_  = 0.0f;
-    float attachAnimationTime_        = 0.0f;
-    float moveStopTimer_              = 0.0f;
 
     bool doLateralMove_ = false; 
     bool canAngleInit_  = false;
