@@ -73,8 +73,8 @@ void Music::Load()
 	ChangeVolumeSoundMem(110, error_SE); 
 	ChangeVolumeSoundMem(110, cancel_SE);
 	ChangeVolumeSoundMem(110, collectionstart_SE);
-	ChangeVolumeSoundMem(110, collect_SE);
-	ChangeVolumeSoundMem(110, run_SE);
+	ChangeVolumeSoundMem(150, collect_SE);
+	ChangeVolumeSoundMem(150, run_SE);
 	ChangeVolumeSoundMem(110, menuopen_SE);
 	ChangeVolumeSoundMem(110, money_SE);
 	ChangeVolumeSoundMem(110, production_SE);

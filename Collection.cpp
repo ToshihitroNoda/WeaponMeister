@@ -83,11 +83,8 @@ void Collection::Final()
 	StopSoundMem(Music::stage5_BGM);
 
 	gm.mapObjects.clear();
-	gm.mapObjects.shrink_to_fit();
 	gm.fieldItems.clear();
-	gm.fieldItems.shrink_to_fit();
 	gm.mapTerrain.clear();
-	gm.mapTerrain.shrink_to_fit();
 	gm.map.reset();
 	gm.player.reset();
 	gm.image.Final();

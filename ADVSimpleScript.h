@@ -30,10 +30,11 @@ private:
 	static std::string filePath_;
 
 	static std::vector<int> ResourceNums_;
-	static std::vector<std::string> ResourcePath_;
 	static std::vector<int> CX_;
 	static std::vector<int> CY_;
 	static std::vector<int> CDrawID_;
+	static std::vector<std::string> ResourcePath_;
+	static std::vector<std::string> ResourceType_;
 	static std::vector<std::string> Commands_;
 	static int ResourceNum_;
 	static int MassegeX_;

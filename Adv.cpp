@@ -1,6 +1,7 @@
 #include "Adv.h"
 #include "Input.h"
 #include "ADVSimpleScript.h"
+#include "Music.h"
 
 int Adv::day = 0;
 
@@ -37,16 +38,28 @@ void Adv::Update()
 		if (Input::GetButtonDown(PAD_INPUT_2) && !skipMode_)
 		{
 			if (!autoMode_)
+			{
+				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 				autoMode_ = true;
+			}
 			else
+			{
+				PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
 				autoMode_ = false;
+			}
 		}
 		if (Input::GetButtonDown(PAD_INPUT_3) && !autoMode_)
 		{
 			if (!skipMode_)
+			{
+				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 				skipMode_ = true;
+			}
 			else
+			{
+				PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
 				skipMode_ = false;
+			}
 		}
 
 		if (autoMode_)

@@ -4,6 +4,7 @@ int ADVSimpleScript::MassegeCount = 0;
 
 std::vector<std::string> ADVSimpleScript::massegeList;
 std::vector<std::string> ADVSimpleScript::ResourcePath_;
+std::vector<std::string> ADVSimpleScript::ResourceType_;
 std::vector<std::string> ADVSimpleScript::Commands_
 { "ResourceLoad", "Image", "Music", "PlayMusic", "BGX", "BGY", "BGDraw",
   "MassegeX", "MassegeY", "StringX", "StringY", "CName", "CX", "CY",
@@ -61,19 +62,23 @@ void ADVSimpleScript::Init()
 
 void ADVSimpleScript::Final()
 {
-	InitGraph();
+	for (int i = 0; i < ResourceType_.size(); i++)
+	{
+		if (ResourceType_[i] == "Image")
+		{
+			DeleteGraph(ResourceNums_[i]);
+		}
+		else if (ResourceType_[i] == "Music")
+		{
+			DeleteGraph(ResourceNums_[i]);
+		}
+	}
 	massegeList.clear();
-	massegeList.shrink_to_fit();
 	ResourcePath_.clear();
-	ResourcePath_.shrink_to_fit();
 	ResourceNums_.clear();
-	ResourceNums_.shrink_to_fit();
 	CX_.clear();
-	CX_.shrink_to_fit();
 	CY_.clear();
-	CY_.shrink_to_fit();
 	CDrawID_.clear();
-	CDrawID_.shrink_to_fit();
 }
 
 void ADVSimpleScript::Load(std::string filePath)
@@ -130,12 +135,14 @@ void ADVSimpleScript::Update()
 				if (massegeList[MassegeCount] == "Image")
 				{
 					MassegeCount++;
+					ResourceType_.push_back("Image");
 					ResourcePath_.push_back(massegeList[MassegeCount]);
 					ResourceNums_[ResourceNum_] = LoadGraph(ResourcePath_.back().c_str());
 				}
 				else if (massegeList[MassegeCount] == "Music")
 				{
 					MassegeCount++;
+					ResourceType_.push_back("Music");
 					ResourcePath_.push_back(massegeList[MassegeCount]);
 					ResourceNums_[ResourceNum_] = LoadSoundMem(ResourcePath_.back().c_str());
 					PrevPlayMusic = ResourceNums_[ResourceNum_];
@@ -151,10 +158,12 @@ void ADVSimpleScript::Update()
 			{
 				DrawSkip_ = true;
 				MassegeCount++;
-				int playMusic = std::stoi(massegeList[MassegeCount].c_str());
+				int playMusic = ResourceNums_[std::stoi(massegeList[MassegeCount])];
 				StopSoundMem(PrevPlayMusic);
 				PlaySoundMem(playMusic, DX_PLAYTYPE_LOOP);
 				PrevPlayMusic = playMusic;
+				MassegeCount++;					
+				ChangeVolumeSoundMem(std::stoi(massegeList[MassegeCount]), playMusic);
 				MassegeCount++;
 			}
 
