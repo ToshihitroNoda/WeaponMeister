@@ -43,7 +43,6 @@ public:
 	int end						{ -1 };
 	int buy						{ -1 };
 	int sale					{ -1 };
-	int mapCursor				{ -1 };
 	int collectionStart			{ -1 };
 	int collectionEnd			{ -1 };
 	int watchBase               { -1 };

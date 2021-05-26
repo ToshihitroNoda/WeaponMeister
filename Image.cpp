@@ -45,13 +45,14 @@ void Image::Load(std::string SceneName)
 		LoadDivGraph("Resource/Image/daynum.png", 15, 15, 1, 255, 141, &dayNum[0]);
 
 		dayWindow = LoadGraph("Resource/Image/daywindow.png");
-		mapCursor = LoadGraph("Resource/Image/cursor.png");
 		worldMap  = LoadGraph("Resource/Image/worldmap.jpg");
 		mapIcon_1 = LoadGraph("Resource/Image/mapicon_1.png");
 		mapIcon_2 = LoadGraph("Resource/Image/mapicon_2.png");
 		mapIcon_3 = LoadGraph("Resource/Image/mapicon_3.png");
 		mapIcon_4 = LoadGraph("Resource/Image/mapicon_4.png");
 		mapIcon_5 = LoadGraph("Resource/Image/mapicon_5.png");
+
+		Player    = MV1LoadModel("Resource/Image/Model/curen.mv1");
 	}
 	else if (SceneName == "Collection")
 	{

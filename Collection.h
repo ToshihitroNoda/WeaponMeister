@@ -73,6 +73,9 @@ private:
 	const int CsvCanGetMap1_				 = 3;
 	const int CsvCanGetMap2_				 = 4;
 
+	const int DrawPouchSizeX_ = 450;
+	const int DrawPouchSizeY_ = 100;
+
 	int getItem_			= 0;	 // 手に入れたアイテムID
 	int getItemCount_		= 0;	 // 一度に手に入れられるアイテム数
 	int getItemCountMax_	= 5;	 // 一度に手に入れられるアイテム数の最大値

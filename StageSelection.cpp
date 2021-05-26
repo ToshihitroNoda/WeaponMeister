@@ -46,6 +46,11 @@ void StageSelection::Init()
 	mapIcons_.resize(5);
 	mapIcons_ = { gm.image.mapIcon_1, gm.image.mapIcon_2, gm.image.mapIcon_3, gm.image.mapIcon_4, gm.image.mapIcon_5 };
 
+	attachIndex_ = MV1AttachAnim(gm.image.Player, 2, -1, FALSE);
+	totalTime_ = MV1GetAttachAnimTotalTime(gm.image.Player, attachIndex_);
+	playTime_ = 0.0f;
+	MV1SetAttachAnimTime(gm.image.Player, attachIndex_, playTime_);
+
 	PlaySoundMem(Music::stageselection_BGM, DX_PLAYTYPE_LOOP);
 }
 
@@ -58,6 +63,14 @@ void StageSelection::Final()
 
 void StageSelection::Update()
 {
+	playTime_ += addPlayTime_;
+
+	if (playTime_ >= totalTime_)
+	{
+		playTime_ = 0.0f;
+	}
+	MV1SetAttachAnimTime(gm.image.Player, attachIndex_, playTime_);
+
 	if (is_Operation_Description_Been_)
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
@@ -162,10 +175,12 @@ void StageSelection::Draw()
 
 	if (!nowLoadingDraw_)
 	{
+		MV1SetPosition(gm.image.Player, VGet(cursorX_ + 100, -cursorY_ + 520, 0));
+		MV1SetScale(gm.image.Player, VGet(0.8f, 0.8f, 0.8f));
+		MV1DrawModel(gm.image.Player);
+
 		DrawGraph(0, 0, gm.image.dayWindow, TRUE);
 		DrawGraph(0, 0, gm.image.dayNum[Adv::day], TRUE);
-
-		DrawGraph(cursorX_, cursorY_, gm.image.mapCursor, TRUE);
 	}
 
 	if (nowLoadingDraw_)

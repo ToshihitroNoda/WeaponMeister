@@ -56,6 +56,11 @@ private:
 	int canMakeWeapon_ = 0;
 	int operationDescriptionMassegeNum_ = 0;
 
+	int attachIndex_ = 0;
+	float totalTime_ = 0.0f;
+	float playTime_ = 0.0f;
+	float addPlayTime_ = 0.07f;
+
 	bool addMap2_			= false;
 	bool addMap3_			= false;
 	bool addMap4_			= false;

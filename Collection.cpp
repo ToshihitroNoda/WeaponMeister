@@ -440,6 +440,8 @@ void Collection::Draw()
 		if (cursorX_ >= CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
 			DrawGraph(cursorX_, cursorY_, gm.image.itemSelection, TRUE);
 
+		DrawString(DrawPouchSizeX_, DrawPouchSizeY_, (std::to_string(gm.pouch.size()) + " / 200").c_str(), gm.colorWhite);
+
 		if (PouchDrawErea_.size() > (signed)selectIconNum_)
 		{
 			DrawGraph(DetailWindowX_, DetailWindowY_, gm.image.detailWindow, TRUE);
