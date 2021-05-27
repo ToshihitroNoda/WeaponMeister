@@ -400,5 +400,5 @@ FodyWeavers.xsd
 *.txt
 *.dat
 
-# Map in Image is MakeMap
-Resource/Map/**/*.png
+# ResourceFiles
+Resource/
