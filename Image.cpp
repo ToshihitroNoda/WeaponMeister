@@ -175,9 +175,16 @@ void Image::Load(std::string SceneName)
 	}
 	else if (SceneName == "GameClear")
 	{
-		textWindow = LoadGraph("Resource/Image/textwindow.png");
-		textCursor = LoadGraph("Resource/Image/textcursor.png");
-		reportBack = LoadGraph("Resource/Image/reportback.jpg");
+		scores.resize(GetGraphSize("Resource/Image/scores.png", 200, 200));
+		LoadDivGraph("Resource/Image/scores.png", 8, 8, 1, 200, 200, &scores[0]);
+		weaponIcons.resize(GetGraphSize("Resource/Image/weaponicons.png", 64, 64));
+		LoadDivGraph("Resource/Image/weaponicons.png", 28, 7, 4, 64, 64, &weaponIcons[0]);
+
+		textWindow     = LoadGraph("Resource/Image/textwindow.png");
+		textCursor     = LoadGraph("Resource/Image/textcursor.png");
+		reportBack     = LoadGraph("Resource/Image/reportback.jpg");
+		itemIconWindow = LoadGraph("Resource/Image/itemiconwindow.png");
+		rank           = LoadGraph("Resource/Image/rank.png");
 	}
 	else if (SceneName == "GameOver")
 	{

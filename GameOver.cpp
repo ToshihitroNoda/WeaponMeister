@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "ADVSimpleScript.h"
 #include "Adv.h"
+#include "Music.h"
 
 #include <sstream>
 
@@ -18,6 +19,7 @@ void GameOver::Init()
 
 void GameOver::Final()
 {
+	ADVSimpleScript::Final();
 	gm.image.Final();
 	sm.currentScene.reset();
 }
@@ -68,7 +70,7 @@ void GameOver::Update()
 
 			if (ADVSimpleScript::MassegeCount >= ADVSimpleScript::massegeList.size())
 			{
-				sm.LoadScene("StageSelection");
+				massegeEnd_ = true;
 			}
 		}
 		ADVSimpleScript::Update();
@@ -77,6 +79,8 @@ void GameOver::Update()
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
+			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
+			remove("savedata.dat");
 			sm.LoadScene("Title");
 		}
 	}

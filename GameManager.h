@@ -57,12 +57,12 @@ struct WeaponData : public DataCsv
 	}
 };
 
-struct MassegeData : public DataCsv
+struct ScoreData : public DataCsv
 {
-	MassegeData(std::string filePath = "", std::string csvOption = "DATA") : DataCsv(filePath)
+	ScoreData(std::string filePath = "", std::string csvOption = "DATA") : DataCsv(filePath)
 	{
 	};
-	~MassegeData() { clear(); };//お掃除処理はこちら
+	~ScoreData() { clear(); };//お掃除処理はこちら
 	// csvファイルの読み込み
 	void Load(std::string filePath)
 	{
@@ -84,6 +84,7 @@ public:
 	MapData mapData;
 	ItemData itemData;
 	WeaponData weaponData;
+	ScoreData scoreData;
 	Image image;
 
 	friend class Singleton<GameManager>;				// Singletonでのインスタンス作成は許可

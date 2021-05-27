@@ -21,7 +21,8 @@ public:
 	int ImageHeight{ 0 }; // ècïùï€ë∂óp
 
 	// UIä÷åW
-	std::vector<int> dayNum		{ NULL };
+	std::vector<int> dayNum		{ NULL }; 
+	std::vector<int> scores     { NULL };
 	int arrow					{ -1 };
 	int pressStartButton		{ -1 };
 	int menuCursor				{ -1 };
@@ -47,6 +48,7 @@ public:
 	int collectionEnd			{ -1 };
 	int watchBase               { -1 };
 	int watchPointer            { -1 };
+	int rank                    { -1 };
 
 	// îwåi
 	int titleBack				{ -1 };

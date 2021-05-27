@@ -1,10 +1,34 @@
 #include "GameClear.h"
 #include "Input.h"
 #include "ADVSimpleScript.h"
+#include "Music.h"
+#include <sstream>
 
 void GameClear::Init()
 {
+	gm.weapons.push_back(9);
+	gm.weaponQuality.push_back(50);
+
 	gm.image.Load(tag);
+	gm.money -= RentLastDay_;
+
+	gm.scoreData.Load("Resource/Datas/ScoreData.csv");
+
+	sold_weapon_         = gm.weapons.back();
+	sold_weapon_quality_ = gm.weaponQuality.back();
+	
+	for (int i = CsvSkipCsell_; i < gm.scoreData[0].size(); i++)
+	{
+		if ((int)gm.scoreData[CsvWeaponIdCsll_][i] == sold_weapon_)
+		{
+			if (sold_weapon_quality_ <= (int)gm.scoreData[CsvQuality_1Cell_][i])
+				evaluation_ = (int)gm.scoreData[CsvEvaluation_1Cell_][i];
+			else if (sold_weapon_quality_ <= (int)gm.scoreData[CsvQuality_2Cell_][i])
+				evaluation_ = (int)gm.scoreData[CsvEvaluation_2Cell_][i];
+			else
+				evaluation_ = (int)gm.scoreData[CsvEvaluation_3Cell_][i];
+		}
+	}
 
 	ADVSimpleScript::Init();
 
@@ -15,6 +39,7 @@ void GameClear::Init()
 
 void GameClear::Final()
 {
+	ADVSimpleScript::Final();
 	gm.image.Final();
 	sm.currentScene.reset();
 }
@@ -65,7 +90,7 @@ void GameClear::Update()
 
 			if (ADVSimpleScript::MassegeCount >= ADVSimpleScript::massegeList.size())
 			{
-				sm.LoadScene("StageSelection");
+				massegeEnd_ = true;
 			}
 		}
 		ADVSimpleScript::Update();
@@ -74,6 +99,8 @@ void GameClear::Update()
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
+			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
+			remove("savedata.dat");
 			sm.LoadScene("Title");
 		}
 	}
@@ -106,5 +133,20 @@ void GameClear::Draw()
 		IconFlashCount_++;
 	}
 	else
+	{
 		DrawGraph(0, 0, gm.image.reportBack, TRUE);
+
+		DrawGraph(350, 200, gm.image.rank, TRUE);
+		DrawGraph((Screen::width / 2) - 100, (Screen::height / 2) - 100, gm.image.scores[evaluation_], TRUE);
+		DrawString(750, 500, "óEé“Ç…îÑÇ¡ÇΩïêäÌ", gm.colorWhite);
+		DrawGraph(920, 480, gm.image.itemIconWindow, TRUE);
+		DrawGraph(920, 480, gm.image.weaponIcons[sold_weapon_], TRUE); 
+		std::stringstream quality;
+		quality << sold_weapon_quality_;
+		DrawString(750, 550, ("ïiéø : " + quality.str()).c_str(), gm.colorWhite);
+		std::stringstream money;
+		money << gm.money;
+		DrawString(950, 650, ("ç≈èIìIÇ»èäéùã‡ : " + money.str()).c_str(), gm.colorWhite);
+
+	}
 }
