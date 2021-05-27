@@ -6,9 +6,6 @@
 
 void GameClear::Init()
 {
-	gm.weapons.push_back(9);
-	gm.weaponQuality.push_back(50);
-
 	gm.image.Load(tag);
 	gm.money -= RentLastDay_;
 

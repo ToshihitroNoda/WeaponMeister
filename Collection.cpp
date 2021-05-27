@@ -93,224 +93,218 @@ void Collection::Final()
 
 void Collection::Update()
 {
-	if (is_Operation_Description_Been_)
+	if (!playStartSound_ && is_Operation_Description_Been_)
 	{
-		if (!playStartSound_)
+		PlaySoundMem(Music::collectionstart_SE, DX_PLAYTYPE_BACK);
+		playStartSound_ = true;
+	}
+	if (collectTimer_ > 0 && startCount_ < 0 && is_Operation_Description_Been_)
+	{
+		if (!menuOpen_)
+			gm.player->Update(); // プレイヤの更新
+
+		// フィールドアイテムの更新
+		for (const auto& fI : gm.fieldItems)
+		{
+			fI->Update();
+		}
+
+		if (!menuOpen_)
+		{
+			// プレイヤーとフィールドアイテムとの当たり判定
+			for (int i = 0; i < (signed)gm.fieldItems.size(); i++)
+			{
+				if (MyMath::RectRectIntersect(
+					gm.player->GetLeft(), gm.player->GetBack(), gm.player->GetRight(), gm.player->GetForward(),
+					gm.fieldItems[i]->GetLeft(), gm.fieldItems[i]->GetBack(), gm.fieldItems[i]->GetRight(), gm.fieldItems[i]->GetForward()
+				))
+				{
+					gm.player->OnCollision(gm.fieldItems[i]);
+					gm.fieldItems[i]->OnCollision(gm.player);
+					ItemGet();
+				}
+			}
+			// プレイヤーとマップオブジェクトの当たり判定
+			for (int i = 0; i < (signed)gm.mapObjects.size(); i++)
+			{
+				if (MyMath::RectRectIntersect(
+					gm.player->GetLeft(), gm.player->GetBack(), gm.player->GetRight(), gm.player->GetForward(),
+					gm.mapObjects[i]->GetLeft(), gm.mapObjects[i]->GetBack(), gm.mapObjects[i]->GetRight(), gm.mapObjects[i]->GetForward()
+				))
+				{
+					gm.player->OnCollision(gm.mapObjects[i]);
+					gm.mapObjects[i]->OnCollision(gm.player);
+				}
+			}
+		}
+		if (getItemFlg_)
+			getItemDrawCounter_++;
+
+		if (getItemDrawCounter_ >= 120 || (getItemDrawCounter_ >= 5 && Input::GetButtonDown(PAD_INPUT_1)))
+		{
+			getItemFlg_ = false; // 手に入れたアイテム表示を消す
+			getItemDrawCounter_ = 0;
+			DrawGetItem_.clear();
+		}
+
+		gm.EraseRemoveIf(gm.fieldItems,
+			[](std::shared_ptr<FieldItem>& ptr) { return ptr->isDead; });
+
+		if (Input::GetButtonDown(PAD_INPUT_2))
+		{
+			if (menuOpen_)
+			{
+				PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
+				menuOpen_ = false;
+				menuInit = false;
+				PouchDrawErea_.clear();
+			}
+		}
+
+		if (!menuOpen_ && Input::GetButtonDown(PAD_INPUT_3))
+		{
+			PlaySoundMem(Music::menuopen_SE, DX_PLAYTYPE_BACK);
+			menuOpen_ = true;
+			int cursorX_ = CursorX_Min_ItemSelect_;
+			int cursorY_ = CursorY_Min_ItemSelect_;
+		}
+
+		if (menuOpen_)
+		{
+			if (!menuInit)
+			{
+				for (int i = 0; i < DrawMaxPouchSize; i++)
+				{
+					if (gm.pouch.size() > i)
+						PouchDrawErea_.push_back(gm.pouch[i]);
+				}
+				menuInit = true;
+			}
+			/*----- カーソル移動 -----*/
+
+			if (Input::GetButtonDown(PAD_INPUT_RIGHT))
+			{
+				if (cursorX_ < CursorX_Max_ItemSelect_)
+				{
+					PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
+					cursorX_ += CursorX_MoveVerticalWidth_ItemSelect_;
+					selectIconNum_++; // 選択されてる箇所のアイテムの番号を取得
+				}
+			}
+			if (Input::GetButtonDown(PAD_INPUT_LEFT))
+			{
+				if (cursorX_ > CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
+				{
+					PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
+					cursorX_ -= CursorX_MoveVerticalWidth_ItemSelect_;
+					selectIconNum_--;
+				}
+			}
+			if (Input::GetButtonDown(PAD_INPUT_DOWN))
+			{
+				if (cursorY_ != CursorY_Max_ItemSelect_)
+				{
+					PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
+					cursorY_ += CursorY_MoveVerticalWidth_ItemSelect_;
+					selectIconNum_ += WaponID_ByLineBreak_ItemSelect_;
+				}
+				else
+				{
+					if (gm.pouch.size() > DrawMaxPouchSize)
+					{
+						if (PouchDrawErea_.size() > WindowX_CellSize_)
+						{
+							PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
+							// 一行スクロール
+							scrollCount_++;
+							// 描画するアイテムのvectorの最初の一行を削除し、後ろに一行足す
+							// まず先頭の一行の削除
+							PouchDrawErea_.erase(PouchDrawErea_.begin(), PouchDrawErea_.begin() + WindowX_CellSize_);
+							// 後ろに一行追加。
+							/// iの初期値		: 表示できる最大数 + 追加する列数 - 列数
+							/// for文の回る条件 : 表示できる最大数 + 追加する列数まで
+							for (int i = DrawMaxPouchSize + (scrollCount_ * WindowX_CellSize_) - WindowX_CellSize_;
+								i < DrawMaxPouchSize + (scrollCount_ * WindowX_CellSize_);
+								i++)
+							{
+								if (i < gm.pouch.size())
+								{
+									PouchDrawErea_.push_back(gm.pouch[i]);
+								}
+							}
+						}
+					}
+				}
+			}
+			if (Input::GetButtonDown(PAD_INPUT_UP))
+			{
+				if (cursorY_ != CursorY_Min_ItemSelect_)
+				{
+					PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
+					cursorY_ -= CursorY_MoveVerticalWidth_ItemSelect_;
+					selectIconNum_ -= WaponID_ByLineBreak_ItemSelect_;
+				}
+				else
+				{
+					if (scrollCount_ > 0)
+					{
+						PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
+						scrollCount_--;
+						if (PouchDrawErea_.size() == DrawMaxPouchSize)		// 描画されてるウィンドウが埋まってる場合
+						{
+							PouchDrawErea_.erase(PouchDrawErea_.end() - WindowX_CellSize_, PouchDrawErea_.end());
+							// 描画するアイテムのvectorの最初に描画されてない一行分追加
+							for (int i = WindowX_CellSize_; i > 0; i--)
+								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount_ * WindowX_CellSize_ + i - 1]);
+						}
+						else if (PouchDrawErea_.size() > DrawMaxPouchSize - WindowX_CellSize_ &&
+							PouchDrawErea_.size() < DrawMaxPouchSize)	// 描画されてるウィンドウの最後の一行に空きがある場合
+						{
+							PouchDrawErea_.erase(PouchDrawErea_.end() - (PouchDrawErea_.size() % WindowX_CellSize_), PouchDrawErea_.end());
+							// 描画するアイテムのvectorの最初に描画されてない一行分追加
+							for (int i = WindowX_CellSize_; i > 0; i--)
+								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount_ * WindowX_CellSize_ + i - 1]);
+						}
+						else												// 描画されてるウィンドウの下何行かが空いている場合
+						{
+							// 描画するアイテムのvectorの最初に描画されてない一行分追加
+							for (int i = WindowX_CellSize_; i > 0; i--)
+								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount_ * WindowX_CellSize_ + i - 1]);
+						}
+					}
+				}
+			}
+
+			/*---------------*/
+		}
+		if (!menuOpen_)
+		{
+			collectTimer_--;
+			watchPointerAngle_ += plusPointerAngle_;
+		}
+	}
+	else if (collectTimer_ <= 0 && startCount_ < 0 && is_Operation_Description_Been_)
+	{
+		if (!playEndSound_)
 		{
 			PlaySoundMem(Music::collectionstart_SE, DX_PLAYTYPE_BACK);
-			playStartSound_ = true;
+			playEndSound_ = true;
 		}
-		if (startCount_ < 0)
+		collectionEnd_ = true;
+		if (endCount_ < 0)
 		{
-			if (collectTimer_ > 0)
+			if (Input::GetButtonDown(PAD_INPUT_1))
 			{
-				if (!menuOpen_)
-					gm.player->Update(); // プレイヤの更新
-
-				// フィールドアイテムの更新
-				for (const auto& fI : gm.fieldItems)
-				{
-					fI->Update();
-				}
-
-				if (!menuOpen_)
-				{
-					// プレイヤーとフィールドアイテムとの当たり判定
-					for (int i = 0; i < (signed)gm.fieldItems.size(); i++)
-					{
-						if (MyMath::RectRectIntersect(
-							gm.player->GetLeft(), gm.player->GetBack(), gm.player->GetRight(), gm.player->GetForward(),
-							gm.fieldItems[i]->GetLeft(), gm.fieldItems[i]->GetBack(), gm.fieldItems[i]->GetRight(), gm.fieldItems[i]->GetForward()
-						))
-						{
-							gm.player->OnCollision(gm.fieldItems[i]);
-							gm.fieldItems[i]->OnCollision(gm.player);
-							ItemGet();
-						}
-					}
-					// プレイヤーとマップオブジェクトの当たり判定
-					for (int i = 0; i < (signed)gm.mapObjects.size(); i++)
-					{
-						if (MyMath::RectRectIntersect(
-							gm.player->GetLeft(), gm.player->GetBack(), gm.player->GetRight(), gm.player->GetForward(),
-							gm.mapObjects[i]->GetLeft(), gm.mapObjects[i]->GetBack(), gm.mapObjects[i]->GetRight(), gm.mapObjects[i]->GetForward()
-						))
-						{
-							gm.player->OnCollision(gm.mapObjects[i]);
-							gm.mapObjects[i]->OnCollision(gm.player);
-						}
-					}
-				}
-				if (getItemFlg_)
-					getItemDrawCounter_++;
-
-				if (getItemDrawCounter_ >= 120 || (getItemDrawCounter_ >= 5 && Input::GetButtonDown(PAD_INPUT_1)))
-				{
-					getItemFlg_ = false; // 手に入れたアイテム表示を消す
-					getItemDrawCounter_ = 0;
-					DrawGetItem_.clear();
-				}
-
-				gm.EraseRemoveIf(gm.fieldItems,
-					[](std::shared_ptr<FieldItem>& ptr) { return ptr->isDead; });
-
-				if (Input::GetButtonDown(PAD_INPUT_2))
-				{
-					if (menuOpen_)
-					{
-						PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
-						menuOpen_ = false;
-						menuInit = false;
-						PouchDrawErea_.clear();
-					}
-				}
-
-				if (!menuOpen_ && Input::GetButtonDown(PAD_INPUT_3))
-				{
-					PlaySoundMem(Music::menuopen_SE, DX_PLAYTYPE_BACK);
-					menuOpen_ = true;
-					int cursorX_ = CursorX_Min_ItemSelect_;
-					int cursorY_ = CursorY_Min_ItemSelect_;
-				}
-
-				if (menuOpen_)
-				{
-					if (!menuInit)
-					{
-						for (int i = 0; i < DrawMaxPouchSize; i++)
-						{
-							if (gm.pouch.size() > i)
-								PouchDrawErea_.push_back(gm.pouch[i]);
-						}
-						menuInit = true;
-					}
-					/*----- カーソル移動 -----*/
-
-					if (Input::GetButtonDown(PAD_INPUT_RIGHT))
-					{
-						if (cursorX_ < CursorX_Max_ItemSelect_)
-						{
-							PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
-							cursorX_ += CursorX_MoveVerticalWidth_ItemSelect_;
-							selectIconNum_++; // 選択されてる箇所のアイテムの番号を取得
-						}
-					}
-					if (Input::GetButtonDown(PAD_INPUT_LEFT))
-					{
-						if (cursorX_ > CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
-						{
-							PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
-							cursorX_ -= CursorX_MoveVerticalWidth_ItemSelect_;
-							selectIconNum_--;
-						}
-					}
-					if (Input::GetButtonDown(PAD_INPUT_DOWN))
-					{
-						if (cursorY_ != CursorY_Max_ItemSelect_)
-						{
-							PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
-							cursorY_ += CursorY_MoveVerticalWidth_ItemSelect_;
-							selectIconNum_ += WaponID_ByLineBreak_ItemSelect_;
-						}
-						else
-						{
-							if (gm.pouch.size() > DrawMaxPouchSize)
-							{
-								if (PouchDrawErea_.size() > WindowX_CellSize_)
-								{
-									PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
-									// 一行スクロール
-									scrollCount_++;
-									// 描画するアイテムのvectorの最初の一行を削除し、後ろに一行足す
-									// まず先頭の一行の削除
-									PouchDrawErea_.erase(PouchDrawErea_.begin(), PouchDrawErea_.begin() + WindowX_CellSize_);
-									// 後ろに一行追加。
-									/// iの初期値		: 表示できる最大数 + 追加する列数 - 列数
-									/// for文の回る条件 : 表示できる最大数 + 追加する列数まで
-									for (int i = DrawMaxPouchSize + (scrollCount_ * WindowX_CellSize_) - WindowX_CellSize_;
-										i < DrawMaxPouchSize + (scrollCount_ * WindowX_CellSize_);
-										i++)
-									{
-										if (i < gm.pouch.size())
-										{
-											PouchDrawErea_.push_back(gm.pouch[i]);
-										}
-									}
-								}
-							}
-						}
-					}
-					if (Input::GetButtonDown(PAD_INPUT_UP))
-					{
-						if (cursorY_ != CursorY_Min_ItemSelect_)
-						{
-							PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
-							cursorY_ -= CursorY_MoveVerticalWidth_ItemSelect_;
-							selectIconNum_ -= WaponID_ByLineBreak_ItemSelect_;
-						}
-						else
-						{
-							if (scrollCount_ > 0)
-							{
-								PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
-								scrollCount_--;
-								if (PouchDrawErea_.size() == DrawMaxPouchSize)		// 描画されてるウィンドウが埋まってる場合
-								{
-									PouchDrawErea_.erase(PouchDrawErea_.end() - WindowX_CellSize_, PouchDrawErea_.end());
-									// 描画するアイテムのvectorの最初に描画されてない一行分追加
-									for (int i = WindowX_CellSize_; i > 0; i--)
-										PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount_ * WindowX_CellSize_ + i - 1]);
-								}
-								else if (PouchDrawErea_.size() > DrawMaxPouchSize - WindowX_CellSize_ &&
-									PouchDrawErea_.size() < DrawMaxPouchSize)	// 描画されてるウィンドウの最後の一行に空きがある場合
-								{
-									PouchDrawErea_.erase(PouchDrawErea_.end() - (PouchDrawErea_.size() % WindowX_CellSize_), PouchDrawErea_.end());
-									// 描画するアイテムのvectorの最初に描画されてない一行分追加
-									for (int i = WindowX_CellSize_; i > 0; i--)
-										PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount_ * WindowX_CellSize_ + i - 1]);
-								}
-								else												// 描画されてるウィンドウの下何行かが空いている場合
-								{
-									// 描画するアイテムのvectorの最初に描画されてない一行分追加
-									for (int i = WindowX_CellSize_; i > 0; i--)
-										PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount_ * WindowX_CellSize_ + i - 1]);
-								}
-							}
-						}
-					}
-
-					/*---------------*/
-				}
-				if (!menuOpen_)
-				{
-					collectTimer_--;
-					watchPointerAngle_ += plusPointerAngle_;
-				}
-			}
-			else
-			{
-				if (!playEndSound_)
-				{
-					PlaySoundMem(Music::collectionstart_SE, DX_PLAYTYPE_BACK);
-					playEndSound_ = true;
-				}
-				collectionEnd_ = true;
-				if (endCount_ < 0)
-				{
-					if (Input::GetButtonDown(PAD_INPUT_1))
-					{
-						PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-						clsDx();
-						sm.LoadScene("Buy");
-					}
-				}
-				endCount_--;
+				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
+				clsDx();
+				sm.LoadScene("Buy");
 			}
 		}
-
-		startCount_--;
+		endCount_--;
 	}
-	else
+
+	startCount_--;
+	if (!is_Operation_Description_Been_)
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
