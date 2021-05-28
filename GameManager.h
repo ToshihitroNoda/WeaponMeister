@@ -127,6 +127,8 @@ public:
 	const int colorBlue  = GetColor(0, 100, 200);
 
 	const int DefaultFontSize_ = 15;
+	const int LastDay = 14;
+	const int MaxPouchSize = 200;
 
 	int money = 0;
 	const int defaultMoney = 1000;

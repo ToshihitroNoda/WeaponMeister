@@ -32,7 +32,6 @@ private:
 	const int DrawGetItemCountMax_     = 120;
 	const int DrawGetItemCountMinimum_ = 5;
 
-	const int MaxPouchSize_    = 200;
 	const int DrawMaxPouchSize = 42;
 
 	const int WatchX_ = 1158;
@@ -65,9 +64,6 @@ private:
 	const int CursorY_MoveVerticalWidth_ItemSelect_ = 73;
 	const int WaponID_ByLineBreak_ItemSelect_       = 6;
 
-	const int DrawAssertPouchSizeOverFlow_X_ = 100;
-	const int DrawAssertPouchSizeOverFlow_Y_ = 100;
-
 	const int CsvSkipCell_   = 2;
 	const int CsvItemID_     = 2;
 	const int CsvCanGetMap1_ = 3;
@@ -75,6 +71,11 @@ private:
 
 	const int DrawPouchSizeX_ = 450;
 	const int DrawPouchSizeY_ = 100;
+
+	const int OptionMenuX_      = 790;
+	const int OptionMenuY_      = 705;
+	const int OptionMenuPouchX_ = 690;
+	const int OptionMenuPouchY_ = 705;
 
 	int getItem_                        = 0;  // 手に入れたアイテムID
 	int getItemCount_                   = 0;  // 一度に手に入れられるアイテム数

@@ -25,6 +25,10 @@ void FieldItem::OnCollision(std::shared_ptr<GameObject> other)
 {
 	if (other->tag == "Player")
 	{
-		isOnCollisionPlayer = true;
+		isOnCollisionPlayer = true; 
+		if (Input::GetButtonDown(PAD_INPUT_1) && gm.pouch.size() < gm.MaxPouchSize)
+		{
+			isDead = true;
+		}
 	}
 }

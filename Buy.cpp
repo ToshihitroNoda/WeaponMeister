@@ -240,6 +240,10 @@ void Buy::Draw()
 
 	/*---------------*/
 
+	SetFontSize(15);
+	DrawString(OptionMenuX_, OptionMenuY_, "←↑→↓ : カーソル移動　,　Zキー : 選択　,　Xキー : 選択解除  ,  Cキー : アイテム詳細", gm.colorWhite);
+	SetFontSize(gm.DefaultFontSize_);
+
 	if (!is_Operation_Description_Been_)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 122);

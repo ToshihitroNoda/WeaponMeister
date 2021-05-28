@@ -23,9 +23,8 @@ public:
 	void Draw() override;
 
 	static int saleAmount;
-private:
-	const int LastDay_       = 14;
 
+private:
 	const int PouchWindowX_  = 60;
 	const int PouchWindowY_  = 120;
 	const int MoneyWindowX_  = 60;
@@ -33,7 +32,7 @@ private:
 	const int DetailWindowX_ = 600;
 	const int DetailWindowY_ = 80;
 	const int SaleButtonX_   = 1000;
-	const int SaleButtonY_   = 650;
+	const int SaleButtonY_   = 640;
 
 	const int CsvSkipCell_        = 2;
 	const int CsvWeaponIdCell_    = 2;
@@ -50,7 +49,7 @@ private:
 	const int itemY_                                = 181;
 
 	const int CursorX_ProceedNextPart_ = 997;
-	const int CursorY_ProceedNextPart_ = 647;
+	const int CursorY_ProceedNextPart_ = 637;
 
 	const int WindowX_CellSize_ = 6;
 	const int WindowY_CellSize_ = 7;
@@ -73,6 +72,9 @@ private:
 
 	const int DrawMaxPouchSize_ = 42;
 
+	const int OptionMenuX_ = 810;
+	const int OptionMenuY_ = 705;
+
 	int cursorX_       = 0;
 	int cursorY_       = 0;
 	int prevCursorY_   = 0;
@@ -83,6 +85,8 @@ private:
 
 	bool alradySelect_ = false;
 	bool is_Operation_Description_Been_ = false;
+	bool retryLastDay_ = false;
+	bool drawalert_ = false;
 
 	std::vector<int> weaponPosOnPouch_;
 	std::vector<int> saleWeapons_;

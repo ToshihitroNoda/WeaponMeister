@@ -7,7 +7,7 @@
 
 #include "Singleton.h"
 
-class Scene; //クラス宣言だけで★インクルードしないのでこのマネージャファイルで循環は止まる
+class Scene; //クラス宣言だけで
 
 class SceneManager : public Singleton<SceneManager>//←<～>として継承すると唯一のシングルトン型タイプとなる
 {

@@ -235,11 +235,14 @@ void  Player::OnCollision(std::shared_ptr<GameObject> other)
 {
 	if (other->tag == "FieldItem")
 	{
-		if (Input::GetButtonDown(PAD_INPUT_1))
+		if (Input::GetButtonDown(PAD_INPUT_1) && gm.pouch.size() < gm.MaxPouchSize)
 		{
 			if (!attachCheck_[(int)State::collect])
 				AnimationAttach((int)State::collect);
-			other->isDead = true;
+		}
+		else if (Input::GetButtonDown(PAD_INPUT_1) && gm.pouch.size() >= gm.MaxPouchSize)
+		{
+			PlaySoundMem(Music::error_SE, DX_PLAYTYPE_BACK);
 		}
 	}
 

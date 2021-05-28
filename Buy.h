@@ -35,6 +35,8 @@ private:
 	const int MoneyWindowY_  = 20;
 	const int BuyMoneyXdist_ = 240;
 	const int BuyY_          = 650;
+	const int OptionMenuX_   = 520;
+	const int OptionMenuY_   = 705;
 
 	const int CsvSkipCell_        = 2;
 	const int CsvItemIdCell_      = 2;

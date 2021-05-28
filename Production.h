@@ -81,7 +81,7 @@ private:
 	const int WindowCellSize_Y_ = 73;
 
 	const int CursorX_ProceedNextPart_ = 997;
-	const int CursorY_ProceedNextPart_ = 647;
+	const int CursorY_ProceedNextPart_ = 637;
 
 	const int MainSelect_MaxSize_   = 6;
 	const int HandleSelect_MaxSize_ = 3;
@@ -91,7 +91,7 @@ private:
 	const int RecipeWindowX_     = 120;
 	const int SelectItemWindowX_ = 600;
 	const int NextButtonX_       = 1000;
-	const int NextButtonY_       = 650;
+	const int NextButtonY_       = 640;
 
 	const int AlreadySelect_HandleItem_X_          = 755;
 	const int AlreadySelect_HandleItem_X_Diameter_ = 117;
@@ -135,6 +135,9 @@ private:
 	const int arrowX_        = 700;
 	const int arrowY_Handle_ = 200;
 	const int arrowY_Main_   = 500;
+
+	const int OptionMenuX_ = 420;
+	const int OptionMenuY_ = 705;
 
 	const int animationSoundTime_ = 30;
 

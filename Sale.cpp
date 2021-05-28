@@ -1,8 +1,11 @@
+#include "DataLoad.h"
 #include "Sale.h"
 #include "Input.h"
-#include "Adv.h"
 #include "Music.h"
+#include "Adv.h"
 #include <algorithm>
+
+DataLoad dataload;
 
 int Sale::saleAmount = 0;
 
@@ -219,7 +222,7 @@ void Sale::Update()
 						else
 						{
 							PlaySoundMem(Music::money_SE, DX_PLAYTYPE_BACK);
-							if (Adv::day == LastDay_)
+							if (Adv::day == gm.LastDay)
 							{
 								saleWeapons_.erase(saleWeapons_.end() - 1);
 								selectWeaponPos_.erase(selectWeaponPos_.end() - 1);
@@ -244,7 +247,16 @@ void Sale::Update()
 				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 				saleAmount = gm.money - prevMoney_;
 
-				if (Adv::day == LastDay_)
+				if (Adv::day == gm.LastDay && saleWeapons_.size() == 0)
+				{
+					retryLastDay_ = true;
+					if (drawalert_ && Input::GetButtonDown(PAD_INPUT_1))
+					{
+						dataload.Load();
+						sm.LoadScene("Adv");
+					}
+				}
+				else if (Adv::day == gm.LastDay)
 					sm.LoadScene("GameClear");
 				else
 					sm.LoadScene("Report");
@@ -344,6 +356,10 @@ void Sale::Draw()
 	if (cursorX_ > CursorX_Max_ItemSelect_)
 		DrawGraph(cursorX_, cursorY_, gm.image.nextCursor, TRUE);
 
+	SetFontSize(15);
+	DrawString(OptionMenuX_, OptionMenuY_, "←↑→↓ : カーソル移動　,　Zキー : 選択 ・ 選択解除", gm.colorWhite);
+	SetFontSize(gm.DefaultFontSize_);
+
 	if (!is_Operation_Description_Been_)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 122);
@@ -355,5 +371,16 @@ void Sale::Draw()
 		std::string drawMassege = description_[operationDescriptionMassegeNum_];
 		int DrawWidth = GetDrawStringWidth(drawMassege.c_str(), -1);
 		DrawString((Screen::width - DrawWidth) / 2, (Screen::height - (Screen::height / 4)), drawMassege.c_str(), gm.colorWhite);
+	}
+
+	if (retryLastDay_)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 122);
+		DrawBox(0, 0, Screen::width, Screen::height, gm.colorBrack, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		std::string drawNextDescription = "最終日は勇者に武器を売らなければいけません。もう一度一日をやり直します。";
+		int DrawWidthUnder = GetDrawStringWidth(drawNextDescription.c_str(), -1);
+		DrawString((Screen::width - DrawWidthUnder) / 2, (Screen::height - (Screen::height / 4) + 30), drawNextDescription.c_str(), gm.colorWhite);
+		drawalert_ = true;
 	}
 }

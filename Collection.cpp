@@ -121,7 +121,10 @@ void Collection::Update()
 				{
 					gm.player->OnCollision(gm.fieldItems[i]);
 					gm.fieldItems[i]->OnCollision(gm.player);
-					ItemGet();
+					if (gm.pouch.size() != gm.MaxPouchSize)
+					{
+						ItemGet();
+					}
 				}
 			}
 			// プレイヤーとマップオブジェクトの当たり判定
@@ -328,37 +331,34 @@ void Collection::ItemGet()
 	if (Input::GetButtonDown(PAD_INPUT_1))
 	{
 		PlaySoundMem(Music::collect_SE, DX_PLAYTYPE_BACK);
-		if (gm.pouch.size() != MaxPouchSize_) // バッグがいっぱいじゃなかったら
+		getItemFlg_ = true; // 手に入れたアイテムを表示
+		// もし手に入れられるアイテムが最大数分手に入った時バッグの容量を越えたら
+		if (gm.MaxPouchSize < gm.pouch.size() + getItemCountMax_)
 		{
-			getItemFlg_ = true; // 手に入れたアイテムを表示
-			// もし手に入れられるアイテムが最大数分手に入った時バッグの容量を越えたら
-			if ((signed)MaxPouchSize_ < gm.pouch.size() + getItemCountMax_)
-			{
+			while(gm.MaxPouchSize < gm.pouch.size() + getItemCountMax_)
 				getItemCountMax_--; // 最大値を減らす
-				return; // もう一度チェック
-			}
+		}
 
-			// 手に入れられるアイテム数をランダムで決定
-			getItemCount_ = MyRandom::RangeInt(1, getItemCountMax_);
+		// 手に入れられるアイテム数をランダムで決定
+		getItemCount_ = MyRandom::RangeInt(1, getItemCountMax_);
 
-			for (int i = 0; i < getItemCount_; i++)
-			{
-				// マップに応じたランダム品質を保管
-				// 手に入れられるアイテムをランダムで取得
-				// 実際にアイテムを手に入れる
+		for (int i = 0; i < getItemCount_; i++)
+		{
+			// マップに応じたランダム品質を保管
+			// 手に入れられるアイテムをランダムで取得
+			// 実際にアイテムを手に入れる
 
-				// Draw用に手に入れたアイテムをvectorに格納
-				// pouchにpush_buck
-				// 品質用vectorに品質を代入
+			// Draw用に手に入れたアイテムをvectorに格納
+			// pouchにpush_buck
+			// 品質用vectorに品質を代入
 
-				qualityStorage_ = MyRandom::RangeInt(gm.mapData[1][StageSelection::stageNum - 1 + CsvSkipCell_], gm.mapData[2][StageSelection::stageNum - 1 + CsvSkipCell_]);
-				int randItems = MyRandom::RangeInt(0, possibilityToGetItem_.size() - 1);
-				getItem_ = possibilityToGetItem_[randItems];
+			qualityStorage_ = MyRandom::RangeInt(gm.mapData[1][StageSelection::stageNum - 1 + CsvSkipCell_], gm.mapData[2][StageSelection::stageNum - 1 + CsvSkipCell_]);
+			int randItems = MyRandom::RangeInt(0, possibilityToGetItem_.size() - 1);
+			getItem_ = possibilityToGetItem_[randItems];
 
-				DrawGetItem_.push_back(getItem_);
-				gm.pouch.push_back(getItem_);
-				gm.pouchQuality.push_back(qualityStorage_);
-			}
+			DrawGetItem_.push_back(getItem_);
+			gm.pouch.push_back(getItem_);
+			gm.pouchQuality.push_back(qualityStorage_);
 		}
 	}
 }
@@ -403,17 +403,13 @@ void Collection::Draw()
 
 	for (int i = 0; i < gm.fieldItems.size(); i++)
 	{
-		if (gm.fieldItems[i]->isOnCollisionPlayer)
+		if (gm.fieldItems[i]->isOnCollisionPlayer && gm.pouch.size() < gm.MaxPouchSize)
 			DrawString(Screen::width / 2, Screen::height / 2, "Zキーで採取", gm.colorWhite);
-	}
-	if (gm.pouch.size() == MaxPouchSize_)
-	{
-		PlaySoundMem(Music::error_SE, DX_PLAYTYPE_BACK);
-		DrawString
-		(DrawAssertPouchSizeOverFlow_X_,
-			DrawAssertPouchSizeOverFlow_Y_,
-			"ポーチがいっぱいです",
-			gm.colorWhite);
+
+		if (gm.fieldItems[i]->isOnCollisionPlayer && gm.pouch.size() >= gm.MaxPouchSize)
+		{
+			DrawString(Screen::width / 2, Screen::height / 2, "ポーチがいっぱいです", gm.colorWhite);
+		}
 	}
 
 	if (menuOpen_)
@@ -445,7 +441,15 @@ void Collection::Draw()
 			DrawString(ItemQualityX_, ItemNameY_, ("品質 : " + ss.str()).c_str(), gm.colorWhite);
 			DrawString(ItemInfoX_, ItemInfoY_, gm.itemData[1][PouchDrawErea_[selectIconNum_] + CsvSkipCell_].stringData.c_str(), gm.colorWhite);
 		}
-
+		SetFontSize(15);
+		DrawString(OptionMenuPouchX_, OptionMenuPouchY_, "←↑→↓ : カーソル移動　,　Xキー : 閉じる  ,  Cキー : アイテム詳細", gm.colorWhite);
+		SetFontSize(gm.DefaultFontSize_);
+	}
+	else
+	{
+		SetFontSize(15);
+		DrawString(OptionMenuX_, OptionMenuY_, "WASD : 移動　,　マウス : カメラ  ,  Cキー : ポーチを開く", gm.colorWhite);
+		SetFontSize(gm.DefaultFontSize_);
 	}
 
 	if (startCount_ >= 0)

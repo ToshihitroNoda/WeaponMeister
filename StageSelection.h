@@ -53,6 +53,9 @@ private:
 
 	const float addPlayTime_   = 0.07f;
 
+	const int OptionMenuX_ = 920;
+	const int OptionMenuY_ = 705;
+
 	int cursorX_ = Map1IconPosX_;
 	int cursorY_ = Map1IconPosY_;
 	int canMakeWeapon_ = 0;

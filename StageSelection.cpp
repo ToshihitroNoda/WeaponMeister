@@ -181,6 +181,10 @@ void StageSelection::Draw()
 
 		DrawGraph(0, 0, gm.image.dayWindow, TRUE);
 		DrawGraph(0, 0, gm.image.dayNum[Adv::day], TRUE);
+
+		SetFontSize(15);
+		DrawString(OptionMenuX_, OptionMenuY_, "←↑→↓ : カーソル移動　,　Zキー : 選択", gm.colorWhite);
+		SetFontSize(gm.DefaultFontSize_);
 	}
 
 	if (nowLoadingDraw_)

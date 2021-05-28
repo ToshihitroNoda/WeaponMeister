@@ -731,6 +731,9 @@ void Production::Draw()
 		}
 
 		/*---------------*/
+		SetFontSize(15);
+		DrawString(OptionMenuX_, OptionMenuY_, "←↑→↓ : カーソル移動　,　Zキー : 選択 ・ 選択解除　,　Xキー : 一つ前へ  ,  Cキー : アイテム詳細", gm.colorWhite);
+		SetFontSize(gm.DefaultFontSize_);
 	}
 
 	/*---------------*/
