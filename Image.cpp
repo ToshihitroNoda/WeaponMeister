@@ -179,4 +179,8 @@ void Image::Load(std::string SceneName)
 		textCursor = LoadGraph("Resource/Image/textcursor.png");
 		reportBack = LoadGraph("Resource/Image/reportback.jpg");
 	}
+	else if (SceneName == "EndCredit")
+	{
+		endCredit = LoadGraph("Resource/Image/endcredit.png");
+    }
 }

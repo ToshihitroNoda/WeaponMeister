@@ -13,6 +13,7 @@
 #include "Report.h"
 #include "GameOver.h"
 #include "GameClear.h"
+#include "EndCredit.h"
 
 void SceneManager::LoadScene(std::string sceneName, std::vector<std::string> options)
 {
@@ -133,6 +134,16 @@ void SceneManager::LoadScene(std::string sceneName, std::vector<std::string> opt
 		}
 		// 次のシーンの生成
 		currentScene = std::make_shared<GameClear>();
+	}
+	else if (sceneName == "EndCredit")
+	{
+	// 前のシーンを削除
+	if (prevScene != nullptr)
+	{
+		prevScene.reset();
+	}
+	// 次のシーンの生成
+	currentScene = std::make_shared<EndCredit>();
 	}
 
 	// 次のシーンの初期化

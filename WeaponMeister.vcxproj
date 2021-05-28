@@ -151,6 +151,7 @@
     <ClCompile Include="ADVSimpleScript.cpp" />
     <ClCompile Include="Buy.cpp" />
     <ClCompile Include="Collection.cpp" />
+    <ClCompile Include="EndCredit.cpp" />
     <ClCompile Include="FieldItem.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameClear.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="DataCsv.h" />
     <ClInclude Include="DataLoad.h" />
     <ClInclude Include="DataSave.h" />
+    <ClInclude Include="EndCredit.h" />
     <ClInclude Include="FieldItem.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Image.h" />

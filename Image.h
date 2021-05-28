@@ -49,6 +49,7 @@ public:
 	int watchBase               { -1 };
 	int watchPointer            { -1 };
 	int rank                    { -1 };
+	int endCredit               { -1 };
 
 	// îwåi
 	int titleBack               { -1 };

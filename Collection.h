@@ -18,7 +18,7 @@ public:
 	{
 		this->tag = "Collection";
 	}
-	~Collection() {};
+	~Collection() = default;
 
 	void Init() override;
 	void Final() override;
