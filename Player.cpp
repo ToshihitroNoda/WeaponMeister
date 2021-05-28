@@ -3,7 +3,6 @@
 #include <DxLib.h>
 #include "Input.h"
 #include "MyMath.h"
-#include "Camera.h"
 #include "Map.h"
 #include "Music.h"
 
@@ -17,13 +16,13 @@ void Player::Init()
 	modelAngle_ = -((nowCamAngle_ - 90) * MyMath::Deg2Rad);	
 	
 	// カメラ位置
-	Camera::SetPosition
+	camera.SetPosition
 	/* X座標 */(gm.player->x + (camDistanceFromPlayer_ * std::cos(nowCamAngle_ * MyMath::Deg2Rad)),
 	/* Y座標 */  gm.player->y - camHeightFromTerrain_,
 	/* Z座標 */  gm.player->z + (camDistanceFromPlayer_ * std::sin(nowCamAngle_ * MyMath::Deg2Rad)));
 
 	//カメラはプレイヤの方を見る
-	Camera::LookAt(gm.player->x, gm.player->y + 100, gm.player->z);
+	camera.LookAt(gm.player->x, gm.player->y + 100, gm.player->z);
 
 }
 
@@ -182,13 +181,13 @@ void Player::Update()
 	MoveZ();
 
 	// カメラ位置
-	Camera::SetPosition
+	camera.SetPosition
 	/* X座標 */ (gm.player->x + (camDistanceFromPlayer_ * std::cos(nowCamAngle_ * MyMath::Deg2Rad)),
 	/* Y座標 */  gm.player->y - camHeightFromTerrain_,
 	/* Z座標 */  gm.player->z + (camDistanceFromPlayer_ * std::sin(nowCamAngle_ * MyMath::Deg2Rad)));
 
 	//カメラはプレイヤの方を見る
-	Camera::LookAt(gm.player->x, gm.player->y + 100, gm.player->z);
+	camera.LookAt(gm.player->x, gm.player->y + 100, gm.player->z);
 
 	if (attachCheck_[(int)State::collect])
 		PlayAnimation(0.5f, FALSE);

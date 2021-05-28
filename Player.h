@@ -54,7 +54,7 @@ public:
         camHeightFromTerrain_  = -200; // ’n–Ê‚©‚çƒJƒƒ‰‚Ü‚Å‚ÌY•ûŒüã‚Ì‚‚³
 
     };
-    ~Player(){};
+    ~Player() = default;
 
     void HandleInput();
 

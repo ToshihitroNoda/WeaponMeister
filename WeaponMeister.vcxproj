@@ -150,7 +150,6 @@
   <ItemGroup>
     <ClCompile Include="ADVSimpleScript.cpp" />
     <ClCompile Include="Buy.cpp" />
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collection.cpp" />
     <ClCompile Include="FieldItem.cpp" />
     <ClCompile Include="Game.cpp" />

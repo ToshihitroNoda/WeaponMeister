@@ -59,7 +59,7 @@ private:
 	int attachIndex_ = 0;
 	float totalTime_ = 0.0f;
 	float playTime_ = 0.0f;
-	float addPlayTime_ = 0.07f;
+	const float addPlayTime_ = 0.07f;
 
 	bool addMap2_			= false;
 	bool addMap3_			= false;

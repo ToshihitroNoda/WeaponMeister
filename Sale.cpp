@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "Adv.h"
 #include "Music.h"
+#include <algorithm>
 
 int Sale::saleAmount = 0;
 
@@ -234,6 +235,12 @@ void Sale::Update()
 			}
 			else
 			{
+				std::sort(selectWeaponPos_.begin(), selectWeaponPos_.end());
+				for (int i = selectWeaponPos_.size() - 1; i >= 0; i--)
+				{
+					gm.weapons.erase(gm.weapons.begin() + selectWeaponPos_[i]);
+					gm.weaponQuality.erase(gm.weaponQuality.begin() + selectWeaponPos_[i]);
+				}
 				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 				saleAmount = gm.money - prevMoney_;
 

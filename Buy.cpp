@@ -95,6 +95,10 @@ void Buy::Update()
 			}
 		}
 
+		// 詳細ウィンドウ表示したままカーソル移動しても閉じるように
+		if (!(selectIconNum_ < buyItems_.size()))
+			itemDetail_ = false;
+
 		if (cursorX_ == CursorX_Buy_Select &&
 			cursorY_ == CursorY_Buy_Select)
 		{
@@ -137,10 +141,6 @@ void Buy::Update()
 			else
 				itemDetail_ = false;
 		}
-
-		// 詳細ウィンドウ表示したままカーソル移動しても閉じるように
-		if (selectIconNum_ >= buyItems_.size())
-			itemDetail_ = false;
 	}
 	else
 	{

@@ -25,7 +25,7 @@ void Report::Init()
 
 	gm.money = finalMoney_;
 
-	if (gm.money < 0)		// 所持金がなかったらセーブしないでゲームオーバー
+	if (gm.money > 0)		// 所持金がなかったらセーブしないでゲームオーバー
 		dataSave.Save();
 
 	if (Adv::day != 1)

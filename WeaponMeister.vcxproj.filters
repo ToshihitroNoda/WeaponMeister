@@ -81,9 +81,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="FieldItem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>

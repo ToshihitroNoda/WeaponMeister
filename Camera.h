@@ -10,34 +10,20 @@ class Camera
 public:
     // カメラの位置。
     // 画面左上のワールド座標を表す。
-    static float x;
-    static float y;
-    static float z;
+    float x = 0;
+    float y = 0;
+    float z = 0;
 
-    static float anglePlaneChara;       // 板ポリゴンのキャラは常にカメラ方向に面を見せるようにするための角度
-    static float anglePlaneCharaRotate; //この角度を0～2πに変えるとクルっとオセロのように回転させる
+    float cameraLookAtHeight = 0;
 
-    static VECTOR cameraPos;
+   VECTOR cameraPos = DxLib::VGet(Screen::width / 2, Screen::height / 2, -100.0f);
 
-    static float cameraLookAtHeight;
+   Camera() = default;
 
-    // コンストラクタ
-    Camera(float x, float y, float z)
-    {
-        this->x   = x;
-        this->y   = y;
-        this->z   = z;
-        cameraPos = VGet(x, y, z); // カメラの位置の保存(読み出し専用)
-    }
-
-    ~Camera()
-    {
-
-    }
-
+    ~Camera() = default;
 
     // カメラの位置をセットし画面左上のワールド2D座標系として保存
-    static void SetPosition(float worldX, float worldY, float worldZ)
+    void SetPosition(float worldX, float worldY, float worldZ)
     {   // 画面左上のワールド座標系として保存
         x = worldX;
         y = worldY;
@@ -46,7 +32,7 @@ public:
     }
 
     // 指定されたワールド座標が画面の中心に来るように、カメラの位置を変更する
-    static void LookAt(float targetX, float targetY, float targetZ)
+    void LookAt(float targetX, float targetY, float targetZ)
     {
         // カメラの位置と向きを設定
         {
@@ -59,14 +45,12 @@ public:
 
             // カメラの設定に反映する
             SetCameraPositionAndTarget_UpVecY(CameraPosition, CameraLookAtPosition);
-            // カメラ回転後の角度を保存して板ポリゴンキャラクタが常にカメラに面を見せるようにする
-            anglePlaneChara = GetCameraAngleHRotate();
             // カメラ位置の保存(cameraPosは読み出し専用)
             cameraPos       = CameraPosition; 
         }
     }
 
-    static int SetCameraPositionAndTarget_UpVecY(VECTOR Position, VECTOR Target)
+    int SetCameraPositionAndTarget_UpVecY(VECTOR Position, VECTOR Target)
     {
         // 右手・左手系とY軸矢印の方向に従い座標を変換
         VECTOR Position_COVERT_XYZ = VGet(Position.x, Position.y, Position.z);
@@ -82,7 +66,7 @@ public:
     /// <param name="right">右端</param>
     /// <param name="bottom">下端</param>
     /// <param name="color">色</param>
-    static void DrawLineBox(float left, float top, float right, float bottom, unsigned int color, float leftTopZ = 0, float rightBottomZ = 0)
+    void DrawLineBox(float left, float top, float right, float bottom, unsigned int color, float leftTopZ = 0, float rightBottomZ = 0)
     {
         if (leftTopZ == 0 && rightBottomZ == 0)
         {   // 2D版

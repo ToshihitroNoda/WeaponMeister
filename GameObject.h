@@ -9,6 +9,7 @@
 class GameObject
 {
 public:
+    Camera camera;
 
     // コンストラクタ
     GameObject() = default;
@@ -28,9 +29,8 @@ public:
     // 当たり判定を描画（デバッグ用）
     virtual void DrawHitBox()
     {
-
         // 四角Boxを描画
-        Camera::DrawLineBox
+        camera.DrawLineBox
         (GetLeft(), 0,
             GetRight(), 0,
             GetColor(255, 0, 0),

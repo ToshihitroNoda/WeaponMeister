@@ -112,8 +112,6 @@ public:
 	int Spruce_2				{ -1 };
 	int Spruce_3				{ -1 };
 	int Trunk					{ -1 };
-
-	std::vector<int> ModelHandles;
 };
 
 #endif

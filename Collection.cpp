@@ -302,8 +302,8 @@ void Collection::Update()
 		}
 		endCount_--;
 	}
-
-	startCount_--;
+	if (is_Operation_Description_Been_)
+		startCount_--;
 	if (!is_Operation_Description_Been_)
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1))
@@ -351,7 +351,7 @@ void Collection::ItemGet()
 				// pouch‚Épush_buck
 				// •iŽ¿—pvector‚É•iŽ¿‚ð‘ã“ü
 
-				qualityStorage_ = MyRandom::RangeInt(gm.mapData[1][StageSelection::stageNum + CsvSkipCell_], gm.mapData[2][StageSelection::stageNum - 1 + CsvSkipCell_]);
+				qualityStorage_ = MyRandom::RangeInt(gm.mapData[1][StageSelection::stageNum - 1 + CsvSkipCell_], gm.mapData[2][StageSelection::stageNum - 1 + CsvSkipCell_]);
 				int randItems = MyRandom::RangeInt(0, possibilityToGetItem_.size() - 1);
 				getItem_ = possibilityToGetItem_[randItems];
 

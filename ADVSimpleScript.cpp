@@ -38,18 +38,18 @@ bool ADVSimpleScript::is_message_text_ = false;
 
 void ADVSimpleScript::Init()
 {
-	MassegeCount  = 0;
-	lineWidth_	  = 0;
-	ResourceNum_  = -1;
-	MassegeX_	  = 0;
-	MassegeY_	  = 0;
-	StringX_	  = 0;
-	StringY_	  = 0;
-	BGX_		  = 0;
-	BGY_		  = 0;
-	BGID_		  = 0;
-	CDrawCount_	  = 0;
-	BreakCount_	  = 0;
+	MassegeCount = 0;
+	lineWidth_ = 0;
+	ResourceNum_ = -1;
+	MassegeX_ = 0;
+	MassegeY_ = 0;
+	StringX_ = 0;
+	StringY_ = 0;
+	BGX_ = 0;
+	BGY_ = 0;
+	BGID_ = 0;
+	CDrawCount_ = 0;
+	BreakCount_ = 0;
 	PrevPlayMusic = 0;
 
 	filePath_ = "";
@@ -73,6 +73,7 @@ void ADVSimpleScript::Final()
 			DeleteGraph(ResourceNums_[i]);
 		}
 	}
+	ResourceType_.clear();
 	massegeList.clear();
 	ResourcePath_.clear();
 	ResourceNums_.clear();
@@ -162,7 +163,7 @@ void ADVSimpleScript::Update()
 				StopSoundMem(PrevPlayMusic);
 				PlaySoundMem(playMusic, DX_PLAYTYPE_LOOP);
 				PrevPlayMusic = playMusic;
-				MassegeCount++;					
+				MassegeCount++;
 				ChangeVolumeSoundMem(std::stoi(massegeList[MassegeCount]), playMusic);
 				MassegeCount++;
 			}

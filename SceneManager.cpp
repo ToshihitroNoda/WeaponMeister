@@ -16,6 +16,9 @@
 
 void SceneManager::LoadScene(std::string sceneName, std::vector<std::string> options)
 {
+	// カメラ位置の初期化
+	SetDrawScreen(GetActiveGraph());
+
 	// 現在のシーンの終了処理
 	if (currentScene != nullptr)
 		currentScene->Final(); // 終了処理を呼び出す
