@@ -355,13 +355,10 @@ void Production::Update()
 					}
 				}
 
-				if (gm.handles.size() >= 1)
+				if (Input::GetButtonDown(PAD_INPUT_2))
 				{
-					HandleSlectOk_ = true;
-				}
-				else
-				{
-					HandleSlectOk_ = false;
+					PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
+					Format();
 				}
 
 				if (Input::GetButtonDown(PAD_INPUT_3) && selectIconNum_ < itemForWeaponMake_.size())
@@ -373,15 +370,18 @@ void Production::Update()
 						itemDetail_ = false;
 				}
 
+				if (gm.handles.size() >= 1)
+				{
+					HandleSlectOk_ = true;
+				}
+				else
+				{
+					HandleSlectOk_ = false;
+				}
+
 				// 詳細ウィンドウ表示したままカーソル移動しても閉じるように
 				if (selectIconNum_ >= itemForWeaponMake_.size())
 					itemDetail_ = false;
-
-				if (Input::GetButtonDown(PAD_INPUT_2))
-				{
-					PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
-					Format();
-				}
 			}
 
 			/*----- メイン部分素材選択 -----*/
@@ -453,13 +453,20 @@ void Production::Update()
 					}
 				}
 
-				if (gm.main.size() >= 2)
+				if (Input::GetButtonDown(PAD_INPUT_2))
 				{
-					MainSlectOk_ = true;
-				}
-				else
-				{
-					MainSlectOk_ = false;
+					PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
+					shouldWeaponMainCreate_ = false;
+					gm.main.clear();
+					gm.mainQuality.clear();
+					itemForWeaponMake_.clear();
+					ItemPosOnThePouch_.clear();
+					SelectItemPosOnThePouch_.erase
+					(SelectItemPosOnThePouch_.begin() + gm.handles.size(),
+						SelectItemPosOnThePouch_.end());
+
+					// 持ち手部分で選択できるものをvectorに保管
+					GetHandleForWeaponMake();
 				}
 
 				if (Input::GetButtonDown(PAD_INPUT_3) && selectIconNum_ < itemForWeaponMake_.size())
@@ -471,25 +478,18 @@ void Production::Update()
 						itemDetail_ = false;
 				}
 
+				if (gm.main.size() >= 2)
+				{
+					MainSlectOk_ = true;
+				}
+				else
+				{
+					MainSlectOk_ = false;
+				}
+
 				// 詳細ウィンドウ表示したままカーソル移動しても閉じるように
 				if (selectIconNum_ >= itemForWeaponMake_.size())
 					itemDetail_ = false;
-
-				if (Input::GetButtonDown(PAD_INPUT_2))
-				{
-					PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
-					shouldWeaponMainCreate_ = false;
-					gm.main.clear();
-					gm.mainQuality.clear();
-					itemForWeaponMake_.clear();
-					ItemPosOnThePouch_.clear();
-					SelectItemPosOnThePouch_.erase
-					(SelectItemPosOnThePouch_.begin() + gm.handles.size(),
-					 SelectItemPosOnThePouch_.end());
-
-					// 持ち手部分で選択できるものをvectorに保管
-					GetHandleForWeaponMake();
-				}
 			}
 
 			/*----------*/
@@ -836,6 +836,9 @@ void Production::Draw()
 				distToCenter_ = defaultDrawCount_;
 				drawCounter_ = defaultDrawCount_;
 				angle_ = defaultAngle_;
+				animationX_.clear();
+				animationY_.clear();
+				drawItemID_.clear();
 			}
 		}
 	}
