@@ -23,10 +23,10 @@ bool Production::canCarbonadeSword_ = false;
 bool Production::canOrichalcumSword_ = false;
 bool Production::canGodStoneSword_ = false;
 
-std::vector<bool> Production::canWeaponMake_{ canWoodSword_		, canJawaSword_		 , canEnriSword_	, canKeinSword_,
-											  canShizukuSword_	, canSaintSword_	 , canGodWoodSword_ ,
-											  canStoneSword_	, canIronOreSword_	 , canJadeSword_	, canDiamondSword_,
-											  canCarbonadeSword_, canOrichalcumSword_, canGodStoneSword_ };
+std::vector<bool> Production::canWeaponMake_{ canWoodSword_     , canJawaSword_      , canEnriSword_    , canKeinSword_,
+											  canShizukuSword_  , canSaintSword_     , canGodWoodSword_ ,
+                                              canStoneSword_    , canIronOreSword_   , canJadeSword_    , canDiamondSword_,
+                                              canCarbonadeSword_, canOrichalcumSword_, canGodStoneSword_ };
 
 void Production::Init()
 {
@@ -62,8 +62,8 @@ void Production::Update()
 	{
 		if (cursorInit_) // カーソル位置初期化
 		{
-			cursorX_ = CursorX_Min_RecipeSelection_;
-			cursorY_ = CursorY_Min_RecipeSelection_;
+			cursorX_  = CursorX_Min_RecipeSelection_;
+			cursorY_  = CursorY_Min_RecipeSelection_;
 			weaponID_ = 0;
 			cursorInit_ = false;
 		}
@@ -74,7 +74,7 @@ void Production::Update()
 			if (cursorX_ < CursorX_Max_RecipeSelection_)
 			{
 				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
-				cursorX_ = CursorX_Max_RecipeSelection_;
+				cursorX_     = CursorX_Max_RecipeSelection_;
 				prevCursorY_ = cursorY_;
 				weaponID_++;
 			}
@@ -158,10 +158,10 @@ void Production::Update()
 		{
 			if (cursorInit_) // カーソル位置初期化
 			{
-				cursorX_ = CursorX_Min_ItemSelect_;
-				cursorY_ = CursorY_Min_ItemSelect_;
+				cursorX_       = CursorX_Min_ItemSelect_;
+				cursorY_       = CursorY_Min_ItemSelect_;
 				selectIconNum_ = 0;
-				cursorInit_ = false;
+				cursorInit_    = false;
 
 				// 持ち手部分で選択できるものをvectorに保管
 				GetHandleForWeaponMake();
@@ -485,7 +485,7 @@ void Production::Update()
 					ItemPosOnThePouch_.clear();
 					SelectItemPosOnThePouch_.erase
 					(SelectItemPosOnThePouch_.begin() + gm.handles.size(),
-						SelectItemPosOnThePouch_.end());
+					 SelectItemPosOnThePouch_.end());
 
 					// 持ち手部分で選択できるものをvectorに保管
 					GetHandleForWeaponMake();

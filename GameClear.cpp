@@ -11,9 +11,9 @@ void GameClear::Init()
 
 	gm.scoreData.Load("Resource/Datas/ScoreData.csv");
 
-	sold_weapon_         = gm.weapons.back();
+	sold_weapon_ = gm.weapons.back();
 	sold_weapon_quality_ = gm.weaponQuality.back();
-	
+
 	for (int i = CsvSkipCsell_; i < gm.scoreData[0].size(); i++)
 	{
 		if ((int)gm.scoreData[CsvWeaponIdCsll_][i] == sold_weapon_)
@@ -137,7 +137,7 @@ void GameClear::Draw()
 		DrawGraph((Screen::width / 2) - 100, (Screen::height / 2) - 100, gm.image.scores[evaluation_], TRUE);
 		DrawString(750, 500, "—EŽÒ‚É”„‚Á‚½•Ší", gm.colorWhite);
 		DrawGraph(920, 480, gm.image.itemIconWindow, TRUE);
-		DrawGraph(920, 480, gm.image.weaponIcons[sold_weapon_], TRUE); 
+		DrawGraph(920, 480, gm.image.weaponIcons[sold_weapon_], TRUE);
 		std::stringstream quality;
 		quality << sold_weapon_quality_;
 		DrawString(750, 550, ("•iŽ¿ : " + quality.str()).c_str(), gm.colorWhite);

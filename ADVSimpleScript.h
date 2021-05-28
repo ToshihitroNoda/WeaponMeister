@@ -10,7 +10,7 @@
 class ADVSimpleScript
 {
 public:
-	ADVSimpleScript() = default;
+	ADVSimpleScript()  = default;
 	~ADVSimpleScript() = default;
 
 	static void Init();

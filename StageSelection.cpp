@@ -47,8 +47,8 @@ void StageSelection::Init()
 	mapIcons_ = { gm.image.mapIcon_1, gm.image.mapIcon_2, gm.image.mapIcon_3, gm.image.mapIcon_4, gm.image.mapIcon_5 };
 
 	attachIndex_ = MV1AttachAnim(gm.image.Player, 2, -1, FALSE);
-	totalTime_ = MV1GetAttachAnimTotalTime(gm.image.Player, attachIndex_);
-	playTime_ = 0.0f;
+	totalTime_   = MV1GetAttachAnimTotalTime(gm.image.Player, attachIndex_);
+	playTime_    = 0.0f;
 	MV1SetAttachAnimTime(gm.image.Player, attachIndex_, playTime_);
 
 	PlaySoundMem(Music::stageselection_BGM, DX_PLAYTYPE_LOOP);

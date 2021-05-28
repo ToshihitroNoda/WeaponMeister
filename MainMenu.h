@@ -25,12 +25,12 @@ private:
 	const int MenuStrX_Init_ = 1000;
 	const int MenuStrY_Init_ = 500;
 	const int MenuStrY_Dist_ = 80;
-	const int FontSize_		 = 30;
+	const int FontSize_      = 30;
 
-	int CursorY_Init_		 = 490;
-	int CursorX_			 = 930;
-	int CursorY_			 = CursorY_Init_;
-	int CursorY_Dist_		 = 80;
+	int CursorY_Init_ = 490;
+	int CursorX_      = 930;
+	int CursorY_      = CursorY_Init_;
+	int CursorY_Dist_ = 80;
 
 	std::vector<std::string> MenuStr_{ "Start","Continue","Exit" };
 };

@@ -17,15 +17,15 @@ public:
 		this->z = z;
 		tag = ObjectsName;
 
-		imageWidth          = Width * 0.5f;	 // 画像の横ピクセル数
-		imageHeight         = 32;	         // 画像の縦ピクセル数
-		imageLength         = Length * 0.5f; // 画像のZ方向の厚みのピクセル数
-		hitboxOffsetLeft    = 0;             // 当たり判定の左端のオフセット
-		hitboxOffsetRight   = 0;             // 当たり判定の右端のオフセット
-		hitboxOffsetTop     = 0;             // 当たり判定の上端のオフセット
-		hitboxOffsetBottom  = 0;             // 当たり判定の下端のオフセット
-		hitboxOffsetForward = 0;             // 当たり判定の奥方向のオフセット
-		hitboxOffsetBack    = 0;             // 当たり判定の手前方向のオフセット
+		imageWidth          = Width * 0.5f;   // 画像の横ピクセル数
+		imageHeight         = 32;             // 画像の縦ピクセル数
+		imageLength         = Length * 0.5f;  // 画像のZ方向の厚みのピクセル数
+		hitboxOffsetLeft    = 0;              // 当たり判定の左端のオフセット
+		hitboxOffsetRight   = 0;              // 当たり判定の右端のオフセット
+		hitboxOffsetTop     = 0;              // 当たり判定の上端のオフセット
+		hitboxOffsetBottom  = 0;              // 当たり判定の下端のオフセット
+		hitboxOffsetForward = 0;              // 当たり判定の奥方向のオフセット
+		hitboxOffsetBack    = 0;              // 当たり判定の手前方向のオフセット
 
 		if (isRotaGraph == true)
 		{   // 画像の中心を起点に描く場合のずれ
@@ -35,7 +35,7 @@ public:
 		}
 	};
 
-	~MapObjects() {};
+	~MapObjects() = default;
 
 	void Init();
 	void Update();

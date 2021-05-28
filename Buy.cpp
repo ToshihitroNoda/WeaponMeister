@@ -11,7 +11,7 @@ void Buy::Init()
 {
 	gm.image.Load(tag);
 	gm.itemData.Load("Resource/Datas/ItemData.csv");
-	
+
 	for (int i = CsvSkipCell_; i < gm.itemData[0].size(); i++)
 	{
 		if ((int)gm.itemData[CsvItemMapCell_][i] <= StageSelection::stageNum - 1)
@@ -20,7 +20,7 @@ void Buy::Init()
 			buyItemsQuality_.push_back((int)gm.itemData[CsvItemQualityCell_][i]);
 		}
 	}
-	
+
 	if (Adv::day != 1)
 		is_Operation_Description_Been_ = true;
 
@@ -114,7 +114,7 @@ void Buy::Update()
 		{
 			if (Input::GetButtonDown(PAD_INPUT_1) &&
 				selectIconNum_ < buyItems_.size() &&
-				gm.pouch.size() < PouchMaxSize_   &&
+				gm.pouch.size() < PouchMaxSize_ &&
 				gm.money >= (int)gm.itemData[CsvItemPriceCell_][buyItems_[selectIconNum_] + CsvSkipCell_])
 			{
 				PlaySoundMem(Music::money_SE, DX_PLAYTYPE_BACK);
@@ -177,9 +177,9 @@ void Buy::Draw()
 	{
 		DrawGraph
 		(itemX_ + x * CursorX_MoveVerticalWidth_ItemSelect_,
-		 itemY_ + y * CursorY_MoveVerticalWidth_ItemSelect_,
+			itemY_ + y * CursorY_MoveVerticalWidth_ItemSelect_,
 			gm.image.itemIcons[buyItems_[x + (y * ItemID_ByLineBreak_ItemSelect_)]],
-		 TRUE);
+			TRUE);
 
 		if (x < ItemID_ByLineBreak_ItemSelect_ - 1)
 		{
@@ -205,9 +205,9 @@ void Buy::Draw()
 	{
 		DrawGraph
 		(pouchItemX_ + pouchX * CursorX_MoveVerticalWidth_ItemSelect_,
-		 itemY_ + pouchY * CursorY_MoveVerticalWidth_ItemSelect_,
+			itemY_ + pouchY * CursorY_MoveVerticalWidth_ItemSelect_,
 			gm.image.itemIcons[DrawItems_[pouchX + (pouchY * ItemID_ByLineBreak_ItemSelect_)]],
-		 TRUE);
+			TRUE);
 
 		if (pouchX < ItemID_ByLineBreak_ItemSelect_ - 1)
 		{

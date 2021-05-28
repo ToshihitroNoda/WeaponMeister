@@ -88,7 +88,7 @@ public:
 	Image image;
 
 	friend class Singleton<GameManager>;				// Singletonでのインスタンス作成は許可
-	
+
 	std::shared_ptr<Map> map{ nullptr };				// マップ
 
 	std::shared_ptr<Player> player{ nullptr };			// 自機の初期化
@@ -102,7 +102,7 @@ public:
 	std::vector<int> pouch;
 	std::vector<int> handles;
 	std::vector<int> main;
-	std::vector<int> weapons; 
+	std::vector<int> weapons;
 
 	// 品質保管vector
 	std::vector<int> pouchQuality;
@@ -123,7 +123,7 @@ public:
 	const int colorWhite = GetColor(255, 255, 255);
 	const int colorBrack = GetColor(0, 0, 0);
 	const int colorGray  = GetColor(122, 122, 122);
-	const int colorRed	 = GetColor(255, 0, 0);
+	const int colorRed   = GetColor(255, 0, 0);
 	const int colorBlue  = GetColor(0, 100, 200);
 
 	const int DefaultFontSize_ = 15;
@@ -132,8 +132,8 @@ public:
 	const int defaultMoney = 1000;
 
 protected:
-	GameManager() {};			// 外部からのインスタンス作成は禁止
-	virtual ~GameManager() {};	// 外部からのインスタンス破棄も禁止
+	GameManager()          = default;  // 外部からのインスタンス作成は禁止
+	virtual ~GameManager() = default;  // 外部からのインスタンス破棄も禁止
 };
 
 #endif 

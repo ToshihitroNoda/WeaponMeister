@@ -13,7 +13,7 @@
 class StageSelection : public Scene
 {
 public:
-	GameManager&  gm = GameManager::GetInstance();
+	GameManager& gm  = GameManager::GetInstance();
 	SceneManager& sm = SceneManager::GetInstance();
 
 	StageSelection() : Scene()
@@ -47,27 +47,28 @@ private:
 	const int CursorXDistMapX_ = 80;
 	const int CursorYDistMapY_ = 0;
 
-	const int MoveCursorDist = 400;
+	const int MoveCursorDist   = 400;
 
-	const int CsvSkipCell_ = 2;
+	const int CsvSkipCell_     = 2;
 
-	int cursorX_	= Map1IconPosX_;
-	int cursorY_	= Map1IconPosY_;
+	const float addPlayTime_   = 0.07f;
+
+	int cursorX_ = Map1IconPosX_;
+	int cursorY_ = Map1IconPosY_;
 	int canMakeWeapon_ = 0;
+	int attachIndex_   = 0;
 	int operationDescriptionMassegeNum_ = 0;
 
-	int attachIndex_ = 0;
 	float totalTime_ = 0.0f;
-	float playTime_ = 0.0f;
-	const float addPlayTime_ = 0.07f;
+	float playTime_  = 0.0f;
 
-	bool addMap2_			= false;
-	bool addMap3_			= false;
-	bool addMap4_			= false;
-	bool addMap5_			= false;
-	bool doNewStageAdd_		= false;
-	bool nextSceneLoad_		= false;
-	bool nowLoadingDraw_	= false;
+	bool addMap2_ = false;
+	bool addMap3_ = false;
+	bool addMap4_ = false;
+	bool addMap5_ = false;
+	bool doNewStageAdd_  = false;
+	bool nextSceneLoad_  = false;
+	bool nowLoadingDraw_ = false;
 
 	bool is_Operation_Description_Been_ = false;
 
@@ -78,12 +79,12 @@ private:
 	std::vector<int>  stageNums_{ 1, 2, 3, 4, 5 };
 	std::vector<int>  mapIcons_;
 	std::vector<int>  mapIconPostions_
-		{ Map1IconPosX_, Map2IconPosX_, 
-		  Map3IconPosX_, Map4IconPosX_, 
-		  Map5IconPosX_, 
-		  Map1IconPosY_, Map2IconPosY_,
-		  Map3IconPosY_, Map4IconPosY_,
-		  Map5IconPosY_ };
+	{ Map1IconPosX_, Map2IconPosX_,
+	  Map3IconPosX_, Map4IconPosX_,
+	  Map5IconPosX_,
+	  Map1IconPosY_, Map2IconPosY_,
+	  Map3IconPosY_, Map4IconPosY_,
+	  Map5IconPosY_ };
 
 	std::string description_[6]
 	{ "Ç‹Ç∏ÇÕëfçﬁÇÃçÃéÊÇ…èoÇ©ÇØÇ‹ÇµÇÂÇ§ÅI",

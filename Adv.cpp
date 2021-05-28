@@ -80,7 +80,7 @@ void Adv::Update()
 			}
 			skipCounter_++;
 		}
-		
+
 		if (ADVSimpleScript::MassegeCount >= ADVSimpleScript::massegeList.size())
 		{
 			sm.LoadScene("StageSelection");

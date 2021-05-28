@@ -22,8 +22,8 @@
 // CSVファイルの読込み & 当たり判定可能なマス目
 struct CsvCell : public DataCsv
 {
-	int noneData	  = -1; // この値のCSVデータはデータがないマスとみなす
-	int cellSize	  = 1;
+	int noneData = -1; // この値のCSVデータはデータがないマスとみなす
+	int cellSize = 1;
 	CsvCell(int CellSize = 1, std::string filePath = "") : DataCsv(filePath)
 	{
 		assert(CellSize > 0 && "マス目サイズ指定CellSizeは1以上に設定して！" != "");
@@ -40,26 +40,26 @@ struct CsvCell : public DataCsv
 
 class Map
 {
-	const int None = -1; // 何も無いマス
-	const int Terrain_Grass = 0;  // 草の地面
-	const int Tterrain_Sand = 1;  // 砂の地面
-	const int Terrain_Stone = 2;  // 石の地面
+	const int None            = -1; // 何も無いマス
+	const int Terrain_Grass   = 0;  // 草の地面
+	const int Tterrain_Sand   = 1;  // 砂の地面
+	const int Terrain_Stone   = 2;  // 石の地面
 	const int Terrain_Volcano = 3;  // 火山の地面
 
-	const int Fielditem = 0;
-	const int Spruce_1 = 1;
-	const int Spruce_2 = 2;
-	const int Spruce_3 = 3;
-	const int Trunk = 4;
-	const int Branch_1 = 5;
-	const int Branch_2 = 6;
-	const int Branch_3 = 7;
-	const int Branch_4 = 8;
+	const int Fielditem   = 0;
+	const int Spruce_1    = 1;
+	const int Spruce_2    = 2;
+	const int Spruce_3    = 3;
+	const int Trunk       = 4;
+	const int Branch_1    = 5;
+	const int Branch_2    = 6;
+	const int Branch_3    = 7;
+	const int Branch_4    = 8;
 	const int BranchGroup = 9;
-	const int Bush_1 = 10;
-	const int Bush_2 = 11;
-	const int Bush_3 = 12;
-	const int Bush_4 = 13;
+	const int Bush_1      = 10;
+	const int Bush_2      = 11;
+	const int Bush_3      = 12;
+	const int Bush_4      = 13;
 	const int BushLarge_1 = 14;
 	const int BushLarge_2 = 15;
 	const int CliffRock_1 = 16;
@@ -67,31 +67,31 @@ class Map
 	const int CliffRock_3 = 18;
 	const int CliffRock_4 = 19;
 	const int CliffRock_5 = 20;
-	const int Rock_1 = 21;
-	const int Rock_2 = 22;
-	const int Rock_3 = 23;
-	const int Rock_4 = 24;
-	const int Rock_5 = 25;
-	const int Crystal_1 = 26;
-	const int Crystal_2 = 27;
-	const int Crystal_3 = 28;
-	const int Crystal_4 = 29;
-	const int Crystal_5 = 30;
+	const int Rock_1      = 21;
+	const int Rock_2      = 22;
+	const int Rock_3      = 23;
+	const int Rock_4      = 24;
+	const int Rock_5      = 25;
+	const int Crystal_1   = 26;
+	const int Crystal_2   = 27;
+	const int Crystal_3   = 28;
+	const int Crystal_4   = 29;
+	const int Crystal_5   = 30;
 
 public:
 	GameManager& gm = GameManager::GetInstance();
 
 	std::vector<int> objectIDs
-	{ Spruce_1,    Spruce_2,	Spruce_3,	 Trunk,		  Branch_1,	   Branch_2,	Branch_3,	 Branch_4,
-	  BranchGroup, Bush_1,	    Bush_2,		 Bush_3,	  Bush_4,	   BushLarge_1, BushLarge_2, CliffRock_1,
-	  CliffRock_2, CliffRock_3, CliffRock_4, CliffRock_5, Rock_1,	   Rock_2,		Rock_3,		 Rock_4,
-	  Rock_5,	   Crystal_1,   Crystal_2,	 Crystal_3,   Crystal_4,   Crystal_5 };
+	{ Spruce_1,    Spruce_2,    Spruce_3,    Trunk,       Branch_1,    Branch_2,    Branch_3,    Branch_4,
+	  BranchGroup, Bush_1,      Bush_2,      Bush_3,      Bush_4,      BushLarge_1, BushLarge_2, CliffRock_1,
+	  CliffRock_2, CliffRock_3, CliffRock_4, CliffRock_5, Rock_1,      Rock_2,      Rock_3,      Rock_4,
+	  Rock_5,      Crystal_1,   Crystal_2,   Crystal_3,   Crystal_4,   Crystal_5 };
 
 	std::vector<std::string> objectNames
-	{ "Spruce_1",	 "Spruce_2",	"Spruce_3",	   "Trunk",		  "Branch_1",  "Branch_2",	  "Branch_3",	 "Branch_4",
-	  "BranchGroup", "Bush_1",		"Bush_2",	   "Bush_3",	  "Bush_4",	   "BushLarge_1", "BushLarge_2", "CliffRock_1",
-	  "CliffRock_2", "CliffRock_3", "CliffRock_4", "CliffRock_5", "Rock_1",	   "Rock_2",	  "Rock_3",		 "Rock_4",
-	  "Rock_5",		 "Crystal_1",	"Crystal_2",   "Crystal_3",	  "Crystal_4", "Crystal_5" };
+	{ "Spruce_1",    "Spruce_2",    "Spruce_3",    "Trunk",       "Branch_1",  "Branch_2",	  "Branch_3",	 "Branch_4",
+	  "BranchGroup", "Bush_1",      "Bush_2",      "Bush_3",      "Bush_4",    "BushLarge_1", "BushLarge_2", "CliffRock_1",
+	  "CliffRock_2", "CliffRock_3", "CliffRock_4", "CliffRock_5", "Rock_1",    "Rock_2",	  "Rock_3",		 "Rock_4",
+	  "Rock_5",      "Crystal_1",   "Crystal_2",   "Crystal_3",   "Crystal_4", "Crystal_5" };
 
 	// マス目のXとYを保持するデータ型
 	struct CellXY
@@ -101,11 +101,11 @@ public:
 		CellXY(int X, int Y) : X{ X }, Y{ Y }
 		{};
 		bool operator < (const CellXY& otherXY) const {
-			if (Y < otherXY.Y) return true;		// Y優先並べ替え
+			if (Y < otherXY.Y) return true;  // Y優先並べ替え
 			if (Y > otherXY.Y) return false;
-			if (X < otherXY.X) return true;		// Yが同じ時はXを比較
+			if (X < otherXY.X) return true;  // Yが同じ時はXを比較
 			if (X > otherXY.X) return false;
-			return false;						// 完全一致のときは
+			return false;                    // 完全一致のときは
 		}
 	};
 
@@ -152,7 +152,7 @@ public:
 	// ゲームオブジェクト描画
 	void LoadObjects();
 
-	//★地形を描く3D対応でY平面に描く
+	//地形を描く3D対応でY平面に描く
 	void LoadTerrain();
 
 private:
@@ -170,34 +170,34 @@ private:
 		225, 320, 432, 245, 150, 162, 189, 161
 	};
 
-	int spawnRangeX_ = 30;      // オブジェクト出現射程スポーンレンジ【注意！Xの単位はマス目】
-	int spawnRangeY_ = 30;      // オブジェクト出現射程スポーンレンジ【注意！Yの単位はマス目】
+	int spawnRangeX_ = 30; // オブジェクト出現射程スポーンレンジ【注意！Xの単位はマス目】
+	int spawnRangeY_ = 30; // オブジェクト出現射程スポーンレンジ【注意！Yの単位はマス目】
 
 	std::map<CellXY, bool> spawnDic_;
 
-	const int cellSize_ = 32;   // マップの1マスのピクセル数
+	const int cellSize_ = 32; // マップの1マスのピクセル数
 
-	bool isRotaGraph_ = true;   // DrawRotaGraphを使うときはマス目サイズ/2ずらす必要がある
+	bool isRotaGraph_ = true; // DrawRotaGraphを使うときはマス目サイズ/2ずらす必要がある
 
 	// 画像の中心を起点に描く場合のずれ
 	float rotaGraphShiftX_ = (isRotaGraph_) ? (float)cellSize_ / 2 : 0.0f;
 	float rotaGraphShiftY_ = (isRotaGraph_) ? (float)cellSize_ / 2 : 0.0f;
 	float rotaGraphShiftZ_ = (isRotaGraph_) ? (float)cellSize_ / 2 : 0.0f;
 
-	CsvCell terrain_;           // 地形データ
-	CsvCell objects_;           // 敵配置データ
+	CsvCell terrain_;  // 地面データ
+	CsvCell objects_;  // 地形（岩とか木とか）データ
 	CsvCell objects2_;
 	CsvCell objects3_;
 
-	int terrainWidth_  = 0;     // マップデータの横のマス数
-	int terrainHeight_ = 0;     // マップデータの縦のマス数
-	float positionX_ = 0;       // 現在の位置（マップ左端の座標）
-	float positionY_ = 0;       // 現在の位置（マップ上端の座標）
+	int terrainWidth_  = 0;  // マップデータの横のマス数
+	int terrainHeight_ = 0;  // マップデータの縦のマス数
+	float positionX_   = 0;  // 現在の位置（マップ左端の座標）
+	float positionY_   = 0;  // 現在の位置（マップ上端の座標）
 
-	bool objectsLoad_ = false;
+	bool objectsLoad_  = false;
 	bool objects2Load_ = false;
 	bool objects3Load_ = false;
-	bool terrainLoad_ = false;
+	bool terrainLoad_  = false;
 
 };
 

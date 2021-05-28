@@ -11,10 +11,10 @@ class Game
 {
 public:
 	SceneManager& sm = SceneManager::GetInstance();
-	GameManager&  gm = GameManager::GetInstance();
+	GameManager& gm  = GameManager::GetInstance();
 
-	Game() {};
-	~Game() {};
+	Game()  = default;
+	~Game() = default;
 
 	void Init();
 	void Update();

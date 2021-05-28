@@ -18,10 +18,10 @@ void Report::Init()
 {
 	gm.image.Load(tag);
 
-	firstMoney_  = gm.money;
-	Rent_		 = (int)(RentBase_ * (Adv::day * RentMultiplied_));
-	nextRent_	 = (int)(RentBase_ * ((Adv::day + 1) * RentMultiplied_));
-	finalMoney_  = gm.money - Rent_;
+	firstMoney_ = gm.money;
+	Rent_ = (int)(RentBase_ * (Adv::day * RentMultiplied_));
+	nextRent_ = (int)(RentBase_ * ((Adv::day + 1) * RentMultiplied_));
+	finalMoney_ = gm.money - Rent_;
 
 	gm.money = finalMoney_;
 

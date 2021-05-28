@@ -23,11 +23,11 @@ class DataLoad
 public:
 	GameManager& gm = GameManager::GetInstance();
 
-	DataLoad() = default;
+	DataLoad()  = default;
 	~DataLoad() = default;
 
 	void Load();
-	
+
 	std::fstream file;
 };
 
@@ -45,8 +45,8 @@ void DataLoad::Load()
 
 	file.read((char*)&status, sizeof(status));
 
-	Adv::day = status.day;
-	gm.money = status.money;
+	Adv::day                 = status.day;
+	gm.money                 = status.money;
 	StageSelection::mapCount = status.mapCount;
 	gm.pouch.resize(status.pouchSize);
 	gm.pouchQuality.resize(status.pouchQSize);

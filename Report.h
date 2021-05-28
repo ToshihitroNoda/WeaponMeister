@@ -5,10 +5,10 @@
 #include "SceneManager.h"
 #include "GameManager.h"
 
-class Report :  public Scene
+class Report : public Scene
 {
 public:
-	GameManager& gm = GameManager::GetInstance(); // ゲームマネージャーへの参照
+	GameManager& gm  = GameManager::GetInstance(); // ゲームマネージャーへの参照
 	SceneManager& sm = SceneManager::GetInstance(); // シーンマネージャーへの参照
 
 	Report() : Scene() // コンストラクタ
@@ -26,47 +26,47 @@ public:
 private:
 	const int LastDay_ = 14;
 
-	const float RentBase_ = 100;
-	const float RentMultiplied_ = 2.0f;
-
 	const int NextMassegeX_ = 900;
 	const int NextMassegeY_ = 650;
 
-	const int AutoSaveX_	= 1000;
-	const int AutoSaveY_	= 10;
+	const int AutoSaveX_ = 1000;
+	const int AutoSaveY_ = 10;
 
-	const int PrevMoneyX_	= 200;
-	const int PrevMoneyY_	= 200;
-	const int BuyAmountX_	= 200;
-	const int BuyAmountY_	= 300;
-	const int SaleAmountX_  = 200;
-	const int SaleAmountY_  = 400;
-	const int HaveMoneyX_   = 700;
-	const int HaveMoneyY_	= 200;
-	const int RentX_		= 700;
-	const int RentY_		= 300;
-	const int FinalMoneyX_  = 700;
-	const int FinalMoneyY_  = 400;
-	const int NextRentX_	= 700;
-	const int NextRentY_	= 500;
+	const int PrevMoneyX_  = 200;
+	const int PrevMoneyY_  = 200;
+	const int BuyAmountX_  = 200;
+	const int BuyAmountY_  = 300;
+	const int SaleAmountX_ = 200;
+	const int SaleAmountY_ = 400;
+	const int HaveMoneyX_  = 700;
+	const int HaveMoneyY_  = 200;
+	const int RentX_       = 700;
+	const int RentY_       = 300;
+	const int FinalMoneyX_ = 700;
+	const int FinalMoneyY_ = 400;
+	const int NextRentX_   = 700;
+	const int NextRentY_   = 500;
 
 	const int DrawDataNums_   = 7;
-	const int prevDraw_		  = 1;
+	const int prevDraw_       = 1;
 	const int buyAmountDraw_  = 2;
 	const int saleAmountDraw_ = 3;
 	const int haveMoneyDraw_  = 4;
-	const int rentDraw_		  = 5;
+	const int rentDraw_       = 5;
 	const int finalMoneyDraw_ = 6;
 	const int nextRentDraw_   = 7;
 
 	const int FontSize_ = 30;
 
-	int firstMoney_  = 0;
-	int Rent_		 = 0; // 家賃。基本額 * (日にち * 2)
-	int nextRent_	 = 0;
-	int finalMoney_  = 0;
+	const float RentBase_       = 100.0f;
+	const float RentMultiplied_ = 2.0f;
 
-	int pressCount_  = 0;
+	int firstMoney_ = 0;
+	int Rent_       = 0; // 家賃。基本額 * (日にち * 2)
+	int nextRent_   = 0;
+	int finalMoney_ = 0;
+
+	int pressCount_ = 0;
 
 	int autoSaveCount_ = 120;
 

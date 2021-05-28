@@ -22,12 +22,12 @@ public:
 	void Draw() override;
 
 private:
-	const int DrawFlashTiming_	= 20;
-	const int Divisor_			= 30;
-	const int DrawButtonX_		= 50;
-	const int DrawButtonY_		= 600;
-	const int TitleLogoBackX_	= 274;
-	const int TitleLogoBackY_	= 100;
+	const int DrawFlashTiming_ = 20;
+	const int Divisor_         = 30;
+	const int DrawButtonX_     = 50;
+	const int DrawButtonY_     = 600;
+	const int TitleLogoBackX_  = 274;
+	const int TitleLogoBackY_  = 100;
 
 	int count_ = 0;
 

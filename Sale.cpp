@@ -32,8 +32,8 @@ void Sale::Init()
 		weaponPrice_.push_back(price);
 	}
 
-	prevMoney_ = gm.money; 
-	
+	prevMoney_ = gm.money;
+
 	if (Adv::day != 1)
 		is_Operation_Description_Been_ = true;
 
@@ -253,14 +253,14 @@ void Sale::Update()
 	}
 	else
 	{
-	if (Input::GetButtonDown(PAD_INPUT_1))
-	{
-		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-		if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
-			operationDescriptionMassegeNum_++;
-		else
-			is_Operation_Description_Been_ = true;
-	}
+		if (Input::GetButtonDown(PAD_INPUT_1))
+		{
+			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
+			if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
+				operationDescriptionMassegeNum_++;
+			else
+				is_Operation_Description_Been_ = true;
+		}
 	}
 }
 

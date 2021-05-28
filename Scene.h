@@ -7,26 +7,26 @@
 class Scene
 {
 public:
-    std::string tag = ""; // シーンの種類の判別に使う
+	std::string tag = ""; // シーンの種類の判別に使う
 
-    // コンストラクタ
-    Scene() = default;
-    // デストラクタ
-    virtual ~Scene() = default;
+	// コンストラクタ
+	Scene() = default;
+	// デストラクタ
+	virtual ~Scene() = default;
 
-    // 初期化処理
-    virtual void Init() = 0;
+	// 初期化処理
+	virtual void Init()   = 0;
 
-    // 終了処理
-    virtual void Final() = 0;
+	// 終了処理
+	virtual void Final()  = 0;
 
-    // 更新処理
-    virtual void Update() = 0;
+	// 更新処理
+	virtual void Update() = 0;
 
-    // 描画処理
-    virtual void Draw() = 0;
+	// 描画処理
+	virtual void Draw()   = 0;
 
-    bool isDead = false;
+	bool isDead = false;
 };
 
 #endif

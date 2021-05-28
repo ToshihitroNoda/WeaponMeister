@@ -6,7 +6,7 @@
 class Music
 {
 public:
-	Music() = default;
+	Music()  = default;
 	~Music() = default;
 
 	static void Load();

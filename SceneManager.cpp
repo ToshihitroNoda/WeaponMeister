@@ -129,7 +129,7 @@ void SceneManager::LoadScene(std::string sceneName, std::vector<std::string> opt
 		// 前のシーンを削除
 		if (prevScene != nullptr)
 		{
-			prevScene.reset(); 
+			prevScene.reset();
 		}
 		// 次のシーンの生成
 		currentScene = std::make_shared<GameClear>();

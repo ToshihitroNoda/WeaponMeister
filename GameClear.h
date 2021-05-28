@@ -9,7 +9,7 @@
 class GameClear : public Scene
 {
 public:
-	GameManager& gm  = GameManager::GetInstance();
+	GameManager& gm =  GameManager::GetInstance();
 	SceneManager& sm = SceneManager::GetInstance();
 
 	GameClear() : Scene()
@@ -23,18 +23,18 @@ public:
 	void Draw() override;
 
 private:
-	const int WindowHeight         = 280;
-	const int WindowX_             = 5;
-	const int WindowY_             = Screen::height - WindowHeight;
-	const int CursorX_             = 1150;
-	const int CursorY_             = 630;
-	const int OptionMenuX_         = 800;
-	const int OptionMenuY_         = 690;
-	const int DrawFlashTiming_     = 20;
-	const int Divisor_             = 30;
-	const int AutoSpeed_           = 180;
-	const int SkipSpeed_           = 10;
-	const int RentLastDay_         = 2800;
+	const int WindowHeight     = 280;
+	const int WindowX_         = 5;
+	const int WindowY_         = Screen::height - WindowHeight;
+	const int CursorX_         = 1150;
+	const int CursorY_         = 630;
+	const int OptionMenuX_     = 800;
+	const int OptionMenuY_     = 690;
+	const int DrawFlashTiming_ = 20;
+	const int Divisor_         = 30;
+	const int AutoSpeed_       = 180;
+	const int SkipSpeed_       = 10;
+	const int RentLastDay_     = 2800;
 
 	const int CsvSkipCsell_        = 2;
 	const int CsvWeaponIdCsll_     = 0;

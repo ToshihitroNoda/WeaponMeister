@@ -1,31 +1,31 @@
 #include "Music.h"
 #include <DxLib.h>
 
-int Music::op                 { -1 };
-int Music::ed                 { -1 };
-int Music::stageselection_BGM { -1 };
-int Music::stage1_BGM         { -1 };
-int Music::stage2_BGM         { -1 };
-int Music::stage3_BGM         { -1 };
-int Music::stage4_BGM         { -1 };
-int Music::stage5_BGM         { -1 };
-int Music::buy_BGM            { -1 };
-int Music::production_BGM     { -1 };
-int Music::sale_BGM           { -1 };
-int Music::report_BGM         { -1 };
+int Music::op                { -1 };
+int Music::ed                { -1 };
+int Music::stageselection_BGM{ -1 };
+int Music::stage1_BGM        { -1 };
+int Music::stage2_BGM        { -1 };
+int Music::stage3_BGM        { -1 };
+int Music::stage4_BGM        { -1 };
+int Music::stage5_BGM        { -1 };
+int Music::buy_BGM           { -1 };
+int Music::production_BGM    { -1 };
+int Music::sale_BGM          { -1 };
+int Music::report_BGM        { -1 };
 
-int Music::enter_SE           { -1 };
-int Music::cursormove_SE      { -1 };
-int Music::error_SE           { -1 };
-int Music::cancel_SE          { -1 };
-int Music::collectionstart_SE { -1 };
-int Music::collect_SE         { -1 };
-int Music::run_SE             { -1 };
-int Music::menuopen_SE        { -1 };
-int Music::money_SE           { -1 };
-int Music::production_SE      { -1 };
-int Music::productionend_SE   { -1 };
-int Music::reportenter_SE     { -1 };
+int Music::enter_SE          { -1 };
+int Music::cursormove_SE     { -1 };
+int Music::error_SE          { -1 };
+int Music::cancel_SE         { -1 };
+int Music::collectionstart_SE{ -1 };
+int Music::collect_SE        { -1 };
+int Music::run_SE            { -1 };
+int Music::menuopen_SE       { -1 };
+int Music::money_SE          { -1 };
+int Music::production_SE     { -1 };
+int Music::productionend_SE  { -1 };
+int Music::reportenter_SE    { -1 };
 
 void Music::Load()
 {
@@ -70,7 +70,7 @@ void Music::Load()
 
 	ChangeVolumeSoundMem(110, enter_SE);
 	ChangeVolumeSoundMem(110, cursormove_SE);
-	ChangeVolumeSoundMem(110, error_SE); 
+	ChangeVolumeSoundMem(110, error_SE);
 	ChangeVolumeSoundMem(110, cancel_SE);
 	ChangeVolumeSoundMem(110, collectionstart_SE);
 	ChangeVolumeSoundMem(150, collect_SE);
