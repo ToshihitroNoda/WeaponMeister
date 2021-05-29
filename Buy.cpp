@@ -12,9 +12,11 @@ void Buy::Init()
 	gm.image.Load(tag);
 	gm.itemData.Load("Resource/Datas/ItemData.csv");
 
+	buyItems_.clear();
+	buyItemsQuality_.clear();
 	for (int i = CsvSkipCell_; i < gm.itemData[0].size(); i++)
 	{
-		if ((int)gm.itemData[CsvItemMapCell_][i] <= StageSelection::stageNum - 1)
+		if ((int)gm.itemData[CsvItemMapCell_][i] < StageSelection::mapCount)
 		{
 			buyItems_.push_back((int)gm.itemData[CsvItemIdCell_][i]);
 			buyItemsQuality_.push_back((int)gm.itemData[CsvItemQualityCell_][i]);

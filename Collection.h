@@ -74,7 +74,7 @@ private:
 
 	const int OptionMenuX_      = 790;
 	const int OptionMenuY_      = 705;
-	const int OptionMenuPouchX_ = 690;
+	const int OptionMenuPouchX_ = 900;
 	const int OptionMenuPouchY_ = 705;
 
 	int getItem_                        = 0;  // Žè‚É“ü‚ê‚½ƒAƒCƒeƒ€ID

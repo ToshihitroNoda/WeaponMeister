@@ -56,7 +56,7 @@ void Collection::Init()
 	{
 		SetLightDifColor(GetColorF(1.0f, 0.8f, 0.8f, 0.0f));
 		backGroundHandle_ = gm.image.volcanoBack;
-		PlaySoundMem(Music::stage5_BGM, DX_PLAYTYPE_LOOP);
+		PlaySoundMem(Music::stage4_BGM, DX_PLAYTYPE_LOOP);
 	}
 
 	if (Adv::day != 1)
@@ -168,8 +168,8 @@ void Collection::Update()
 		{
 			PlaySoundMem(Music::menuopen_SE, DX_PLAYTYPE_BACK);
 			menuOpen_ = true;
-			int cursorX_ = CursorX_Min_ItemSelect_;
-			int cursorY_ = CursorY_Min_ItemSelect_;
+			cursorX_ = CursorX_Min_ItemSelect_;
+			cursorY_ = CursorY_Min_ItemSelect_;
 		}
 
 		if (menuOpen_)
@@ -178,6 +178,8 @@ void Collection::Update()
 			{
 				for (int i = 0; i < DrawMaxPouchSize; i++)
 				{
+					selectIconNum_ = 0;
+					scrollCount_ = 0;
 					if (gm.pouch.size() > i)
 						PouchDrawErea_.push_back(gm.pouch[i]);
 				}
@@ -194,7 +196,7 @@ void Collection::Update()
 					selectIconNum_++; // 選択されてる箇所のアイテムの番号を取得
 				}
 			}
-			if (Input::GetButtonDown(PAD_INPUT_LEFT))
+			else if (Input::GetButtonDown(PAD_INPUT_LEFT))
 			{
 				if (cursorX_ > CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
 				{
@@ -203,7 +205,7 @@ void Collection::Update()
 					selectIconNum_--;
 				}
 			}
-			if (Input::GetButtonDown(PAD_INPUT_DOWN))
+			else if (Input::GetButtonDown(PAD_INPUT_DOWN))
 			{
 				if (cursorY_ != CursorY_Max_ItemSelect_)
 				{
@@ -239,7 +241,7 @@ void Collection::Update()
 					}
 				}
 			}
-			if (Input::GetButtonDown(PAD_INPUT_UP))
+			else if (Input::GetButtonDown(PAD_INPUT_UP))
 			{
 				if (cursorY_ != CursorY_Min_ItemSelect_)
 				{
@@ -432,17 +434,17 @@ void Collection::Draw()
 
 		DrawString(DrawPouchSizeX_, DrawPouchSizeY_, (std::to_string(gm.pouch.size()) + " / 200").c_str(), gm.colorWhite);
 
-		if (PouchDrawErea_.size() > (signed)selectIconNum_)
+		if (PouchDrawErea_.size() > selectIconNum_)
 		{
 			DrawGraph(DetailWindowX_, DetailWindowY_, gm.image.detailWindow, TRUE);
 			DrawString(ItemNameX_, ItemNameY_, gm.itemData[0][PouchDrawErea_[selectIconNum_] + CsvSkipCell_].stringData.c_str(), gm.colorWhite);
 			std::stringstream ss;
-			ss << gm.pouchQuality[selectIconNum_];
+			ss << gm.pouchQuality[selectIconNum_ + scrollCount_ * WindowX_CellSize_];
 			DrawString(ItemQualityX_, ItemNameY_, ("品質 : " + ss.str()).c_str(), gm.colorWhite);
 			DrawString(ItemInfoX_, ItemInfoY_, gm.itemData[1][PouchDrawErea_[selectIconNum_] + CsvSkipCell_].stringData.c_str(), gm.colorWhite);
 		}
 		SetFontSize(15);
-		DrawString(OptionMenuPouchX_, OptionMenuPouchY_, "←↑→↓ : カーソル移動　,　Xキー : 閉じる  ,  Cキー : アイテム詳細", gm.colorWhite);
+		DrawString(OptionMenuPouchX_, OptionMenuPouchY_, "←↑→↓ : カーソル移動　,　Xキー : 閉じる", gm.colorWhite);
 		SetFontSize(gm.DefaultFontSize_);
 	}
 	else

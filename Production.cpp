@@ -24,7 +24,7 @@ bool Production::canOrichalcumSword_ = false;
 bool Production::canGodStoneSword_ = false;
 
 std::vector<bool> Production::canWeaponMake_{ canWoodSword_     , canJawaSword_      , canEnriSword_    , canKeinSword_,
-											  canShizukuSword_  , canSaintSword_     , canGodWoodSword_ ,
+                                              canShizukuSword_  , canSaintSword_     , canGodWoodSword_ ,
                                               canStoneSword_    , canIronOreSword_   , canJadeSword_    , canDiamondSword_,
                                               canCarbonadeSword_, canOrichalcumSword_, canGodStoneSword_ };
 
@@ -133,7 +133,7 @@ void Production::Update()
 				{
 					recipeSelection_ = true;						// フラグを立てる
 
-					if (cursorY_ <= CursorY_Max_RecipeSelection_ / 2) // 木製武器選択
+					if (weaponID_ < canWeaponMake_.size()) // 木製武器選択
 					{
 						ItemType_ = gm.itemData[CsvTypeCheck_][CsvSkipCell_];
 						cursorInit_ = true;
@@ -210,7 +210,7 @@ void Production::Update()
 					prevCursorY_ = cursorY_;
 					selectIconNum_ += ItemID_ByLineBreak_ItemSelect_;
 				}
-				else
+				else if (cursorX_ <= CursorX_Max_ItemSelect_)
 				{
 					if (itemForWeaponMake_.size() > DrawMaxPouchSize_)
 					{
@@ -253,7 +253,7 @@ void Production::Update()
 					prevCursorY_ = cursorY_;
 					selectIconNum_ -= ItemID_ByLineBreak_ItemSelect_;
 				}
-				else
+				else if (cursorX_ <= CursorX_Max_ItemSelect_)
 				{
 					if (scrollCount_ > 0)
 					{
@@ -342,6 +342,7 @@ void Production::Update()
 							shouldWeaponMainCreate_ = true;
 							itemDetail_ = false;						// アイテム詳細ウィンドウフラグ初期化
 							itemForWeaponMake_.clear();					// 選択できるアイテムリストをクリア
+							itemQualityForWeaponMake_.clear();
 							ItemPosOnThePouch_.clear();					// 選択できるアイテムポーチ内の位置情報をクリア
 
 							// メイン部分で選択できるものをvectorに保管
@@ -536,7 +537,7 @@ void Production::Update()
 					{
 						/*----- 選択済み素材削除処理 -----*/
 
-						/*　選択済みのアイテムのポーチにおける位置が入ってるVectorを　*/
+						/*　選択済みのアイテムのポーチにおける位置が入ってるvectorを　*/
 						/*　　　　降順にソートしてgm.pouchの後ろから順にerase　 　　　*/
 
 						std::sort(SelectItemPosOnThePouch_.begin(), SelectItemPosOnThePouch_.end(), std::greater<int>());
@@ -549,7 +550,9 @@ void Production::Update()
 						/*---------------*/
 
 						gm.handles.clear();
+						gm.handlesQuality.clear();
 						gm.main.clear();
+						gm.mainQuality.clear();
 
 						gm.weapons.push_back(weaponID_);
 						gm.weaponQuality.push_back(weaponQualityStorage);
@@ -588,6 +591,7 @@ void Production::Update()
 
 void Production::Format()
 {
+	scrollCount_ = 0;
 	// フラグを初期化
 	cursorInit_ = true;
 	shouldWeaponMainCreate_ = false;
@@ -724,7 +728,7 @@ void Production::Draw()
 			DrawGraph(DetailWindowX_, DetailWindowY_, gm.image.detailWindow, TRUE);
 			DrawString(ItemNameX_, ItemNameY_, gm.itemData[0][itemForWeaponMake_[selectIconNum_] + CsvSkipCell_].stringData.c_str(), gm.colorWhite);
 			std::stringstream ss;
-			ss << itemQualityForWeaponMake_[selectIconNum_];
+			ss << itemQualityForWeaponMake_[selectIconNum_ + scrollCount_ * WindowX_CellSize_];
 			DrawString(ItemQualityX_, ItemNameY_, ("品質 : " + ss.str()).c_str(), gm.colorWhite);								// 品質 : 123(vector<int> -> charに変換)　にしたい。自分用メモ
 			DrawString(ItemInfoX_, ItemInfoY_, gm.itemData[1][itemForWeaponMake_[selectIconNum_] + CsvSkipCell_].stringData.c_str(), gm.colorWhite);
 

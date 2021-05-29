@@ -42,7 +42,6 @@ void MainMenu::Update()
 	if (CursorY_ == CursorY_Init_ && Input::GetButtonDown(PAD_INPUT_1))
 	{
 		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-		remove("savedata.dat");
 		sm.LoadScene("Adv");
 	}
 	else if (CursorY_ == CursorY_Init_ + CursorY_Dist_ && Input::GetButtonDown(PAD_INPUT_1))
