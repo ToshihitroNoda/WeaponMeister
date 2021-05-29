@@ -14,7 +14,7 @@ void Game::Init()
 
 	gm.money = gm.defaultMoney;
 
-	sm.LoadScene("TiTle");
+	sm.LoadScene("Title");
 }
 
 void Game::Update()
