@@ -6,58 +6,58 @@ std::vector<std::string> ADVSimpleScript::massegeList;
 std::vector<std::string> ADVSimpleScript::ResourcePath_;
 std::vector<std::string> ADVSimpleScript::ResourceType_;
 std::vector<std::string> ADVSimpleScript::Commands_
-{ "ResourceLoad", "Image", "Music", "PlayMusic", "BGX", "BGY", "BGDraw",
-  "MassegeX", "MassegeY", "StringX", "StringY", "CName", "CX", "CY",
-  "CDraw", "CDrawEnd", "Break", "BreakEnd" };
+{ "ResourceLoad", "Image",    "Music",   "PlayMusic", "BGX",   "BGY", "BGDraw",
+  "MassegeX",     "MassegeY", "StringX", "StringY",   "CName", "CX",  "CY",
+  "CDraw",        "CDrawEnd", "Break",   "BreakEnd" };
 
 std::vector<int> ADVSimpleScript::ResourceNums_;
 std::vector<int> ADVSimpleScript::CX_;
 std::vector<int> ADVSimpleScript::CY_;
 std::vector<int> ADVSimpleScript::CDrawID_;
 
-int ADVSimpleScript::lineWidth_ = 0;
-int ADVSimpleScript::ResourceNum_ = -1;
-int ADVSimpleScript::MassegeX_ = 0;
-int ADVSimpleScript::MassegeY_ = 0;
-int ADVSimpleScript::StringX_ = 0;
-int ADVSimpleScript::StringY_ = 0;
-int ADVSimpleScript::BGX_ = 0;
-int ADVSimpleScript::BGY_ = 0;
-int ADVSimpleScript::BGID_ = 0;
-int ADVSimpleScript::CDrawCount_ = 0;
-int ADVSimpleScript::BreakCount_ = 0;
+int ADVSimpleScript::lineWidth_    = 0;
+int ADVSimpleScript::ResourceNum_  = -1;
+int ADVSimpleScript::MassegeX_     = 0;
+int ADVSimpleScript::MassegeY_     = 0;
+int ADVSimpleScript::StringX_      = 0;
+int ADVSimpleScript::StringY_      = 0;
+int ADVSimpleScript::BGX_          = 0;
+int ADVSimpleScript::BGY_          = 0;
+int ADVSimpleScript::BGID_         = 0;
+int ADVSimpleScript::CDrawCount_   = 0;
+int ADVSimpleScript::BreakCount_   = 0;
 int ADVSimpleScript::PrevPlayMusic = 0;
 
 std::string ADVSimpleScript::filePath_ = "";
-std::string ADVSimpleScript::CName_ = "";
+std::string ADVSimpleScript::CName_    = "";
 
-bool ADVSimpleScript::NowBreak_ = false;
-bool ADVSimpleScript::DrawSkip_ = false;
-bool ADVSimpleScript::LoadEnd_ = false;
+bool ADVSimpleScript::NowBreak_        = false;
+bool ADVSimpleScript::DrawSkip_        = false;
+bool ADVSimpleScript::LoadEnd_         = false;
 bool ADVSimpleScript::is_message_text_ = false;
 
 void ADVSimpleScript::Init()
 {
-	MassegeCount = 0;
-	lineWidth_ = 0;
-	ResourceNum_ = -1;
-	MassegeX_ = 0;
-	MassegeY_ = 0;
-	StringX_ = 0;
-	StringY_ = 0;
-	BGX_ = 0;
-	BGY_ = 0;
-	BGID_ = 0;
-	CDrawCount_ = 0;
-	BreakCount_ = 0;
+	MassegeCount  = 0;
+	lineWidth_    = 0;
+	ResourceNum_  = -1;
+	MassegeX_     = 0;
+	MassegeY_     = 0;
+	StringX_      = 0;
+	StringY_      = 0;
+	BGX_          = 0;
+	BGY_          = 0;
+	BGID_         = 0;
+	CDrawCount_   = 0;
+	BreakCount_   = 0;
 	PrevPlayMusic = 0;
 
 	filePath_ = "";
-	CName_ = "";
+	CName_    = "";
 
 	NowBreak_ = false;
 	DrawSkip_ = false;
-	LoadEnd_ = false;
+	LoadEnd_  = false;
 }
 
 void ADVSimpleScript::Final()
