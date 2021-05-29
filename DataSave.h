@@ -32,13 +32,13 @@ public:
 		* 日にち、ポーチ内のアイテム・装備、それぞれの品質、所持金
 		*/
 
-		Status status = { 0 };
-		status.day = Adv::day;
-		status.money = gm.money;
-		status.mapCount = StageSelection::mapCount;
-		status.pouchSize = gm.pouch.size();
-		status.pouchQSize = gm.pouchQuality.size();
-		status.weaponSize = gm.weapons.size();
+		Status status      = { 0 };
+		status.day         = Adv::day;
+		status.money       = gm.money;
+		status.mapCount    = StageSelection::mapCount;
+		status.pouchSize   = gm.pouch.size();
+		status.pouchQSize  = gm.pouchQuality.size();
+		status.weaponSize  = gm.weapons.size();
 		status.WeaponQSize = gm.weaponQuality.size();
 
 		std::fstream file;

@@ -129,16 +129,16 @@ void Production::Update()
 			else
 			{
 				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-				if (canWeaponMake_[weaponID_ / 2])					// 選択した武器が作れるなら
+				if (canWeaponMake_[weaponID_ / 2])                  // 選択した武器が作れるなら
 				{
-					recipeSelection_ = true;						// フラグを立てる
+					recipeSelection_ = true;                        // フラグを立てる
 
-					if (weaponID_ < canWeaponMake_.size()) // 木製武器選択
+					if (weaponID_ < canWeaponMake_.size())          // 木製武器選択
 					{
 						ItemType_ = gm.itemData[CsvTypeCheck_][CsvSkipCell_];
 						cursorInit_ = true;
 					}
-					else											  // 石製武器選択
+					else                                            // 石製武器選択
 					{
 						ItemType_ = gm.itemData[CsvTypeCheck_][gm.itemData[0].size() - 1];
 						cursorInit_ = true;
