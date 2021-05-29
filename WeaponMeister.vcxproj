@@ -214,7 +214,11 @@
     <ClInclude Include="Title.h" />
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="myIcon.rc" />
     <ResourceCompile Include="WeaponMeister.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\Image\weaponmiester.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
