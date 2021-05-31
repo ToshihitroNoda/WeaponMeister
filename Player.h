@@ -108,8 +108,8 @@ private:
 	const int DrawStrPosY  = 500;
 	const int TapSoundTime = 30;
 
-	const float IncreaseSpeed = 0.3f;
-	const float DecreaseSpeed = 0.9f;
+	const float IncreaseSpeed = 0.5f;
+	const float DecreaseSpeed = 0.8f;
 };
 
 #endif

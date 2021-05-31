@@ -32,6 +32,10 @@ private:
 	int CursorY_      = CursorY_Init_;
 	int CursorY_Dist_ = 80;
 
+	const int DrawFlashTiming_ = 20;
+	const int Divisor_         = 30;
+	int count_                 = 0;
+
 	std::vector<std::string> MenuStr_{ "Start","Continue","Exit" };
 };
 

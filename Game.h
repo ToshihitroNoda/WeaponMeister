@@ -19,6 +19,8 @@ public:
 	void Init();
 	void Update();
 	void Draw();
+private:
+	bool is_mousePos_outsideWindow_ = false;
 };
 
 #endif

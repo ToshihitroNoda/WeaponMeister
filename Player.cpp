@@ -50,6 +50,7 @@ void Player::HandleInput()
 				AnimationAttach((int)State::run);
 			modelAngle_ = -((nowCamAngle_ - 180) * MyMath::Deg2Rad);
 		}
+
 		if (Input::GetButton(PAD_INPUT_8))              // W
 		{
 			doLateralMove_ = false;
@@ -107,8 +108,8 @@ void Player::Update()
 		    //                             x(Screen::Width * 2) = 360(MouseX - prevMouseX)
 		    //                             x = (360(MouseX - prevMouseX)) / (Screen::Width * 2)
 
-			percentAngleByCursorDis_    = (float)((MaxAngle * (mouseX_ - prevMouseX_)) / (Screen::width * 2));
-			percentAngleByCursorDis_BG_ = (float)((MaxAngle * (prevMouseX_ - mouseX_)) / (BackImageWidth / 60));
+			percentAngleByCursorDis_    = (float)((MaxAngle * (mouseX_ - prevMouseX_)) / (Screen::width * 1.2f));
+			percentAngleByCursorDis_BG_ = (float)((MaxAngle * (mouseX_ - prevMouseX_)) / (BackImageWidth / 60));
 
 			// PercentAngleByCursor初期化
 			if (!canAngleInit_)
@@ -124,10 +125,10 @@ void Player::Update()
 			if (backX <= -BackImageWidth + Screen::width)
 				backX = 0;
 		}
-		else if (mouseX_ < prevMouseX_)                // マウスが左に動いていたら
+		else                                        // マウスが左に動いていたら
 		{
-			percentAngleByCursorDis_    = (float)((MaxAngle * (prevMouseX_ - mouseX_)) / (Screen::width * 2));
-			percentAngleByCursorDis_BG_ = (float)((MaxAngle * (prevMouseX_ - mouseX_)) / (BackImageWidth / 60));
+			percentAngleByCursorDis_    = (float)((MaxAngle * (prevMouseX_ - mouseX_)) / (Screen::width * 1.2f));
+			percentAngleByCursorDis_BG_ = (float)((MaxAngle * (mouseX_ - prevMouseX_)) / (BackImageWidth / 60));
 
 			// PercentAngleByCursor初期化
 			if (!canAngleInit_)
@@ -161,7 +162,7 @@ void Player::Update()
 	// 入力を受けての処理 
 	HandleInput();
 
-	// ↓進行方向角度をX方向とZ方向の速度に変える
+	// 進行方向角度をX方向とZ方向の速度に変える
 	if (!doLateralMove_)
 	{
 		vx = (float)std::cos((nowCamAngle_ + MaxAngle / 2) * MyMath::Deg2Rad) * moveSpeed_;

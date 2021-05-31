@@ -92,6 +92,9 @@ private:
 	const int SelectItemWindowX_ = 600;
 	const int NextButtonX_       = 1000;
 	const int NextButtonY_       = 640;
+	const int ArrowX_            = 540;
+	const int ArrowYHandle_      = 100;
+	const int ArrowYMain_        = 280;
 
 	const int AlreadySelect_HandleItem_X_          = 755;
 	const int AlreadySelect_HandleItem_X_Diameter_ = 117;

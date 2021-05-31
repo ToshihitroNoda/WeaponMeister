@@ -626,6 +626,11 @@ void Production::Draw()
 		DrawGraph(SelectItemWindowX_, WindowY_, gm.image.selectItemWindow, TRUE);
 		DrawGraph(NextButtonX_, NextButtonY_, gm.image.next, TRUE);
 
+		if (!shouldWeaponMainCreate_)
+			DrawGraph(ArrowX_, ArrowYHandle_, gm.image.productionArrow, TRUE);
+		else
+			DrawGraph(ArrowX_, ArrowYMain_, gm.image.productionArrow, TRUE);
+
 		for (int y = 0; y < WindowY_CellSize_; y++)
 		{
 			for (int x = 0; x < WindowX_CellSize_; x++)

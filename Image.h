@@ -50,6 +50,7 @@ public:
 	int watchPointer            { -1 };
 	int rank                    { -1 };
 	int endCredit               { -1 };
+	int productionArrow         { -1 };
 
 	// îwåi
 	int titleBack               { -1 };

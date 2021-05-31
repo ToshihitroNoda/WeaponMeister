@@ -142,6 +142,7 @@ void Image::Load(std::string SceneName)
 		end              = LoadGraph("Resource/Image/end.png");
 		recipeWindow     = LoadGraph("Resource/Image/recipewindow.png");
 		recipeSelection  = LoadGraph("Resource/Image/recipeselection.png");
+		productionArrow  = LoadGraph("Resource/Image/productionArrow.png");
 	}
 	else if (SceneName == "Sale")
 	{

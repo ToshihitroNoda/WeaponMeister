@@ -73,5 +73,9 @@ void MainMenu::Draw()
 		DrawString(MenuStrX_Init_, MenuStrY_Init_ + (MenuStrY_Dist_ * i), MenuStr_[i].c_str(), gm.colorWhite);
 		SetFontSize(gm.DefaultFontSize_);
 	}
-	DrawGraph(CursorX_, CursorY_, gm.image.menuCursor, TRUE);
+	if (count_ % Divisor_ < DrawFlashTiming_)
+	{
+		DrawGraph(CursorX_, CursorY_, gm.image.menuCursor, TRUE);
+	}
+	count_++;
 }
