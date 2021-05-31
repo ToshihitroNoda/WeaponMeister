@@ -735,6 +735,24 @@ void Production::Draw()
 		}
 
 		/*---------------*/
+
+
+		/*-----品質描画-----*/
+		int drawWeaponQualityStorage = 0; // 品質保存用変数
+
+		for (int i = 0; i < gm.handles.size(); i++)
+		{
+			drawWeaponQualityStorage += (gm.handlesQuality[i] / ((i + 1) * 2)); // 全素材の品質を計算(持ち手部分)
+		}
+		for (int i = 0; i < gm.main.size(); i++)
+		{
+			drawWeaponQualityStorage += (gm.mainQuality[i] / ((i + 1) * 2));	// 全素材の品質を計算(上で計算した持ち手部分 + メイン部分)
+		}
+
+		DrawString(MakeWeaponQualityX_, MakeWeaponQualityY_, std::to_string(drawWeaponQualityStorage).c_str(), gm.colorWhite);
+		
+
+		/*---------------*/
 		SetFontSize(15);
 		DrawString(OptionMenuX_, OptionMenuY_, "←↑→↓ : カーソル移動　,　Zキー : 選択 ・ 選択解除　,　Xキー : 一つ前へ  ,  Cキー : アイテム詳細", gm.colorWhite);
 		SetFontSize(gm.DefaultFontSize_);
@@ -766,24 +784,6 @@ void Production::Draw()
 
 	/*---------------*/
 
-	/*-----品質描画-----*/
-	if (!MakeEnd_)
-	{
-		int drawWeaponQualityStorage = 0; // 品質保存用変数
-
-		for (int i = 0; i < gm.handles.size(); i++)
-		{
-			drawWeaponQualityStorage += (gm.handlesQuality[i] / ((i + 1) * 2)); // 全素材の品質を計算(持ち手部分)
-		}
-		for (int i = 0; i < gm.main.size(); i++)
-		{
-			drawWeaponQualityStorage += (gm.mainQuality[i] / ((i + 1) * 2));	// 全素材の品質を計算(上で計算した持ち手部分 + メイン部分)
-		}
-
-		DrawString(MakeWeaponQualityX_, MakeWeaponQualityY_, std::to_string(drawWeaponQualityStorage).c_str(), gm.colorWhite);
-	}
-
-	/*---------------*/
 
 	if (weaponMakeAssert_)
 	{
