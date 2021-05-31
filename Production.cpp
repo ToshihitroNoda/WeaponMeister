@@ -350,7 +350,6 @@ void Production::Update()
 						}
 						else
 						{
-							PlaySoundMem(Music::error_SE, DX_PLAYTYPE_BACK);
 							weaponMakeAssert_ = true;
 						}
 					}
@@ -444,7 +443,6 @@ void Production::Update()
 								}
 								else
 								{
-									PlaySoundMem(Music::error_SE, DX_PLAYTYPE_BACK);
 									weaponMakeAssert_ = true;
 								}
 							}
@@ -566,13 +564,13 @@ void Production::Update()
 				}
 			}
 		}
-
 		else
 		{
 			if (Input::GetButtonDown(PAD_INPUT_1))
 			{
 				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 				weaponMakeAssert_ = false;
+				playErrorSound_   = false;
 			}
 		}
 	}
@@ -787,6 +785,11 @@ void Production::Draw()
 
 	if (weaponMakeAssert_)
 	{
+		if (!playErrorSound_)
+		{
+			PlaySoundMem(Music::error_SE, DX_PLAYTYPE_BACK);
+			playErrorSound_ = true;
+		}
 		std::string drawMassege = "素材数が足りないか、必要素材が選択されていません。";
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 122);
 		DrawBox(0, 0, Screen::width, Screen::height, gm.colorBrack, TRUE);

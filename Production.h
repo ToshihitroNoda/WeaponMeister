@@ -170,6 +170,7 @@ private:
 	bool animationEnd_                  = false;
 	bool weaponMakeAssert_              = false;
 	bool playProductionEndSound_        = false;
+	bool playErrorSound_                = false;
 	bool is_Operation_Description_Been_ = false;
 
 	std::vector<int> itemForWeaponMake_;		  // 武器生成に必要なアイテムを一時的に保管するvector
