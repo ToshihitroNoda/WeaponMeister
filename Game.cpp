@@ -27,6 +27,7 @@ void Game::Update()
 
 	if (Input::GetButtonDown(PAD_INPUT_9))
 	{
+		PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
 		if (!is_mousePos_outsideWindow_)
 		{
 			SetValidMousePointerWindowOutClientAreaMoveFlag(TRUE);
@@ -49,5 +50,6 @@ void Game::Draw()
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 122);
 		DrawBox(0, 0, Screen::width, Screen::height, gm.colorBrack, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		DrawString(Screen::width / 2 - 10, Screen::height / 2, "POUSE", gm.colorWhite);
 	}
 }

@@ -103,13 +103,13 @@ private:
 	bool waitAttach_    = false;
 	std::vector<bool> attachCheck_{ collectAttach_, runAttach_, waitAttach_ };
 
-	const int MaxAngle     = 360;
-	const int DrawStrPosX  = 500;
-	const int DrawStrPosY  = 500;
-	const int TapSoundTime = 30;
+	const int MaxAngle_     = 360;
+	const int DrawStrPosX_  = 500;
+	const int DrawStrPosY_  = 500;
+	const int TapSoundTime_ = 30;
 
-	const float IncreaseSpeed = 0.5f;
-	const float DecreaseSpeed = 0.8f;
+	const float IncreaseSpeed_ = 0.5f;
+	const float DecreaseSpeed_ = 0.8f;
 };
 
 #endif

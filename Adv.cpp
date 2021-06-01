@@ -87,6 +87,7 @@ void Adv::Update()
 		}
 	}
 	ADVSimpleScript::Update();
+	IconFlashCount_++;
 }
 
 void Adv::Draw()
@@ -111,5 +112,4 @@ void Adv::Draw()
 	{
 		DrawGraph(CursorX_, CursorY_, gm.image.textCursor, TRUE);
 	}
-	IconFlashCount_++;
 }
