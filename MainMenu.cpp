@@ -61,6 +61,7 @@ void MainMenu::Update()
 		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 		exit(0);
 	}
+	count_++;
 }
 
 void MainMenu::Draw()
@@ -77,5 +78,4 @@ void MainMenu::Draw()
 	{
 		DrawGraph(CursorX_, CursorY_, gm.image.menuCursor, TRUE);
 	}
-	count_++;
 }

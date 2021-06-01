@@ -22,6 +22,7 @@ void Title::Update()
 		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 		sm.LoadScene("MainMenu");
 	}
+	count_++;
 }
 
 void Title::Draw()
@@ -33,5 +34,4 @@ void Title::Draw()
 	{
 		DrawGraph(DrawButtonX_, DrawButtonY_, gm.image.pressStartButton, TRUE);
 	}
-	count_++;
 }
