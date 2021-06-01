@@ -40,52 +40,52 @@ struct CsvCell : public DataCsv
 
 class Map
 {
-	const int None            = -1; // 何も無いマス
-	const int Terrain_Grass   = 0;  // 草の地面
-	const int Tterrain_Sand   = 1;  // 砂の地面
-	const int Terrain_Stone   = 2;  // 石の地面
-	const int Terrain_Volcano = 3;  // 火山の地面
+	const int None_            = -1; // 何も無いマス
+	const int Terrain_Grass_   = 0;  // 草の地面
+	const int Tterrain_Sand_   = 1;  // 砂の地面
+	const int Terrain_Stone_   = 2;  // 石の地面
+	const int Terrain_Volcano_ = 3;  // 火山の地面
 
-	const int Fielditem   = 0;
-	const int Spruce_1    = 1;
-	const int Spruce_2    = 2;
-	const int Spruce_3    = 3;
-	const int Trunk       = 4;
-	const int Branch_1    = 5;
-	const int Branch_2    = 6;
-	const int Branch_3    = 7;
-	const int Branch_4    = 8;
-	const int BranchGroup = 9;
-	const int Bush_1      = 10;
-	const int Bush_2      = 11;
-	const int Bush_3      = 12;
-	const int Bush_4      = 13;
-	const int BushLarge_1 = 14;
-	const int BushLarge_2 = 15;
-	const int CliffRock_1 = 16;
-	const int CliffRock_2 = 17;
-	const int CliffRock_3 = 18;
-	const int CliffRock_4 = 19;
-	const int CliffRock_5 = 20;
-	const int Rock_1      = 21;
-	const int Rock_2      = 22;
-	const int Rock_3      = 23;
-	const int Rock_4      = 24;
-	const int Rock_5      = 25;
-	const int Crystal_1   = 26;
-	const int Crystal_2   = 27;
-	const int Crystal_3   = 28;
-	const int Crystal_4   = 29;
-	const int Crystal_5   = 30;
+	const int Fielditem_   = 0;
+	const int Spruce_1_    = 1;
+	const int Spruce_2_   = 2;
+	const int Spruce_3_    = 3;
+	const int Trunk_       = 4;
+	const int Branch_1_    = 5;
+	const int Branch_2_    = 6;
+	const int Branch_3_    = 7;
+	const int Branch_4_    = 8;
+	const int BranchGroup_ = 9;
+	const int Bush_1_      = 10;
+	const int Bush_2_      = 11;
+	const int Bush_3_      = 12;
+	const int Bush_4_      = 13;
+	const int BushLarge_1_ = 14;
+	const int BushLarge_2_ = 15;
+	const int CliffRock_1_ = 16;
+	const int CliffRock_2_ = 17;
+	const int CliffRock_3_ = 18;
+	const int CliffRock_4_ = 19;
+	const int CliffRock_5_ = 20;
+	const int Rock_1_      = 21;
+	const int Rock_2_      = 22;
+	const int Rock_3_      = 23;
+	const int Rock_4_      = 24;
+	const int Rock_5_      = 25;
+	const int Crystal_1_   = 26;
+	const int Crystal_2_   = 27;
+	const int Crystal_3_   = 28;
+	const int Crystal_4_   = 29;
+	const int Crystal_5_   = 30;
 
 public:
 	GameManager& gm = GameManager::GetInstance();
 
 	std::vector<int> objectIDs
-	{ Spruce_1,    Spruce_2,    Spruce_3,    Trunk,       Branch_1,    Branch_2,    Branch_3,    Branch_4,
-	  BranchGroup, Bush_1,      Bush_2,      Bush_3,      Bush_4,      BushLarge_1, BushLarge_2, CliffRock_1,
-	  CliffRock_2, CliffRock_3, CliffRock_4, CliffRock_5, Rock_1,      Rock_2,      Rock_3,      Rock_4,
-	  Rock_5,      Crystal_1,   Crystal_2,   Crystal_3,   Crystal_4,   Crystal_5 };
+	{ Spruce_1_,    Spruce_2_,    Spruce_3_,    Trunk_,       Branch_1_,    Branch_2_,    Branch_3_,    Branch_4_,
+	  BranchGroup_, Bush_1_,      Bush_2_,      Bush_3_,      Bush_4_,      BushLarge_1_, BushLarge_2_, CliffRock_1_,
+	  CliffRock_2_, CliffRock_3_, CliffRock_4_, CliffRock_5_, Rock_1_,      Rock_2_,      Rock_3_,      Rock_4_,
+	  Rock_5_,      Crystal_1_,   Crystal_2_,   Crystal_3_,   Crystal_4_,   Crystal_5_ };
 
 	std::vector<std::string> objectNames
 	{ "Spruce_1",    "Spruce_2",    "Spruce_3",    "Trunk",       "Branch_1",  "Branch_2",	  "Branch_3",	 "Branch_4",

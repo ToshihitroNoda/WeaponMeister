@@ -159,7 +159,7 @@ void Collection::Update()
 			{
 				PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
 				menuOpen_ = false;
-				menuInit = false;
+				menuInit_ = false;
 				PouchDrawErea_.clear();
 			}
 		}
@@ -174,16 +174,16 @@ void Collection::Update()
 
 		if (menuOpen_)
 		{
-			if (!menuInit)
+			if (!menuInit_)
 			{
-				for (int i = 0; i < DrawMaxPouchSize; i++)
+				for (int i = 0; i < DrawMaxPouchSize_; i++)
 				{
 					selectIconNum_ = 0;
 					scrollCount_ = 0;
 					if (gm.pouch.size() > i)
 						PouchDrawErea_.push_back(gm.pouch[i]);
 				}
-				menuInit = true;
+				menuInit_ = true;
 			}
 			/*----- カーソル移動 -----*/
 
@@ -215,7 +215,7 @@ void Collection::Update()
 				}
 				else
 				{
-					if (gm.pouch.size() > DrawMaxPouchSize)
+					if (gm.pouch.size() > DrawMaxPouchSize_)
 					{
 						if (PouchDrawErea_.size() > WindowX_CellSize_)
 						{
@@ -228,8 +228,8 @@ void Collection::Update()
 							// 後ろに一行追加。
 							/// iの初期値		: 表示できる最大数 + 追加する列数 - 列数
 							/// for文の回る条件 : 表示できる最大数 + 追加する列数まで
-							for (int i = DrawMaxPouchSize + (scrollCount_ * WindowX_CellSize_) - WindowX_CellSize_;
-								i < DrawMaxPouchSize + (scrollCount_ * WindowX_CellSize_);
+							for (int i = DrawMaxPouchSize_ + (scrollCount_ * WindowX_CellSize_) - WindowX_CellSize_;
+								i < DrawMaxPouchSize_ + (scrollCount_ * WindowX_CellSize_);
 								i++)
 							{
 								if (i < gm.pouch.size())
@@ -255,15 +255,15 @@ void Collection::Update()
 					{
 						PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 						scrollCount_--;
-						if (PouchDrawErea_.size() == DrawMaxPouchSize)		// 描画されてるウィンドウが埋まってる場合
+						if (PouchDrawErea_.size() == DrawMaxPouchSize_)		// 描画されてるウィンドウが埋まってる場合
 						{
 							PouchDrawErea_.erase(PouchDrawErea_.end() - WindowX_CellSize_, PouchDrawErea_.end());
 							// 描画するアイテムのvectorの最初に描画されてない一行分追加
 							for (int i = WindowX_CellSize_; i > 0; i--)
 								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount_ * WindowX_CellSize_ + i - 1]);
 						}
-						else if (PouchDrawErea_.size() > DrawMaxPouchSize - WindowX_CellSize_ &&
-							PouchDrawErea_.size() < DrawMaxPouchSize)	// 描画されてるウィンドウの最後の一行に空きがある場合
+						else if (PouchDrawErea_.size() > DrawMaxPouchSize_ - WindowX_CellSize_ &&
+							PouchDrawErea_.size() < DrawMaxPouchSize_)	// 描画されてるウィンドウの最後の一行に空きがある場合
 						{
 							PouchDrawErea_.erase(PouchDrawErea_.end() - (PouchDrawErea_.size() % WindowX_CellSize_), PouchDrawErea_.end());
 							// 描画するアイテムのvectorの最初に描画されてない一行分追加

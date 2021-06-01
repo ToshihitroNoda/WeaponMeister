@@ -46,7 +46,7 @@ void Map::LoadObjects()
 				{
 					id = objects_[cellY][cellX];
 				}
-				if (id == Fielditem)
+				if (id == Fielditem_)
 				{
 					gm.fieldItems.push_back(std::make_shared<FieldItem>(x, 30, y));
 				}
@@ -130,19 +130,19 @@ void Map::LoadTerrain()
 				{
 					id = terrain_[cellY][cellX];
 				}
-				if (id == Terrain_Grass)
+				if (id == Terrain_Grass_)
 				{
 					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Grass"));
 				}
-				else if (id == Tterrain_Sand)
+				else if (id == Tterrain_Sand_)
 				{
 					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Sand"));
 				}
-				else if (id == Terrain_Stone)
+				else if (id == Terrain_Stone_)
 				{
 					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Stone"));
 				}
-				else if (id == Terrain_Volcano)
+				else if (id == Terrain_Volcano_)
 				{
 					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Volcano"));
 				}

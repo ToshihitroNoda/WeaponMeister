@@ -156,7 +156,7 @@ void Player::Update()
 	vy = 0;                                              // y方向移動速度
 	vz = 0;                                              // z方向移動速度
 
-	moveSpeed_        *= DecreaseSpeed_;                  // 移動速度も減速する
+	moveSpeed_        *= DecreaseSpeed_;                 // 移動速度も減速する
 	moveSpeedLateral_ *= DecreaseSpeed_;
 
 	// 入力を受けての処理 
