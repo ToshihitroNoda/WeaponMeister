@@ -12,7 +12,7 @@
 
 DataSave dataSave;
 
-int Report::prevMoney = 0;
+int Report::prevMoney = 1000;
 
 void Report::Init()
 {

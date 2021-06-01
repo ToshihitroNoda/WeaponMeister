@@ -72,6 +72,43 @@ void Player::HandleInput()
 			modelAngle_ = -((nowCamAngle_ + 90) * MyMath::Deg2Rad);
 		}
 
+		if ((Input::GetButton(PAD_INPUT_8) && Input::GetButtonDown(PAD_INPUT_4)) ||
+			(Input::GetButtonDown(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_4)))      // 左前
+		{
+			targetAngle_ = nowCamAngle_ + 45.0f;
+			if (targetAngle_ > MaxAngle_)
+				targetAngle_ -= MaxAngle_;
+			if (!diagonalMoveAnglePlus_)
+				diagonalMoveAnglePlus_ = true;
+		}
+		else if ((Input::GetButton(PAD_INPUT_8) && Input::GetButtonDown(PAD_INPUT_6)) ||
+			     (Input::GetButtonDown(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_6))) // 右前
+		{
+			targetAngle_ = nowCamAngle_ - 45.0f;
+			if (targetAngle_ < 0)
+				targetAngle_ += MaxAngle_;
+			if (!diagonalMoveAngleMinus_)
+				diagonalMoveAngleMinus_ = true;
+		}
+		else if ((Input::GetButton(PAD_INPUT_5) && Input::GetButtonDown(PAD_INPUT_4)) ||
+			     (Input::GetButtonDown(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_4))) // 左後ろ
+		{
+			targetAngle_ = nowCamAngle_ - 45.0f;
+			if (targetAngle_ < 0)
+				targetAngle_ += MaxAngle_;
+			if (!diagonalMoveAngleMinus_)
+				diagonalMoveAngleMinus_ = true;
+		}
+		else if ((Input::GetButton(PAD_INPUT_5) && Input::GetButtonDown(PAD_INPUT_6)) ||
+			     (Input::GetButtonDown(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_6))) // 右前
+		{
+			targetAngle_ = nowCamAngle_ + 45.0f;
+			if (targetAngle_ > MaxAngle_)
+				targetAngle_ -= MaxAngle_;
+			if (!diagonalMoveAnglePlus_)
+				diagonalMoveAnglePlus_ = true;
+		}
+
 		if (!Input::GetButton(PAD_INPUT_4) &&
 			!Input::GetButton(PAD_INPUT_6) &&
 			!Input::GetButton(PAD_INPUT_5) &&
@@ -174,23 +211,20 @@ void Player::Update()
 		vz = (float)std::sin((nowCamAngle_ + MaxAngle_ - (MaxAngle_ / 4)) * MyMath::Deg2Rad) * moveSpeedLateral_;
 	}
 
-	/*
-	vx = (float)std::cos((nowCamAngle_ + MaxAngle_ / 2) * MyMath::Deg2Rad) * moveSpeed_;
-	if ((nowCamAngle_ >= 45 && nowCamAngle_ < 135) || (nowCamAngle_ >= 225 && nowCamAngle_ < 315))
-		vx = (float)std::cos((nowCamAngle_ + MaxAngle_ - (MaxAngle_ / 4)) * MyMath::Deg2Rad) * moveSpeedLateral_;
-	vz = (float)std::sin((nowCamAngle_ + MaxAngle_ - (MaxAngle_ / 4)) * MyMath::Deg2Rad) * moveSpeedLateral_;
-	if ((nowCamAngle_ >= 45 && nowCamAngle_ < 135) || (nowCamAngle_ >= 225 && nowCamAngle_ < 315))
-		vz = (float)std::sin((nowCamAngle_ + MaxAngle_ / 2) * MyMath::Deg2Rad) * moveSpeed_;
-
-	if ((Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_4)) ||
-		(Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_6)) || 
-		(Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_4)) || 
-		(Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_6)))
+	if (diagonalMoveAnglePlus_)
 	{
-		vx /= MyMath::Sqrt2;
-		vx /= MyMath::Sqrt2;
+		if (nowCamAngle_ < targetAngle_)
+			nowCamAngle_++;
+		else
+			diagonalMoveAnglePlus_ = false;
 	}
-	*/
+	if (diagonalMoveAngleMinus_)
+	{
+		if (nowCamAngle_ > targetAngle_)
+			nowCamAngle_--;
+		else
+			diagonalMoveAngleMinus_ = false;
+	}
 
 	// 実際に位置を動かす
 

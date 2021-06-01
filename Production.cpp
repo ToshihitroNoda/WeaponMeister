@@ -7,21 +7,21 @@
 #include "Music.h"
 #include <DxLib.h>
 
-bool Production::canWoodSword_ = true;
-bool Production::canJawaSword_ = true;
-bool Production::canEnriSword_ = false;
-bool Production::canKeinSword_ = false;
-bool Production::canShizukuSword_ = false;
-bool Production::canSaintSword_ = false;
-bool Production::canGodWoodSword_ = false;
+bool Production::canWoodSword_       = true;
+bool Production::canJawaSword_       = true;
+bool Production::canEnriSword_       = false;
+bool Production::canKeinSword_       = false;
+bool Production::canShizukuSword_    = false;
+bool Production::canSaintSword_      = false;
+bool Production::canGodWoodSword_    = false;
 
-bool Production::canStoneSword_ = true;
-bool Production::canIronOreSword_ = true;
-bool Production::canJadeSword_ = false;
-bool Production::canDiamondSword_ = false;
-bool Production::canCarbonadeSword_ = false;
+bool Production::canStoneSword_      = true;
+bool Production::canIronOreSword_    = true;
+bool Production::canJadeSword_       = false;
+bool Production::canDiamondSword_    = false;
+bool Production::canCarbonadeSword_  = false;
 bool Production::canOrichalcumSword_ = false;
-bool Production::canGodStoneSword_ = false;
+bool Production::canGodStoneSword_   = false;
 
 std::vector<bool> Production::canWeaponMake_{ canWoodSword_     , canJawaSword_      , canEnriSword_    , canKeinSword_,
                                               canShizukuSword_  , canSaintSword_     , canGodWoodSword_ ,
