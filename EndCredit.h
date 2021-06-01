@@ -23,8 +23,8 @@ public:
 	void Draw() override;
 
 private:
-	int totalSoundTime_ = 0;
-	int scrollCounter_  = 0;
+	int totalSoundTime_   = 0;
+	int scrollCounter_    = 0;
 
 	float creditGraphY_   = 0.0;
 

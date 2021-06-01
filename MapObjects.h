@@ -43,6 +43,7 @@ public:
 	void OnCollision(std::shared_ptr<GameObject> other);
 	void DrawModel(int MV1Handle);
 
+private:
 	std::vector<int> objectModelHandles
 	{ gm.image.Spruce_1,       gm.image.Spruce_2,       gm.image.Spruce_3,     gm.image.Trunk,        gm.image.Branch_1,     gm.image.Branch_2,
 	  gm.image.Branch_3,       gm.image.Branch_4,       gm.image.Branch_group, gm.image.Bush_1,       gm.image.Bush_2,       gm.image.Bush_3,

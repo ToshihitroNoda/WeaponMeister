@@ -48,8 +48,8 @@ private:
 	const int CursorY_Min_ItemSelect_               = 180;
 	const int CursorX_Max_ItemSelect_               = 444;
 	const int CursorY_Max_ItemSelect_               = 472;
-	const int CursorX_Buy_Select                    = 57;
-	const int CursorY_Buy_Select                    = 647;
+	const int CursorX_Buy_Select_                   = 57;
+	const int CursorY_Buy_Select_                   = 647;
 	const int CursorX_MoveVerticalWidth_ItemSelect_ = 72;
 	const int CursorY_MoveVerticalWidth_ItemSelect_ = 73;
 	const int ItemID_ByLineBreak_ItemSelect_        = 6;

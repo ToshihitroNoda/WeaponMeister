@@ -32,7 +32,7 @@ private:
 	const int DrawGetItemCountMax_     = 120;
 	const int DrawGetItemCountMinimum_ = 5;
 
-	const int DrawMaxPouchSize = 42;
+	const int DrawMaxPouchSize_ = 42;
 
 	const int WatchX_ = 1158;
 	const int WatchY_ = 122;
@@ -99,7 +99,7 @@ private:
 
 	bool getItemFlg_                    = false; // アイテムゲットフラグ
 	bool menuOpen_                      = false;
-	bool menuInit                       = false;
+	bool menuInit_                       = false;
 	bool collectionEnd_                 = false;
 	bool playStartSound_                = false;
 	bool playEndSound_                  = false;

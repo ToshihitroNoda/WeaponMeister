@@ -49,7 +49,7 @@ void Buy::Update()
 	{
 		if (Input::GetButtonDown(PAD_INPUT_RIGHT))
 		{
-			if (cursorX_ < CursorX_Max_ItemSelect_ && cursorY_ != CursorY_Buy_Select)
+			if (cursorX_ < CursorX_Max_ItemSelect_ && cursorY_ != CursorY_Buy_Select_)
 			{
 				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorX_ += CursorX_MoveVerticalWidth_ItemSelect_;
@@ -68,28 +68,28 @@ void Buy::Update()
 		}
 		if (Input::GetButtonDown(PAD_INPUT_DOWN))
 		{
-			if (cursorY_ != CursorY_Max_ItemSelect_ && cursorY_ != CursorY_Buy_Select)
+			if (cursorY_ != CursorY_Max_ItemSelect_ && cursorY_ != CursorY_Buy_Select_)
 			{
 				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorY_ += CursorY_MoveVerticalWidth_ItemSelect_;
 				selectIconNum_ += ItemID_ByLineBreak_ItemSelect_;
 			}
-			else if (cursorY_ < CursorY_Buy_Select)
+			else if (cursorY_ < CursorY_Buy_Select_)
 			{
 				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
-				cursorX_ = CursorX_Buy_Select;
-				cursorY_ = CursorY_Buy_Select;
+				cursorX_ = CursorX_Buy_Select_;
+				cursorY_ = CursorY_Buy_Select_;
 			}
 		}
 		if (Input::GetButtonDown(PAD_INPUT_UP))
 		{
-			if (cursorY_ != CursorY_Min_ItemSelect_ && cursorY_ != CursorY_Buy_Select)
+			if (cursorY_ != CursorY_Min_ItemSelect_ && cursorY_ != CursorY_Buy_Select_)
 			{
 				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorY_ -= CursorY_MoveVerticalWidth_ItemSelect_;
 				selectIconNum_ -= ItemID_ByLineBreak_ItemSelect_;
 			}
-			else if (cursorY_ == CursorY_Buy_Select)
+			else if (cursorY_ == CursorY_Buy_Select_)
 			{
 				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 				cursorX_ = CursorX_Min_ItemSelect_;
@@ -101,8 +101,8 @@ void Buy::Update()
 		if (!(selectIconNum_ < buyItems_.size()))
 			itemDetail_ = false;
 
-		if (cursorX_ == CursorX_Buy_Select &&
-			cursorY_ == CursorY_Buy_Select)
+		if (cursorX_ == CursorX_Buy_Select_ &&
+			cursorY_ == CursorY_Buy_Select_)
 		{
 			if (Input::GetButtonDown(PAD_INPUT_1))
 			{
