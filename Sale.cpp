@@ -199,9 +199,9 @@ void Sale::Update()
 						{
 							PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
 							/*-----‘I‘ğ‰ğœ-----*/
-							for (int j = 0; j < saleWeapons_.size(); j++)
+							for (int j = 0; j < selectWeaponPos_.size(); j++)
 							{
-								if (saleWeapons_.back() == saleWeapons_[j])
+								if (selectWeaponPos_.back() == selectWeaponPos_[j])
 								{
 									saleWeapons_.erase(saleWeapons_.begin() + j);
 									selectWeaponPos_.erase(selectWeaponPos_.begin() + j);
