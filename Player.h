@@ -95,10 +95,7 @@ private:
 	float percentAngleByCursorDis_BG_ = 0.0f;
 	float collisionDetectionMiddleX_  = 0.0f;
 	float collisionDetectionMiddleZ_  = 0.0f;
-	float targetAngle_                = 0.0f;
 
-	bool diagonalMoveAnglePlus_  = false;
-	bool diagonalMoveAngleMinus_ = false;
 	bool doLateralMove_          = false;
 	bool canAngleInit_           = false;
 	bool collectAttach_          = false;

@@ -72,43 +72,6 @@ void Player::HandleInput()
 			modelAngle_ = -((nowCamAngle_ + 90) * MyMath::Deg2Rad);
 		}
 
-		if ((Input::GetButton(PAD_INPUT_8) && Input::GetButtonDown(PAD_INPUT_4)) ||
-			(Input::GetButtonDown(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_4)))      // 左前
-		{
-			targetAngle_ = nowCamAngle_ + 45.0f;
-			if (targetAngle_ > MaxAngle_)
-				targetAngle_ -= MaxAngle_;
-			if (!diagonalMoveAnglePlus_)
-				diagonalMoveAnglePlus_ = true;
-		}
-		else if ((Input::GetButton(PAD_INPUT_8) && Input::GetButtonDown(PAD_INPUT_6)) ||
-			     (Input::GetButtonDown(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_6))) // 右前
-		{
-			targetAngle_ = nowCamAngle_ - 45.0f;
-			if (targetAngle_ < 0)
-				targetAngle_ += MaxAngle_;
-			if (!diagonalMoveAngleMinus_)
-				diagonalMoveAngleMinus_ = true;
-		}
-		else if ((Input::GetButton(PAD_INPUT_5) && Input::GetButtonDown(PAD_INPUT_4)) ||
-			     (Input::GetButtonDown(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_4))) // 左後ろ
-		{
-			targetAngle_ = nowCamAngle_ - 45.0f;
-			if (targetAngle_ < 0)
-				targetAngle_ += MaxAngle_;
-			if (!diagonalMoveAngleMinus_)
-				diagonalMoveAngleMinus_ = true;
-		}
-		else if ((Input::GetButton(PAD_INPUT_5) && Input::GetButtonDown(PAD_INPUT_6)) ||
-			     (Input::GetButtonDown(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_6))) // 右前
-		{
-			targetAngle_ = nowCamAngle_ + 45.0f;
-			if (targetAngle_ > MaxAngle_)
-				targetAngle_ -= MaxAngle_;
-			if (!diagonalMoveAnglePlus_)
-				diagonalMoveAnglePlus_ = true;
-		}
-
 		if (!Input::GetButton(PAD_INPUT_4) &&
 			!Input::GetButton(PAD_INPUT_6) &&
 			!Input::GetButton(PAD_INPUT_5) &&
@@ -141,9 +104,9 @@ void Player::Update()
 		if (mouseX_ > prevMouseX_)                  //　マウスが右に動いていたら
 		{
 
-		    // マウスの移動距離を度数変換、360 : x = Screen::Width * 2 : MouseX - prevMouseX
-		    //                             x(Screen::Width * 2) = 360(MouseX - prevMouseX)
-		    //                             x = (360(MouseX - prevMouseX)) / (Screen::Width * 2)
+		    // マウスの移動距離を度数変換、360 : x = Screen::Width * 1.2f : MouseX - prevMouseX
+		    //                             x(Screen::Width * 1.2f) = 360(MouseX - prevMouseX)
+		    //                             x = (360(MouseX - prevMouseX)) / (Screen::Width * 1.2f)
 
 			percentAngleByCursorDis_    = (float)((MaxAngle_ * (mouseX_ - prevMouseX_)) / (Screen::width * 1.2f));
 			percentAngleByCursorDis_BG_ = (float)((MaxAngle_ * (mouseX_ - prevMouseX_)) / (BackImageWidth / 60));
@@ -211,19 +174,20 @@ void Player::Update()
 		vz = (float)std::sin((nowCamAngle_ + MaxAngle_ - (MaxAngle_ / 4)) * MyMath::Deg2Rad) * moveSpeedLateral_;
 	}
 
-	if (diagonalMoveAnglePlus_)
+	if ((Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_4)) ||
+		(Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_6)) ||
+		(Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_4)) ||
+		(Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_6)))
 	{
-		if (nowCamAngle_ < targetAngle_)
-			nowCamAngle_++;
-		else
-			diagonalMoveAnglePlus_ = false;
-	}
-	if (diagonalMoveAngleMinus_)
-	{
-		if (nowCamAngle_ > targetAngle_)
-			nowCamAngle_--;
-		else
-			diagonalMoveAngleMinus_ = false;
+		vx = (float)std::cos((nowCamAngle_ + MaxAngle_ / 2) * MyMath::Deg2Rad) * moveSpeed_;
+		if ((nowCamAngle_ >= 45 && nowCamAngle_ < 135) || (nowCamAngle_ >= 225 && nowCamAngle_ < 315))
+			vx = (float)std::cos((nowCamAngle_ + MaxAngle_ - (MaxAngle_ / 4)) * MyMath::Deg2Rad) * moveSpeedLateral_;
+		vz = (float)std::sin((nowCamAngle_ + MaxAngle_ - (MaxAngle_ / 4)) * MyMath::Deg2Rad) * moveSpeedLateral_;
+		if ((nowCamAngle_ >= 45 && nowCamAngle_ < 135) || (nowCamAngle_ >= 225 && nowCamAngle_ < 315))
+			vz = (float)std::sin((nowCamAngle_ + MaxAngle_ / 2) * MyMath::Deg2Rad) * moveSpeed_;
+
+		vx /= MyMath::Sqrt2;
+		vx /= MyMath::Sqrt2;
 	}
 
 	// 実際に位置を動かす
