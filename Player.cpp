@@ -32,20 +32,18 @@ void Player::HandleInput()
 	{
 		if (Input::GetButton(PAD_INPUT_4))              // A
 		{
-			doLateralMove_ = true;
-			moveSpeedLateral_ += IncreaseSpeed_;
-			if (moveSpeedLateral_ > moveSpeedMax_)
-				moveSpeedLateral_ = moveSpeedMax_;      //Maxスピードで止める
+			moveSpeed_ += IncreaseSpeed_;
+			if (moveSpeed_ > moveSpeedMax_)
+				moveSpeed_ = moveSpeedMax_;      //Maxスピードで止める
 			if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
 				AnimationAttach((int)State::run);
 			modelAngle_ = -(nowCamAngle_ * MyMath::Deg2Rad);
 		}
 		else if (Input::GetButton(PAD_INPUT_6))         // D
 		{
-			doLateralMove_ = true;
-			moveSpeedLateral_ -= IncreaseSpeed_;
-			if (moveSpeedLateral_ < -moveSpeedMax_)
-				moveSpeedLateral_ = -moveSpeedMax_;     //Maxスピードで止める
+			moveSpeed_ += IncreaseSpeed_;
+			if (moveSpeed_ < -moveSpeedMax_)
+				moveSpeed_ = -moveSpeedMax_;     //Maxスピードで止める
 			if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
 				AnimationAttach((int)State::run);
 			modelAngle_ = -((nowCamAngle_ - 180) * MyMath::Deg2Rad);
@@ -53,7 +51,6 @@ void Player::HandleInput()
 
 		if (Input::GetButton(PAD_INPUT_8))              // W
 		{
-			doLateralMove_ = false;
 			moveSpeed_ += IncreaseSpeed_;
 			if (moveSpeed_ > moveSpeedMax_)
 				moveSpeed_ = moveSpeedMax_;             //Maxスピードで止める
@@ -63,14 +60,22 @@ void Player::HandleInput()
 		}
 		else if (Input::GetButton(PAD_INPUT_5))         // S
 		{
-			doLateralMove_ = false;
-			moveSpeed_ -= IncreaseSpeed_;
+			moveSpeed_ += IncreaseSpeed_;
 			if (moveSpeed_ < -moveSpeedMax_)
 				moveSpeed_ = -moveSpeedMax_;           //Maxスピードで止める
 			if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
 				AnimationAttach((int)State::run);
 			modelAngle_ = -((nowCamAngle_ + 90) * MyMath::Deg2Rad);
 		}
+
+		if (Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_4)) // 左前
+			modelAngle_ = -((nowCamAngle_ - 45) * MyMath::Deg2Rad);
+		else if (Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_6)) // 右前
+			modelAngle_ = -((nowCamAngle_ - 135) * MyMath::Deg2Rad);
+		else if (Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_4)) // 左後ろ
+			modelAngle_ = -((nowCamAngle_ + 45) * MyMath::Deg2Rad);
+		else if (Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_6)) // 右後ろ
+			modelAngle_ = -((nowCamAngle_ + 135) * MyMath::Deg2Rad);
 
 		if (!Input::GetButton(PAD_INPUT_4) &&
 			!Input::GetButton(PAD_INPUT_6) &&
@@ -147,8 +152,8 @@ void Player::Update()
 	}
 
 	// カメラが360度で1周するように
-	if (nowCamAngle_ <= 0)        nowCamAngle_ = (float)MaxAngle_ - 1;
-	if (nowCamAngle_ >= MaxAngle_) nowCamAngle_ = 1;
+	if (nowCamAngle_ <= 0.0f)             nowCamAngle_ = (float)MaxAngle_ - 1.0f;
+	if (nowCamAngle_ >= (float)MaxAngle_) nowCamAngle_ = 1.0f;
 
 	prevMouseX_ = mouseX_;                               // マウスカーソル座標を保存
 
@@ -157,39 +162,17 @@ void Player::Update()
 	vz = 0;                                              // z方向移動速度
 
 	moveSpeed_        *= DecreaseSpeed_;                 // 移動速度も減速する
-	moveSpeedLateral_ *= DecreaseSpeed_;
 
 	// 入力を受けての処理 
 	HandleInput();
 
-	// 進行方向角度をX方向とZ方向の速度に変える
-	if (!doLateralMove_)
-	{
-		vx = (float)std::cos((nowCamAngle_ + MaxAngle_ / 2) * MyMath::Deg2Rad) * moveSpeed_;
-		vz = (float)std::sin((nowCamAngle_ + MaxAngle_ / 2) * MyMath::Deg2Rad) * moveSpeed_;
-	}
-	else
-	{
-		vx = (float)std::cos((nowCamAngle_ + MaxAngle_ - (MaxAngle_ / 4)) * MyMath::Deg2Rad) * moveSpeedLateral_;
-		vz = (float)std::sin((nowCamAngle_ + MaxAngle_ - (MaxAngle_ / 4)) * MyMath::Deg2Rad) * moveSpeedLateral_;
-	}
+	if (modelAngle_ > 0)
+		modelAngle_ -= 360.0f * MyMath::Deg2Rad;         // プレイヤーの角度のずれを直す
 
-	if ((Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_4)) ||
-		(Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_6)) ||
-		(Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_4)) ||
-		(Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_6)))
-	{
-		vx = (float)std::cos((nowCamAngle_ + MaxAngle_ / 2) * MyMath::Deg2Rad) * moveSpeed_;
-		if ((nowCamAngle_ >= 45 && nowCamAngle_ < 135) || (nowCamAngle_ >= 225 && nowCamAngle_ < 315))
-			vx = (float)std::cos((nowCamAngle_ + MaxAngle_ - (MaxAngle_ / 4)) * MyMath::Deg2Rad) * moveSpeedLateral_;
-		vz = (float)std::sin((nowCamAngle_ + MaxAngle_ - (MaxAngle_ / 4)) * MyMath::Deg2Rad) * moveSpeedLateral_;
-		if ((nowCamAngle_ >= 45 && nowCamAngle_ < 135) || (nowCamAngle_ >= 225 && nowCamAngle_ < 315))
-			vz = (float)std::sin((nowCamAngle_ + MaxAngle_ / 2) * MyMath::Deg2Rad) * moveSpeed_;
-
-		vx /= MyMath::Sqrt2;
-		vx /= MyMath::Sqrt2;
-	}
-
+	vx = (float)std::sin(modelAngle_) * moveSpeed_ * (modelAngle_ / std::abs(modelAngle_));
+	vz = (float)std::cos(modelAngle_) * moveSpeed_ * (modelAngle_ / std::abs(modelAngle_));
+	printfDx("PlayerAngle : %f \n", modelAngle_ / MyMath::Deg2Rad);
+	
 	// 実際に位置を動かす
 
 	MoveX();

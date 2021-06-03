@@ -30,12 +30,12 @@ void Game::Update()
 		PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
 		if (!is_mousePos_outsideWindow_)
 		{
-			SetValidMousePointerWindowOutClientAreaMoveFlag(TRUE);
+			//SetValidMousePointerWindowOutClientAreaMoveFlag(TRUE);
 			is_mousePos_outsideWindow_ = true;
 		}
 		else
 		{
-			SetValidMousePointerWindowOutClientAreaMoveFlag(FALSE);
+			//SetValidMousePointerWindowOutClientAreaMoveFlag(FALSE);
 			is_mousePos_outsideWindow_ = false;
 		}
 		return;
