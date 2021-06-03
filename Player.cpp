@@ -171,8 +171,16 @@ void Player::Update()
 
 	vx = (float)std::sin(modelAngle_) * moveSpeed_ * (modelAngle_ / std::abs(modelAngle_));
 	vz = (float)std::cos(modelAngle_) * moveSpeed_ * (modelAngle_ / std::abs(modelAngle_));
-	printfDx("PlayerAngle : %f \n", modelAngle_ / MyMath::Deg2Rad);
 	
+	if ((Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_4)) ||
+		(Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_6)) ||
+		(Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_4)) ||
+		(Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_6)))
+	{
+		vx /= MyMath::Sqrt2;
+		vx /= MyMath::Sqrt2;
+	}
+
 	// é¿ç€Ç…à íuÇìÆÇ©Ç∑
 
 	MoveX();

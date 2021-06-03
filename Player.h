@@ -87,7 +87,6 @@ private:
 	float modelAngle_                 = 0.0f;
 	float moveSpeedMax_               = 15.0f;
 	float moveSpeed_                  = 0.0f;
-	float moveSpeedLateral_           = 0.0f;
 	float camDistanceFromPlayer_      = 0.0f;
 	float camHeightFromTerrain_       = 0.0f;
 	float nowCamAngle_                = 0.0f;
@@ -96,7 +95,6 @@ private:
 	float collisionDetectionMiddleX_  = 0.0f;
 	float collisionDetectionMiddleZ_  = 0.0f;
 
-	bool doLateralMove_          = false;
 	bool canAngleInit_           = false;
 	bool collectAttach_          = false;
 	bool runAttach_              = false;
