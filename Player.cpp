@@ -18,8 +18,8 @@ void Player::Init()
 	// カメラ位置
 	camera.SetPosition
 	/* X座標 */(gm.player->x + (camDistanceFromPlayer_ * std::cos(nowCamAngle_ * MyMath::Deg2Rad)),
-	/* Y座標 */  gm.player->y - camHeightFromTerrain_,
-	/* Z座標 */  gm.player->z + (camDistanceFromPlayer_ * std::sin(nowCamAngle_ * MyMath::Deg2Rad)));
+	/* Y座標 */ gm.player->y - camHeightFromTerrain_,
+	/* Z座標 */ gm.player->z + (camDistanceFromPlayer_ * std::sin(nowCamAngle_ * MyMath::Deg2Rad)));
 
 	//カメラはプレイヤの方を見る
 	camera.LookAt(gm.player->x, gm.player->y + 100, gm.player->z);
@@ -118,15 +118,15 @@ void Player::Update()
 	if (mouseX_ > 0 && mouseX_ < Screen::width &&
 		mouseY_ > 0 && mouseY_ < Screen::height)
 	{
-		if (mouseX_ > prevMouseX_)                  //　マウスが右に動いていたら
+		if (mouseX_ > Screen::width / 2)                  //　マウスが右に動いていたら
 		{
 
-		    // マウスの移動距離を度数変換、360 : x = Screen::Width * 1.2f : MouseX - prevMouseX
-		    //                             x(Screen::Width * 1.2f) = 360(MouseX - prevMouseX)
-		    //                             x = (360(MouseX - prevMouseX)) / (Screen::Width * 1.2f)
+		    // マウスの移動距離を度数変換、360 : x = Screen::Width * 1.2f : MouseX - Screen::width / 2
+		    //                             x(Screen::Width * 1.2f) = 360(MouseX - Screen::width / 2)
+		    //                             x = (360(MouseX - Screen::width / 2)) / (Screen::Width * 1.2f)
 
-			percentAngleByCursorDis_    = (float)((MaxAngle_ * (mouseX_ - prevMouseX_)) / (Screen::width * 1.2f));
-			percentAngleByCursorDis_BG_ = (float)((MaxAngle_ * (mouseX_ - prevMouseX_)) / (BackImageWidth / 60));
+			percentAngleByCursorDis_    = (float)((MaxAngle_ * (mouseX_ - Screen::width / 2)) / (Screen::width * 1.2f));
+			percentAngleByCursorDis_BG_ = (float)((MaxAngle_ * (mouseX_ - Screen::width / 2)) / (BackImageWidth / 60));
 
 			// PercentAngleByCursor初期化
 			if (!canAngleInit_)
@@ -144,8 +144,8 @@ void Player::Update()
 		}
 		else                                        // マウスが左に動いていたら
 		{
-			percentAngleByCursorDis_    = (float)((MaxAngle_ * (prevMouseX_ - mouseX_)) / (Screen::width * 1.2f));
-			percentAngleByCursorDis_BG_ = (float)((MaxAngle_ * (mouseX_ - prevMouseX_)) / (BackImageWidth / 60));
+			percentAngleByCursorDis_    = (float)((MaxAngle_ * (Screen::width / 2 - mouseX_)) / (Screen::width * 1.2f));
+			percentAngleByCursorDis_BG_ = (float)((MaxAngle_ * (mouseX_ - Screen::width / 2)) / (BackImageWidth / 60));
 
 			// PercentAngleByCursor初期化
 			if (!canAngleInit_)
@@ -166,8 +166,6 @@ void Player::Update()
 	// カメラが360度で1周するように
 	if (nowCamAngle_ <= 0.0f)             nowCamAngle_ = (float)MaxAngle_ - 1.0f;
 	if (nowCamAngle_ >= (float)MaxAngle_) nowCamAngle_ = 1.0f;
-
-	prevMouseX_ = mouseX_;                               // マウスカーソル座標を保存
 
 	vx = 0;                                              // x方向移動速度
 	vy = 0;                                              // y方向移動速度
@@ -214,6 +212,9 @@ void Player::Update()
 		PlayAnimation(0.6f, TRUE);
 	else
 		PlayAnimation(0.07f, TRUE);
+
+	// マウス位置の初期化
+	SetMousePoint(Screen::width / 2, Screen::height / 2);
 }
 
 // 横の移動処理
