@@ -69,13 +69,25 @@ void Player::HandleInput()
 		}
 
 		if (Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_4)) // 左前
-			modelAngle_ = -((nowCamAngle_ - 45) * MyMath::Deg2Rad);
+		{
+			if (modelAngle_ != -((nowCamAngle_ - 45) * MyMath::Deg2Rad))
+				modelAngle_ -= 0.5f;
+		}
 		else if (Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_6)) // 右前
-			modelAngle_ = -((nowCamAngle_ - 135) * MyMath::Deg2Rad);
+		{
+			if (modelAngle_ != -((nowCamAngle_ - 135) * MyMath::Deg2Rad))
+				modelAngle_ += 0.5f;
+		}
 		else if (Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_4)) // 左後ろ
-			modelAngle_ = -((nowCamAngle_ + 45) * MyMath::Deg2Rad);
+		{
+			if (modelAngle_ != -((nowCamAngle_ + 45) * MyMath::Deg2Rad))
+				modelAngle_ += 0.5f;
+		}
 		else if (Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_6)) // 右後ろ
-			modelAngle_ = -((nowCamAngle_ + 135) * MyMath::Deg2Rad);
+		{
+			if (modelAngle_ != -((nowCamAngle_ + 135) * MyMath::Deg2Rad))
+				modelAngle_ -= 0.5f;
+		}
 
 		if (!Input::GetButton(PAD_INPUT_4) &&
 			!Input::GetButton(PAD_INPUT_6) &&
