@@ -25,8 +25,8 @@ void Collection::Init()
 	gm.map = std::make_shared<Map>(0, "Map" + std::to_string(StageSelection::stageNum));
 	gm.player = std::make_shared<Player>
 		(gm.mapData[3][StageSelection::stageNum - 1 + CsvSkipCell_],
-			gm.mapData[4][StageSelection::stageNum - 1 + CsvSkipCell_],
-			gm.mapData[5][StageSelection::stageNum - 1 + CsvSkipCell_]);
+		 gm.mapData[4][StageSelection::stageNum - 1 + CsvSkipCell_],
+		 gm.mapData[5][StageSelection::stageNum - 1 + CsvSkipCell_]);
 
 	gm.player->Init();
 

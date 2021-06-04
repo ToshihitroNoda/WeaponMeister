@@ -58,14 +58,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		return -1;
 	}
 
-	SetMouseDispFlag(TRUE);// ここをFALSEにするとマウスカーソル非表示
+	SetMouseDispFlag(FALSE);// ここをFALSEにするとマウスカーソル非表示
 	//表示しているスクリーンの後ろで隠れて次に描く画像を先に描くモード
 	// これとペアでScreenFlip();でつぎのページと入れ替えでちらつきを防ぐ
 	SetDrawScreen(DX_SCREEN_BACK);
 	SetUseTransColor(FALSE); // 画像の指定色を透過する機能を無効化
 
 	SetCameraNearFar(1.0f, 2500.0f); // 描画距離の設定
-	//SetValidMousePointerWindowOutClientAreaMoveFlag(FALSE);
+	SetValidMousePointerWindowOutClientAreaMoveFlag(FALSE);
 
 	// これまでInitでやってきてた初期化処理
 	Game game;
