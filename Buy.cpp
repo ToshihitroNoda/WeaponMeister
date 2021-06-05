@@ -101,8 +101,14 @@ void Buy::Update()
 		if (!(selectIconNum_ < buyItems_.size()))
 			itemDetail_ = false;
 
-		if (cursorX_ == CursorX_Buy_Select_ &&
-			cursorY_ == CursorY_Buy_Select_)
+		if (Input::GetKeyDown(KEY_INPUT_RETURN))
+		{
+			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
+			buyAmount = beforeMoney_ - gm.money;
+			sm.LoadScene("Production");
+		}
+
+		if (cursorX_ == CursorX_Buy_Select_ && cursorY_ == CursorY_Buy_Select_)
 		{
 			if (Input::GetButtonDown(PAD_INPUT_1))
 			{

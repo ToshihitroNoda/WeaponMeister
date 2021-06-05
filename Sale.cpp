@@ -183,87 +183,86 @@ void Sale::Update()
 			}
 		}
 
-		if (Input::GetButtonDown(PAD_INPUT_1))
+		if (!(Input::GetButtonDown(PAD_INPUT_1) || Input::GetKeyDown(KEY_INPUT_RETURN)))
+			return;
+		if (cursorX_ <= CursorX_Max_ItemSelect_ && !Input::GetKeyDown(KEY_INPUT_RETURN))
 		{
-			if (cursorX_ <= CursorX_Max_ItemSelect_)
-			{
-				if (selectIconNum_ < gm.weapons.size())
-				{
-					saleWeapons_.push_back(gm.weapons[selectIconNum_]);
-					selectWeaponPos_.push_back(selectIconNum_);
-					gm.money += weaponPrice_[selectIconNum_];
+			if (!(selectIconNum_ < gm.weapons.size()))
+				return;
+			saleWeapons_.push_back(gm.weapons[selectIconNum_]);
+			selectWeaponPos_.push_back(selectIconNum_);
+			gm.money += weaponPrice_[selectIconNum_];
 
-					for (int i = 0; i < alreadySelectWeaponPos_.size(); i++)
-					{
-						if (alreadySelectWeaponPos_[i] == selectWeaponPos_.back()) // 重複していたら
-						{
-							PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
-							/*-----選択解除-----*/
-							for (int j = 0; j < selectWeaponPos_.size(); j++)
-							{
-								if (selectWeaponPos_.back() == selectWeaponPos_[j])
-								{
-									saleWeapons_.erase(saleWeapons_.begin() + j);
-									selectWeaponPos_.erase(selectWeaponPos_.begin() + j);
-									gm.money -= weaponPrice_[selectIconNum_];
-									alreadySelectWeaponPos_.erase(alreadySelectWeaponPos_.begin() + j);
-									break;
-								}
-							}
-							/*------------------*/
-							/*-----重複消し-----*/
-							saleWeapons_.erase(saleWeapons_.end() - 1);			   // 最後に追加したやつ(今追加したやつ)を削除
-							selectWeaponPos_.erase(selectWeaponPos_.end() - 1);
-							gm.money -= weaponPrice_[selectIconNum_];
-							/*------------------*/
-							alradySelect_ = true;
-							break;
-						}
-						else
-						{
-							PlaySoundMem(Music::money_SE, DX_PLAYTYPE_BACK);
-							if (Adv::day == gm.LastDay)
-							{
-								saleWeapons_.erase(saleWeapons_.end() - 1);
-								selectWeaponPos_.erase(selectWeaponPos_.end() - 1);
-								gm.money -= weaponPrice_[selectIconNum_];
-								alradySelect_ = true;
-							}
-						}
-					}
-					if (!alradySelect_)
-						alreadySelectWeaponPos_.push_back(selectIconNum_);
-					alradySelect_ = false;
-				}
-			}
-			else
-			{
-				if (Adv::day != gm.LastDay)
-				{
-					std::sort(selectWeaponPos_.begin(), selectWeaponPos_.end());
-					for (int i = selectWeaponPos_.size() - 1; i >= 0; i--)
-					{
-						gm.weapons.erase(gm.weapons.begin() + selectWeaponPos_[i]);
-						gm.weaponQuality.erase(gm.weaponQuality.begin() + selectWeaponPos_[i]);
-					}
-				}
-				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-				saleAmount = gm.money - prevMoney_;
+			if (saleWeapons_.size() == 1)
+				PlaySoundMem(Music::money_SE, DX_PLAYTYPE_BACK);
 
-				if (Adv::day == gm.LastDay && saleWeapons_.size() == 0)
+			for (int i = 0; i < alreadySelectWeaponPos_.size(); i++)
+			{
+				if (alreadySelectWeaponPos_[i] == selectWeaponPos_.back()) // 重複していたら
 				{
-					retryLastDay_ = true;
-					if (drawalert_ && Input::GetButtonDown(PAD_INPUT_1))
+					PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
+					/*-----選択解除-----*/
+					for (int j = 0; j < selectWeaponPos_.size(); j++)
 					{
-						dataload.Load();
-						sm.LoadScene("Adv");
+						if (!(selectWeaponPos_.back() == selectWeaponPos_[j]))
+							return;
+						saleWeapons_.erase(saleWeapons_.begin() + j);
+						selectWeaponPos_.erase(selectWeaponPos_.begin() + j);
+						gm.money -= weaponPrice_[selectIconNum_];
+						alreadySelectWeaponPos_.erase(alreadySelectWeaponPos_.begin() + j);
+						break;
 					}
+					/*------------------*/
+					/*-----重複消し-----*/
+					saleWeapons_.erase(saleWeapons_.end() - 1);			   // 最後に追加したやつ(今追加したやつ)を削除
+					selectWeaponPos_.erase(selectWeaponPos_.end() - 1);
+					gm.money -= weaponPrice_[selectIconNum_];
+					/*------------------*/
+					alradySelect_ = true;
+					break;
 				}
-				else if (Adv::day == gm.LastDay)
-					sm.LoadScene("GameClear");
 				else
-					sm.LoadScene("Report");
+				{
+					PlaySoundMem(Music::money_SE, DX_PLAYTYPE_BACK);
+					if (Adv::day == gm.LastDay)
+						return;
+					saleWeapons_.erase(saleWeapons_.end() - 1);
+					selectWeaponPos_.erase(selectWeaponPos_.end() - 1);
+					gm.money -= weaponPrice_[selectIconNum_];
+					alradySelect_ = true;
+				}
 			}
+			if (!alradySelect_)
+				alreadySelectWeaponPos_.push_back(selectIconNum_);
+			alradySelect_ = false;
+		}
+		else
+		{
+			if (Adv::day != gm.LastDay)
+			{
+				std::sort(selectWeaponPos_.begin(), selectWeaponPos_.end());
+				for (int i = selectWeaponPos_.size() - 1; i >= 0; i--)
+				{
+					gm.weapons.erase(gm.weapons.begin() + selectWeaponPos_[i]);
+					gm.weaponQuality.erase(gm.weaponQuality.begin() + selectWeaponPos_[i]);
+				}
+			}
+			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
+			saleAmount = gm.money - prevMoney_;
+
+			if (Adv::day == gm.LastDay && saleWeapons_.size() == 0)
+			{
+				retryLastDay_ = true;
+				if (drawalert_ && Input::GetButtonDown(PAD_INPUT_1))
+				{
+					dataload.Load();
+					sm.LoadScene("Adv");
+				}
+			}
+			else if (Adv::day == gm.LastDay)
+				sm.LoadScene("GameClear");
+			else
+				sm.LoadScene("Report");
 		}
 	}
 	else

@@ -139,8 +139,9 @@ private:
 	const int arrowY_Handle_ = 200;
 	const int arrowY_Main_   = 500;
 
-	const int OptionMenuX_ = 420;
-	const int OptionMenuY_ = 705;
+	const int OptionMenuX_     = 420;
+	const int MakeOptionMenuX_ = 1100;
+	const int OptionMenuY_     = 705;
 
 	const int animationSoundTime_ = 30;
 
@@ -157,6 +158,7 @@ private:
 	int scrollCount_                    = 0;
 	int animationSoundTimer_            = 0;
 	int operationDescriptionMassegeNum_ = 0;
+	int productAnimationSpeed_          = 1;
 
 	bool recipeSelection_ = false; // レシピを選び終わったかどうかの判定(終わったらtrue)
 	bool itemSelection_   = false; // アイテムを選び終わったかどうかの判定

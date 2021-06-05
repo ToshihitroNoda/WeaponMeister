@@ -9,6 +9,8 @@ class Input
 public:
     static int prevState; // 1フレーム前の状況
     static int currentState; // 現在の状態
+    static int prevKeyState;
+    static int currentKeyState;
 
     // 初期化。最初に1回だけ呼んでください。
     static void Init();
@@ -25,6 +27,10 @@ public:
 
     // ボタンが離された瞬間か？
     static bool GetButtonUp(int buttonId);
+
+    static bool GetKey(int keyId);
+
+    static bool GetKeyDown(int keyId);
 };
 
 #endif // !INPUT_H_

@@ -119,33 +119,39 @@ void Production::Update()
 		/*---------------*/
 
 		/*----- 作る武器を決定 -----*/
-		if (Input::GetButtonDown(PAD_INPUT_1))
+		if (Input::GetKeyDown(KEY_INPUT_RETURN))
 		{
-			if (cursorX_ == CursorX_ProceedNextPart_ && cursorY_ == CursorY_ProceedNextPart_)
-			{
-				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-				sm.LoadScene("Sale");
-			}
-			else
-			{
-				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-				if (canWeaponMake_[weaponID_ / 2])                  // 選択した武器が作れるなら
-				{
-					recipeSelection_ = true;                        // フラグを立てる
+			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
+			sm.LoadScene("Sale");
+		}
+		if (!Input::GetButtonDown(PAD_INPUT_1))
+			return;
 
-					if (weaponID_ < canWeaponMake_.size())          // 木製武器選択
-					{
-						ItemType_ = gm.itemData[CsvTypeCheck_][CsvSkipCell_];
-						cursorInit_ = true;
-					}
-					else                                            // 石製武器選択
-					{
-						ItemType_ = gm.itemData[CsvTypeCheck_][gm.itemData[0].size() - 1];
-						cursorInit_ = true;
-					}
+		if (cursorX_ == CursorX_ProceedNextPart_ && cursorY_ == CursorY_ProceedNextPart_)
+		{
+			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
+			sm.LoadScene("Sale");
+		}
+		else
+		{
+			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
+			if (canWeaponMake_[weaponID_ / 2])                  // 選択した武器が作れるなら
+			{
+				recipeSelection_ = true;                        // フラグを立てる
+
+				if (weaponID_ < canWeaponMake_.size())          // 木製武器選択
+				{
+					ItemType_ = gm.itemData[CsvTypeCheck_][CsvSkipCell_];
+					cursorInit_ = true;
+				}
+				else                                            // 石製武器選択
+				{
+					ItemType_ = gm.itemData[CsvTypeCheck_][gm.itemData[0].size() - 1];
+					cursorInit_ = true;
 				}
 			}
 		}
+		
 		/*---------------*/
 	}
 
@@ -303,32 +309,32 @@ void Production::Update()
 			/*----- 持ち手部分素材選択 -----*/
 			if (!shouldWeaponMainCreate_)
 			{
-				if (Input::GetButtonDown(PAD_INPUT_1))
+				if (Input::GetButtonDown(PAD_INPUT_1) || Input::GetKeyDown(KEY_INPUT_RETURN))
 				{
-					if (cursorX_ <= CursorX_Max_ItemSelect_)
+					if (cursorX_ <= CursorX_Max_ItemSelect_ && !Input::GetKeyDown(KEY_INPUT_RETURN))
 					{
-						if (selectIconNum_ < itemForWeaponMake_.size())
+						if (!(selectIconNum_ < itemForWeaponMake_.size()))
+							return;
+						PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
+						if (gm.handles.size() < HandleSelect_MaxSize_ && !AlreadySecectItem(ItemPosOnThePouch_[selectIconNum_])) // 重複していなかったら
 						{
-							PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-							if (gm.handles.size() < HandleSelect_MaxSize_ && !AlreadySecectItem(ItemPosOnThePouch_[selectIconNum_])) // 重複していなかったら
+							gm.handles.push_back(itemForWeaponMake_[selectIconNum_]);
+							gm.handlesQuality.push_back(itemQualityForWeaponMake_[selectIconNum_]);
+							SelectItemPosOnThePouch_.push_back(NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_]);
+						}
+						else
+						{
+							for (int i = 0; i < gm.handles.size(); i++)
 							{
-								gm.handles.push_back(itemForWeaponMake_[selectIconNum_]);
-								gm.handlesQuality.push_back(itemQualityForWeaponMake_[selectIconNum_]);
-								SelectItemPosOnThePouch_.push_back(NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_]);
-							}
-							else
-							{
-								for (int i = 0; i < gm.handles.size(); i++)
-								{
-									if (SelectItemPosOnThePouch_[i] == NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_])
-									{
-										gm.handles.erase(gm.handles.begin() + i);
-										gm.handlesQuality.erase(gm.handlesQuality.begin() + i);
-										SelectItemPosOnThePouch_.erase(SelectItemPosOnThePouch_.begin() + i);
-									}
-								}
+								if (!(SelectItemPosOnThePouch_[i] == NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_]))
+									return;
+								gm.handles.erase(gm.handles.begin() + i);
+								gm.handlesQuality.erase(gm.handlesQuality.begin() + i);
+								SelectItemPosOnThePouch_.erase(SelectItemPosOnThePouch_.begin() + i);
+
 							}
 						}
+
 					}
 					// 次へ
 					else
@@ -360,7 +366,6 @@ void Production::Update()
 					PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
 					Format();
 				}
-
 				if (Input::GetButtonDown(PAD_INPUT_3) && selectIconNum_ < itemForWeaponMake_.size())
 				{
 					PlaySoundMem(Music::menuopen_SE, DX_PLAYTYPE_BACK);
@@ -387,37 +392,34 @@ void Production::Update()
 			/*----- メイン部分素材選択 -----*/
 			else
 			{
-				if (Input::GetButtonDown(PAD_INPUT_1))
+				if (Input::GetButtonDown(PAD_INPUT_1) || Input::GetKeyDown(KEY_INPUT_RETURN))
 				{
-					if (cursorX_ <= CursorX_Max_ItemSelect_)
+					if (cursorX_ <= CursorX_Max_ItemSelect_ && !Input::GetKeyDown(KEY_INPUT_RETURN))
 					{
-						if (selectIconNum_ < itemForWeaponMake_.size())
+						if (!(selectIconNum_ < itemForWeaponMake_.size()))
+							return;
+						PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
+						if (gm.main.size() < MainSelect_MaxSize_ && !AlreadySecectItem(ItemPosOnThePouch_[selectIconNum_])) // 重複していなかったら
 						{
-							PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-							if (gm.main.size() < MainSelect_MaxSize_ && !AlreadySecectItem(ItemPosOnThePouch_[selectIconNum_])) // 重複していなかったら
+							gm.main.push_back(itemForWeaponMake_[selectIconNum_]);
+							gm.mainQuality.push_back(itemQualityForWeaponMake_[selectIconNum_]);
+							SelectItemPosOnThePouch_.push_back(NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_]);
+						}
+						else
+						{
+							for (int i = 0; i < gm.main.size(); i++)
 							{
-								gm.main.push_back(itemForWeaponMake_[selectIconNum_]);
-								gm.mainQuality.push_back(itemQualityForWeaponMake_[selectIconNum_]);
-								SelectItemPosOnThePouch_.push_back(NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_]);
-							}
-							else
-							{
-								for (int i = 0; i < gm.main.size(); i++)
+								if (!(SelectItemPosOnThePouch_[i + gm.handles.size()] == ItemPosOnThePouch_[selectIconNum_]))
+									return;
+								for (int j = 0; j < gm.handles.size(); j++)
 								{
-									if (SelectItemPosOnThePouch_[i + gm.handles.size()] == ItemPosOnThePouch_[selectIconNum_])
-									{
-										for (int j = 0; j < gm.handles.size(); j++)
-										{
-											if (SelectItemPosOnThePouch_[j] != NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_])
-											{
-												gm.main.erase(gm.main.begin() + i);
-												gm.mainQuality.erase(gm.mainQuality.begin() + i);
-												SelectItemPosOnThePouch_.erase(SelectItemPosOnThePouch_.begin() + (i + gm.handles.size()));
-												break;
-											}
-										}
-									}
-								}
+									if (!(SelectItemPosOnThePouch_[j] != NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_]))
+										return;
+									gm.main.erase(gm.main.begin() + i);
+									gm.mainQuality.erase(gm.mainQuality.begin() + i);
+									SelectItemPosOnThePouch_.erase(SelectItemPosOnThePouch_.begin() + (i + gm.handles.size()));
+									break;	
+								}				
 							}
 						}
 					}
@@ -811,6 +813,10 @@ void Production::Draw()
 	{
 		if (drawCounter_ > 0)
 		{
+			if (Input::GetKey(KEY_INPUT_SPACE))
+				productAnimationSpeed_ = 3;
+			else
+				productAnimationSpeed_ = 1;
 			if (animationSoundTimer_ >= animationSoundTime_)
 			{
 				PlaySoundMem(Music::production_SE, DX_PLAYTYPE_BACK);
@@ -827,9 +833,9 @@ void Production::Draw()
 			for (int i = 0; i < drawItemID_.size(); i++)
 				DrawGraph(animationX_[i], animationY_[i], gm.image.itemIcons[drawItemID_[i]], TRUE);
 
-			distToCenter_--;
-			drawCounter_--;
-			animationSoundTimer_++;
+			distToCenter_ -= productAnimationSpeed_;
+			drawCounter_ -= productAnimationSpeed_;
+			animationSoundTimer_ ++;
 		}
 		else
 		{
@@ -851,11 +857,15 @@ void Production::Draw()
 				distToCenter_ = defaultDrawCount_;
 				drawCounter_ = defaultDrawCount_;
 				angle_ = defaultAngle_;
+				productAnimationSpeed_ = 1;
 				animationX_.clear();
 				animationY_.clear();
 				drawItemID_.clear();
 			}
 		}
+		SetFontSize(15);
+		DrawString(MakeOptionMenuX_, OptionMenuY_, "SPACE : 早送り", gm.colorWhite);
+		SetFontSize(gm.DefaultFontSize_);
 	}
 
 	/*---------------*/
