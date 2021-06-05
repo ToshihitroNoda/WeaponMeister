@@ -184,7 +184,7 @@ void Player::Update()
 		(Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_6)))
 	{
 		vx /= MyMath::Sqrt2;
-		vx /= MyMath::Sqrt2;
+		vz /= MyMath::Sqrt2;
 	}
 
 	// é¿ç€Ç…à íuÇìÆÇ©Ç∑
