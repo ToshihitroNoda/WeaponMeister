@@ -80,6 +80,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <IncludePath>$(SolutionDir)/;$(SolutionDir)Scene;$(IncludePath)</IncludePath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -151,22 +153,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ADVSimpleScript.cpp" />
-    <ClCompile Include="Buy.cpp" />
-    <ClCompile Include="Collection.cpp" />
-    <ClCompile Include="CreateRun.cpp" />
-    <ClCompile Include="EndCredit.cpp" />
     <ClCompile Include="FieldItem.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameClear.cpp" />
-    <ClCompile Include="GameOver.cpp" />
-    <ClCompile Include="HandleItemSelect.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="ItemSelect.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MainItemSelect.cpp" />
-    <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="Adv.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapObjects.cpp" />
     <ClCompile Include="MapTerrain.cpp" />
@@ -174,59 +165,70 @@
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="MyRandom.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Production.cpp" />
-    <ClCompile Include="ProductionSectionBase.cpp" />
-    <ClCompile Include="RecipeSelect.cpp" />
-    <ClCompile Include="Report.cpp" />
-    <ClCompile Include="Sale.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="StageSelection.cpp" />
-    <ClCompile Include="Title.cpp" />
+    <ClCompile Include="Scene\Adv.cpp" />
+    <ClCompile Include="Scene\Buy.cpp" />
+    <ClCompile Include="Scene\Collection.cpp" />
+    <ClCompile Include="Scene\CreateRun.cpp" />
+    <ClCompile Include="Scene\EndCredit.cpp" />
+    <ClCompile Include="Scene\GameClear.cpp" />
+    <ClCompile Include="Scene\GameOver.cpp" />
+    <ClCompile Include="Scene\HandleItemSelect.cpp" />
+    <ClCompile Include="Scene\ItemSelect.cpp" />
+    <ClCompile Include="Scene\MainItemSelect.cpp" />
+    <ClCompile Include="Scene\MainMenu.cpp" />
+    <ClCompile Include="Scene\Production.cpp" />
+    <ClCompile Include="Scene\ProductionSectionBase.cpp" />
+    <ClCompile Include="Scene\RecipeSelect.cpp" />
+    <ClCompile Include="Scene\Report.cpp" />
+    <ClCompile Include="Scene\Sale.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Scene\StageSelection.cpp" />
+    <ClCompile Include="Scene\Title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ADVSimpleScript.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="CreateRun.h" />
     <ClInclude Include="DataCsv.h" />
     <ClInclude Include="DataLoad.h" />
     <ClInclude Include="DataSave.h" />
-    <ClInclude Include="EndCredit.h" />
     <ClInclude Include="FieldItem.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="HandleItemSelect.h" />
     <ClInclude Include="Image.h" />
-    <ClInclude Include="ItemSelect.h" />
-    <ClInclude Include="MainItemSelect.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapObjects.h" />
     <ClInclude Include="MapTerrain.h" />
     <ClInclude Include="Music.h" />
     <ClInclude Include="MyMath.h" />
-    <ClInclude Include="Buy.h" />
-    <ClInclude Include="Collection.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="GameOver.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MyRandom.h" />
     <ClInclude Include="MyTimer.h" />
-    <ClInclude Include="Adv.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Production.h" />
-    <ClInclude Include="ProductionFlagManager.h" />
-    <ClInclude Include="ProductionSectionBase.h" />
-    <ClInclude Include="RecipeSelect.h" />
-    <ClInclude Include="Report.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Sale.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Scene\Adv.h" />
+    <ClInclude Include="Scene\Buy.h" />
+    <ClInclude Include="Scene\Collection.h" />
+    <ClInclude Include="Scene\CreateRun.h" />
+    <ClInclude Include="Scene\EndCredit.h" />
+    <ClInclude Include="Scene\GameClear.h" />
+    <ClInclude Include="Scene\GameOver.h" />
+    <ClInclude Include="Scene\HandleItemSelect.h" />
+    <ClInclude Include="Scene\ItemSelect.h" />
+    <ClInclude Include="Scene\MainItemSelect.h" />
+    <ClInclude Include="Scene\MainMenu.h" />
+    <ClInclude Include="Scene\Production.h" />
+    <ClInclude Include="Scene\ProductionFlagManager.h" />
+    <ClInclude Include="Scene\ProductionSectionBase.h" />
+    <ClInclude Include="Scene\RecipeSelect.h" />
+    <ClInclude Include="Scene\Report.h" />
+    <ClInclude Include="Scene\Sale.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Scene\StageSelection.h" />
+    <ClInclude Include="Scene\Title.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Singleton.h" />
-    <ClInclude Include="StageSelection.h" />
-    <ClInclude Include="Title.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="myIcon.rc" />

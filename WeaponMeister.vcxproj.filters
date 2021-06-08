@@ -33,9 +33,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Buy.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
@@ -69,59 +66,62 @@
     <ClCompile Include="Music.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Adv.cpp">
+    <ClCompile Include="Scene\Adv.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Collection.cpp">
+    <ClCompile Include="Scene\Buy.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="EndCredit.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameClear.cpp">
+    <ClCompile Include="Scene\Collection.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="GameOver.cpp">
+    <ClCompile Include="Scene\CreateRun.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="MainMenu.cpp">
+    <ClCompile Include="Scene\EndCredit.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Production.cpp">
+    <ClCompile Include="Scene\GameClear.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Report.cpp">
+    <ClCompile Include="Scene\GameOver.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Sale.cpp">
+    <ClCompile Include="Scene\HandleItemSelect.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
+    <ClCompile Include="Scene\ItemSelect.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="StageSelection.cpp">
+    <ClCompile Include="Scene\MainItemSelect.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Title.cpp">
+    <ClCompile Include="Scene\MainMenu.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="RecipeSelect.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Scene\Production.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="ProductionSectionBase.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Scene\ProductionSectionBase.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="HandleItemSelect.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Scene\RecipeSelect.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="MainItemSelect.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Scene\Report.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="ItemSelect.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Scene\Sale.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="CreateRun.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Scene\SceneManager.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\StageSelection.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Title.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,9 +136,6 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Buy.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -194,65 +191,68 @@
     <ClInclude Include="Music.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Adv.h">
+    <ClInclude Include="Scene\Title.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Collection.h">
+    <ClInclude Include="Scene\StageSelection.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="EndCredit.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameClear.h">
+    <ClInclude Include="Scene\SceneManager.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="GameOver.h">
+    <ClInclude Include="Scene\Sale.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="MainMenu.h">
+    <ClInclude Include="Scene\Scene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Production.h">
+    <ClInclude Include="Scene\Report.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Report.h">
+    <ClInclude Include="Scene\Production.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Sale.h">
+    <ClInclude Include="Scene\ProductionFlagManager.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
+    <ClInclude Include="Scene\ProductionSectionBase.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
+    <ClInclude Include="Scene\RecipeSelect.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="StageSelection.h">
+    <ClInclude Include="Scene\MainItemSelect.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Title.h">
+    <ClInclude Include="Scene\MainMenu.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="RecipeSelect.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scene\ItemSelect.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="ProductionSectionBase.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scene\HandleItemSelect.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="HandleItemSelect.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scene\GameOver.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="MainItemSelect.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scene\GameClear.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="ItemSelect.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scene\EndCredit.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CreateRun.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scene\CreateRun.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="ProductionFlagManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scene\Collection.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Buy.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Adv.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
