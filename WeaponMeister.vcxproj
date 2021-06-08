@@ -79,9 +79,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -151,14 +153,18 @@
     <ClCompile Include="ADVSimpleScript.cpp" />
     <ClCompile Include="Buy.cpp" />
     <ClCompile Include="Collection.cpp" />
+    <ClCompile Include="CreateRun.cpp" />
     <ClCompile Include="EndCredit.cpp" />
     <ClCompile Include="FieldItem.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameOver.cpp" />
+    <ClCompile Include="HandleItemSelect.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="ItemSelect.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainItemSelect.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Adv.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -169,6 +175,8 @@
     <ClCompile Include="MyRandom.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Production.cpp" />
+    <ClCompile Include="ProductionSectionBase.cpp" />
+    <ClCompile Include="RecipeSelect.cpp" />
     <ClCompile Include="Report.cpp" />
     <ClCompile Include="Sale.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -178,13 +186,17 @@
   <ItemGroup>
     <ClInclude Include="ADVSimpleScript.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CreateRun.h" />
     <ClInclude Include="DataCsv.h" />
     <ClInclude Include="DataLoad.h" />
     <ClInclude Include="DataSave.h" />
     <ClInclude Include="EndCredit.h" />
     <ClInclude Include="FieldItem.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HandleItemSelect.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="ItemSelect.h" />
+    <ClInclude Include="MainItemSelect.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapObjects.h" />
     <ClInclude Include="MapTerrain.h" />
@@ -203,6 +215,9 @@
     <ClInclude Include="Adv.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Production.h" />
+    <ClInclude Include="ProductionFlagManager.h" />
+    <ClInclude Include="ProductionSectionBase.h" />
+    <ClInclude Include="RecipeSelect.h" />
     <ClInclude Include="Report.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Sale.h" />

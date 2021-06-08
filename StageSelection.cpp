@@ -1,13 +1,11 @@
 #include "StageSelection.h"
 
 #include "Map.h"
-#include "Production.h"
+#include "ProductionSectionBase.h"
 #include "Adv.h"
 #include "Input.h"
 #include "Screen.h"
 #include "Music.h"
-
-Production production;
 
 int StageSelection::mapCount = 1;
 int StageSelection::stageNum = 0;
@@ -36,8 +34,8 @@ void StageSelection::Init()
 			canMakeWeapon_ += KindofCanWeaponsMake_[i];
 			for (int j = 0; j < alreadyTrueWapon_ + canMakeWeapon_; j++)
 			{
-				Production::canWeaponMake_[j] = true;
-				Production::canWeaponMake_[j + Production::canWeaponMake_.size() / 2] = true;
+				ProductionSectionBase::canWeaponMake_[j] = true;
+				ProductionSectionBase::canWeaponMake_[j + ProductionSectionBase::canWeaponMake_.size() / 2] = true;
 			}
 			addMapList_[i] = true;
 		}
