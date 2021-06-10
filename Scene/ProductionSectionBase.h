@@ -3,6 +3,7 @@
 
 #include "GameManager.h"
 #include "SceneManager.h"
+#include <unordered_map>
 #include <DxLib.h>
 
 class ProductionSectionBase
@@ -17,26 +18,10 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
-	static std::vector<bool> canWeaponMake_;
+	static std::unordered_map<std::string, bool> canWeaponMake;
+	static const std::string canWeaponMakeKeys[14];
 
 protected:
-	// 武器レシピGetフラグ
-	static bool canWoodSword_;
-	static bool canJawaSword_;
-	static bool canEnriSword_;
-	static bool canKeinSword_;
-	static bool canShizukuSword_;
-	static bool canSaintSword_;
-	static bool canGodWoodSword_;
-
-	static bool canStoneSword_;
-	static bool canIronOreSword_;
-	static bool canJadeSword_;
-	static bool canDiamondSword_;
-	static bool canCarbonadeSword_;
-	static bool canOrichalcumSword_;
-	static bool canGodStoneSword_;
-
 	const int CsvSkipCell_ = 2;
 	const int CsvTypeCheckFine_ = 5;
 	const int CsvTypeCheck_ = 6;

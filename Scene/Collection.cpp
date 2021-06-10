@@ -301,7 +301,6 @@ void Collection::Update()
 			if (Input::GetButtonDown(PAD_INPUT_1))
 			{
 				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-				clsDx();
 				sm.LoadScene("Buy");
 			}
 		}

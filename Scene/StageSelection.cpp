@@ -34,8 +34,8 @@ void StageSelection::Init()
 			canMakeWeapon_ += KindofCanWeaponsMake_[i];
 			for (int j = 0; j < alreadyTrueWapon_ + canMakeWeapon_; j++)
 			{
-				ProductionSectionBase::canWeaponMake_[j] = true;
-				ProductionSectionBase::canWeaponMake_[j + ProductionSectionBase::canWeaponMake_.size() / 2] = true;
+				ProductionSectionBase::canWeaponMake[ProductionSectionBase::canWeaponMakeKeys[j]] = true;
+				ProductionSectionBase::canWeaponMake[ProductionSectionBase::canWeaponMakeKeys[j + 7]] = true;
 			}
 			addMapList_[i] = true;
 		}
