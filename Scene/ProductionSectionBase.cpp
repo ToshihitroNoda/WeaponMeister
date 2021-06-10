@@ -1,20 +1,20 @@
 #include "ProductionSectionBase.h"
 
-bool ProductionSectionBase::canWoodSword_ = true;
-bool ProductionSectionBase::canJawaSword_ = true;
-bool ProductionSectionBase::canEnriSword_ = false;
-bool ProductionSectionBase::canKeinSword_ = false;
-bool ProductionSectionBase::canShizukuSword_ = false;
-bool ProductionSectionBase::canSaintSword_ = false;
-bool ProductionSectionBase::canGodWoodSword_ = false;
+std::unordered_map<std::string, bool> ProductionSectionBase::canWeaponMake
+{
+	{"WoodSword", true}      , {"JawaSword", true}       , {"EnriSword", false}   , {"KeinSword", false},
+	{"ShizukuSword", false}  , {"SaintSword", false}     , {"GodWoodSword", false},
+	{"StoneSword", true}     , {"IronOreSword", true}    , {"JadeSword", false}   , {"DiamondSword", false},
+	{"CarbonadeSword", false}, {"OrichalcumSword", false}, {"GodStoneSword", false}
+};
 
-bool ProductionSectionBase::canStoneSword_ = true;
-bool ProductionSectionBase::canIronOreSword_ = true;
-bool ProductionSectionBase::canJadeSword_ = false;
-bool ProductionSectionBase::canDiamondSword_ = false;
-bool ProductionSectionBase::canCarbonadeSword_ = false;
-bool ProductionSectionBase::canOrichalcumSword_ = false;
-bool ProductionSectionBase::canGodStoneSword_ = false;
+const std::string ProductionSectionBase::canWeaponMakeKeys[14]
+{
+	"WoodSword"     , "JawaSword"      , "EnriSword"    , "KeinSword",
+	"ShizukuSword"  , "SaintSword"     , "GodWoodSword" ,
+	"StoneSword"    , "IronOreSword"   , "JadeSword"    , "DiamondSword",
+	"CarbonadeSword", "OrichalcumSword", "GodStoneSword"
+};
 
 int ProductionSectionBase::cursorX_ = 0;
 int ProductionSectionBase::cursorY_ = 0;
@@ -41,12 +41,6 @@ std::vector<int> ProductionSectionBase::ItemPosOnThePouch_;
 std::vector<int> ProductionSectionBase::SelectItemPosOnThePouch_;
 std::vector<int> ProductionSectionBase::PouchDrawErea_;
 std::vector<int> ProductionSectionBase::NowDrawPosOnPouch_;
-
-std::vector<bool> ProductionSectionBase::canWeaponMake_
-{ canWoodSword_     , canJawaSword_      , canEnriSword_    , canKeinSword_,
-  canShizukuSword_  , canSaintSword_     , canGodWoodSword_ ,
-  canStoneSword_    , canIronOreSword_   , canJadeSword_    , canDiamondSword_,
-  canCarbonadeSword_, canOrichalcumSword_, canGodStoneSword_ };
 
 void ProductionSectionBase::GetHandleForWeaponMake()
 {

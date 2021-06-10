@@ -75,9 +75,9 @@ void RecipeSelect::Update()
 		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 		sm.LoadScene("Sale");
 	}
+
 	if (!Input::GetButtonDown(PAD_INPUT_1))
 		return;
-
 	if (cursorX_ == CursorX_ProceedNextPart_ && cursorY_ == CursorY_ProceedNextPart_)
 	{
 		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
@@ -86,11 +86,11 @@ void RecipeSelect::Update()
 	else
 	{
 		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-		if (canWeaponMake_[weaponID_ / 2])                  // 選択した武器が作れるなら
+		if (canWeaponMake[canWeaponMakeKeys[weaponID_ / 2]])  // 選択した武器が作れるなら
 		{
 			recipeSelection_ = true;                        // フラグを立てる
 
-			if (weaponID_ < canWeaponMake_.size())          // 木製武器選択
+			if (weaponID_ < sizeof(canWeaponMakeKeys) / sizeof(std::string))          // 木製武器選択
 			{
 				ItemType_ = gm.itemData[CsvTypeCheck_][CsvSkipCell_];
 				cursorInit_ = true;
@@ -110,9 +110,9 @@ void RecipeSelect::Draw()
 
 	DrawGraph(WindowX_, RecipeWindowY_, gm.image.recipeWindow, TRUE);
 
-	for (int i = 0; i < canWeaponMake_.size(); i++)
+	for (int i = 0; i < sizeof(canWeaponMakeKeys) / sizeof(std::string); i++)
 	{
-		if (canWeaponMake_[i])
+		if (canWeaponMake[canWeaponMakeKeys[i]])
 		{
 			DrawString(DrawWeaponName_LeftLine_X_, DrawWeaponName_Y_ + (CursorY_MoveVerticalWidth_RecipeSelect_ * i), weaponName_[i * 2].c_str(), gm.colorWhite);
 			DrawString(DrawWeaponName_RightLine_X_, DrawWeaponName_Y_ + (CursorY_MoveVerticalWidth_RecipeSelect_ * i), weaponName_[i * 2 + 1].c_str(), gm.colorWhite);
