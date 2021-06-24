@@ -1,12 +1,6 @@
 #include "ItemSelect.h"
 #include "Input.h"
 #include "Music.h"
-#include "HandleItemSelect.h"
-#include "MainItemSelect.h"
-#include "CreateRun.h"
-
-HandleItemSelect handleItemSelectSection;
-MainItemSelect   mainItemSelectSection;
 
 void ItemSelect::Update()
 {
@@ -159,13 +153,13 @@ void ItemSelect::Update()
 		// Ž‚¿Žè•”•ª‘fÞ‘I‘ð
 		if (!shouldWeaponMainCreate_)
 		{
-			handleItemSelectSection.Update();
+			handleItemSelectSection_.Update();
 		}
 
 		// ƒƒCƒ“•”•ª‘fÞ‘I‘ð 
 		else
 		{
-			mainItemSelectSection.Update();
+			mainItemSelectSection_.Update();
 		}
 	}
 	else
@@ -247,10 +241,10 @@ void ItemSelect::Draw()
 	DrawGraph(MakeWeaponX_, MakeWeaponY_, gm.image.weaponIcons[weaponID_], TRUE);
 
 	// Ž‚¿Žè•”•ª‚Ì‘fÞ•`‰æ
-	handleItemSelectSection.Draw();
+	handleItemSelectSection_.Draw();
 
 	// ƒƒCƒ“•”•ª‚Ì‘fÞ•`‰æ 
-	mainItemSelectSection.Draw();
+	mainItemSelectSection_.Draw();
 
 	if (cursorX_ >= CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
 		DrawGraph(cursorX_, cursorY_, gm.image.itemSelection, TRUE);

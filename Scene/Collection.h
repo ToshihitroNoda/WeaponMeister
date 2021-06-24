@@ -27,8 +27,6 @@ public:
 	void ItemGet();
 
 private:
-	StageSelection stageSelection;
-
 	const int DrawGetItemCountMax_     = 120;
 	const int DrawGetItemCountMinimum_ = 5;
 

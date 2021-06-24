@@ -1,15 +1,5 @@
 #include "MapTerrain.h"
 
-void MapTerrain::Init()
-{
-
-}
-
-void MapTerrain::Update()
-{
-
-}
-
 void MapTerrain::Draw()
 {
 	if (tag == "Grass")
@@ -28,11 +18,6 @@ void MapTerrain::Draw()
 	{
 		DrawModel(gm.image.Terrain_Block_4);
 	}
-}
-
-void MapTerrain::OnCollision(std::shared_ptr<GameObject> other)
-{
-
 }
 
 void MapTerrain::DrawModel(int MV1Handle)

@@ -37,10 +37,8 @@ public:
 
 	~MapObjects() = default;
 
-	void Init();
-	void Update();
-	void Draw();
-	void OnCollision(std::shared_ptr<GameObject> other);
+	void Update() override {};
+	void Draw() override;
 	void DrawModel(int MV1Handle);
 
 private:

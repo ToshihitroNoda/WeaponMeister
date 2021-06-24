@@ -5,8 +5,6 @@
 #include "Adv.h"
 #include <algorithm>
 
-DataLoad dataload;
-
 int Sale::saleAmount = 0;
 
 void Sale::Init()
@@ -258,7 +256,7 @@ void Sale::Update()
 					retryLastDay_ = true;
 					if (drawalert_ && Input::GetButtonDown(PAD_INPUT_1))
 					{
-						dataload.Load();
+						dataload_.Load();
 						sm.LoadScene("Adv");
 					}
 				}

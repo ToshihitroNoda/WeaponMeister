@@ -3,10 +3,7 @@
 
 #include "MainMenu.h"
 #include "Input.h"
-#include "DataLoad.h"
 #include "Music.h"
-
-DataLoad dataLoad;
 
 void MainMenu::Init()
 {
@@ -50,7 +47,7 @@ void MainMenu::Update()
 		std::ifstream ifs("savedata.dat");
 		if (ifs.is_open())
 		{
-			dataLoad.Load();
+			dataLoad_.Load();
 			sm.LoadScene("Adv");
 		}
 		else

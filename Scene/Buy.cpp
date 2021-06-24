@@ -3,8 +3,6 @@
 #include "Adv.h"
 #include "Music.h"
 
-StageSelection stageSelection;
-
 int Buy::buyAmount = 0;
 
 void Buy::Init()

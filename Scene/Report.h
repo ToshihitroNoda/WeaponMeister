@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "GameManager.h"
+#include "DataSave.h"
 
 class Report : public Scene
 {
@@ -23,7 +24,10 @@ public:
 	void Draw() override;
 
 	static int prevMoney;
+
 private:
+	DataSave dataSave_;
+
 	const int LastDay_ = 14;
 
 	const int NextMassegeX_ = 900;

@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "GameManager.h"
 #include "StageSelection.h"
+#include "DataLoad.h"
 
 class Sale : public Scene
 {
@@ -25,6 +26,8 @@ public:
 	static int saleAmount;
 
 private:
+	DataLoad dataload_;
+
 	const int PouchWindowX_  = 60;
 	const int PouchWindowY_  = 120;
 	const int MoneyWindowX_  = 60;

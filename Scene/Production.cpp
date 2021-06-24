@@ -5,25 +5,11 @@
 #include "Music.h"
 #include <DxLib.h>
 
-#include "RecipeSelect.h"
-#include "ItemSelect.h"
-#include "HandleItemSelect.h"
-#include "MainItemSelect.h"
-#include "CreateRun.h"
-#include "ProductionFlagManager.h"
-
-RecipeSelect recipeSelect;
-ItemSelect itemSelect;
-HandleItemSelect handleItemSelect;
-MainItemSelect mainItemSelect;
-CreateRun createRun;
-ProductionFlagManager productionFlag;
-
 void Production::Init()
 {
 	gm.image.Load(tag);
 
-	recipeSelect.Init();
+	recipeSelect_.Init();
 
 	if (Adv::day != 1)
 		is_Operation_Description_Been_ = true;
@@ -38,19 +24,19 @@ void Production::Final()
 
 void Production::Update()
 {
-	if (!recipeSelect.recipeSelection_ && is_Operation_Description_Been_)
+	if (!recipeSelect_.recipeSelection_ && is_Operation_Description_Been_)
 	{
-		recipeSelect.Update();
+		recipeSelect_.Update();
 	}
 
 	/*----- 使用素材選択 -----*/
 	else if (is_Operation_Description_Been_)
 	{
-		if (!productionFlag.shouldCreate)
-			itemSelect.Update();
+		if (!productionFlag_.shouldCreate)
+			itemSelect_.Update();
 		// 素材選択後。武器生成 
 		else
-			createRun.Update();
+			createRun_.Update();
 	}
 	if (!is_Operation_Description_Been_)
 	{
@@ -63,40 +49,40 @@ void Production::Update()
 				is_Operation_Description_Been_ = true;
 		}
 	}
-	if (productionFlag.doAllFormat)
+	if (productionFlag_.doAllFormat)
 		Format();
 
-	productionFlag.Update();
+	productionFlag_.Update();
 }
 
 void Production::Format()
 {
-	productionFlag.scrollCount = 0;
+	productionFlag_.scrollCount = 0;
 	// フラグを初期化
-	productionFlag.cursorInit = true;
-	productionFlag.shouldWeaponMainCreate = false;
-	recipeSelect.recipeSelection_ = false;
-	productionFlag.shouldCreate = false;
-	productionFlag.itemDetail = false;
-	createRun.MakeEnd = false;
-	productionFlag.doAllFormat = false;
-	itemSelect.playErrorSound = false;
+	productionFlag_.cursorInit = true;
+	productionFlag_.shouldWeaponMainCreate = false;
+	recipeSelect_.recipeSelection_ = false;
+	productionFlag_.shouldCreate = false;
+	productionFlag_.itemDetail = false;
+	createRun_.MakeEnd = false;
+	productionFlag_.doAllFormat = false;
+	itemSelect_.playErrorSound = false;
 	// リストをクリア(初期化)
 	gm.handles.clear();
 	gm.handlesQuality.clear();
 	gm.main.clear();
 	gm.mainQuality.clear();
-	productionFlag.itemForWeaponMake.clear();
-	productionFlag.itemQualityForWeaponMake.clear();
-	productionFlag.SelectItemPosOnThePouch.clear();
-	productionFlag.ItemPosOnThePouch.clear();
-	recipeSelect.weaponName_.clear();
+	productionFlag_.itemForWeaponMake.clear();
+	productionFlag_.itemQualityForWeaponMake.clear();
+	productionFlag_.SelectItemPosOnThePouch.clear();
+	productionFlag_.ItemPosOnThePouch.clear();
+	recipeSelect_.weaponName_.clear();
 	// CSVを破棄
 	gm.itemData.clear();
 	gm.weaponData.clear();
 	// 最初に戻る
-	productionFlag.Final();
-	recipeSelect.Init();
+	productionFlag_.Final();
+	recipeSelect_.Init();
 }
 
 void Production::Draw()
@@ -104,27 +90,27 @@ void Production::Draw()
 	DrawGraph(0, 0, gm.image.productionBack, TRUE);
 
 	// 作成武器選択時描画
-	if (!recipeSelect.recipeSelection_ && !createRun.MakeEnd)
+	if (!recipeSelect_.recipeSelection_ && !createRun_.MakeEnd)
 	{
-		recipeSelect.Draw();
+		recipeSelect_.Draw();
 	}
 	// 素材選択時描画
-	else if (!createRun.MakeEnd)
+	else if (!createRun_.MakeEnd)
 	{
-		itemSelect.Draw();
+		itemSelect_.Draw();
 	}
 	// 素材選択後武器生成アニメーション
 	else
 	{
-		createRun.Draw();
+		createRun_.Draw();
 	}
 
-	if (productionFlag.weaponMakeAssert)
+	if (productionFlag_.weaponMakeAssert)
 	{
-		if (!itemSelect.playErrorSound)
+		if (!itemSelect_.playErrorSound)
 		{
 			PlaySoundMem(Music::error_SE, DX_PLAYTYPE_BACK);
-			itemSelect.playErrorSound = true;
+			itemSelect_.playErrorSound = true;
 		}
 		std::string drawMassege = "素材数が足りないか、必要素材が選択されていません。";
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 122);

@@ -2,6 +2,8 @@
 #define ITEMSELECT_H_
 
 #include "ProductionSectionBase.h"
+#include "HandleItemSelect.h"
+#include "MainItemSelect.h"
 
 class ItemSelect : public ProductionSectionBase
 {
@@ -13,7 +15,10 @@ public:
 	void Draw() override;
 
 	bool playErrorSound = false;
+
 private:
+	HandleItemSelect handleItemSelectSection_;
+	MainItemSelect   mainItemSelectSection_;
 
 	const int CursorX_Min_ItemSelect_ = 84;
 	const int CursorY_Min_ItemSelect_ = 139;

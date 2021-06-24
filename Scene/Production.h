@@ -6,6 +6,12 @@
 #include "GameManager.h"
 #include "DataCsv.h"
 #include "Screen.h"
+#include "RecipeSelect.h"
+#include "ItemSelect.h"
+#include "HandleItemSelect.h"
+#include "MainItemSelect.h"
+#include "CreateRun.h"
+#include "ProductionFlagManager.h"
 
 class Production : public Scene
 {
@@ -27,6 +33,13 @@ public:
 	static std::vector<bool> canWeaponMake_;
 
 private:
+	RecipeSelect recipeSelect_;
+	ItemSelect itemSelect_;
+	HandleItemSelect handleItemSelect_;
+	MainItemSelect mainItemSelect_;
+	CreateRun createRun_;
+	ProductionFlagManager productionFlag_;
+
 	void Format();
 
 	int operationDescriptionMassegeNum_ = 0;

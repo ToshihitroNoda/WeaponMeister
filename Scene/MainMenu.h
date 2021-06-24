@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "GameManager.h"
+#include "DataLoad.h"
 
 class MainMenu : public Scene
 {
@@ -22,6 +23,8 @@ public:
 	void Draw() override;
 
 private:
+	DataLoad dataLoad_;
+
 	const int MenuStrX_Init_ = 1000;
 	const int MenuStrY_Init_ = 500;
 	const int MenuStrY_Dist_ = 80;

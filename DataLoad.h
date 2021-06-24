@@ -8,7 +8,7 @@
 #include "StageSelection.h"
 #include "GameManager.h"
 
-struct Status {
+struct LStatus {
 	int day;
 	int money;
 	int mapCount;
@@ -34,19 +34,19 @@ public:
 		* 日にち、ポーチ内のアイテム・装備、それぞれの品質、所持金
 		*/
 
-		Status status = { 0 };
+		LStatus lStatus = { 0 };
 
 		file.open("savedata.dat", std::ios::binary | std::ios::in);
 
-		file.read((char*)&status, sizeof(status));
+		file.read((char*)&lStatus, sizeof(lStatus));
 
-		Adv::day                 = status.day;
-		gm.money                 = status.money;
-		StageSelection::mapCount = status.mapCount;
-		gm.pouch.resize(status.pouchSize);
-		gm.pouchQuality.resize(status.pouchQSize);
-		gm.weapons.resize(status.weaponSize);
-		gm.weaponQuality.resize(status.WeaponQSize);
+		Adv::day                 = lStatus.day;
+		gm.money                 = lStatus.money;
+		StageSelection::mapCount = lStatus.mapCount;
+		gm.pouch.resize(lStatus.pouchSize);
+		gm.pouchQuality.resize(lStatus.pouchQSize);
+		gm.weapons.resize(lStatus.weaponSize);
+		gm.weaponQuality.resize(lStatus.WeaponQSize);
 
 		for (int i = 0; i < gm.pouch.size(); i++)
 		{

@@ -63,8 +63,8 @@ public:
 	void MoveZ();
 
 	void Init();
-	void Update();
-	void Draw();
+	void Update() override;
+	void Draw() override;
 	void OnCollision(std::shared_ptr<GameObject> other);
 
 	void AnimationAttach(int AtnimIndex);

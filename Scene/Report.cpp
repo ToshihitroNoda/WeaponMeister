@@ -8,9 +8,6 @@
 #include "Buy.h"
 #include "Sale.h"
 #include "Music.h"
-#include "DataSave.h"
-
-DataSave dataSave;
 
 int Report::prevMoney = 1000;
 
@@ -26,7 +23,7 @@ void Report::Init()
 	gm.money = finalMoney_;
 
 	if (gm.money > 0)		// 所持金がなかったらセーブしないでゲームオーバー
-		dataSave.Save();
+		dataSave_.Save();
 
 	if (Adv::day != 1)
 		is_Operation_Description_Been_ = true;
