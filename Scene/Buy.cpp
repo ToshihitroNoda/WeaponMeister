@@ -1,7 +1,7 @@
 #include "Buy.h"
-#include "Input.h"
+#include "../MyLib/Input.h"
 #include "Adv.h"
-#include "Music.h"
+#include "../Music.h"
 
 int Buy::buyAmount = 0;
 
@@ -12,6 +12,7 @@ void Buy::Init()
 
 	buyItems_.clear();
 	buyItemsQuality_.clear();
+
 	for (int i = CsvSkipCell_; i < gm.itemData[0].size(); i++)
 	{
 		if ((int)gm.itemData[CsvItemMapCell_][i] < StageSelection::mapCount)
@@ -103,7 +104,7 @@ void Buy::Update()
 		{
 			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 			buyAmount = beforeMoney_ - gm.money;
-			sm.LoadScene("Production");
+			isDead = true;
 		}
 
 		if (cursorX_ == CursorX_Buy_Select_ && cursorY_ == CursorY_Buy_Select_)
@@ -112,7 +113,7 @@ void Buy::Update()
 			{
 				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 				buyAmount = beforeMoney_ - gm.money;
-				sm.LoadScene("Production");
+				isDead = true;
 			}
 		}
 		// w“üˆ—
@@ -125,8 +126,7 @@ void Buy::Update()
 			{
 				PlaySoundMem(Music::money_SE, DX_PLAYTYPE_BACK);
 				gm.money -= (int)gm.itemData[CsvItemPriceCell_][buyItems_[selectIconNum_] + CsvSkipCell_];
-				gm.pouch.push_back(buyItems_[selectIconNum_]);
-				gm.pouchQuality.push_back(buyItemsQuality_[selectIconNum_]);
+				gm.pouch.Add(buyItems_[selectIconNum_], buyItemsQuality_[selectIconNum_]);
 			}
 		}
 
@@ -134,9 +134,8 @@ void Buy::Update()
 		if (Input::GetButtonDown(PAD_INPUT_2) && gm.pouch.size() > beforeBuyPouchSize_)
 		{
 			PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
-			gm.money += (int)gm.itemData[CsvItemPriceCell_][gm.pouch.back() + CsvSkipCell_];
-			gm.pouch.erase(gm.pouch.end() - 1);
-			gm.pouchQuality.erase(gm.pouchQuality.end() - 1);
+			gm.money += (int)gm.itemData[CsvItemPriceCell_][gm.pouch.item_back() + CsvSkipCell_];
+			gm.pouch.EraseToEnd(1);
 		}
 
 		if (Input::GetButtonDown(PAD_INPUT_3) && selectIconNum_ < buyItems_.size())
@@ -153,12 +152,17 @@ void Buy::Update()
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
 			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-			if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
-				operationDescriptionMassegeNum_++;
+			if (operationDescriptionMessageNum_ < sizeof(description_) / sizeof(*description_) - 1)
+				operationDescriptionMessageNum_++;
 			else
 				is_Operation_Description_Been_ = true;
 		}
 	}
+}
+
+void Buy::Change()
+{
+	sm.LoadScene("Production");
 }
 
 void Buy::Draw()
@@ -179,13 +183,13 @@ void Buy::Draw()
 
 	int x = 0;
 	int y = 0;
-	for (size_t i = 0; i < buyItems_.size(); i++)
+	for (int i = 0; i < buyItems_.size(); i++)
 	{
 		DrawGraph
 		(itemX_ + x * CursorX_MoveVerticalWidth_ItemSelect_,
-			itemY_ + y * CursorY_MoveVerticalWidth_ItemSelect_,
-			gm.image.itemIcons[buyItems_[x + (y * ItemID_ByLineBreak_ItemSelect_)]],
-			TRUE);
+		 itemY_ + y * CursorY_MoveVerticalWidth_ItemSelect_,
+		 gm.image.itemIcons[buyItems_[i]],
+		 TRUE);
 
 		if (x < ItemID_ByLineBreak_ItemSelect_ - 1)
 		{
@@ -198,7 +202,7 @@ void Buy::Draw()
 		}
 	}
 
-	DrawItems_ = gm.pouch;
+	DrawItems_ = gm.pouch.item_copy();
 	if (gm.pouch.size() > DrawPouchMax_)
 	{
 		allLine_ = gm.pouch.size() / ItemID_ByLineBreak_ItemSelect_ + 1;
@@ -211,9 +215,9 @@ void Buy::Draw()
 	{
 		DrawGraph
 		(pouchItemX_ + pouchX * CursorX_MoveVerticalWidth_ItemSelect_,
-			itemY_ + pouchY * CursorY_MoveVerticalWidth_ItemSelect_,
-			gm.image.itemIcons[DrawItems_[pouchX + (pouchY * ItemID_ByLineBreak_ItemSelect_)]],
-			TRUE);
+		 itemY_ + pouchY * CursorY_MoveVerticalWidth_ItemSelect_,
+		 gm.image.itemIcons[DrawItems_[pouchX + (pouchY * ItemID_ByLineBreak_ItemSelect_)]],
+		 TRUE);
 
 		if (pouchX < ItemID_ByLineBreak_ItemSelect_ - 1)
 		{
@@ -258,7 +262,7 @@ void Buy::Draw()
 		std::string drawNextDescription = "ZƒL[‚ÅŽŸ‚Ö";
 		int DrawWidthUnder = GetDrawStringWidth(drawNextDescription.c_str(), -1);
 		DrawString((Screen::width - DrawWidthUnder) / 2, (Screen::height - (Screen::height / 4) + 30), drawNextDescription.c_str(), gm.colorWhite);
-		std::string drawMassege = description_[operationDescriptionMassegeNum_];
+		std::string drawMassege = description_[operationDescriptionMessageNum_];
 		int DrawWidth = GetDrawStringWidth(drawMassege.c_str(), -1);
 		DrawString((Screen::width - DrawWidth) / 2, (Screen::height - (Screen::height / 4)), drawMassege.c_str(), gm.colorWhite);
 	}

@@ -3,8 +3,8 @@
 
 #include "Scene.h"
 #include "SceneManager.h"
-#include "GameManager.h"
-#include "DataSave.h"
+#include "../GameManager.h"
+#include "../DataSave.h"
 
 class Report : public Scene
 {
@@ -21,6 +21,7 @@ public:
 	void Init() override;
 	void Final() override;
 	void Update() override;
+	void Change() override;
 	void Draw() override;
 
 	static int prevMoney;
@@ -30,8 +31,8 @@ private:
 
 	const int LastDay_ = 14;
 
-	const int NextMassegeX_ = 900;
-	const int NextMassegeY_ = 650;
+	const int NextMessageX_ = 900;
+	const int NextMessageY_ = 650;
 
 	const int AutoSaveX_ = 1000;
 	const int AutoSaveY_ = 10;
@@ -74,7 +75,7 @@ private:
 
 	int autoSaveCount_ = 120;
 
-	int operationDescriptionMassegeNum_ = 0;
+	int operationDescriptionMessageNum_ = 0;
 
 	bool is_Operation_Description_Been_ = false;
 

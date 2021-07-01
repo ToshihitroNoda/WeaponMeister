@@ -3,11 +3,11 @@
 #include <DxLib.h>
 #include <string>
 #include <sstream>
-#include "Input.h"
+#include "../MyLib/Input.h"
 #include "Adv.h"
 #include "Buy.h"
 #include "Sale.h"
-#include "Music.h"
+#include "../Music.h"
 
 int Report::prevMoney = 1000;
 
@@ -54,10 +54,7 @@ void Report::Update()
 				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 				prevMoney = finalMoney_;
 
-				if (finalMoney_ < 0)
-					sm.LoadScene("GameOver");
-				else
-					sm.LoadScene("Adv");
+				isDead = true;
 			}
 		}
 
@@ -69,12 +66,20 @@ void Report::Update()
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
 			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-			if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
-				operationDescriptionMassegeNum_++;
+			if (operationDescriptionMessageNum_ < sizeof(description_) / sizeof(*description_) - 1)
+				operationDescriptionMessageNum_++;
 			else
 				is_Operation_Description_Been_ = true;
 		}
 	}
+}
+
+void Report::Change()
+{
+	if (finalMoney_ < 0)
+		sm.LoadScene("GameOver");
+	else
+		sm.LoadScene("Adv");
 }
 
 void Report::Draw()
@@ -127,9 +132,9 @@ void Report::Draw()
 
 	}
 	if (pressCount_ >= DrawDataNums_)
-		DrawString(NextMassegeX_, NextMassegeY_, "Zキーで終了", gm.colorWhite);
+		DrawString(NextMessageX_, NextMessageY_, "Zキーで終了", gm.colorWhite);
 	else
-		DrawString(NextMassegeX_, NextMassegeY_, "Zキーで次へ", gm.colorWhite);
+		DrawString(NextMessageX_, NextMessageY_, "Zキーで次へ", gm.colorWhite);
 	SetFontSize(gm.DefaultFontSize_);
 
 	if (gm.money >= 0 && autoSaveCount_ > 0)
@@ -145,7 +150,7 @@ void Report::Draw()
 		std::string drawNextDescription = "Zキーで次へ";
 		int DrawWidthUnder = GetDrawStringWidth(drawNextDescription.c_str(), -1);
 		DrawString((Screen::width - DrawWidthUnder) / 2, (Screen::height - (Screen::height / 4) + 30), drawNextDescription.c_str(), gm.colorWhite);
-		std::string drawMassege = description_[operationDescriptionMassegeNum_];
+		std::string drawMassege = description_[operationDescriptionMessageNum_];
 		int DrawWidth = GetDrawStringWidth(drawMassege.c_str(), -1);
 		DrawString((Screen::width - DrawWidth) / 2, (Screen::height - (Screen::height / 4)), drawMassege.c_str(), gm.colorWhite);
 	}

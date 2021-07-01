@@ -1,8 +1,8 @@
 #ifndef MAINITEMSELECT_H_
 #define MAINITEMSELECT_H_
 
-#include "GameManager.h"
-#include "SceneManager.h"
+#include "../../GameManager.h"
+#include "../SceneManager.h"
 #include "ProductionSectionBase.h"
 
 class MainItemSelect : public ProductionSectionBase

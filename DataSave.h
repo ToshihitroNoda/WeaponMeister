@@ -4,8 +4,8 @@
 #include<fstream>
 #include<vector>
 
-#include "Adv.h"
-#include "StageSelection.h"
+#include "Scene/Adv.h"
+#include "Scene/StageSelection.h"
 #include "GameManager.h"
 
 struct SStatus {
@@ -13,9 +13,7 @@ struct SStatus {
 	int money;
 	int mapCount;
 	int pouchSize;
-	int pouchQSize;
 	int weaponSize;
-	int WeaponQSize;
 };
 
 class DataSave
@@ -37,9 +35,7 @@ public:
 		sStatus.money       = gm.money;
 		sStatus.mapCount    = StageSelection::mapCount;
 		sStatus.pouchSize   = gm.pouch.size();
-		sStatus.pouchQSize  = gm.pouchQuality.size();
 		sStatus.weaponSize  = gm.weapons.size();
-		sStatus.WeaponQSize = gm.weaponQuality.size();
 
 		std::fstream file;
 		file.open("savedata.dat", std::ios::binary | std::ios::out);
@@ -48,22 +44,26 @@ public:
 
 		for (int i = 0; i < gm.pouch.size(); i++)
 		{
-			file.write((char*)&gm.pouch[i], sizeof(gm.pouch[i]));
+			int saveData = gm.pouch.get_item_element(i);
+			file.write((char*)&saveData, sizeof(saveData));
 		}
 
-		for (int i = 0; i < gm.pouchQuality.size(); i++)
+		for (int i = 0; i < gm.pouch.size(); i++)
 		{
-			file.write((char*)&gm.pouchQuality[i], sizeof(gm.pouchQuality[i]));
+			int saveData = gm.pouch.get_quality_element(i);
+			file.write((char*)&saveData, sizeof(saveData));
 		}
 
 		for (int i = 0; i < gm.weapons.size(); i++)
 		{
-			file.write((char*)&gm.weapons[i], sizeof(gm.weapons[i]));
+			int saveData = gm.weapons.get_item_element(i);
+			file.write((char*)&saveData, sizeof(saveData));
 		}
 
-		for (int i = 0; i < gm.weaponQuality.size(); i++)
+		for (int i = 0; i < gm.weapons.size(); i++)
 		{
-			file.write((char*)&gm.weaponQuality[i], sizeof(gm.weaponQuality[i]));
+			int saveData = gm.weapons.get_quality_element(i);
+			file.write((char*)&saveData, sizeof(saveData));
 		}
 
 		file.close();

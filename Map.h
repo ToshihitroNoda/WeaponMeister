@@ -12,12 +12,12 @@
 
 #include "Screen.h"
 #include "GameManager.h"
-#include "GameObject.h"
-#include "MyMath.h"
-#include "FieldItem.h"
-#include "MapObjects.h"
-#include "MapTerrain.h"
-#include "DataCsv.h"
+#include "GameObjects/GameObject.h"
+#include "MyLib/MyMath.h"
+#include "GameObjects/FieldItem.h"
+#include "GameObjects/MapObjects.h"
+#include "GameObjects/MapTerrain.h"
+#include "MyLib/DataCsv.h"
 
 // CSVファイルの読込み & 当たり判定可能なマス目
 struct CsvCell : public DataCsv

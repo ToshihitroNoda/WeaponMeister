@@ -23,6 +23,9 @@ public:
 	// 更新処理
 	virtual void Update() = 0;
 
+	// シーン切り替え処理
+	virtual void Change() = 0;
+
 	// 描画処理
 	virtual void Draw()   = 0;
 

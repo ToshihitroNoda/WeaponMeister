@@ -1,8 +1,8 @@
 #include "GameOver.h"
-#include "Input.h"
-#include "ADVSimpleScript.h"
+#include "../MyLib/Input.h"
+#include "../MyLib/ADVSimpleScript.h"
 #include "Adv.h"
-#include "Music.h"
+#include "../Music.h"
 
 #include <sstream>
 
@@ -12,7 +12,7 @@ void GameOver::Init()
 
 	ADVSimpleScript::Init();
 
-	filePath_ = ("Resource/Massege/Massege_GameOver.csv");
+	filePath_ = ("Resource/Message/Message_GameOver.csv");
 
 	ADVSimpleScript::Load(filePath_);
 }
@@ -26,13 +26,13 @@ void GameOver::Final()
 
 void GameOver::Update()
 {
-	if (!massegeEnd_)
+	if (!messageEnd_)
 	{
 		if (ADVSimpleScript::LoadEnd_)
 		{
 			if (Input::GetButtonDown(PAD_INPUT_1) && !autoMode_ && !skipMode_)
 			{
-				ADVSimpleScript::MassegeCount++;
+				ADVSimpleScript::MessageCount++;
 			}
 			if (Input::GetButtonDown(PAD_INPUT_2) && !skipMode_)
 			{
@@ -53,7 +53,7 @@ void GameOver::Update()
 			{
 				if (autoCounter_ >= AutoSpeed_)
 				{
-					ADVSimpleScript::MassegeCount++;
+					ADVSimpleScript::MessageCount++;
 					autoCounter_ = 0;
 				}
 				autoCounter_++;
@@ -62,15 +62,15 @@ void GameOver::Update()
 			{
 				if (skipCounter_ >= SkipSpeed_)
 				{
-					ADVSimpleScript::MassegeCount++;
+					ADVSimpleScript::MessageCount++;
 					skipCounter_ = 0;
 				}
 				skipCounter_++;
 			}
 
-			if (ADVSimpleScript::MassegeCount >= ADVSimpleScript::massegeList.size())
+			if (ADVSimpleScript::MessageCount >= ADVSimpleScript::messageList.size())
 			{
-				massegeEnd_ = true;
+				messageEnd_ = true;
 			}
 		}
 		ADVSimpleScript::Update();
@@ -80,22 +80,27 @@ void GameOver::Update()
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
 			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-			remove("savedata.dat");
-			sm.LoadScene("Title");
+			isDead = true;
 		}
 	}
 }
 
+void GameOver::Change()
+{
+	remove("savedata.dat");
+	sm.LoadScene("Title");
+}
+
 void GameOver::Draw()
 {
-	if (!massegeEnd_)
+	if (!messageEnd_)
 	{
 		ADVSimpleScript::ImageDraw();
 
 		DrawGraph(WindowX_, WindowY_, gm.image.textWindow, TRUE);
 
 		if (ADVSimpleScript::LoadEnd_)
-			ADVSimpleScript::MassegeDraw(gm.colorWhite);
+			ADVSimpleScript::MessageDraw(gm.colorWhite);
 
 		if (autoMode_)
 			DrawBox(865, 690, 975, 705, gm.colorBlue, TRUE);
@@ -120,7 +125,7 @@ void GameOver::Draw()
 		std::stringstream ss;
 		ss << Adv::day;
 		DrawString(DayX_, DayY_, (ss.str() + " 日 ").c_str(), gm.colorWhite);
-		DrawString(NextMassegeX_, NextMassegeY_, "Zキーで終了", gm.colorWhite);
+		DrawString(NextMessageX_, NextMessageY_, "Zキーで終了", gm.colorWhite);
 		SetFontSize(gm.DefaultFontSize_);
 	}
 }

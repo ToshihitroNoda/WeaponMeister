@@ -1,8 +1,8 @@
 #include "Production.h"
-#include "Input.h"
-#include "DataCsv.h"
+#include "../MyLib/Input.h"
+#include "../MyLib/DataCsv.h"
 #include "Adv.h"
-#include "Music.h"
+#include "../Music.h"
 #include <DxLib.h>
 
 void Production::Init()
@@ -24,18 +24,18 @@ void Production::Final()
 
 void Production::Update()
 {
-	if (!recipeSelect_.recipeSelection_ && is_Operation_Description_Been_)
-	{
-		recipeSelect_.Update();
-	}
+	if (recipeSelect_.isDead)
+		isDead = true;
 
-	/*----- 使用素材選択 -----*/
+	if (!recipeSelect_.recipeSelection_ && is_Operation_Description_Been_)
+		recipeSelect_.Update();
+	// 使用素材選択
 	else if (is_Operation_Description_Been_)
 	{
-		if (!productionFlag_.shouldCreate)
+		if (!productionFlag_.shouldCreate && recipeSelect_.recipeSelection_)
 			itemSelect_.Update();
 		// 素材選択後。武器生成 
-		else
+		else if (productionFlag_.shouldCreate)
 			createRun_.Update();
 	}
 	if (!is_Operation_Description_Been_)
@@ -43,8 +43,8 @@ void Production::Update()
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
 			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-			if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
-				operationDescriptionMassegeNum_++;
+			if (operationDescriptionMessageNum_ < sizeof(description_) / sizeof(*description_) - 1)
+				operationDescriptionMessageNum_++;
 			else
 				is_Operation_Description_Been_ = true;
 		}
@@ -69,9 +69,7 @@ void Production::Format()
 	itemSelect_.playErrorSound = false;
 	// リストをクリア(初期化)
 	gm.handles.clear();
-	gm.handlesQuality.clear();
 	gm.main.clear();
-	gm.mainQuality.clear();
 	productionFlag_.itemForWeaponMake.clear();
 	productionFlag_.itemQualityForWeaponMake.clear();
 	productionFlag_.SelectItemPosOnThePouch.clear();
@@ -83,6 +81,11 @@ void Production::Format()
 	// 最初に戻る
 	productionFlag_.Final();
 	recipeSelect_.Init();
+}
+
+void Production::Change()
+{
+	sm.LoadScene("Sale");
 }
 
 void Production::Draw()
@@ -131,7 +134,7 @@ void Production::Draw()
 		std::string drawNextDescription = "Zキーで次へ";
 		int DrawWidthUnder = GetDrawStringWidth(drawNextDescription.c_str(), -1);
 		DrawString((Screen::width - DrawWidthUnder) / 2, (Screen::height - (Screen::height / 4) + 30), drawNextDescription.c_str(), gm.colorWhite);
-		std::string drawMassege = description_[operationDescriptionMassegeNum_];
+		std::string drawMassege = description_[operationDescriptionMessageNum_];
 		int DrawWidth = GetDrawStringWidth(drawMassege.c_str(), -1);
 		DrawString((Screen::width - DrawWidth) / 2, (Screen::height - (Screen::height / 4)), drawMassege.c_str(), gm.colorWhite);
 	}

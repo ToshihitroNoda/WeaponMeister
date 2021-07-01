@@ -1,7 +1,7 @@
 #include <DxLib.h>
 #include "Title.h"
-#include "Input.h"
-#include "Music.h"
+#include "../Mylib/Input.h"
+#include "../Music.h"
 
 void Title::Init()
 {
@@ -20,9 +20,14 @@ void Title::Update()
 	if (Input::GetButtonDown(PAD_INPUT_1))
 	{
 		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-		sm.LoadScene("MainMenu");
+		isDead = true;
 	}
 	count_++;
+}
+
+void Title::Change()
+{
+	sm.LoadScene("MainMenu");
 }
 
 void Title::Draw()

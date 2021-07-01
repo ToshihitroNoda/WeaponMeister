@@ -2,8 +2,8 @@
 #include <filesystem>
 
 #include "MainMenu.h"
-#include "Input.h"
-#include "Music.h"
+#include "../MyLib/Input.h"
+#include "../Music.h"
 
 void MainMenu::Init()
 {
@@ -39,7 +39,7 @@ void MainMenu::Update()
 	if (CursorY_ == CursorY_Init_ && Input::GetButtonDown(PAD_INPUT_1))
 	{
 		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-		sm.LoadScene("Adv");
+		isDead = true;
 	}
 	else if (CursorY_ == CursorY_Init_ + CursorY_Dist_ && Input::GetButtonDown(PAD_INPUT_1))
 	{
@@ -48,7 +48,7 @@ void MainMenu::Update()
 		if (ifs.is_open())
 		{
 			dataLoad_.Load();
-			sm.LoadScene("Adv");
+			isDead = true;
 		}
 		else
 			return;
@@ -59,6 +59,11 @@ void MainMenu::Update()
 		exit(0);
 	}
 	count_++;
+}
+
+void MainMenu::Change()
+{
+	sm.LoadScene("Adv");
 }
 
 void MainMenu::Draw()

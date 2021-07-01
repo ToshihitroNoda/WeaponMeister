@@ -3,9 +3,9 @@
 
 #include "Scene.h"
 #include "SceneManager.h"
-#include "GameManager.h"
+#include "..\GameManager.h"
 #include "StageSelection.h"
-#include "DataLoad.h"
+#include "../DataLoad.h"
 
 class Sale : public Scene
 {
@@ -21,12 +21,15 @@ public:
 	void Init() override;
 	void Final() override;
 	void Update() override;
+	void Change() override;
 	void Draw() override;
 
 	static int saleAmount;
 
 private:
 	DataLoad dataload_;
+
+	void MoveCursor();
 
 	const int PouchWindowX_  = 60;
 	const int PouchWindowY_  = 120;
@@ -84,7 +87,7 @@ private:
 	int selectIconNum_ = 0;
 	int prevMoney_     = 0;
 	int scrollCount_   = 0;
-	int operationDescriptionMassegeNum_ = 0;
+	int operationDescriptionMessageNum_ = 0;
 
 	bool alradySelect_ = false;
 	bool is_Operation_Description_Been_ = false;

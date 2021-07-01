@@ -3,8 +3,8 @@
 
 #include "Scene.h"
 #include "SceneManager.h"
-#include "GameManager.h"
-#include "DataLoad.h"
+#include "../GameManager.h"
+#include "../DataLoad.h"
 
 class MainMenu : public Scene
 {
@@ -20,6 +20,7 @@ public:
 	void Init() override;
 	void Final() override;
 	void Update() override;
+	void Change() override;
 	void Draw() override;
 
 private:

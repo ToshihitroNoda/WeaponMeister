@@ -1,7 +1,7 @@
 #include "GameClear.h"
-#include "Input.h"
-#include "ADVSimpleScript.h"
-#include "Music.h"
+#include "../MyLib/Input.h"
+#include "../MyLib/ADVSimpleScript.h"
+#include "../Music.h"
 #include <sstream>
 
 void GameClear::Init()
@@ -11,8 +11,8 @@ void GameClear::Init()
 
 	gm.scoreData.Load("Resource/Datas/ScoreData.csv");
 
-	sold_weapon_ = gm.weapons.back();
-	sold_weapon_quality_ = gm.weaponQuality.back();
+	sold_weapon_ = gm.weapons.item_back();
+	sold_weapon_quality_ = gm.weapons.quality_back();
 
 	for (int i = CsvSkipCsell_; i < gm.scoreData[0].size(); i++)
 	{
@@ -29,7 +29,7 @@ void GameClear::Init()
 
 	ADVSimpleScript::Init();
 
-	filePath_ = ("Resource/Massege/Massege_GameClear.csv");
+	filePath_ = ("Resource/Message/Message_GameClear.csv");
 
 	ADVSimpleScript::Load(filePath_);
 }
@@ -43,13 +43,13 @@ void GameClear::Final()
 
 void GameClear::Update()
 {
-	if (!massegeEnd_)
+	if (!messageEnd_)
 	{
 		if (ADVSimpleScript::LoadEnd_)
 		{
 			if (Input::GetButtonDown(PAD_INPUT_1) && !autoMode_ && !skipMode_)
 			{
-				ADVSimpleScript::MassegeCount++;
+				ADVSimpleScript::MessageCount++;
 			}
 			if (Input::GetButtonDown(PAD_INPUT_2) && !skipMode_)
 			{
@@ -70,7 +70,7 @@ void GameClear::Update()
 			{
 				if (autoCounter_ >= AutoSpeed_)
 				{
-					ADVSimpleScript::MassegeCount++;
+					ADVSimpleScript::MessageCount++;
 					autoCounter_ = 0;
 				}
 				autoCounter_++;
@@ -79,15 +79,15 @@ void GameClear::Update()
 			{
 				if (skipCounter_ >= SkipSpeed_)
 				{
-					ADVSimpleScript::MassegeCount++;
+					ADVSimpleScript::MessageCount++;
 					skipCounter_ = 0;
 				}
 				skipCounter_++;
 			}
 
-			if (ADVSimpleScript::MassegeCount >= ADVSimpleScript::massegeList.size())
+			if (ADVSimpleScript::MessageCount >= ADVSimpleScript::messageList.size())
 			{
-				massegeEnd_ = true;
+				messageEnd_ = true;
 			}
 		}
 		ADVSimpleScript::Update();
@@ -97,21 +97,26 @@ void GameClear::Update()
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
 			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-			sm.LoadScene("EndCredit");
+			isDead = true;
 		}
 	}
 }
 
+void GameClear::Change()
+{
+	sm.LoadScene("EndCredit");
+}
+
 void GameClear::Draw()
 {
-	if (!massegeEnd_)
+	if (!messageEnd_)
 	{
 		ADVSimpleScript::ImageDraw();
 
 		DrawGraph(WindowX_, WindowY_, gm.image.textWindow, TRUE);
 
 		if (ADVSimpleScript::LoadEnd_)
-			ADVSimpleScript::MassegeDraw(gm.colorWhite);
+			ADVSimpleScript::MessageDraw(gm.colorWhite);
 
 		if (autoMode_)
 			DrawBox(865, 690, 975, 705, gm.colorBlue, TRUE);

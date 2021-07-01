@@ -1,8 +1,6 @@
 #ifndef GAMEMANAGER_H_
 #define GAMEMANAGER_H_
 
-#include "Singleton.h"
-
 #include <vector>
 #include <memory>
 #include <iostream>
@@ -10,66 +8,19 @@
 #include <DxLib.h>
 #include <assert.h>
 
-#include "DataCsv.h"
+#include "MyLib/Singleton.h"
+#include "MyLib/DataCsv.h"
 #include "Image.h"
 
+#include "Items/Pouch.h"
+#include "Items/HandleItems.h"
+#include "Items/MainItems.h"
+#include "Items/Weapon.h"
 
-// CSVファイルの読込み
-struct MapData : public DataCsv
-{
-	MapData(std::string filePath = "", std::string csvOption = "DATA") : DataCsv(filePath)
-	{
-	};
-	~MapData() { clear(); };//お掃除処理はこちら
-	// csvファイルの読み込み
-	void Load(std::string filePath)
-	{
-		assert(filePath != "" && "ファイル名filePathを設定して！" != "");
-		DataCsv::LoadData(filePath);
-	}
-};
-
-struct ItemData : public DataCsv
-{
-	ItemData(std::string filePath = "", std::string csvOption = "DATA") : DataCsv(filePath)
-	{
-	};
-	~ItemData() { clear(); };//お掃除処理はこちら
-	// csvファイルの読み込み
-	void Load(std::string filePath)
-	{
-		assert(filePath != "" && "ファイル名filePathを設定して！" != "");
-		DataCsv::LoadData(filePath);
-	}
-};
-
-struct WeaponData : public DataCsv
-{
-	WeaponData(std::string filePath = "", std::string csvOption = "DATA") : DataCsv(filePath)
-	{
-	};
-	~WeaponData() { clear(); };//お掃除処理はこちら
-	// csvファイルの読み込み
-	void Load(std::string filePath)
-	{
-		assert(filePath != "" && "ファイル名filePathを設定して！" != "");
-		DataCsv::LoadData(filePath);
-	}
-};
-
-struct ScoreData : public DataCsv
-{
-	ScoreData(std::string filePath = "", std::string csvOption = "DATA") : DataCsv(filePath)
-	{
-	};
-	~ScoreData() { clear(); };//お掃除処理はこちら
-	// csvファイルの読み込み
-	void Load(std::string filePath)
-	{
-		assert(filePath != "" && "ファイル名filePathを設定して！" != "");
-		DataCsv::LoadData(filePath);
-	}
-};
+#include "Datas/MapData.h"
+#include "Datas/ItemData.h"
+#include "Datas/WeaponData.h"
+#include "Datas/ScoreData.h"
 
 class Map;
 class Player;
@@ -81,11 +32,16 @@ class GameManager : public Singleton<GameManager>
 {
 public:
 
-	MapData mapData;
-	ItemData itemData;
+	MapData    mapData;
+	ItemData   itemData;
 	WeaponData weaponData;
-	ScoreData scoreData;
-	Image image;
+	ScoreData  scoreData;
+	Image      image;
+
+	Pouch       pouch;
+	HandleItems handles;
+	MainItems   main;
+	Weapon      weapons;
 
 	friend class Singleton<GameManager>;				// Singletonでのインスタンス作成は許可
 
@@ -97,18 +53,6 @@ public:
 
 	std::vector<std::shared_ptr<MapObjects>> mapObjects;
 	std::vector<std::shared_ptr<MapTerrain>> mapTerrain;
-
-	// アイテム保管vector
-	std::vector<int> pouch;
-	std::vector<int> handles;
-	std::vector<int> main;
-	std::vector<int> weapons;
-
-	// 品質保管vector
-	std::vector<int> pouchQuality;
-	std::vector<int> handlesQuality;
-	std::vector<int> mainQuality;
-	std::vector<int> weaponQuality;
 
 	// 削除処理テンプレート
 	template <typename T, class T_if>

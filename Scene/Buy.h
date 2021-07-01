@@ -3,7 +3,7 @@
 
 #include "Scene.h"
 #include "SceneManager.h"
-#include "GameManager.h"
+#include "../GameManager.h"
 #include "StageSelection.h"
 
 class Buy : public Scene
@@ -20,6 +20,7 @@ public:
 	void Init() override;
 	void Final() override;
 	void Update() override;
+	void Change() override;
 	void Draw() override;
 
 	static int buyAmount;
@@ -82,7 +83,7 @@ private:
 	int beforeMoney_                    = 0;
 	int allLine_                        = 0;
 	int eraseLine_                      = 0;
-	int operationDescriptionMassegeNum_ = 0;
+	int operationDescriptionMessageNum_ = 0;
 
 	bool itemDetail_                    = false;
 	bool is_Operation_Description_Been_ = false;

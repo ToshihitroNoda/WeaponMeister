@@ -1,6 +1,6 @@
 #include "RecipeSelect.h"
-#include "Input.h"
-#include "Music.h"
+#include "../../MyLib/Input.h"
+#include "../../Music.h"
 
 void RecipeSelect::Init()
 {
@@ -19,7 +19,46 @@ void RecipeSelect::Init()
 
 void RecipeSelect::Update()
 {
-	/*----- カーソル移動 -----*/
+	// カーソル移動
+	MoveCursor();
+
+	/*----- 作る武器を決定 -----*/
+	if (Input::GetKeyDown(KEY_INPUT_RETURN))
+	{
+		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
+		isDead = true;
+	}
+
+	if (!Input::GetButtonDown(PAD_INPUT_1))
+		return;
+	if (cursorX_ == CursorX_ProceedNextPart_ && cursorY_ == CursorY_ProceedNextPart_)
+	{
+		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
+		isDead = true;
+	}
+	else
+	{
+		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
+		if (canWeaponMake[canWeaponMakeKeys[weaponID_ / 2]])  // 選択した武器が作れるなら
+		{
+			recipeSelection_ = true;                        // フラグを立てる
+
+			if (weaponID_ < sizeof(canWeaponMakeKeys) / sizeof(std::string))          // 木製武器選択
+			{
+				ItemType_ = gm.itemData[CsvTypeCheck_][CsvSkipCell_];
+				cursorInit_ = true;
+			}
+			else                                            // 石製武器選択
+			{
+				ItemType_ = gm.itemData[CsvTypeCheck_][gm.itemData[0].size() - 1];
+				cursorInit_ = true;
+			}
+		}
+	}
+}
+
+void RecipeSelect::MoveCursor()
+{
 	if (Input::GetButtonDown(PAD_INPUT_RIGHT))
 	{
 		if (cursorX_ < CursorX_Max_RecipeSelection_)
@@ -66,41 +105,6 @@ void RecipeSelect::Update()
 		PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
 		cursorY_ -= CursorY_MoveVerticalWidth_RecipeSelect_;
 		weaponID_ -= WeaponID_ByLineBreak_RecipeSelection_;
-	}
-	/*---------------*/
-
-	/*----- 作る武器を決定 -----*/
-	if (Input::GetKeyDown(KEY_INPUT_RETURN))
-	{
-		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-		sm.LoadScene("Sale");
-	}
-
-	if (!Input::GetButtonDown(PAD_INPUT_1))
-		return;
-	if (cursorX_ == CursorX_ProceedNextPart_ && cursorY_ == CursorY_ProceedNextPart_)
-	{
-		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-		sm.LoadScene("Sale");
-	}
-	else
-	{
-		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-		if (canWeaponMake[canWeaponMakeKeys[weaponID_ / 2]])  // 選択した武器が作れるなら
-		{
-			recipeSelection_ = true;                        // フラグを立てる
-
-			if (weaponID_ < sizeof(canWeaponMakeKeys) / sizeof(std::string))          // 木製武器選択
-			{
-				ItemType_ = gm.itemData[CsvTypeCheck_][CsvSkipCell_];
-				cursorInit_ = true;
-			}
-			else                                            // 石製武器選択
-			{
-				ItemType_ = gm.itemData[CsvTypeCheck_][gm.itemData[0].size() - 1];
-				cursorInit_ = true;
-			}
-		}
 	}
 }
 

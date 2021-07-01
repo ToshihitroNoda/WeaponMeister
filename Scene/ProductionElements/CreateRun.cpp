@@ -1,8 +1,8 @@
 #include "CreateRun.h"
-#include "Input.h"
-#include "Music.h"
-#include "Screen.h"
-#include "MyMath.h"
+#include "../../MyLib/Input.h"
+#include "../../Music.h"
+#include "../../Screen.h"
+#include "../../MyLib/MyMath.h"
 #include <vector>
 #include <algorithm>
 
@@ -21,19 +21,19 @@ void CreateRun::Update()
 
 		for (int i = 0; i < gm.handles.size(); i++)
 		{
-			weaponQualityStorage += (gm.handlesQuality[i] / ((i + 1) * 2)); // ‘S‘fÞ‚Ì•iŽ¿‚ðŒvŽZ(Ž‚¿Žè•”•ª)
+			weaponQualityStorage += (gm.handles.get_quality_element(i) / ((i + 1) * 2)); // ‘S‘fÞ‚Ì•iŽ¿‚ðŒvŽZ(Ž‚¿Žè•”•ª)
 		}
 		for (int i = 0; i < gm.main.size(); i++)
 		{
-			weaponQualityStorage += (gm.mainQuality[i] / ((i + 1) * 2));	// ‘S‘fÞ‚Ì•iŽ¿‚ðŒvŽZ(ã‚ÅŒvŽZ‚µ‚½Ž‚¿Žè•”•ª + ƒƒCƒ“•”•ª)
+			weaponQualityStorage += (gm.main.get_quality_element(i) / ((i + 1) * 2));	// ‘S‘fÞ‚Ì•iŽ¿‚ðŒvŽZ(ã‚ÅŒvŽZ‚µ‚½Ž‚¿Žè•”•ª + ƒƒCƒ“•”•ª)
 		}
 
 		if (!animationEnd_ && !MakeEnd)
 		{
 			for (int i = 0; i < gm.handles.size(); i++)
-				drawItemID_.push_back(gm.handles[i]);
+				drawItemID_.push_back(gm.handles.get_item_element(i));
 			for (int i = 0; i < gm.main.size(); i++)
-				drawItemID_.push_back(gm.main[i]);
+				drawItemID_.push_back(gm.main.get_item_element(i));
 
 			animationX_.resize(drawItemID_.size());
 			animationY_.resize(drawItemID_.size());
@@ -93,19 +93,14 @@ void CreateRun::Update()
 			std::sort(SelectItemPosOnThePouch_.begin(), SelectItemPosOnThePouch_.end(), std::greater<int>());
 			for (int i = 0; i < SelectItemPosOnThePouch_.size(); i++)
 			{
-				gm.pouch.erase(gm.pouch.begin() + SelectItemPosOnThePouch_[i]);
-				gm.pouchQuality.erase(gm.pouchQuality.begin() + SelectItemPosOnThePouch_[i]);
-
+				gm.pouch.EraseToBegin(SelectItemPosOnThePouch_[i]);
 			}
 			/*---------------*/
 
 			gm.handles.clear();
-			gm.handlesQuality.clear();
 			gm.main.clear();
-			gm.mainQuality.clear();
 
-			gm.weapons.push_back(weaponID_);
-			gm.weaponQuality.push_back(weaponQualityStorage);
+			gm.weapons.Add(weaponID_, weaponQualityStorage);
 		}
 	}
 	else

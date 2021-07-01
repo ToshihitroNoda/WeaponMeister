@@ -1,8 +1,8 @@
 #include "Game.h"
 
 #include "Screen.h"
-#include "MyRandom.h"
-#include "Input.h"
+#include "MyLib/MyRandom.h"
+#include "MyLib/Input.h"
 #include "Music.h"
 
 void Game::Init()
@@ -22,15 +22,12 @@ void Game::Update()
 {
 	Input::Update();
 
-	if (!is_mousePos_outsideWindow_)
-		sm.currentScene->Update(); 
-
 	if (Input::GetButtonDown(PAD_INPUT_9))
 	{
 		PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
 		if (!is_mousePos_outsideWindow_)
 		{
-			SetValidMousePointerWindowOutClientAreaMoveFlag(TRUE); 
+			SetValidMousePointerWindowOutClientAreaMoveFlag(TRUE);
 			SetMouseDispFlag(TRUE);
 			is_mousePos_outsideWindow_ = true;
 		}
@@ -42,6 +39,14 @@ void Game::Update()
 		}
 		return;
 	}
+
+	// シーンの更新処理
+	if (!is_mousePos_outsideWindow_)
+		sm.currentScene->Update();
+
+	// シーンの切り替え処理
+	if (sm.currentScene->isDead && !is_mousePos_outsideWindow_)
+		sm.currentScene->Change();
 }
 
 void Game::Draw()

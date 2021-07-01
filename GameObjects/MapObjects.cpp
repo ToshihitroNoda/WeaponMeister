@@ -1,5 +1,5 @@
 #include "MapObjects.h"
-#include "Map.h"
+#include "../Map.h"
 
 void MapObjects::Draw()
 {

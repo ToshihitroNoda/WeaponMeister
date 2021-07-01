@@ -1,16 +1,16 @@
 #include "Collection.h"
 
-#include "GameObject.h"
-#include "Player.h"
-#include "Map.h"
-#include "Camera.h"
-#include "DataCsv.h"
-#include "FieldItem.h"
-#include "MyRandom.h"
-#include "Input.h"
-#include "Screen.h"
+#include "../GameObjects/GameObject.h"
+#include "../GameObjects/Player.h"
+#include "../Map.h"
+#include "../Camera.h"
+#include "../MyLib/DataCsv.h"
+#include "../GameObjects/FieldItem.h"
+#include "../MyLib/MyRandom.h"
+#include "../MyLib/Input.h"
+#include "../Screen.h"
 #include "Adv.h"
-#include "Music.h"
+#include "../Music.h"
 
 void Collection::Init()
 {
@@ -111,34 +111,7 @@ void Collection::Update()
 
 		if (!menuOpen_)
 		{
-			// プレイヤーとフィールドアイテムとの当たり判定
-			for (int i = 0; i < (signed)gm.fieldItems.size(); i++)
-			{
-				if (MyMath::RectRectIntersect(
-					gm.player->GetLeft(), gm.player->GetBack(), gm.player->GetRight(), gm.player->GetForward(),
-					gm.fieldItems[i]->GetLeft(), gm.fieldItems[i]->GetBack(), gm.fieldItems[i]->GetRight(), gm.fieldItems[i]->GetForward()
-				))
-				{
-					gm.player->OnCollision(gm.fieldItems[i]);
-					gm.fieldItems[i]->OnCollision(gm.player);
-					if (gm.pouch.size() != gm.MaxPouchSize)
-					{
-						ItemGet();
-					}
-				}
-			}
-			// プレイヤーとマップオブジェクトの当たり判定
-			for (int i = 0; i < (signed)gm.mapObjects.size(); i++)
-			{
-				if (MyMath::RectRectIntersect(
-					gm.player->GetLeft(), gm.player->GetBack(), gm.player->GetRight(), gm.player->GetForward(),
-					gm.mapObjects[i]->GetLeft(), gm.mapObjects[i]->GetBack(), gm.mapObjects[i]->GetRight(), gm.mapObjects[i]->GetForward()
-				))
-				{
-					gm.player->OnCollision(gm.mapObjects[i]);
-					gm.mapObjects[i]->OnCollision(gm.player);
-				}
-			}
+			Collide();
 		}
 		if (getItemFlg_)
 			getItemDrawCounter_++;
@@ -181,106 +154,12 @@ void Collection::Update()
 					selectIconNum_ = 0;
 					scrollCount_ = 0;
 					if (gm.pouch.size() > i)
-						PouchDrawErea_.push_back(gm.pouch[i]);
+						PouchDrawErea_.push_back(gm.pouch.get_item_element(i));
 				}
 				menuInit_ = true;
 			}
-			/*----- カーソル移動 -----*/
-
-			if (Input::GetButtonDown(PAD_INPUT_RIGHT))
-			{
-				if (cursorX_ < CursorX_Max_ItemSelect_)
-				{
-					PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
-					cursorX_ += CursorX_MoveVerticalWidth_ItemSelect_;
-					selectIconNum_++; // 選択されてる箇所のアイテムの番号を取得
-				}
-			}
-			else if (Input::GetButtonDown(PAD_INPUT_LEFT))
-			{
-				if (cursorX_ > CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
-				{
-					PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
-					cursorX_ -= CursorX_MoveVerticalWidth_ItemSelect_;
-					selectIconNum_--;
-				}
-			}
-			else if (Input::GetButtonDown(PAD_INPUT_DOWN))
-			{
-				if (cursorY_ != CursorY_Max_ItemSelect_)
-				{
-					PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
-					cursorY_ += CursorY_MoveVerticalWidth_ItemSelect_;
-					selectIconNum_ += WaponID_ByLineBreak_ItemSelect_;
-				}
-				else
-				{
-					if (gm.pouch.size() > DrawMaxPouchSize_)
-					{
-						if (PouchDrawErea_.size() > WindowX_CellSize_)
-						{
-							PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
-							// 一行スクロール
-							scrollCount_++;
-							// 描画するアイテムのvectorの最初の一行を削除し、後ろに一行足す
-							// まず先頭の一行の削除
-							PouchDrawErea_.erase(PouchDrawErea_.begin(), PouchDrawErea_.begin() + WindowX_CellSize_);
-							// 後ろに一行追加。
-							/// iの初期値		: 表示できる最大数 + 追加する列数 - 列数
-							/// for文の回る条件 : 表示できる最大数 + 追加する列数まで
-							for (int i = DrawMaxPouchSize_ + (scrollCount_ * WindowX_CellSize_) - WindowX_CellSize_;
-								i < DrawMaxPouchSize_ + (scrollCount_ * WindowX_CellSize_);
-								i++)
-							{
-								if (i < gm.pouch.size())
-								{
-									PouchDrawErea_.push_back(gm.pouch[i]);
-								}
-							}
-						}
-					}
-				}
-			}
-			else if (Input::GetButtonDown(PAD_INPUT_UP))
-			{
-				if (cursorY_ != CursorY_Min_ItemSelect_)
-				{
-					PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
-					cursorY_ -= CursorY_MoveVerticalWidth_ItemSelect_;
-					selectIconNum_ -= WaponID_ByLineBreak_ItemSelect_;
-				}
-				else
-				{
-					if (scrollCount_ > 0)
-					{
-						PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
-						scrollCount_--;
-						if (PouchDrawErea_.size() == DrawMaxPouchSize_)		// 描画されてるウィンドウが埋まってる場合
-						{
-							PouchDrawErea_.erase(PouchDrawErea_.end() - WindowX_CellSize_, PouchDrawErea_.end());
-							// 描画するアイテムのvectorの最初に描画されてない一行分追加
-							for (int i = WindowX_CellSize_; i > 0; i--)
-								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount_ * WindowX_CellSize_ + i - 1]);
-						}
-						else if (PouchDrawErea_.size() > DrawMaxPouchSize_ - WindowX_CellSize_ &&
-							PouchDrawErea_.size() < DrawMaxPouchSize_)	// 描画されてるウィンドウの最後の一行に空きがある場合
-						{
-							PouchDrawErea_.erase(PouchDrawErea_.end() - (PouchDrawErea_.size() % WindowX_CellSize_), PouchDrawErea_.end());
-							// 描画するアイテムのvectorの最初に描画されてない一行分追加
-							for (int i = WindowX_CellSize_; i > 0; i--)
-								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount_ * WindowX_CellSize_ + i - 1]);
-						}
-						else												// 描画されてるウィンドウの下何行かが空いている場合
-						{
-							// 描画するアイテムのvectorの最初に描画されてない一行分追加
-							for (int i = WindowX_CellSize_; i > 0; i--)
-								PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(), gm.pouch[scrollCount_ * WindowX_CellSize_ + i - 1]);
-						}
-					}
-				}
-			}
-
-			/*---------------*/
+			// カーソル移動
+			MoveCursor();
 		}
 		if (!menuOpen_)
 		{
@@ -301,7 +180,7 @@ void Collection::Update()
 			if (Input::GetButtonDown(PAD_INPUT_1))
 			{
 				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-				sm.LoadScene("Buy");
+				isDead = true;
 			}
 		}
 		endCount_--;
@@ -313,8 +192,8 @@ void Collection::Update()
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
 			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-			if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
-				operationDescriptionMassegeNum_++;
+			if (operationDescriptionMessageNum_ < sizeof(description_) / sizeof(*description_) - 1)
+				operationDescriptionMessageNum_++;
 			else
 				is_Operation_Description_Been_ = true;
 		}
@@ -358,16 +237,152 @@ void Collection::ItemGet()
 			getItem_ = possibilityToGetItem_[randItems];
 
 			DrawGetItem_.push_back(getItem_);
-			gm.pouch.push_back(getItem_);
-			gm.pouchQuality.push_back(qualityStorage_);
+			gm.pouch.Add(getItem_, qualityStorage_);
 		}
 	}
 }
 
+void Collection::MoveCursor()
+{
+	if (Input::GetButtonDown(PAD_INPUT_RIGHT))
+	{
+		if (cursorX_ < CursorX_Max_ItemSelect_)
+		{
+			PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
+			cursorX_ += CursorX_MoveVerticalWidth_ItemSelect_;
+			selectIconNum_++; // 選択されてる箇所のアイテムの番号を取得
+		}
+	}
+	else if (Input::GetButtonDown(PAD_INPUT_LEFT))
+	{
+		if (cursorX_ > CursorX_Min_ItemSelect_ && cursorX_ <= CursorX_Max_ItemSelect_)
+		{
+			PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
+			cursorX_ -= CursorX_MoveVerticalWidth_ItemSelect_;
+			selectIconNum_--;
+		}
+	}
+	else if (Input::GetButtonDown(PAD_INPUT_DOWN))
+	{
+		if (cursorY_ != CursorY_Max_ItemSelect_)
+		{
+			PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
+			cursorY_ += CursorY_MoveVerticalWidth_ItemSelect_;
+			selectIconNum_ += WaponID_ByLineBreak_ItemSelect_;
+		}
+		else
+		{
+			if (gm.pouch.size() > DrawMaxPouchSize_)
+			{
+				if (PouchDrawErea_.size() > WindowX_CellSize_)
+				{
+					PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
+					// 一行スクロール
+					scrollCount_++;
+					// 描画するアイテムのvectorの最初の一行を削除し、後ろに一行足す
+					// まず先頭の一行の削除
+					PouchDrawErea_.erase(PouchDrawErea_.begin(), PouchDrawErea_.begin() + WindowX_CellSize_);
+					// 後ろに一行追加。
+					/// iの初期値		: 表示できる最大数 + 追加する列数 - 列数
+					/// for文の回る条件 : 表示できる最大数 + 追加する列数まで
+					for (int i = DrawMaxPouchSize_ + (scrollCount_ * WindowX_CellSize_) - WindowX_CellSize_;
+						i < DrawMaxPouchSize_ + (scrollCount_ * WindowX_CellSize_);
+						i++)
+					{
+						if (i < gm.pouch.size())
+						{
+							PouchDrawErea_.push_back(gm.pouch.get_item_element(i));
+						}
+					}
+				}
+			}
+		}
+	}
+	else if (Input::GetButtonDown(PAD_INPUT_UP))
+	{
+		if (cursorY_ != CursorY_Min_ItemSelect_)
+		{
+			PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
+			cursorY_ -= CursorY_MoveVerticalWidth_ItemSelect_;
+			selectIconNum_ -= WaponID_ByLineBreak_ItemSelect_;
+		}
+		else
+		{
+			if (scrollCount_ > 0)
+			{
+				PlaySoundMem(Music::cursormove_SE, DX_PLAYTYPE_BACK);
+				scrollCount_--;
+				if (PouchDrawErea_.size() == DrawMaxPouchSize_)		// 描画されてるウィンドウが埋まってる場合
+				{
+					PouchDrawErea_.erase(PouchDrawErea_.end() - WindowX_CellSize_, PouchDrawErea_.end());
+					// 描画するアイテムのvectorの最初に描画されてない一行分追加
+					for (int i = WindowX_CellSize_; i > 0; i--)
+						PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(),
+							gm.pouch.get_item_element(scrollCount_ * WindowX_CellSize_ + i - 1));
+				}
+				else if (PouchDrawErea_.size() > DrawMaxPouchSize_ - WindowX_CellSize_ &&
+					PouchDrawErea_.size() < DrawMaxPouchSize_)	// 描画されてるウィンドウの最後の一行に空きがある場合
+				{
+					PouchDrawErea_.erase(PouchDrawErea_.end() - (PouchDrawErea_.size() % WindowX_CellSize_), PouchDrawErea_.end());
+					// 描画するアイテムのvectorの最初に描画されてない一行分追加
+					for (int i = WindowX_CellSize_; i > 0; i--)
+						PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(),
+							gm.pouch.get_item_element(scrollCount_ * WindowX_CellSize_ + i - 1));
+				}
+				else												// 描画されてるウィンドウの下何行かが空いている場合
+				{
+					// 描画するアイテムのvectorの最初に描画されてない一行分追加
+					for (int i = WindowX_CellSize_; i > 0; i--)
+						PouchDrawErea_.begin() = PouchDrawErea_.insert(PouchDrawErea_.begin(),
+							gm.pouch.get_item_element(scrollCount_ * WindowX_CellSize_ + i - 1));
+				}
+			}
+		}
+	}
+}
+
+void Collection::Collide()
+{
+	// プレイヤーとフィールドアイテムとの当たり判定
+	for (int i = 0; i < (signed)gm.fieldItems.size(); i++)
+	{
+		if (MyMath::RectRectIntersect(
+			gm.player->GetLeft(), gm.player->GetBack(), gm.player->GetRight(), gm.player->GetForward(),
+			gm.fieldItems[i]->GetLeft(), gm.fieldItems[i]->GetBack(), gm.fieldItems[i]->GetRight(), gm.fieldItems[i]->GetForward()
+		))
+		{
+			gm.player->OnCollision(gm.fieldItems[i]);
+			gm.fieldItems[i]->OnCollision(gm.player);
+			if (gm.pouch.size() != gm.MaxPouchSize)
+			{
+				ItemGet();
+			}
+		}
+	}
+	// プレイヤーとマップオブジェクトの当たり判定
+	for (int i = 0; i < (signed)gm.mapObjects.size(); i++)
+	{
+		if (MyMath::RectRectIntersect(
+			gm.player->GetLeft(), gm.player->GetBack(), gm.player->GetRight(), gm.player->GetForward(),
+			gm.mapObjects[i]->GetLeft(), gm.mapObjects[i]->GetBack(), gm.mapObjects[i]->GetRight(), gm.mapObjects[i]->GetForward()
+		))
+		{
+			gm.player->OnCollision(gm.mapObjects[i]);
+			gm.mapObjects[i]->OnCollision(gm.player);
+		}
+	}
+}
+
+void Collection::Change()
+{
+	sm.LoadScene("Buy");
+}
+
 void Collection::Draw()
 {
-	DrawGraph(gm.player->backX, 0, backGroundHandle_, TRUE);
-	DrawGraph(gm.player->backX - gm.player->BackImageWidth, 0, backGroundHandle_, TRUE);
+	// 空
+	DrawGraph(gm.player->backX, -700, backGroundHandle_, TRUE);
+	DrawGraph(gm.player->backX - gm.player->BackImageWidth, -700, backGroundHandle_, TRUE);
 
 	// 地形
 	for (auto& mT : gm.mapTerrain)
@@ -438,7 +453,7 @@ void Collection::Draw()
 			DrawGraph(DetailWindowX_, DetailWindowY_, gm.image.detailWindow, TRUE);
 			DrawString(ItemNameX_, ItemNameY_, gm.itemData[0][PouchDrawErea_[selectIconNum_] + CsvSkipCell_].stringData.c_str(), gm.colorWhite);
 			std::stringstream ss;
-			ss << gm.pouchQuality[selectIconNum_ + scrollCount_ * WindowX_CellSize_];
+			ss << gm.pouch.get_quality_element(selectIconNum_ + scrollCount_ * WindowX_CellSize_);
 			DrawString(ItemQualityX_, ItemNameY_, ("品質 : " + ss.str()).c_str(), gm.colorWhite);
 			DrawString(ItemInfoX_, ItemInfoY_, gm.itemData[1][PouchDrawErea_[selectIconNum_] + CsvSkipCell_].stringData.c_str(), gm.colorWhite);
 		}
@@ -459,10 +474,12 @@ void Collection::Draw()
 	if (collectionEnd_)
 	{
 		DrawGraph(0, 0, gm.image.collectionEnd, TRUE);
-		std::string drawNextDescription = "Zキーで次へ";
-		int DrawWidthUnder = GetDrawStringWidth(drawNextDescription.c_str(), -1);
-		DrawString((Screen::width - DrawWidthUnder) / 2, (Screen::height - (Screen::height / 4) + 30), drawNextDescription.c_str(), gm.colorWhite);
-
+		if (endCount_ < 0)
+		{
+			std::string drawNextDescription = "Zキーで次へ";
+			int DrawWidthUnder = GetDrawStringWidth(drawNextDescription.c_str(), -1);
+			DrawString((Screen::width - DrawWidthUnder) / 2, (Screen::height - (Screen::height / 4) + 30), drawNextDescription.c_str(), gm.colorWhite);
+		}
 	}
 	if (!is_Operation_Description_Been_)
 	{
@@ -472,7 +489,7 @@ void Collection::Draw()
 		std::string drawNextDescription = "Zキーで次へ";
 		int DrawWidthUnder = GetDrawStringWidth(drawNextDescription.c_str(), -1);
 		DrawString((Screen::width - DrawWidthUnder) / 2, (Screen::height - (Screen::height / 4) + 30), drawNextDescription.c_str(), gm.colorWhite);
-		std::string drawMassege = description_[operationDescriptionMassegeNum_];
+		std::string drawMassege = description_[operationDescriptionMessageNum_];
 		int DrawWidth = GetDrawStringWidth(drawMassege.c_str(), -1);
 		DrawString((Screen::width - DrawWidth) / 2, (Screen::height - (Screen::height / 4)), drawMassege.c_str(), gm.colorWhite);
 	}

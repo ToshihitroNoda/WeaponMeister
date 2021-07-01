@@ -3,9 +3,9 @@
 
 #include "Scene.h"
 #include "SceneManager.h"
-#include "GameManager.h"
+#include "../GameManager.h"
 #include "StageSelection.h"
-#include "DataCsv.h"
+#include "../MyLib/DataCsv.h"
 
 
 class Collection : public Scene
@@ -23,10 +23,14 @@ public:
 	void Init() override;
 	void Final() override;
 	void Update() override;
+	void Change() override;
 	void Draw() override;
-	void ItemGet();
 
 private:
+	void ItemGet();
+	void MoveCursor();
+	void Collide();
+
 	const int DrawGetItemCountMax_     = 120;
 	const int DrawGetItemCountMinimum_ = 5;
 
@@ -90,14 +94,14 @@ private:
 	int endCount_                       = 120;
 	int collectTimer_                   = 7200;	 // 採取時間。2分
 	int backGroundHandle_               = 0;
-	int operationDescriptionMassegeNum_ = 0;
+	int operationDescriptionMessageNum_ = 0;
 
 	float watchPointerAngle_ = 0.0f; // 時計の針の角度。1フレームで+=0.05fすると2分で一周
 	float plusPointerAngle_  = 0.05f;
 
 	bool getItemFlg_                    = false; // アイテムゲットフラグ
 	bool menuOpen_                      = false;
-	bool menuInit_                       = false;
+	bool menuInit_                      = false;
 	bool collectionEnd_                 = false;
 	bool playStartSound_                = false;
 	bool playEndSound_                  = false;

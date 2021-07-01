@@ -4,8 +4,8 @@
 #include<fstream>
 #include<vector>
 
-#include "Adv.h"
-#include "StageSelection.h"
+#include "Scene/Adv.h"
+#include "Scene/StageSelection.h"
 #include "GameManager.h"
 
 struct LStatus {
@@ -13,9 +13,7 @@ struct LStatus {
 	int money;
 	int mapCount;
 	int pouchSize;
-	int pouchQSize;
 	int weaponSize;
-	int WeaponQSize;
 };
 
 class DataLoad
@@ -43,26 +41,46 @@ public:
 		Adv::day                 = lStatus.day;
 		gm.money                 = lStatus.money;
 		StageSelection::mapCount = lStatus.mapCount;
-		gm.pouch.resize(lStatus.pouchSize);
-		gm.pouchQuality.resize(lStatus.pouchQSize);
-		gm.weapons.resize(lStatus.weaponSize);
-		gm.weaponQuality.resize(lStatus.WeaponQSize);
 
-		for (int i = 0; i < gm.pouch.size(); i++)
+		// ロード前に何かデータが書き込まれていたら重複するのでclear()
+		gm.weapons.clear();
+		gm.pouch.clear();
+
+		for (int i = 0; i < lStatus.pouchSize; i++)
 		{
-			file.read((char*)&gm.pouch[i], sizeof(gm.pouch[i]));
+			int loadItemData;
+			int loadQualityData;
+			// アイテムIDの読み込み
+			file.read((char*)&loadItemData, sizeof(loadItemData)); 
+			// ポインタの位置を品質の場所にずらす
+			file.seekg((5 + i + lStatus.pouchSize) * sizeof(loadItemData));
+			// 品質の読み込み
+			file.read((char*)&loadQualityData, sizeof(loadQualityData)); 
+			// アイテムIDと品質を追加
+			gm.pouch.Add(loadItemData, loadQualityData);
+			// ポインタの位置を一つ進める
+			file.seekg((6 + i) * sizeof(loadItemData));
 		}
-		for (int i = 0; i < gm.pouchQuality.size(); i++)
+
+		// 武器データが保存されている場所(LStatus数 + pouch数 + pouch品質数)
+		int weaponDataPos = 5 + lStatus.pouchSize * 2;
+		// ポインタの位置を武器の場所にずらす
+		file.seekg((weaponDataPos) * sizeof(int)); 
+
+		for (int i = 0; i < lStatus.weaponSize; i++)
 		{
-			file.read((char*)&gm.pouchQuality[i], sizeof(gm.pouchQuality[i]));
-		}
-		for (int i = 0; i < gm.weapons.size(); i++)
-		{
-			file.read((char*)&gm.weapons[i], sizeof(gm.weapons[i]));
-		}
-		for (int i = 0; i < gm.weaponQuality.size(); i++)
-		{
-			file.read((char*)&gm.weaponQuality[i], sizeof(gm.weaponQuality[i]));
+			int loadWeaponData;
+			int loadQualityData;
+			// 武器IDの読み込み
+			file.read((char*)&loadWeaponData, sizeof(loadWeaponData));
+			// ポインタの位置を品質の場所にずらす
+			file.seekg((weaponDataPos + i + lStatus.weaponSize) * sizeof(loadWeaponData));
+			// 品質の読み込み
+			file.read((char*)&loadQualityData, sizeof(loadQualityData)); 
+			// 武器IDと品質を追加
+			gm.weapons.Add(loadWeaponData, loadQualityData);
+			// ポインタの位置を一つ進める
+			file.seekg((6 + i) * sizeof(loadWeaponData));
 		}
 
 		file.close();

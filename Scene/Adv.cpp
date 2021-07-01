@@ -1,7 +1,7 @@
 #include "Adv.h"
-#include "Input.h"
-#include "ADVSimpleScript.h"
-#include "Music.h"
+#include "../MyLib/Input.h"
+#include "../MyLib/ADVSimpleScript.h"
+#include "../Music.h"
 
 int Adv::day = 0;
 
@@ -14,7 +14,7 @@ void Adv::Init()
 
 	std::stringstream ss;
 	ss << day;
-	filePath_ = ("Resource/Massege/Massege_" + ss.str() + ".csv");
+	filePath_ = ("Resource/Message/Message_" + ss.str() + ".csv");
 
 	ADVSimpleScript::Load(filePath_);
 }
@@ -33,7 +33,7 @@ void Adv::Update()
 	{
 		if (Input::GetButtonDown(PAD_INPUT_1) && !autoMode_ && !skipMode_)
 		{
-			ADVSimpleScript::MassegeCount++;
+			ADVSimpleScript::MessageCount++;
 		}
 		if (Input::GetButtonDown(PAD_INPUT_2) && !skipMode_)
 		{
@@ -66,7 +66,7 @@ void Adv::Update()
 		{
 			if (autoCounter_ >= AutoSpeed_)
 			{
-				ADVSimpleScript::MassegeCount++;
+				ADVSimpleScript::MessageCount++;
 				autoCounter_ = 0;
 			}
 			autoCounter_++;
@@ -75,19 +75,24 @@ void Adv::Update()
 		{
 			if (skipCounter_ >= SkipSpeed_)
 			{
-				ADVSimpleScript::MassegeCount++;
+				ADVSimpleScript::MessageCount++;
 				skipCounter_ = 0;
 			}
 			skipCounter_++;
 		}
 
-		if (ADVSimpleScript::MassegeCount >= ADVSimpleScript::massegeList.size())
+		if (ADVSimpleScript::MessageCount >= ADVSimpleScript::messageList.size())
 		{
-			sm.LoadScene("StageSelection");
+			isDead = true;
 		}
 	}
 	ADVSimpleScript::Update();
 	IconFlashCount_++;
+}
+
+void Adv::Change()
+{
+	sm.LoadScene("StageSelection");
 }
 
 void Adv::Draw()
@@ -97,7 +102,7 @@ void Adv::Draw()
 	DrawGraph(WindowX_, WindowY_, gm.image.textWindow, TRUE);
 
 	if (ADVSimpleScript::LoadEnd_)
-		ADVSimpleScript::MassegeDraw(gm.colorWhite);
+		ADVSimpleScript::MessageDraw(gm.colorWhite);
 
 	if (autoMode_)
 		DrawBox(865, 690, 975, 705, gm.colorBlue, TRUE);

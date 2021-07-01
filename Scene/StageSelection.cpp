@@ -1,11 +1,11 @@
 #include "StageSelection.h"
 
-#include "Map.h"
-#include "ProductionSectionBase.h"
+#include "../Map.h"
+#include "ProductionElements/ProductionSectionBase.h"
 #include "Adv.h"
-#include "Input.h"
-#include "Screen.h"
-#include "Music.h"
+#include "../MyLib/Input.h"
+#include "../Screen.h"
+#include "../Music.h"
 
 int StageSelection::mapCount = 1;
 int StageSelection::stageNum = 0;
@@ -85,7 +85,7 @@ void StageSelection::Update()
 					stageNum = stageNums_[i];
 				}
 			}
-			sm.LoadScene("Collection");
+			isDead = true;
 		}
 
 		if (Input::GetButtonDown(PAD_INPUT_RIGHT))
@@ -150,12 +150,17 @@ void StageSelection::Update()
 		if (Input::GetButtonDown(PAD_INPUT_1))
 		{
 			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
-			if (operationDescriptionMassegeNum_ < sizeof(description_) / sizeof(*description_) - 1)
-				operationDescriptionMassegeNum_++;
+			if (operationDescriptionMessageNum_ < sizeof(description_) / sizeof(*description_) - 1)
+				operationDescriptionMessageNum_++;
 			else
 				is_Operation_Description_Been_ = true;
 		}
 	}
+}
+
+void StageSelection::Change()
+{
+	sm.LoadScene("Collection");
 }
 
 void StageSelection::Draw()
@@ -202,7 +207,7 @@ void StageSelection::Draw()
 		std::string drawNextDescription = "ZƒL[‚ÅŽŸ‚Ö";
 		int DrawWidthUnder = GetDrawStringWidth(drawNextDescription.c_str(), -1);
 		DrawString((Screen::width - DrawWidthUnder) / 2, (Screen::height - (Screen::height / 4) + 30), drawNextDescription.c_str(), gm.colorWhite);
-		std::string drawMassege = description_[operationDescriptionMassegeNum_];
+		std::string drawMassege = description_[operationDescriptionMessageNum_];
 		int DrawWidth = GetDrawStringWidth(drawMassege.c_str(), -1);
 		DrawString((Screen::width - DrawWidth) / 2, (Screen::height - (Screen::height / 4)), drawMassege.c_str(), gm.colorWhite);
 	}

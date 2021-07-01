@@ -6,9 +6,9 @@
 
 #include "Scene.h"
 #include "SceneManager.h"
-#include "GameManager.h"
-#include "Map.h"
-#include "DataCsv.h"
+#include "../GameManager.h"
+#include "../Map.h"
+#include "../MyLib/DataCsv.h"
 
 class StageSelection : public Scene
 {
@@ -24,6 +24,7 @@ public:
 	void Init() override;
 	void Final() override;
 	void Update() override;
+	void Change() override;
 	void Draw() override;
 
 	static int stageNum;
@@ -60,7 +61,7 @@ private:
 	int cursorY_ = Map1IconPosY_;
 	int canMakeWeapon_ = 0;
 	int attachIndex_   = 0;
-	int operationDescriptionMassegeNum_ = 0;
+	int operationDescriptionMessageNum_ = 0;
 
 	float totalTime_ = 0.0f;
 	float playTime_  = 0.0f;

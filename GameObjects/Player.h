@@ -1,9 +1,9 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
-#include "GameManager.h"
+#include "../GameManager.h"
 #include "GameObject.h"
-#include "Screen.h"
+#include "../Screen.h"
 
 enum class State
 {
