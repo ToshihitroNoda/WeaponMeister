@@ -1,5 +1,5 @@
 #include "EndCredit.h"
-#include "Music.h"
+#include "../Music.h"
 #include <DxLib.h>
 
 void EndCredit::Init()
@@ -26,9 +26,14 @@ void EndCredit::Update()
 		creditScrollEnd_ = true;
 	if (creditScrollEnd_)
 	{
-		remove("savedata.dat");
-		sm.LoadScene("Title");
+		isDead = true;
 	}
+}
+
+void EndCredit::Change()
+{
+	remove("savedata.dat");
+	sm.LoadScene("Title");
 }
 
 void EndCredit::Draw()

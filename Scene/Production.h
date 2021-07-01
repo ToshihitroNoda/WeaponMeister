@@ -3,15 +3,15 @@
 
 #include "Scene.h"
 #include "SceneManager.h"
-#include "GameManager.h"
-#include "DataCsv.h"
-#include "Screen.h"
-#include "RecipeSelect.h"
-#include "ItemSelect.h"
-#include "HandleItemSelect.h"
-#include "MainItemSelect.h"
-#include "CreateRun.h"
-#include "ProductionFlagManager.h"
+#include "../GameManager.h"
+#include "../MyLib/DataCsv.h"
+#include "../Screen.h"
+#include "ProductionElements/RecipeSelect.h"
+#include "ProductionElements/ItemSelect.h"
+#include "ProductionElements/HandleItemSelect.h"
+#include "ProductionElements/MainItemSelect.h"
+#include "ProductionElements/CreateRun.h"
+#include "ProductionElements/ProductionFlagManager.h"
 
 class Production : public Scene
 {
@@ -28,6 +28,7 @@ public:
 	void Init() override;
 	void Final() override;
 	void Update() override;
+	void Change() override;
 	void Draw() override;
 
 	static std::vector<bool> canWeaponMake_;
@@ -42,7 +43,7 @@ private:
 
 	void Format();
 
-	int operationDescriptionMassegeNum_ = 0;
+	int operationDescriptionMessageNum_ = 0;
 	bool is_Operation_Description_Been_ = false;
 
 	std::string description_[7]

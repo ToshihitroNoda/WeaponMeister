@@ -1,6 +1,6 @@
 #include "FieldItem.h"
-#include "Camera.h"
-#include "Input.h"
+#include "../Camera.h"
+#include "../MyLib/Input.h"
 
 void FieldItem::Init()
 {

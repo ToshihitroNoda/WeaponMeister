@@ -4,7 +4,7 @@
 #include "Screen.h"
 #include "Game.h"
 
-#include "MyTimer.h"
+#include "MyLib/MyTimer.h"
 
 int TargetFPS = 60; // 目標のFPS(Frame Per Second, 1秒あたりのフレーム数)
 static bool EnableFrameSkip = true; // 高負荷時にフレームスキップするか（falseの場合は処理落ち（スロー））

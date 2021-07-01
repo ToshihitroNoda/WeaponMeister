@@ -113,7 +113,6 @@ struct DataCsv
 		if (filePath == "") return; //ファイル名がない
 		FilePath = filePath; // ファイル名を保管
 		Data.clear(); //データを一旦クリア
-		Data.shrink_to_fit();
 		// 読み込むcsvファイルを開く(std::ifstreamのコンストラクタで開く)
 		std::ifstream ifs_csv_file(filePath);
 		std::string line; //1行単位の読込み文字列
@@ -159,7 +158,6 @@ struct DataCsv
 		if (filePath == "") return; //ファイル名がない
 		FilePath = filePath; // ファイル名を保管
 		Data.clear(); //データを一旦クリア
-		Data.shrink_to_fit();
 		// 読み込むcsvファイルを開く(std::ifstreamのコンストラクタで開く)
 		std::ifstream ifs_csv_file(filePath);
 		std::string line; //1行単位の読込み文字列

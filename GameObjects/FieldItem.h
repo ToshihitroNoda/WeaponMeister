@@ -2,7 +2,7 @@
 #define FIELDITEM_H_
 
 #include "GameObject.h"
-#include "GameManager.h"
+#include "../GameManager.h"
 
 class FieldItem : public GameObject
 {

@@ -2,9 +2,9 @@
 #define GAMECLEAR_H_
 
 #include "Scene.h"
-#include "Screen.h"
+#include "../Screen.h"
 #include "SceneManager.h"
-#include "GameManager.h"
+#include "../GameManager.h"
 
 class GameClear : public Scene
 {
@@ -20,6 +20,7 @@ public:
 	void Init() override;
 	void Final() override;
 	void Update() override;
+	void Change() override;
 	void Draw() override;
 
 private:
@@ -57,7 +58,7 @@ private:
 
 	bool autoMode_   = false;
 	bool skipMode_   = false;
-	bool massegeEnd_ = false;
+	bool messageEnd_ = false;
 };
 
 #endif

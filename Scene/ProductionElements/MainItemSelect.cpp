@@ -1,6 +1,6 @@
 #include "MainItemSelect.h"
-#include "Input.h"
-#include "Music.h"
+#include "../../MyLib/Input.h"
+#include "../../Music.h"
 
 void MainItemSelect::Update()
 {
@@ -32,7 +32,6 @@ void MainItemSelect::Update()
 		PlaySoundMem(Music::cancel_SE, DX_PLAYTYPE_BACK);
 		shouldWeaponMainCreate_ = false;
 		gm.main.clear();
-		gm.mainQuality.clear();
 		itemForWeaponMake_.clear();
 		ItemPosOnThePouch_.clear();
 		SelectItemPosOnThePouch_.erase
@@ -77,7 +76,7 @@ void MainItemSelect::Draw()
 			DrawGraph
 			(AlreadySelect_MainItem_X_ + i * AlreadySelect_MainItem_X_Diameter_,
 			 AlreadySelect_MainItem_Y_,
-			 gm.image.itemIcons[gm.main[i]],
+			 gm.image.itemIcons[gm.main.get_item_element(i)],
 			 TRUE);
 		}
 	}
@@ -85,8 +84,7 @@ void MainItemSelect::Draw()
 
 void MainItemSelect::addItem()
 {
-	gm.main.push_back(itemForWeaponMake_[selectIconNum_]);
-	gm.mainQuality.push_back(itemQualityForWeaponMake_[selectIconNum_]);
+	gm.main.Add(itemForWeaponMake_[selectIconNum_], itemQualityForWeaponMake_[selectIconNum_]);
 	SelectItemPosOnThePouch_.push_back(NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_]);
 }
 
@@ -100,8 +98,7 @@ void MainItemSelect::eraseItem()
 			{
 				if (SelectItemPosOnThePouch_[j] != NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_])
 				{
-					gm.main.erase(gm.main.begin() + i);
-					gm.mainQuality.erase(gm.mainQuality.begin() + i);
+					gm.main.EraseToBegin(i);
 					SelectItemPosOnThePouch_.erase(SelectItemPosOnThePouch_.begin() + (i + gm.handles.size()));
 					break;
 				}
@@ -118,8 +115,8 @@ void MainItemSelect::allSelectEnd()
 		for (int j = 0; j < gm.main.size(); j++)
 		{   // メイン部分選択後、必要素材が含まれていたら
 			if (MainSlectOk_ &&
-				((int)gm.weaponData[CsvNecessaryItem_][weaponID_ + CsvSkipCell_] == gm.handles[i] ||
-					(int)gm.weaponData[CsvNecessaryItem_][weaponID_ + CsvSkipCell_] == gm.main[j]))
+				((int)gm.weaponData[CsvNecessaryItem_][weaponID_ + CsvSkipCell_] == gm.handles.get_item_element(i) ||
+					(int)gm.weaponData[CsvNecessaryItem_][weaponID_ + CsvSkipCell_] == gm.main.get_item_element(j)))
 			{
 				PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 				shouldCreate_ = true;

@@ -1,10 +1,10 @@
 #include "Player.h"
 
 #include <DxLib.h>
-#include "Input.h"
-#include "MyMath.h"
-#include "Map.h"
-#include "Music.h"
+#include "../MyLib/Input.h"
+#include "../MyLib/MyMath.h"
+#include "../Map.h"
+#include "../Music.h"
 
 #include <cmath> 
 

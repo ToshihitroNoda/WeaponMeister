@@ -3,8 +3,8 @@
 
 #include "Scene.h"
 #include "SceneManager.h"
-#include "GameManager.h"
-#include "Screen.h"
+#include "../GameManager.h"
+#include "../Screen.h"
 
 class Adv : public Scene
 {
@@ -20,6 +20,7 @@ public:
 	void Init() override;
 	void Final() override;
 	void Update() override;
+	void Change() override;
 	void Draw() override;
 
 	static int day;

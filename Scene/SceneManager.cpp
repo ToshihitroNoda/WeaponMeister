@@ -3,7 +3,6 @@
 
 #include "Title.h"
 #include "MainMenu.h"
-
 #include "Adv.h"
 #include "StageSelection.h"
 #include "Collection.h"
@@ -26,122 +25,62 @@ void SceneManager::LoadScene(std::string sceneName, std::vector<std::string> opt
 
 	if (sceneName == "Title")
 	{
-		// 前のシーンを削除
-		if (prevScene != nullptr)
-		{
-			prevScene.reset();
-		}
 		// 次のシーンの生成
 		currentScene = std::make_shared<Title>();
 	}
 	else if (sceneName == "MainMenu")
 	{
-		// 前のシーンを削除
-		if (prevScene != nullptr)
-		{
-			prevScene.reset();
-		}
 		// 次のシーンの生成
 		currentScene = std::make_shared<MainMenu>();
 	}
 	else if (sceneName == "Adv")
 	{
-		// 前のシーンを削除
-		if (prevScene != nullptr)
-		{
-			prevScene.reset();
-		}
 		// 次のシーンの生成
 		currentScene = std::make_shared<Adv>();
 	}
 
 	else if (sceneName == "StageSelection")
 	{
-		// 前のシーンを削除
-		if (prevScene != nullptr)
-		{
-			prevScene.reset();
-		}
 		// 次のシーンの生成
 		currentScene = std::make_shared<StageSelection>();
 	}
 	else if (sceneName == "Collection")
 	{
-		// 前のシーンを削除
-		if (prevScene != nullptr)
-		{
-			prevScene.reset();
-		}
 		// 次のシーンの生成
 		currentScene = std::make_shared<Collection>();
 	}
 	else if (sceneName == "Buy")
 	{
-		// 前のシーンを削除
-		if (prevScene != nullptr)
-		{
-			prevScene.reset();
-		}
 		// 次のシーンの生成
 		currentScene = std::make_shared<Buy>();
 	}
 	else if (sceneName == "Production")
 	{
-		// 前のシーンを削除
-		if (prevScene != nullptr)
-		{
-			prevScene.reset();
-		}
 		// 次のシーンの生成
 		currentScene = std::make_shared<Production>();
 	}
 	else if (sceneName == "Sale")
 	{
-		// 前のシーンを削除
-		if (prevScene != nullptr)
-		{
-			prevScene.reset();
-		}
 		// 次のシーンの生成
 		currentScene = std::make_shared<Sale>();
 	}
 	else if (sceneName == "Report")
 	{
-		// 前のシーンを削除
-		if (prevScene != nullptr)
-		{
-			prevScene.reset();
-		}
 		// 次のシーンの生成
 		currentScene = std::make_shared<Report>();
 	}
 	else if (sceneName == "GameOver")
 	{
-		// 前のシーンを削除
-		if (prevScene != nullptr)
-		{
-			prevScene.reset();
-		}
 		// 次のシーンの生成
 		currentScene = std::make_shared<GameOver>();
 	}
 	else if (sceneName == "GameClear")
 	{
-		// 前のシーンを削除
-		if (prevScene != nullptr)
-		{
-			prevScene.reset();
-		}
 		// 次のシーンの生成
 		currentScene = std::make_shared<GameClear>();
 	}
 	else if (sceneName == "EndCredit")
 	{
-		// 前のシーンを削除
-		if (prevScene != nullptr)
-		{
-			prevScene.reset();
-		}
 		// 次のシーンの生成
 		currentScene = std::make_shared<EndCredit>();
 	}

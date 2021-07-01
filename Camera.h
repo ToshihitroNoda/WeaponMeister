@@ -2,7 +2,7 @@
 #define CAMERA_H_
 
 #include <DxLib.h>
-#include "MyMath.h"
+#include "MyLib/MyMath.h"
 #include "Screen.h"
 
 class Camera

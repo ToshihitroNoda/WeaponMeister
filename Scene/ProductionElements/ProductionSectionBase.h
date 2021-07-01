@@ -1,8 +1,8 @@
 #ifndef PRODUCTIONSECTIONBASE_H_
 #define PRODUCTIONSECTIONBASE_H_
 
-#include "GameManager.h"
-#include "SceneManager.h"
+#include "../../GameManager.h"
+#include "../SceneManager.h"
 #include <unordered_map>
 #include <DxLib.h>
 

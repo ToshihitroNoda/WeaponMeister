@@ -3,8 +3,8 @@
 
 #include <DxLib.h>
 
-#include "SceneManager.h"
-#include "Scene.h"
+#include "Scene/SceneManager.h"
+#include "Scene/Scene.h"
 #include "GameManager.h"
 
 class Game

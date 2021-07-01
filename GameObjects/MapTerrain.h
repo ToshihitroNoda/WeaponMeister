@@ -2,7 +2,7 @@
 #define MAPTERRAIN_H_
 
 #include <DxLib.h>
-#include "GameManager.h"
+#include "../GameManager.h"
 #include "GameObject.h"
 
 class MapTerrain : public GameObject

@@ -25,7 +25,7 @@ private:
 	int drawCounter_ = defaultDrawCount_;
 	int scrollCount_ = 0;
 	int animationSoundTimer_ = 0;
-	int operationDescriptionMassegeNum_ = 0;
+	int operationDescriptionMessageNum_ = 0;
 	int productAnimationSpeed_ = 1;
 
 	bool playProductionEndSound_ = false;

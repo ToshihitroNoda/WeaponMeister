@@ -1,6 +1,6 @@
 #include "HandleItemSelect.h"
-#include "Input.h"
-#include "Music.h"
+#include "../../MyLib/Input.h"
+#include "../../Music.h"
 
 void HandleItemSelect::Update()
 {
@@ -13,8 +13,7 @@ void HandleItemSelect::Update()
 			PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 			if (gm.handles.size() < HandleSelect_MaxSize_ && !AlreadySecectItem(ItemPosOnThePouch_[selectIconNum_])) // d•¡‚µ‚Ä‚¢‚È‚©‚Á‚½‚ç
 			{
-				gm.handles.push_back(itemForWeaponMake_[selectIconNum_]);
-				gm.handlesQuality.push_back(itemQualityForWeaponMake_[selectIconNum_]);
+				gm.handles.Add(itemForWeaponMake_[selectIconNum_], itemQualityForWeaponMake_[selectIconNum_]);
 				SelectItemPosOnThePouch_.push_back(NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_]);
 			}
 			else
@@ -23,8 +22,7 @@ void HandleItemSelect::Update()
 				{
 					if (SelectItemPosOnThePouch_[i] == NowDrawPosOnPouch_[selectIconNum_ - scrollCount_ * WindowX_CellSize_])
 					{
-						gm.handles.erase(gm.handles.begin() + i);
-						gm.handlesQuality.erase(gm.handlesQuality.begin() + i);
+						gm.handles.EraseToBegin(i);
 						SelectItemPosOnThePouch_.erase(SelectItemPosOnThePouch_.begin() + i);
 					}
 				}
@@ -94,7 +92,7 @@ void HandleItemSelect::Draw()
 			DrawGraph
 			(AlreadySelect_HandleItem_X_ + i * AlreadySelect_HandleItem_X_Diameter_,
 			 AlreadySelect_HandleItem_Y_,
-			 gm.image.itemIcons[gm.handles[i]],
+			 gm.image.itemIcons[gm.handles.get_item_element(i)],
 			 TRUE);
 		}
 	}

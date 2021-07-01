@@ -14,10 +14,13 @@ public:
 	void Draw() override;
 
 	bool recipeSelection_ = false; // レシピを選び終わったかどうかの判定(終わったらtrue)
+	bool isDead = false;
 
 	std::vector<std::string> weaponName_;
 
 private:
+	void MoveCursor();
+
 	const int CursorX_Min_RecipeSelection_ = 77;
 	const int CursorY_Min_RecipeSelection_ = 175;
 	const int CursorX_Max_RecipeSelection_ = 304;

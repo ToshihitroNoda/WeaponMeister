@@ -20,6 +20,8 @@ private:
 	HandleItemSelect handleItemSelectSection_;
 	MainItemSelect   mainItemSelectSection_;
 
+	void MoveCursor();
+
 	const int CursorX_Min_ItemSelect_ = 84;
 	const int CursorY_Min_ItemSelect_ = 139;
 	const int CursorX_Max_ItemSelect_ = 444;

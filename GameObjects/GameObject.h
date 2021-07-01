@@ -3,7 +3,7 @@
 
 #include <string> 
 #include <memory> 
-#include "Camera.h" 
+#include "../Camera.h" 
 
 // ゲーム上に表示される物体の基底クラス。
 class GameObject

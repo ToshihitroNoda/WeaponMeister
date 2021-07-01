@@ -18,10 +18,10 @@ public:
 	static void Load(std::string filePath);
 	static void Update();
 	static void ImageDraw();
-	static void MassegeDraw(int MassegeColor, int FontSize = 30, int DefaultFontSize = 20);
+	static void MessageDraw(int MassegeColor, int FontSize = 30, int DefaultFontSize = 20);
 
-	static int MassegeCount;
-	static std::vector<std::string> massegeList;
+	static int MessageCount;
+	static std::vector<std::string> messageList;
 
 	static bool LoadEnd_;
 private:
@@ -37,8 +37,8 @@ private:
 	static std::vector<std::string> ResourceType_;
 	static std::vector<std::string> Commands_;
 	static int ResourceNum_;
-	static int MassegeX_;
-	static int MassegeY_;
+	static int MessageX_;
+	static int MessageY_;
 	static int StringX_;
 	static int StringY_;
 	static int BGX_;

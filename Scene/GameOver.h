@@ -2,9 +2,9 @@
 #define GAMEOVER_H_
 
 #include "Scene.h"
-#include "Screen.h"
+#include "../Screen.h"
 #include "SceneManager.h"
-#include "GameManager.h"
+#include "../GameManager.h"
 
 class GameOver : public Scene
 {
@@ -20,6 +20,7 @@ public:
 	void Init() override;
 	void Final() override;
 	void Update() override;
+	void Change() override;
 	void Draw() override;
 
 private:
@@ -40,8 +41,8 @@ private:
 	const int TitleY_       = 300;
 	const int DayX_         = 600;
 	const int DayY_         = 400;
-	const int NextMassegeX_ = 900;
-	const int NextMassegeY_ = 600;
+	const int NextMessageX_ = 900;
+	const int NextMessageY_ = 600;
 
 	int IconFlashCount_ = 0;
 	int autoCounter_    = 0;
@@ -49,7 +50,7 @@ private:
 
 	std::string filePath_ = "";
 
-	bool massegeEnd_ = false;
+	bool messageEnd_ = false;
 	bool autoMode_   = false;
 	bool skipMode_   = false;
 
