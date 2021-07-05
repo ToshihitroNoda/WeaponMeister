@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="MyLib\ADVSimpleScript.cpp" />
     <ClCompile Include="GameObjects\FieldItem.cpp" />
     <ClCompile Include="Game.cpp" />

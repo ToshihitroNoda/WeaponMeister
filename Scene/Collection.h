@@ -79,6 +79,8 @@ private:
 	const int OptionMenuPouchX_ = 900;
 	const int OptionMenuPouchY_ = 705;
 
+	const int BackImageWidth_   = 8192;
+
 	int getItem_                        = 0;  // 手に入れたアイテムID
 	int getItemCount_                   = 0;  // 一度に手に入れられるアイテム数
 	int getItemCountMax_                = 5;  // 一度に手に入れられるアイテム数の最大値
