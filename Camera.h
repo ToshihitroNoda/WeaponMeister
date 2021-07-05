@@ -2,7 +2,6 @@
 #define CAMERA_H_
 
 #include <DxLib.h>
-#include "MyLib/MyMath.h"
 #include "Screen.h"
 
 class Camera
@@ -22,41 +21,16 @@ public:
 
 	~Camera() = default;
 
+	// カメラを動かす
+	void Move();
+
 	// カメラの位置をセットし画面左上のワールド2D座標系として保存
-	void SetPosition(float worldX, float worldY, float worldZ)
-	{   // 画面左上のワールド座標系として保存
-		x = worldX;
-		y = worldY;
-		z = worldZ;
-		cameraPos = VGet(x, y, z); // カメラの位置の保存(cameraPosは読み出し専用)
-	}
+	void SetPosition(float worldX, float worldY, float worldZ);
 
 	// 指定されたワールド座標が画面の中心に来るように、カメラの位置を変更する
-	void LookAt(float targetX, float targetY, float targetZ)
-	{
-		// カメラの位置と向きを設定
-		{
-			// 注視点はターゲットの座標から CAMERA_LOOK_AT_HEIGHT 分だけ高い位置
-			VECTOR TargetPosition = VGet(targetX, targetY + cameraLookAtHeight, targetZ);
-			// カメラの位置の設定
-			VECTOR CameraPosition = VGet(x, y, z);
-			// カメラがターゲットのほうを向くようにする
-			VECTOR CameraLookAtPosition = TargetPosition;
+	void LookAt(float targetX, float targetY, float targetZ);
 
-			// カメラの設定に反映する
-			SetCameraPositionAndTarget_UpVecY(CameraPosition, CameraLookAtPosition);
-			// カメラ位置の保存(cameraPosは読み出し専用)
-			cameraPos = CameraPosition;
-		}
-	}
-
-	int SetCameraPositionAndTarget_UpVecY(VECTOR Position, VECTOR Target)
-	{
-		// 右手・左手系とY軸矢印の方向に従い座標を変換
-		VECTOR Position_COVERT_XYZ = VGet(Position.x, Position.y, Position.z);
-		VECTOR Target_COVERT_XYZ = VGet(Target.x, Target.y, Target.z);
-		return DxLib::SetCameraPositionAndTarget_UpVecY(Position_COVERT_XYZ, Target_COVERT_XYZ);
-	}
+	int SetCameraPositionAndTarget_UpVecY(VECTOR Position, VECTOR Target);
 
 	/// <summary>
 	/// 四角形（枠線のみ）を描画する
@@ -66,26 +40,22 @@ public:
 	/// <param name="right">右端</param>
 	/// <param name="bottom">下端</param>
 	/// <param name="color">色</param>
-	void DrawLineBox(float left, float top, float right, float bottom, unsigned int color, float leftTopZ = 0, float rightBottomZ = 0)
-	{
-		if (leftTopZ == 0 && rightBottomZ == 0)
-		{   // 2D版
-			DrawBox(
-				(int)(left - x + 0.5f),
-				(int)(top - y + 0.5f),
-				(int)(right - x + 0.5f),
-				(int)(bottom - y + 0.5f),
-				color,
-				FALSE);
-		}
-		else
-		{   // 3D版
-			DrawCube3D
-			(VGet(left, top, leftTopZ),
-			 VGet(right, bottom, rightBottomZ),
-			 color, color, FALSE);
-		}
-	}
+	void DrawLineBox(float left, float top, float right, float bottom, unsigned int color, float leftTopZ = 0, float rightBottomZ = 0);
+
+	int backX = 0;
+	float nowCamAngle_ = 0.0f;
+
+private:
+	int mouseX_ = 0;
+	int mouseY_ = 0;
+
+	float percentAngleByCursorDis_    = 0.0f; // マウスの移動距離に応じて角度変える
+	float percentAngleByCursorDis_BG_ = 0.0f;
+
+	bool canAngleInit_ = false;
+
+	const int MaxAngle_      = 360;
+	const int BackImageWidth = 8192;
 };
 
 #endif

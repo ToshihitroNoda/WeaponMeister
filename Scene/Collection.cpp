@@ -382,7 +382,7 @@ void Collection::Draw()
 {
 	// ãÛ
 	DrawGraph(gm.player->backX, -700, backGroundHandle_, TRUE);
-	DrawGraph(gm.player->backX - gm.player->BackImageWidth, -700, backGroundHandle_, TRUE);
+	DrawGraph(gm.player->backX - BackImageWidth_, -700, backGroundHandle_, TRUE);
 
 	// ínå`
 	for (auto& mT : gm.mapTerrain)

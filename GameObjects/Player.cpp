@@ -13,13 +13,13 @@ void Player::Init()
 	AnimationAttach((int)State::wait);
 
 	// プレイヤーモデルの角度
-	modelAngle_ = -((nowCamAngle_ - 90) * MyMath::Deg2Rad);
+	modelAngle_ = -((camera.nowCamAngle_ - 90) * MyMath::Deg2Rad);
 
 	// カメラ位置
 	camera.SetPosition
-	/* X座標 */(gm.player->x + (camDistanceFromPlayer_ * std::cos(nowCamAngle_ * MyMath::Deg2Rad)),
+	/* X座標 */(gm.player->x + (camDistanceFromPlayer_ * std::cos(camera.nowCamAngle_ * MyMath::Deg2Rad)),
 	/* Y座標 */ gm.player->y - camHeightFromTerrain_,
-	/* Z座標 */ gm.player->z + (camDistanceFromPlayer_ * std::sin(nowCamAngle_ * MyMath::Deg2Rad)));
+	/* Z座標 */ gm.player->z + (camDistanceFromPlayer_ * std::sin(camera.nowCamAngle_ * MyMath::Deg2Rad)));
 
 	//カメラはプレイヤの方を見る
 	camera.LookAt(gm.player->x, gm.player->y + 100, gm.player->z);
@@ -37,7 +37,7 @@ void Player::HandleInput()
 				moveSpeed_ = moveSpeedMax_;      //Maxスピードで止める
 			if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
 				AnimationAttach((int)State::run);
-			modelAngle_ = -(nowCamAngle_ * MyMath::Deg2Rad);
+			modelAngle_ = -(camera.nowCamAngle_ * MyMath::Deg2Rad);
 		}
 		else if (Input::GetButton(PAD_INPUT_6))         // D
 		{
@@ -46,7 +46,7 @@ void Player::HandleInput()
 				moveSpeed_ = -moveSpeedMax_;     //Maxスピードで止める
 			if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
 				AnimationAttach((int)State::run);
-			modelAngle_ = -((nowCamAngle_ - 180) * MyMath::Deg2Rad);
+			modelAngle_ = -((camera.nowCamAngle_ - 180) * MyMath::Deg2Rad);
 		}
 
 		if (Input::GetButton(PAD_INPUT_8))              // W
@@ -56,7 +56,7 @@ void Player::HandleInput()
 				moveSpeed_ = moveSpeedMax_;             //Maxスピードで止める
 			if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
 				AnimationAttach((int)State::run);
-			modelAngle_ = -((nowCamAngle_ - 90) * MyMath::Deg2Rad);
+			modelAngle_ = -((camera.nowCamAngle_ - 90) * MyMath::Deg2Rad);
 		}
 		else if (Input::GetButton(PAD_INPUT_5))         // S
 		{
@@ -65,24 +65,24 @@ void Player::HandleInput()
 				moveSpeed_ = -moveSpeedMax_;           //Maxスピードで止める
 			if (!attachCheck_[(int)State::run] && !attachCheck_[(int)State::collect])
 				AnimationAttach((int)State::run);
-			modelAngle_ = -((nowCamAngle_ + 90) * MyMath::Deg2Rad);
+			modelAngle_ = -((camera.nowCamAngle_ + 90) * MyMath::Deg2Rad);
 		}
 
 		if (Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_4)) // 左前
 		{
-			modelAngle_ = -((nowCamAngle_ - 45) * MyMath::Deg2Rad);
+			modelAngle_ = -((camera.nowCamAngle_ - 45) * MyMath::Deg2Rad);
 		}
 		else if (Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_6)) // 右前
 		{
-			modelAngle_ = -((nowCamAngle_ - 135) * MyMath::Deg2Rad);
+			modelAngle_ = -((camera.nowCamAngle_ - 135) * MyMath::Deg2Rad);
 		}
 		else if (Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_4)) // 左後ろ
 		{
-			modelAngle_ = -((nowCamAngle_ + 45) * MyMath::Deg2Rad);
+			modelAngle_ = -((camera.nowCamAngle_ + 45) * MyMath::Deg2Rad);
 		}
 		else if (Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_6)) // 右後ろ
 		{
-			modelAngle_ = -((nowCamAngle_ + 135) * MyMath::Deg2Rad);
+			modelAngle_ = -((camera.nowCamAngle_ + 135) * MyMath::Deg2Rad);
 		}
 
 		if (!Input::GetButton(PAD_INPUT_4) &&
@@ -108,60 +108,8 @@ void Player::HandleInput()
 // 更新処理
 void Player::Update()
 {
-	GetMousePoint(&mouseX_, &mouseY_);              // マウスカーソル座標取得
-
-	// マウスがウィンドウ内にあったらカメラ移動
-	if (mouseX_ > 0 && mouseX_ < Screen::width &&
-		mouseY_ > 0 && mouseY_ < Screen::height)
-	{
-		if (mouseX_ > Screen::width / 2)                  //　マウスが右に動いていたら
-		{
-
-		    // マウスの移動距離を度数変換、360 : x = Screen::Width * 1.2f : MouseX - Screen::width / 2
-		    //                             x(Screen::Width * 1.2f) = 360(MouseX - Screen::width / 2)
-		    //                             x = (360(MouseX - Screen::width / 2)) / (Screen::Width * 1.2f)
-
-			percentAngleByCursorDis_    = (float)((MaxAngle_ * (mouseX_ - Screen::width / 2)) / (Screen::width * 1.2f));
-			percentAngleByCursorDis_BG_ = (float)((MaxAngle_ * (mouseX_ - Screen::width / 2)) / (BackImageWidth / 60));
-
-			// PercentAngleByCursor初期化
-			if (!canAngleInit_)
-			{
-				percentAngleByCursorDis_    = 0;
-				percentAngleByCursorDis_BG_ = 0;
-				canAngleInit_               = true;
-			}
-
-			nowCamAngle_ += percentAngleByCursorDis_;   // 度数分足す
-
-			backX += percentAngleByCursorDis_BG_;
-			if (backX <= -BackImageWidth + Screen::width)
-				backX = 0;
-		}
-		else                                        // マウスが左に動いていたら
-		{
-			percentAngleByCursorDis_    = (float)((MaxAngle_ * (Screen::width / 2 - mouseX_)) / (Screen::width * 1.2f));
-			percentAngleByCursorDis_BG_ = (float)((MaxAngle_ * (mouseX_ - Screen::width / 2)) / (BackImageWidth / 60));
-
-			// PercentAngleByCursor初期化
-			if (!canAngleInit_)
-			{
-				percentAngleByCursorDis_    = 0;
-				percentAngleByCursorDis_BG_ = 0;
-				canAngleInit_               = true;
-			}
-
-			nowCamAngle_ -= percentAngleByCursorDis_;
-
-			backX += percentAngleByCursorDis_BG_;
-			if (backX > BackImageWidth)
-				backX = 0;
-		}
-	}
-
-	// カメラが360度で1周するように
-	if (nowCamAngle_ <= 0.0f)             nowCamAngle_ = (float)MaxAngle_ - 1.0f;
-	if (nowCamAngle_ >= (float)MaxAngle_) nowCamAngle_ = 1.0f;
+	camera.Move();
+	backX = camera.backX;
 
 	vx = 0;                                              // x方向移動速度
 	vy = 0;                                              // y方向移動速度
@@ -195,9 +143,9 @@ void Player::Update()
 
 	// カメラ位置
 	camera.SetPosition
-	/* X座標 */(gm.player->x + (camDistanceFromPlayer_ * std::cos(nowCamAngle_ * MyMath::Deg2Rad)),
+	/* X座標 */(gm.player->x + (camDistanceFromPlayer_ * std::cos(camera.nowCamAngle_ * MyMath::Deg2Rad)),
 	/* Y座標 */ gm.player->y - camHeightFromTerrain_,
-	/* Z座標 */ gm.player->z + (camDistanceFromPlayer_ * std::sin(nowCamAngle_ * MyMath::Deg2Rad)));
+	/* Z座標 */ gm.player->z + (camDistanceFromPlayer_ * std::sin(camera.nowCamAngle_ * MyMath::Deg2Rad)));
 
 	//カメラはプレイヤの方を見る
 	camera.LookAt(gm.player->x, gm.player->y + 100, gm.player->z);

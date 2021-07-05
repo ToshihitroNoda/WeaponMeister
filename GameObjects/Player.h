@@ -56,27 +56,24 @@ public:
 	};
 	~Player() = default;
 
+	void Init();
+	void Update() override;
+	void Draw() override;
+	void OnCollision(std::shared_ptr<GameObject> other);
+
+
+	int backX = 0;
+
+private:
 	void HandleInput();
 
 	void MoveX();
 	void MoveY();
 	void MoveZ();
 
-	void Init();
-	void Update() override;
-	void Draw() override;
-	void OnCollision(std::shared_ptr<GameObject> other);
-
 	void AnimationAttach(int AtnimIndex);
 	void PlayAnimation(float ConstPlayTime, bool isLoop);
 
-	const int BackImageWidth = 8192;
-	int backX = 0;
-
-private:
-	int mouseX_          = 0;
-	int mouseY_          = 0;
-	int prevMouseX_      = 0;
 	int attachIndex_     = 0;
 	int prevAttachIndex_ = 0;
 	int prevAnimIndex_   = 0;
@@ -89,19 +86,14 @@ private:
 	float moveSpeed_                  = 0.0f;
 	float camDistanceFromPlayer_      = 0.0f;
 	float camHeightFromTerrain_       = 0.0f;
-	float nowCamAngle_                = 0.0f;
-	float percentAngleByCursorDis_    = 0.0f; // マウスの移動距離に応じて角度変える
-	float percentAngleByCursorDis_BG_ = 0.0f;
 	float collisionDetectionMiddleX_  = 0.0f;
 	float collisionDetectionMiddleZ_  = 0.0f;
 
-	bool canAngleInit_           = false;
 	bool collectAttach_          = false;
 	bool runAttach_              = false;
 	bool waitAttach_             = false;
 	std::vector<bool> attachCheck_{ collectAttach_, runAttach_, waitAttach_ };
 
-	const int MaxAngle_     = 360;
 	const int DrawStrPosX_  = 500;
 	const int DrawStrPosY_  = 500;
 	const int TapSoundTime_ = 30;
