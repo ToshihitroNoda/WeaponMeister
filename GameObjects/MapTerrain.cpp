@@ -22,7 +22,7 @@ void MapTerrain::Draw()
 
 void MapTerrain::DrawModel(int MV1Handle)
 {
-	MV1SetPosition(MV1Handle, VGet(x, y, z));
+	MV1SetPosition(MV1Handle, position.Vec3ToVec(position));
 	MV1SetScale(MV1Handle, VGet(0.162f, 0.25f, 0.162f));
 	MV1DrawModel(MV1Handle);
 }

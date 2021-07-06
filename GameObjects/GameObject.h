@@ -4,6 +4,7 @@
 #include <string> 
 #include <memory> 
 #include "../Camera.h" 
+#include "../Vector3.h"
 
 // ゲーム上に表示される物体の基底クラス。
 class GameObject
@@ -40,49 +41,45 @@ public:
 	// 当たり判定の左端を取得
 	virtual float GetLeft()
 	{
-		return (x - rotaGraphShiftX) + hitboxOffsetLeft;
+		return (position.x - rotaGraphShift.x) + hitboxOffsetLeft;
 	}
 
 	// 右端を取得
 	virtual float GetRight()
 	{
-		return (x - rotaGraphShiftX) + imageWidth - hitboxOffsetRight;
+		return (position.x - rotaGraphShift.x) + imageWidth - hitboxOffsetRight;
 	}
 
 	// 上端を取得
 	virtual float GetTop()
 	{
-		return y + hitboxOffsetTop;
+		return position.y + hitboxOffsetTop;
 	}
 
 	// 下端を取得する
 	virtual float GetBottom()
 	{
-		return y + imageHeight - hitboxOffsetBottom;
+		return position.y + imageHeight - hitboxOffsetBottom;
 	}
 
 	// 当たり判定のZ手前側を取得
 	virtual float GetBack()
 	{
-		return (z - rotaGraphShiftZ) + hitboxOffsetBack;
+		return (position.z - rotaGraphShift.z) + hitboxOffsetBack;
 	}
 
 	// Z奥行き方向位置を取得
 	virtual float GetForward()
 	{
-		return (z - rotaGraphShiftZ) + imageLength - hitboxOffsetForward;
+		return (position.z - rotaGraphShift.z) + imageLength - hitboxOffsetForward;
 	}
 
 	std::string tag = "";
 	bool isDead = false;            // 死んだ（削除対象）フラグ
 
 protected:
-	float x = 0;                    // x座標
-	float y = 0;                    // y座標
-	float z = 0;                    // z座標
-	float vx = 0;                   // x方向の速度
-	float vy = 0;                   // y方向の速度
-	float vz = 0;                   // z方向の速度
+	Vector3 position{ 0.0f, 0.0f, 0.0f }; // 座標
+	Vector3 velocity{ 0.0f, 0.0f, 0.0f }; // 速度
 
 	int imageWidth          = 0;    // 画像の横ピクセル数
 	int imageHeight         = 0;    // 画像の縦ピクセル数
@@ -97,14 +94,9 @@ protected:
 	bool isRotaGraph = true;        // 画像の中心を起点に描くか？
 
 	// 画像の中心を起点に描く場合のずれ
-	float rotaGraphShiftX = 0.0;
-	float rotaGraphShiftY = 0.0;
-	float rotaGraphShiftZ = 0.0;
+	Vector3 rotaGraphShift{ 0.0f, 0.0f, 0.0f };
 
-	// 雲に乗る系のための1フレーム前変数群
-	float prevX = 0;                // 1フレーム前のx座標
-	float prevY = 0;                // 1フレーム前のy座標
-	float prevZ = 0;                // 1フレーム前のz座標
+	Vector3 prevPosition{ 0.0f, 0.0f, 0.0f };
 
 	float prevLeft    = 0;          // 1フレーム前の左端
 	float prevRight   = 0;          // 1フレーム前の右端
@@ -116,56 +108,55 @@ protected:
 	// 左端を指定することにより位置を設定する
 	virtual void SetLeft(float left)
 	{
-		x = left - hitboxOffsetLeft + rotaGraphShiftX;
+		position.x = left - hitboxOffsetLeft + rotaGraphShift.x;
 	}
 
 	// 右端を指定することにより位置を設定する
 	virtual void SetRight(float right)
 	{
-		x = right + hitboxOffsetRight - imageWidth + rotaGraphShiftX;
+		position.x = right + hitboxOffsetRight - imageWidth + rotaGraphShift.x;
 	}
 
 	// 上端を指定することにより位置を設定する
 	virtual void SetTop(float top)
 	{
-		y = top - hitboxOffsetTop;
+		position.y = top - hitboxOffsetTop;
 	}
 
 	// 下端を指定することにより位置を設定する
 	virtual void SetBottom(float bottom)
 	{
-		y = bottom + hitboxOffsetBottom - imageHeight;
+		position.y = bottom + hitboxOffsetBottom - imageHeight;
 	}
 
 	// Z手前側を指定することにより位置を設定する
 	virtual void SetBack(float back)
 	{
-		z = back - hitboxOffsetBack + rotaGraphShiftZ;
+		position.z = back - hitboxOffsetBack + rotaGraphShift.z;
 	}
 
 	// Z奥行き方向位置を指定することにより位置を設定する
 	virtual void SetForward(float forward)
 	{
-		z = forward + hitboxOffsetForward - imageLength + rotaGraphShiftZ;
+		position.z = forward + hitboxOffsetForward - imageLength + rotaGraphShift.z;
 	}
 
-	// 雲に乗る系のための1フレーム前処理関数群
 	// 1フレーム前からの移動量（x方向）
 	virtual float GetDeltaX()
 	{
-		return x - prevX;
+		return position.x - prevPosition.x;
 	}
 
 	// 1フレーム前からの移動量（y方向）
 	virtual float GetDeltaY()
 	{
-		return y - prevY;
+		return position.y - prevPosition.y;
 	}
 
 	// 1フレーム前からの移動量（z方向）
 	virtual float GetDeltaZ()
 	{
-		return z - prevZ;
+		return position.z - prevPosition.z;
 	}
 
 
@@ -208,9 +199,9 @@ protected:
 	// 1フレーム前の場所と当たり判定を記憶する
 	virtual void StorePostionAndHitBox()
 	{
-		prevX = x;
-		prevY = y;
-		prevZ = z;
+		prevPosition.x = position.x;
+		prevPosition.y = position.y;
+		prevPosition.z = position.z;
 		prevLeft    = GetLeft();
 		prevRight   = GetRight();
 		prevTop     = GetTop();

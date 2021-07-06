@@ -11,6 +11,7 @@
 #include "../Screen.h"
 #include "Adv.h"
 #include "../Music.h"
+#include "../Vector3.h"
 
 void Collection::Init()
 {
@@ -23,10 +24,11 @@ void Collection::Init()
 	SetWriteZBuffer3D(TRUE);
 
 	gm.map = std::make_shared<Map>(0, "Map" + std::to_string(StageSelection::stageNum));
-	gm.player = std::make_shared<Player>
-		(gm.mapData[3][StageSelection::stageNum - 1 + CsvSkipCell_],
-		 gm.mapData[4][StageSelection::stageNum - 1 + CsvSkipCell_],
-		 gm.mapData[5][StageSelection::stageNum - 1 + CsvSkipCell_]);
+	Vector3 playerPos
+	{ gm.mapData[3][StageSelection::stageNum - 1 + CsvSkipCell_],
+	  gm.mapData[4][StageSelection::stageNum - 1 + CsvSkipCell_],
+	  gm.mapData[5][StageSelection::stageNum - 1 + CsvSkipCell_] };
+	gm.player = std::make_shared<Player>(playerPos);
 
 	gm.player->Init();
 

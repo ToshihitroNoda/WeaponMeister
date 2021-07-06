@@ -16,14 +16,15 @@ void Player::Init()
 	modelAngle_ = -((camera.nowCamAngle_ - 90) * MyMath::Deg2Rad);
 
 	// カメラ位置
-	camera.SetPosition
-	/* X座標 */(gm.player->x + (camDistanceFromPlayer_ * std::cos(camera.nowCamAngle_ * MyMath::Deg2Rad)),
-	/* Y座標 */ gm.player->y - camHeightFromTerrain_,
-	/* Z座標 */ gm.player->z + (camDistanceFromPlayer_ * std::sin(camera.nowCamAngle_ * MyMath::Deg2Rad)));
+	Vector3 cameraPos
+	{ /* X座標 */gm.player->position.x + (camDistanceFromPlayer_ * std::cos(camera.nowCamAngle_ * MyMath::Deg2Rad)),
+		/* Y座標 */ gm.player->position.y - camHeightFromTerrain_,
+		/* Z座標 */ gm.player->position.z + (camDistanceFromPlayer_ * std::sin(camera.nowCamAngle_ * MyMath::Deg2Rad)) };
+	camera.SetPosition(cameraPos);
 
 	//カメラはプレイヤの方を見る
-	camera.LookAt(gm.player->x, gm.player->y + 100, gm.player->z);
-
+	Vector3 lookPos{ gm.player->position.x, gm.player->position.y + 100, gm.player->position.z };
+	camera.LookAt(lookPos);
 }
 
 void Player::HandleInput()
@@ -111,9 +112,7 @@ void Player::Update()
 	camera.Move();
 	backX = camera.backX;
 
-	vx = 0;                                              // x方向移動速度
-	vy = 0;                                              // y方向移動速度
-	vz = 0;                                              // z方向移動速度
+	velocity = 0;
 
 	moveSpeed_        *= DecreaseSpeed_;                 // 移動速度も減速する
 
@@ -123,32 +122,31 @@ void Player::Update()
 	if (modelAngle_ > 0)
 		modelAngle_ -= 360.0f * MyMath::Deg2Rad;         // プレイヤーの角度のずれを直す
 
-	vx = (float)std::sin(modelAngle_) * moveSpeed_ * (modelAngle_ / std::abs(modelAngle_));
-	vz = (float)std::cos(modelAngle_) * moveSpeed_ * (modelAngle_ / std::abs(modelAngle_));
-	
+	float vx = (float)std::sin(modelAngle_) * moveSpeed_ * (modelAngle_ / std::abs(modelAngle_));
+	float vz = (float)std::cos(modelAngle_) * moveSpeed_ * (modelAngle_ / std::abs(modelAngle_));
+	velocity = { vx, 0.0f, vz };
+
 	if ((Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_4)) ||
 		(Input::GetButton(PAD_INPUT_8) && Input::GetButton(PAD_INPUT_6)) ||
 		(Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_4)) ||
 		(Input::GetButton(PAD_INPUT_5) && Input::GetButton(PAD_INPUT_6)))
 	{
-		vx /= MyMath::Sqrt2;
-		vz /= MyMath::Sqrt2;
+		velocity /= MyMath::Sqrt2;
 	}
 
 	// 実際に位置を動かす
-
-	MoveX();
-	MoveY();
-	MoveZ();
+	position += velocity;
 
 	// カメラ位置
-	camera.SetPosition
-	/* X座標 */(gm.player->x + (camDistanceFromPlayer_ * std::cos(camera.nowCamAngle_ * MyMath::Deg2Rad)),
-	/* Y座標 */ gm.player->y - camHeightFromTerrain_,
-	/* Z座標 */ gm.player->z + (camDistanceFromPlayer_ * std::sin(camera.nowCamAngle_ * MyMath::Deg2Rad)));
+	Vector3 cameraPos
+	{ /* X座標 */gm.player->position.x + (camDistanceFromPlayer_ * std::cos(camera.nowCamAngle_ * MyMath::Deg2Rad)),
+		/* Y座標 */ gm.player->position.y - camHeightFromTerrain_,
+		/* Z座標 */ gm.player->position.z + (camDistanceFromPlayer_ * std::sin(camera.nowCamAngle_ * MyMath::Deg2Rad)) };
+	camera.SetPosition(cameraPos);
 
 	//カメラはプレイヤの方を見る
-	camera.LookAt(gm.player->x, gm.player->y + 100, gm.player->z);
+	Vector3 lookPos{ gm.player->position.x, gm.player->position.y + 100, gm.player->position.z };
+	camera.LookAt(lookPos);
 
 	if (attachCheck_[(int)State::collect])
 		PlayAnimation(0.5f, FALSE);
@@ -161,34 +159,12 @@ void Player::Update()
 	SetMousePoint(Screen::width / 2, Screen::height / 2);
 }
 
-// 横の移動処理
-void Player::MoveX()
-{
-	// 横に移動する
-	x += vx;
-}
-
-// Z奥行き方向の移動処理
-void Player::MoveZ()
-{
-	// Z奥行き方向に移動する
-	z += vz;
-}
-
-
-// 縦の移動処理
-void Player::MoveY()
-{
-	// 縦に移動する
-	y += vy;
-}
-
 // 描画処理
 void Player::Draw()
 {
 	// プレイヤーモデルを回転させる
 	MV1SetRotationXYZ(gm.image.Player, VGet(0, modelAngle_, 0));
-	MV1SetPosition(gm.image.Player, VGet(x, y, z));
+	MV1SetPosition(gm.image.Player, position.Vec3ToVec(position));
 	MV1SetScale(gm.image.Player, VGet(0.8f, 0.8f, 0.8f));
 	MV1DrawModel(gm.image.Player);
 	//DrawHitBox(); 

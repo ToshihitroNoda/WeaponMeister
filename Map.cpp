@@ -1,4 +1,5 @@
 #include "Map.h"
+#include "Vector3.h"
 
 // “GoŒ»Ë’ö‚Ì«‘‰Šú‰»yæ‚ÉŒvZ‚µ‚Ä«‘‰»z‚·‚é‚ÆŒvZ‚ª•K—v‚È‚­‚È‚èy‚‘¬‰»‚·‚éz
 	//y’ˆÓIX‚ÆY‚Ì’PˆÊ‚Íƒ}ƒX–Úz
@@ -48,13 +49,15 @@ void Map::LoadObjects()
 				}
 				if (id == Fielditem_)
 				{
-					gm.fieldItems.push_back(std::make_shared<FieldItem>(x, 30, y));
+					Vector3 fieldItemPos{ x, 30, y };
+					gm.fieldItems.push_back(std::make_shared<FieldItem>(fieldItemPos));
 				}
 				for (int i = 0; i < objectIDs.size(); i++)
 				{
 					if (id == objectIDs[i])
 					{
-						gm.mapObjects.push_back(std::make_shared<MapObjects>(x, 0, y, objectWidths_[i], objectLengths_[i], objectNames[i]));
+						Vector3 mapObjectsPos{ x, 0, y };
+						gm.mapObjects.push_back(std::make_shared<MapObjects>(mapObjectsPos, objectWidths_[i], objectLengths_[i], objectNames[i]));
 					}
 				}
 			}
@@ -79,7 +82,8 @@ void Map::LoadObjects()
 				{
 					if (id == objectIDs[i])
 					{
-						gm.mapObjects.push_back(std::make_shared<MapObjects>(x, 180, y, objectWidths_[i], objectLengths_[i], objectNames[i]));
+						Vector3 MapObjectsPos{ x, 180, y };
+						gm.mapObjects.push_back(std::make_shared<MapObjects>(MapObjectsPos, objectWidths_[i], objectLengths_[i], objectNames[i]));
 					}
 				}
 			}
@@ -104,7 +108,8 @@ void Map::LoadObjects()
 				{
 					if (id == objectIDs[i])
 					{
-						gm.mapObjects.push_back(std::make_shared<MapObjects>(x, 360, y, objectWidths_[i], objectLengths_[i], objectNames[i]));
+						Vector3 mapObjectsPos{ x, 360, y };
+						gm.mapObjects.push_back(std::make_shared<MapObjects>(mapObjectsPos, objectWidths_[i], objectLengths_[i], objectNames[i]));
 					}
 				}
 			}
@@ -132,19 +137,23 @@ void Map::LoadTerrain()
 				}
 				if (id == Terrain_Grass_)
 				{
-					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Grass"));
+					Vector3 mapTerrainPos{ x, -25, y, };
+					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(mapTerrainPos, "Grass"));
 				}
 				else if (id == Tterrain_Sand_)
 				{
-					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Sand"));
+					Vector3 mapTerrainPos{ x, -25, y, };
+					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(mapTerrainPos, "Sand"));
 				}
 				else if (id == Terrain_Stone_)
 				{
-					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Stone"));
+					Vector3 mapTerrainPos{ x, -25, y, };
+					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(mapTerrainPos, "Stone"));
 				}
 				else if (id == Terrain_Volcano_)
 				{
-					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(x, -25, y, "Volcano"));
+					Vector3 mapTerrainPos{ x, -25, y, };
+					gm.mapTerrain.push_back(std::make_shared<MapTerrain>(mapTerrainPos, "Volcano"));
 				}
 			}
 		}

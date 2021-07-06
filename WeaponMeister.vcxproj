@@ -239,6 +239,7 @@
     <ClInclude Include="Screen.h" />
     <ClInclude Include="MyLib\Singleton.h" />
     <ClInclude Include="Items\Weapon.h" />
+    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="myIcon.rc" />

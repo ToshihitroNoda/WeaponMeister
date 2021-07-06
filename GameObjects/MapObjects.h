@@ -10,11 +10,9 @@ class MapObjects : public GameObject
 public:
 	GameManager& gm = GameManager::GetInstance();
 
-	MapObjects(float x, float y, float z, float Width, float Length, std::string ObjectsName)
+	MapObjects(Vector3 position, float Width, float Length, std::string ObjectsName)
 	{
-		this->x = x;
-		this->y = y;
-		this->z = z;
+		this->position = position;
 		tag = ObjectsName;
 
 		imageWidth          = Width * 0.5f;   // 画像の横ピクセル数
@@ -29,9 +27,7 @@ public:
 
 		if (isRotaGraph == true)
 		{   // 画像の中心を起点に描く場合のずれ
-			rotaGraphShiftX = (float)imageWidth / 2;
-			rotaGraphShiftY = (float)imageHeight / 2;
-			rotaGraphShiftZ = (float)imageLength / 2;
+			rotaGraphShift = { (float)imageWidth / 2, (float)imageHeight / 2, (float)imageLength / 2 };
 		}
 	};
 
