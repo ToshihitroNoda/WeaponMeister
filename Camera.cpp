@@ -64,7 +64,7 @@ void Camera::Move()
 void Camera::SetPosition(Vector3 v3)
 {   // 画面左上のワールド座標系として保存
 	position = v3;
-	cameraPos = position.Vec3ToVec(position); // カメラの位置の保存(cameraPosは読み出し専用)
+	cameraPos = position.Vec3ToVec(); // カメラの位置の保存(cameraPosは読み出し専用)
 }
 
 // 指定されたワールド座標が画面の中心に来るように、カメラの位置を変更する
@@ -75,7 +75,7 @@ void Camera::LookAt(Vector3 v3)
 		// 注視点はターゲットの座標から CAMERA_LOOK_AT_HEIGHT 分だけ高い位置
 		VECTOR TargetPosition = VGet(v3.x, v3.y + cameraLookAtHeight, v3.z);
 		// カメラの位置の設定
-		VECTOR CameraPosition = position.Vec3ToVec(position);
+		VECTOR CameraPosition = position.Vec3ToVec();
 		// カメラがターゲットのほうを向くようにする
 		VECTOR CameraLookAtPosition = TargetPosition;
 
