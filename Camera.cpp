@@ -61,23 +61,21 @@ void Camera::Move()
 }
 
 // カメラの位置をセットし画面左上のワールド2D座標系として保存
-void Camera::SetPosition(float worldX, float worldY, float worldZ)
+void Camera::SetPosition(Vector3 v3)
 {   // 画面左上のワールド座標系として保存
-	x = worldX;
-	y = worldY;
-	z = worldZ;
-	cameraPos = VGet(x, y, z); // カメラの位置の保存(cameraPosは読み出し専用)
+	position = v3;
+	cameraPos = position.Vec3ToVec(position); // カメラの位置の保存(cameraPosは読み出し専用)
 }
 
 // 指定されたワールド座標が画面の中心に来るように、カメラの位置を変更する
-void Camera::LookAt(float targetX, float targetY, float targetZ)
+void Camera::LookAt(Vector3 v3)
 {
 	// カメラの位置と向きを設定
 	{
 		// 注視点はターゲットの座標から CAMERA_LOOK_AT_HEIGHT 分だけ高い位置
-		VECTOR TargetPosition = VGet(targetX, targetY + cameraLookAtHeight, targetZ);
+		VECTOR TargetPosition = VGet(v3.x, v3.y + cameraLookAtHeight, v3.z);
 		// カメラの位置の設定
-		VECTOR CameraPosition = VGet(x, y, z);
+		VECTOR CameraPosition = position.Vec3ToVec(position);
 		// カメラがターゲットのほうを向くようにする
 		VECTOR CameraLookAtPosition = TargetPosition;
 
@@ -109,10 +107,10 @@ void Camera::DrawLineBox(float left, float top, float right, float bottom, unsig
 	if (leftTopZ == 0 && rightBottomZ == 0)
 	{   // 2D版
 		DrawBox(
-			(int)(left - x + 0.5f),
-			(int)(top - y + 0.5f),
-			(int)(right - x + 0.5f),
-			(int)(bottom - y + 0.5f),
+			(int)(left - position.x + 0.5f),
+			(int)(top - position.y + 0.5f),
+			(int)(right - position.x + 0.5f),
+			(int)(bottom - position.y + 0.5f),
 			color,
 			FALSE);
 	}

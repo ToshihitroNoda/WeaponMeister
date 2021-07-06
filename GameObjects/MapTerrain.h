@@ -10,11 +10,9 @@ class MapTerrain : public GameObject
 public:
 	GameManager& gm = GameManager::GetInstance();
 
-	MapTerrain(float x, float y, float z, std::string TerrainName)
+	MapTerrain(Vector3 position, std::string TerrainName)
 	{
-		this->x = x;
-		this->y = y;
-		this->z = z;
+		this->position = position;
 		tag = TerrainName;
 
 		imageWidth  = 32;   // ‰æ‘œ‚Ì‰¡ƒsƒNƒZƒ‹”

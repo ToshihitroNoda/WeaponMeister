@@ -3,17 +3,16 @@
 
 #include <DxLib.h>
 #include "Screen.h"
+#include "Vector3.h"
 
 class Camera
 {
 public:
 	// カメラの位置。
 	// 画面左上のワールド座標を表す。
-	float x = 0;
-	float y = 0;
-	float z = 0;
+	Vector3 position{ 0.0f, 0.0f, 0.0f };
 
-	float cameraLookAtHeight = 0;
+	float cameraLookAtHeight = 0.0f;
 
 	VECTOR cameraPos = DxLib::VGet(Screen::width / 2, Screen::height / 2, -100.0f);
 
@@ -25,10 +24,10 @@ public:
 	void Move();
 
 	// カメラの位置をセットし画面左上のワールド2D座標系として保存
-	void SetPosition(float worldX, float worldY, float worldZ);
+	void SetPosition(Vector3 v3);
 
 	// 指定されたワールド座標が画面の中心に来るように、カメラの位置を変更する
-	void LookAt(float targetX, float targetY, float targetZ);
+	void LookAt(Vector3 v3);
 
 	int SetCameraPositionAndTarget_UpVecY(VECTOR Position, VECTOR Target);
 

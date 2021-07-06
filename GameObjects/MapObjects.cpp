@@ -15,7 +15,7 @@ void MapObjects::Draw()
 
 void MapObjects::DrawModel(int MV1Handle)
 {
-	MV1SetPosition(MV1Handle, VGet(x, y, z));
+	MV1SetPosition(MV1Handle, position.Vec3ToVec(position));
 	MV1SetScale(MV1Handle, VGet(0.5f, 0.5f, 0.5f));
 	MV1DrawModel(MV1Handle);
 }

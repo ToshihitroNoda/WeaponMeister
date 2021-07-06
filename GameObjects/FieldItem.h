@@ -11,11 +11,9 @@ public:
 
 	FieldItem() = default;
 
-	FieldItem(float x, float y, float z = 0)
+	FieldItem(Vector3 position)
 	{
-		this->x = x;
-		this->y = y;
-		this->z = z;
+		this->position = position;
 		tag = "FieldItem";
 
 		imageWidth          = 32;   // 画像の横ピクセル数
@@ -30,9 +28,7 @@ public:
 
 		if (isRotaGraph == true)
 		{   // 画像の中心を起点に描く場合のずれ
-			rotaGraphShiftX = (float)imageWidth / 2;
-			rotaGraphShiftY = (float)imageHeight / 2;
-			rotaGraphShiftZ = (float)imageLength / 2;
+			rotaGraphShift = { (float)imageWidth / 2, (float)imageHeight / 2, (float)imageLength / 2 };
 		}
 	};
 

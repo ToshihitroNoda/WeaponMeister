@@ -18,11 +18,9 @@ public:
 	GameManager& gm = GameManager::GetInstance();
 
 	Player() = default;
-	Player(float x, float y, float z = 0)
+	Player(Vector3 position)
 	{
-		this->x = x;
-		this->y = y;
-		this->z = z;
+		this->position = position;
 		tag = "Player";
 
 		// 画像ピクセル数
@@ -39,9 +37,7 @@ public:
 
 		if (isRotaGraph == true)
 		{   // 画像の中心を起点に描く場合のずれ
-			rotaGraphShiftX = (float)imageWidth / 2;
-			rotaGraphShiftY = (float)imageHeight / 2;
-			rotaGraphShiftZ = (float)imageLength / 2;
+			rotaGraphShift = { (float)imageWidth / 2, (float)imageHeight / 2, (float)imageLength / 2 };
 		}
 
 		// ミドルの値を初期化のときに計算して固定値を得る
