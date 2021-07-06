@@ -164,7 +164,7 @@ void Player::Draw()
 {
 	// プレイヤーモデルを回転させる
 	MV1SetRotationXYZ(gm.image.Player, VGet(0, modelAngle_, 0));
-	MV1SetPosition(gm.image.Player, position.Vec3ToVec(position));
+	MV1SetPosition(gm.image.Player, position.Vec3ToVec());
 	MV1SetScale(gm.image.Player, VGet(0.8f, 0.8f, 0.8f));
 	MV1DrawModel(gm.image.Player);
 	//DrawHitBox(); 

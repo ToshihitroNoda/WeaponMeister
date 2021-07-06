@@ -131,12 +131,12 @@ typedef struct Vector3
 	/*----------------------*/
 
 	// Vector3‚©‚çdxlib‚ÌVECTOR‚Ö‚Ì•ÏŠ·
-	VECTOR Vec3ToVec(Vector3 v3)
+	VECTOR Vec3ToVec()
 	{
 		VECTOR Result;
-		Result.x = v3.x;
-		Result.y = v3.y;
-		Result.z = v3.z;
+		Result.x = this->x;
+		Result.y = this->y;
+		Result.z = this->z;
 		return Result;
 	}
 
