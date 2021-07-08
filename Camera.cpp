@@ -10,7 +10,7 @@ void Camera::Move()
 	if (mouseX_ > 0 && mouseX_ < Screen::width &&
 		mouseY_ > 0 && mouseY_ < Screen::height)
 	{
-		if (mouseX_ > Screen::width / 2)                  //　マウスが右に動いていたら
+		if (mouseX_ > Screen::width / 2)            //　マウスが右に動いていたら
 		{
 
 			// マウスの移動距離を度数変換、360 : x = Screen::Width * 1.2f : MouseX - Screen::width / 2

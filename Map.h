@@ -48,7 +48,7 @@ class Map
 
 	const int Fielditem_   = 0;
 	const int Spruce_1_    = 1;
-	const int Spruce_2_   = 2;
+	const int Spruce_2_    = 2;
 	const int Spruce_3_    = 3;
 	const int Trunk_       = 4;
 	const int Branch_1_    = 5;
@@ -82,16 +82,16 @@ public:
 	GameManager& gm = GameManager::GetInstance();
 
 	std::vector<int> objectIDs
-	{ Spruce_1_,    Spruce_2_,    Spruce_3_,    Trunk_,       Branch_1_,    Branch_2_,    Branch_3_,    Branch_4_,
-	  BranchGroup_, Bush_1_,      Bush_2_,      Bush_3_,      Bush_4_,      BushLarge_1_, BushLarge_2_, CliffRock_1_,
-	  CliffRock_2_, CliffRock_3_, CliffRock_4_, CliffRock_5_, Rock_1_,      Rock_2_,      Rock_3_,      Rock_4_,
-	  Rock_5_,      Crystal_1_,   Crystal_2_,   Crystal_3_,   Crystal_4_,   Crystal_5_ };
+	{ Spruce_1_   , Spruce_2_   , Spruce_3_   , Trunk_      , Branch_1_ , Branch_2_   , Branch_3_   , Branch_4_   ,
+	  BranchGroup_, Bush_1_     , Bush_2_     , Bush_3_     , Bush_4_   , BushLarge_1_, BushLarge_2_, CliffRock_1_,
+	  CliffRock_2_, CliffRock_3_, CliffRock_4_, CliffRock_5_, Rock_1_   , Rock_2_     , Rock_3_     , Rock_4_     ,
+	  Rock_5_     , Crystal_1_  , Crystal_2_  , Crystal_3_  , Crystal_4_, Crystal_5_ };
 
 	std::vector<std::string> objectNames
-	{ "Spruce_1",    "Spruce_2",    "Spruce_3",    "Trunk",       "Branch_1",  "Branch_2",	  "Branch_3",	 "Branch_4",
-	  "BranchGroup", "Bush_1",      "Bush_2",      "Bush_3",      "Bush_4",    "BushLarge_1", "BushLarge_2", "CliffRock_1",
-	  "CliffRock_2", "CliffRock_3", "CliffRock_4", "CliffRock_5", "Rock_1",    "Rock_2",	  "Rock_3",		 "Rock_4",
-	  "Rock_5",      "Crystal_1",   "Crystal_2",   "Crystal_3",   "Crystal_4", "Crystal_5" };
+	{ "Spruce_1"   , "Spruce_2"   , "Spruce_3"   , "Trunk"      , "Branch_1" , "Branch_2"   , "Branch_3"   , "Branch_4"   ,
+	  "BranchGroup", "Bush_1"     , "Bush_2"     , "Bush_3"     , "Bush_4"   , "BushLarge_1", "BushLarge_2", "CliffRock_1",
+	  "CliffRock_2", "CliffRock_3", "CliffRock_4", "CliffRock_5", "Rock_1"   , "Rock_2"     , "Rock_3"     , "Rock_4"     ,
+	  "Rock_5"     , "Crystal_1"  , "Crystal_2"  , "Crystal_3"  , "Crystal_4", "Crystal_5" };
 
 	// マス目のXとYを保持するデータ型
 	struct CellXY
@@ -159,13 +159,13 @@ private:
 
 	std::vector<int> objectWidths_
 	{
-		120, 140, 40,  40,  540, 360, 270, 450, 560,  175, 180,
+		120, 140, 40 , 40 , 540, 360, 270, 450, 560 , 175, 180,
 		270, 198, 240, 200, 660, 462, 450, 552, 1160, 297, 270,
 		225, 320, 252, 175, 210, 162, 189, 138
 	};
 	std::vector<int> objectLengths_
 	{
-		120, 140, 40,  180, 60,  40,  30,  50,  560, 250, 180,
+		120, 140, 40 , 180, 60 , 40 , 30 , 50 , 560, 250, 180,
 		189, 220, 300, 225, 240, 294, 270, 920, 464, 231, 210,
 		225, 320, 432, 245, 150, 162, 189, 161
 	};

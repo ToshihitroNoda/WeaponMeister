@@ -39,11 +39,11 @@ public:
 
 private:
 	std::vector<int> objectModelHandles
-	{ gm.image.Spruce_1,       gm.image.Spruce_2,       gm.image.Spruce_3,     gm.image.Trunk,        gm.image.Branch_1,     gm.image.Branch_2,
-	  gm.image.Branch_3,       gm.image.Branch_4,       gm.image.Branch_group, gm.image.Bush_1,       gm.image.Bush_2,       gm.image.Bush_3,
-	  gm.image.Bush_4,         gm.image.Bush_large_1,   gm.image.Bush_large_2, gm.image.Cliff_rock_1, gm.image.Cliff_rock_2, gm.image.Cliff_rock_3,
-	  gm.image.Cliff_rock_4,   gm.image.Cliff_rock_5,   gm.image.Rock_1,       gm.image.Rock_2,       gm.image.Rock_3,       gm.image.Rock_4,
-	  gm.image.Rock_5,         gm.image.Crystal_1,      gm.image.Crystal_2,    gm.image.Crystal_3,    gm.image.Crystal_4,    gm.image.Crystal_5
+	{ gm.image.Spruce_1    , gm.image.Spruce_2    , gm.image.Spruce_3    , gm.image.Trunk       , gm.image.Branch_1    , gm.image.Branch_2    ,
+	  gm.image.Branch_3    , gm.image.Branch_4    , gm.image.Branch_group, gm.image.Bush_1      , gm.image.Bush_2      , gm.image.Bush_3      ,
+	  gm.image.Bush_4      , gm.image.Bush_large_1, gm.image.Bush_large_2, gm.image.Cliff_rock_1, gm.image.Cliff_rock_2, gm.image.Cliff_rock_3,
+	  gm.image.Cliff_rock_4, gm.image.Cliff_rock_5, gm.image.Rock_1      , gm.image.Rock_2      , gm.image.Rock_3      , gm.image.Rock_4      ,
+	  gm.image.Rock_5      , gm.image.Crystal_1   , gm.image.Crystal_2   , gm.image.Crystal_3   , gm.image.Crystal_4   , gm.image.Crystal_5
 	};
 
 };
