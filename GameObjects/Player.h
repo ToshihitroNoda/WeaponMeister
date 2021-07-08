@@ -63,10 +63,6 @@ public:
 private:
 	void HandleInput();
 
-	void MoveX();
-	void MoveY();
-	void MoveZ();
-
 	void AnimationAttach(int AtnimIndex);
 	void PlayAnimation(float ConstPlayTime, bool isLoop);
 

@@ -114,13 +114,13 @@ void Player::Update()
 
 	velocity = 0;
 
-	moveSpeed_        *= DecreaseSpeed_;                 // 移動速度も減速する
+	moveSpeed_ *= DecreaseSpeed_;                // 移動速度も減速する
 
 	// 入力を受けての処理 
 	HandleInput();
 
 	if (modelAngle_ > 0)
-		modelAngle_ -= 360.0f * MyMath::Deg2Rad;         // プレイヤーの角度のずれを直す
+		modelAngle_ -= 360.0f * MyMath::Deg2Rad; // プレイヤーの角度のずれを直す
 
 	float vx = (float)std::sin(modelAngle_) * moveSpeed_ * (modelAngle_ / std::abs(modelAngle_));
 	float vz = (float)std::cos(modelAngle_) * moveSpeed_ * (modelAngle_ / std::abs(modelAngle_));
@@ -139,9 +139,9 @@ void Player::Update()
 
 	// カメラ位置
 	Vector3 cameraPos
-	{ /* X座標 */gm.player->position.x + (camDistanceFromPlayer_ * std::cos(camera.nowCamAngle_ * MyMath::Deg2Rad)),
-		/* Y座標 */ gm.player->position.y - camHeightFromTerrain_,
-		/* Z座標 */ gm.player->position.z + (camDistanceFromPlayer_ * std::sin(camera.nowCamAngle_ * MyMath::Deg2Rad)) };
+	{ /* X座標 */ gm.player->position.x + (camDistanceFromPlayer_ * std::cos(camera.nowCamAngle_ * MyMath::Deg2Rad)),
+	  /* Y座標 */ gm.player->position.y - camHeightFromTerrain_,
+	  /* Z座標 */ gm.player->position.z + (camDistanceFromPlayer_ * std::sin(camera.nowCamAngle_ * MyMath::Deg2Rad)) };
 	camera.SetPosition(cameraPos);
 
 	//カメラはプレイヤの方を見る

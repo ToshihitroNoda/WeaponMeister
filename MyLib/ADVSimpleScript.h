@@ -24,8 +24,8 @@ public:
 	static std::vector<std::string> messageList;
 
 	static bool LoadEnd_;
-private:
 
+private:
 	static int lineWidth_;
 	static std::string filePath_;
 

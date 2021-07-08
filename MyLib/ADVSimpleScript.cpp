@@ -6,9 +6,9 @@ std::vector<std::string> ADVSimpleScript::messageList;
 std::vector<std::string> ADVSimpleScript::ResourcePath_;
 std::vector<std::string> ADVSimpleScript::ResourceType_;
 std::vector<std::string> ADVSimpleScript::Commands_
-{ "ResourceLoad", "Image",    "Music",   "PlayMusic", "BGX",   "BGY", "BGDraw",
-  "MessageX",     "MessageY", "StringX", "StringY",   "CName", "CX",  "CY",
-  "CDraw",        "CDrawEnd", "Break",   "BreakEnd" };
+{ "ResourceLoad", "Image"   , "Music"  , "PlayMusic", "BGX"  , "BGY", "BGDraw",
+  "MessageX"    , "MessageY", "StringX", "StringY"  , "CName", "CX" , "CY"    ,
+  "CDraw"       , "CDrawEnd", "Break"  , "BreakEnd" };
 
 std::vector<int> ADVSimpleScript::ResourceNums_;
 std::vector<int> ADVSimpleScript::CX_;
