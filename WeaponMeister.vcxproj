@@ -167,6 +167,7 @@
     <ClCompile Include="MyLib\MyMath.cpp" />
     <ClCompile Include="MyLib\MyRandom.cpp" />
     <ClCompile Include="GameObjects\Player.cpp" />
+    <ClCompile Include="Scene\Option.cpp" />
     <ClCompile Include="Scene\Adv.cpp" />
     <ClCompile Include="Scene\Buy.cpp" />
     <ClCompile Include="Scene\Collection.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="MyLib\MyTimer.h" />
     <ClInclude Include="GameObjects\Player.h" />
     <ClInclude Include="Items\Pouch.h" />
+    <ClInclude Include="Scene\Option.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene\Adv.h" />
     <ClInclude Include="Scene\Buy.h" />

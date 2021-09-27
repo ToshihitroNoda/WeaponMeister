@@ -139,5 +139,3 @@ void Production::Draw()
 		DrawString((Screen::width - DrawWidth) / 2, (Screen::height - (Screen::height / 4)), drawMassege.c_str(), gm.colorWhite);
 	}
 }
-
-

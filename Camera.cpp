@@ -28,9 +28,9 @@ void Camera::Move()
 				canAngleInit_ = true;
 			}
 
-			nowCamAngle_ += percentAngleByCursorDis_;   // “x”•ª‘«‚·
+			nowCamAngle_ += percentAngleByCursorDis_ * -gm.cameraReverseY;   // “x”•ª‘«‚·
 
-			backX += percentAngleByCursorDis_BG_;
+			backX += percentAngleByCursorDis_BG_ * -gm.cameraReverseY;
 			if (backX <= -BackImageWidth + Screen::width)
 				backX = 0;
 		}
@@ -47,9 +47,9 @@ void Camera::Move()
 				canAngleInit_ = true;
 			}
 
-			nowCamAngle_ -= percentAngleByCursorDis_;
+			nowCamAngle_ += percentAngleByCursorDis_ * gm.cameraReverseY;
 
-			backX += percentAngleByCursorDis_BG_;
+			backX += percentAngleByCursorDis_BG_ * -gm.cameraReverseY;
 			if (backX > BackImageWidth)
 				backX = 0;
 		}

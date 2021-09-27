@@ -77,6 +77,8 @@ public:
 	int money = 0;
 	const int defaultMoney = 1000;
 
+	int cameraReverseY = 1; // カメラの左右反転 1 : 通常 、 -1 : 反転
+
 protected:
 	GameManager()          = default;  // 外部からのインスタンス作成は禁止
 	virtual ~GameManager() = default;  // 外部からのインスタンス破棄も禁止

@@ -4,10 +4,13 @@
 #include <DxLib.h>
 #include "Screen.h"
 #include "Vector3.h"
+#include "GameManager.h"
 
 class Camera
 {
 public:
+	GameManager& gm = GameManager::GetInstance();
+
 	// カメラの位置。
 	// 画面左上のワールド座標を表す。
 	Vector3 position{ 0.0f, 0.0f, 0.0f };

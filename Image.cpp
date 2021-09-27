@@ -31,6 +31,11 @@ void Image::Load(std::string SceneName)
 		mainmenuBack = LoadGraph("Resource/Image/mainmenu.jpg");
 		menuCursor   = LoadGraph("Resource/Image/menucursor.png");
 	}
+	else if (SceneName == "Option")
+	{
+		mainmenuBack = LoadGraph("Resource/Image/mainmenu.jpg");
+		menuCursor = LoadGraph("Resource/Image/menucursor.png");
+	}
 	else if (SceneName == "Adv")
 	{
 		textWindow = LoadGraph("Resource/Image/textwindow.png");
