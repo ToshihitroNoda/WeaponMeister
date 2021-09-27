@@ -8,6 +8,7 @@
 void MainMenu::Init()
 {
 	gm.image.Load(tag);
+	changeOption_ = false;
 }
 
 void MainMenu::Final()
@@ -56,6 +57,12 @@ void MainMenu::Update()
 	else if (CursorY_ == CursorY_Init_ + CursorY_Dist_ * 2 && Input::GetButtonDown(PAD_INPUT_1))
 	{
 		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
+		isDead = true;
+		changeOption_ = true;
+	}
+	else if (CursorY_ == CursorY_Init_ + CursorY_Dist_ * 3 && Input::GetButtonDown(PAD_INPUT_1))
+	{
+		PlaySoundMem(Music::enter_SE, DX_PLAYTYPE_BACK);
 		exit(0);
 	}
 	count_++;
@@ -63,7 +70,8 @@ void MainMenu::Update()
 
 void MainMenu::Change()
 {
-	sm.LoadScene("Adv");
+	if (changeOption_) sm.LoadScene("Option");
+	else sm.LoadScene("Adv");
 }
 
 void MainMenu::Draw()

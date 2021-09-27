@@ -3,6 +3,7 @@
 
 #include "Title.h"
 #include "MainMenu.h"
+#include "Option.h"
 #include "Adv.h"
 #include "StageSelection.h"
 #include "Collection.h"
@@ -32,6 +33,11 @@ void SceneManager::LoadScene(std::string sceneName, std::vector<std::string> opt
 	{
 		// 次のシーンの生成
 		currentScene = std::make_shared<MainMenu>();
+	}
+	else if (sceneName == "Option")
+	{
+		// 次のシーンの生成
+		currentScene = std::make_shared<Option>();
 	}
 	else if (sceneName == "Adv")
 	{
